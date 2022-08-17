@@ -19,7 +19,7 @@ recipePromiseDb =  Product.findAll(
 )        
 .then((respuesta)=>{         
 console.log(respuesta)
-    recipePromiseDb = respuesta.map(product=>{
+    productPromiseDb = respuesta.map(product=>{
           
           return {
             id: product.id,
@@ -32,7 +32,7 @@ console.log(respuesta)
         
       })
       
-       res.status(200).send(recipePromiseDb)
+       res.status(200).send(productPromiseDb)
       }) 
 
       .catch(err=>next(err))
