@@ -11,14 +11,14 @@ const router = Router();
 
 router.get('/', async (req, res, next) => { 
  
-let recipePromiseDb
-recipePromiseDb =  Product.findAll(
+let productPromiseDb
+productPromiseDb =  Product.findAll(
   {
     include: SubCategory
   }
 )        
-.then((respuesta)=>{         
-console.log(respuesta)
+.then((respuesta)=>{   
+
     productPromiseDb = respuesta.map(product=>{
           
           return {
@@ -36,8 +36,6 @@ console.log(respuesta)
       }) 
 
       .catch(err=>next(err))
-
- 
 })
 
 module.exports = router;
