@@ -23,6 +23,17 @@ productRoutes.post("/", async (req, res) => {
 
 
 productRoutes.get("/", async (req, res) => {
+    const name = req.query.name
+    if (name) {
+        const data = await Product.findAll({ where:{
+            [Op.or]:[
+                { title: { [Op.iLike]: `%${name}%` } },
+                { model: { [Op.iLike]: `%${name}%` } }
+            ]
+        } })
+
+        return res.status(200).json({ data })
+    }
     const lista = await Product.findAll()
     res.status(200).json({ data: lista })
 })
