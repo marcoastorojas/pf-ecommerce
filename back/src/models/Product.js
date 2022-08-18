@@ -9,14 +9,24 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true,
-          },
+          },          
+        brand: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         model: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         description: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
-    });
+    },
+    { timestamps: false }
+    );
 };
