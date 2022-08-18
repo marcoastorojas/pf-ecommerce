@@ -14,7 +14,10 @@ export default function Landing() {
  return (
   <div>
    <h1>Landing Page</h1>
+<<<<<<< HEAD
    <LandingContainer />
+=======
+>>>>>>> d5eb674422b5bbca067701aaa77dd227c6758d99
   </div>
  );
 }

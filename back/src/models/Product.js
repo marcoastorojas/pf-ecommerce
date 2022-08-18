@@ -9,12 +9,23 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true,
-          },
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         model: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         description: {
+            type: DataTypes.TEXT,
+        },
+        brand: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        image:{
             type: DataTypes.STRING,
             allowNull: false,
         }
