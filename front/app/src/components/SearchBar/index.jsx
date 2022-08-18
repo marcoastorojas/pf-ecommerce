@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
+import style from "./index.modules.css";
+
 export default function SearchBar() {
  const [textInput, setTextInput] = useState(null);
 
@@ -28,7 +30,7 @@ export default function SearchBar() {
 
  return (
   <div>
-   <form onSubmit={onSearchHandler}>
+   <form onSubmit={onSearchHandler} className={style.input}>
     <input
      type="text"
      placeholder="What are you looking for?"

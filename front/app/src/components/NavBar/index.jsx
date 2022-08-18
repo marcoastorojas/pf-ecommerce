@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { Link } from "react-router-dom";
+
 import style from "./index.module.css";
 import SearchBar from "../SearchBar";
 
@@ -11,12 +13,12 @@ export default function NavBar() {
    <div className={style.sectionOne}>
     <h1 className={style.logo}>Logo</h1>
     <SearchBar />
-    <div>
+    <Link to={"/log-in"}>
      <button>Login</button>
-     <button>Signup</button>
-     <button>🛒</button>
-     <span>{productNumber}</span>
-    </div>
+    </Link>
+    <button>Signup</button>
+    <button>🛒</button>
+    <p>{productNumber}</p>
    </div>
    <div className={style.sectionTwo}>
     <button>Categories</button>
