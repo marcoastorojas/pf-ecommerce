@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         price:{
-            type:DataTypes.NUMBER,
+            type:DataTypes.FLOAT,
             allowNull:false
         },
         description: {
@@ -30,8 +30,8 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        image:{
-            type: DataTypes.STRING,
+        images:{
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     });

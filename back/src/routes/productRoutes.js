@@ -5,8 +5,8 @@ const productRoutes = Router()
 const { Product, Subcategory } = require("../db")
 
 productRoutes.post("/", async (req, res) => {
-    const { subcategoryId, title, model, brand, image } = req.body
-    if (!subcategoryId || !title || !model || !brand || !image) return res.status(400).json("faltan datos")
+    const { subcategoryId, title, model, brand, images, price, description } = req.body
+    if (!subcategoryId || !title || !model || !brand || !images || !description || !price) return res.status(400).json("faltan datos")
     const expReg = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
     if (!expReg.test(subcategoryId)) return res.status(400).json({ error: "debe ser un uuid valido" })
 
