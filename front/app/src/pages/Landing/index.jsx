@@ -2,6 +2,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { stateTest } from "../../redux/actions";
 
+// import styles from "./index.module.css";
+
+import NavBar from "../../components/NavBar";
+
 export default function Landing() {
  const dispatch = useDispatch();
 
@@ -12,7 +16,7 @@ export default function Landing() {
 
  return (
   <div>
-   <h1>Landing Page</h1>
+   <NavBar />
   </div>
  );
 }
