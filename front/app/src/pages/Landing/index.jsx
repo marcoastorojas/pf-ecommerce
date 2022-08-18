@@ -1,22 +1,17 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { stateTest } from "../../redux/actions";
-
-// import styles from "./index.module.css";
-
+import LandingProducts from "../../components/LandingProducts";
+import Carousel from "../../components/Carousel";
 import NavBar from "../../components/NavBar";
 
-export default function Landing() {
- const dispatch = useDispatch();
+import styles from "./index.module.css";
 
- useEffect(() => {
-  console.log("Landing Render");
-  dispatch(stateTest());
- });
+
+export default function Landing() {
 
  return (
   <div>
    <NavBar />
+   <Carousel />
+   <LandingProducts/>
   </div>
  );
 }

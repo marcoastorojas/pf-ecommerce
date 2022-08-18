@@ -1,7 +1,9 @@
 import { useState } from "react";
 import styles from "./index.module.css";
+import { Link } from "react-router-dom";
 
 import SearchBar from "../SearchBar";
+
 
 export default function NavBar() {
  const [productNumber, setProductNumber] = useState(0);
@@ -11,7 +13,7 @@ export default function NavBar() {
    <div>
     <h1>Logo</h1>
     <SearchBar />
-    <button>Login</button>
+    <Link to={"/log-in"}><button>Login</button></Link>
     <button>Signup</button>
     <button>🛒</button>
     <p>{productNumber}</p>
