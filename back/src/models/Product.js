@@ -18,8 +18,13 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        price:{
+            type:DataTypes.NUMBER,
+            allowNull:false
+        },
         description: {
             type: DataTypes.TEXT,
+            allowNull:false
         },
         brand: {
             type: DataTypes.STRING,
