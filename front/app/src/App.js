@@ -2,13 +2,15 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
+import LogIn from "./pages/LogIn"
 import React from "react";
 
 function App() {
  return (
   <div className="App">
    <Routes>
-    <Route path="/" exact element={<Landing />} />
+    <Route exact path="/" element={<Landing />} />
+    <Route path="/log-in" exact element={<LogIn />} />
    </Routes>
   </div>
  );

@@ -10,9 +10,9 @@ export default function LandingProducts() {
     const products = useSelector((state) => state.allProducts)
     const sliceArrayProduct = products.data?.slice(0, 6);
 
-    useEffect(() => {
-        dispatch(getProducts());
-      }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getProducts());
+    //   }, [dispatch]);
 
     return (
        <main>
