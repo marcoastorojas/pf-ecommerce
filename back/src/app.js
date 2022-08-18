@@ -1,8 +1,8 @@
-const express = require("express");
-const { routes } = require("./routes")
-
-const server = express()
-server.use(express.json())
-// server.use("/api", routes)
+const express = require("express"); 
+const routes = require('./routes/index.js');
+require('./db.js');
+const server = express() 
+server.use('/', routes);
+  
 
 module.exports = server
