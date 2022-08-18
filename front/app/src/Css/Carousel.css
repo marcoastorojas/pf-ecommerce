@@ -12,6 +12,22 @@
      border-radius: 8px;
 }
 
+.slide-name {
+    position: absolute;
+    justify-content: center;
+    display: flex;
+    left: 10px;
+    top: 2px;
+}
+
+.slide-price {
+    position: absolute;
+    justify-content: center;
+    display: flex;
+    right: 10px;
+    bottom: 10px
+}
+
 .right-arrow {
     position: absolute;
     top: 50%;

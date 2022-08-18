@@ -1,3 +1,4 @@
+
 const { Router } = require("express")
 const { categoriesroutes } = require("./categoriesRoutes")
 const { productRoutes } = require("./productRoutes")

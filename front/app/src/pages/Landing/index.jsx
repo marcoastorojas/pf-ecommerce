@@ -1,10 +1,17 @@
-import LandingContainer from "../../components/LandingContainer";
+import LandingProducts from "../../components/LandingProducts";
+import Carousel from "../../components/Carousel";
+import NavBar from "../../components/NavBar";
+
+import styles from "./index.module.css";
+
+
 export default function Landing() {
 
  return (
   <div>
-   <h1>Landing Page</h1>
-   <LandingContainer />
+   <NavBar />
+   <Carousel />
+   <LandingProducts/>
   </div>
  );
 }

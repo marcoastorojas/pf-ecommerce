@@ -12,7 +12,7 @@ const products = useSelector((state) => state.allProducts)
 const [current, setCurrent] = useState(0);
 const sliceArrayProducts = products.data?.slice(0, 10)
 const length = sliceArrayProducts?.length;
-
+console.log(sliceArrayProducts)
 useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -24,8 +24,6 @@ const nextSlide = () => {
 const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
 }
-
-//console.log(slides.length);
 
 if(!Array.isArray(sliceArrayProducts) || sliceArrayProducts?.length <= 0) {
     return null;
@@ -39,7 +37,11 @@ if(!Array.isArray(sliceArrayProducts) || sliceArrayProducts?.length <= 0) {
                 return (
                     <div className={index === current ? "slide-active" : "slide"} key={index}>
                         {index === current && (
-                        <img src={slide.image} alt="pcs-gamers" className="image-carousel" />
+                        <div>
+                            <img src={slide.images.slice(0)} alt="not found" className="image-carousel" />
+                            <span className="slide-name">{slide.title}</span>
+                            <span className="slide-price">${slide.price}</span>
+                        </div>
                         )}  
                     </div>
                     )

@@ -29,7 +29,7 @@ const submitHandler = e => {
             </div>
             <input type="submit" value="LOGIN" />
         </div>
-        <Link to={"/"}>Back to Home</Link>
+        <Link to={"/"}><button>Back to Home</button></Link>
     </form>
   )
 }

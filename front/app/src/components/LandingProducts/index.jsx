@@ -1,5 +1,5 @@
 import { getProducts } from "../../redux/actions";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
 import "../../Css/LandingProducts.css"
@@ -10,9 +10,9 @@ export default function LandingProducts() {
     const products = useSelector((state) => state.allProducts)
     const sliceArrayProduct = products.data?.slice(0, 6);
 
-    // useEffect(() => {
-    //     dispatch(getProducts());
-    //   }, [dispatch]);
+    useEffect(() => {
+        dispatch(getProducts());
+      }, [dispatch]);
 
     return (
        <main>
@@ -22,7 +22,7 @@ export default function LandingProducts() {
                     <ProductCard
                     key={product.id} 
                     title={product.title}
-                    image={product.image}
+                    image={product.images}
                     />
                 )
                }) : null}
