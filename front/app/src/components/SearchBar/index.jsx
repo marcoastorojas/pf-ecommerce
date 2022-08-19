@@ -1,14 +1,21 @@
 import { useState } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+
+import { getProductsByName } from "../../redux/actions";
 
 import style from "./index.modules.css";
 
 export default function SearchBar() {
+ const dispatch = useDispatch();
+ //  const navigate = useNavigate();
+
  const [textInput, setTextInput] = useState(null);
 
- useEffect(() => {
-  console.log(textInput);
- });
+ //  useEffect(() => {
+ //   console.log(textInput);
+ //  });
 
  function onChangeHandler(e) {
   const input = e.target.value;
@@ -24,7 +31,8 @@ export default function SearchBar() {
   if (!textInput) {
    console.log({ m: "nothing to search!" });
   } else {
-   console.log({ search: textInput });
+   dispatch(getProductsByName(textInput));
+   //  navigate("/results");
   }
  }
 

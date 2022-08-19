@@ -11,7 +11,7 @@ export default function Carousel() {
  const [current, setCurrent] = useState(0);
  const sliceArrayProducts = products.data?.slice(0, 10);
  const length = sliceArrayProducts?.length;
- console.log(sliceArrayProducts);
+ //  console.log(sliceArrayProducts);
  useEffect(() => {
   dispatch(getProducts());
  }, [dispatch]);
