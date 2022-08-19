@@ -1,6 +1,6 @@
 import style from "./index.modules.css";
 
-export function Footer() {
+export default function Footer() {
  return (
   <div>
    <br />
