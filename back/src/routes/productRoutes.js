@@ -41,6 +41,7 @@ productRoutes.get("/", async (req, res) => {
 
     const { name, max, min, asc = false, desc = false, limit = 20, page = 1 } = req.query
     const currentPage = Number(page)
+    if (limit && !/^[0-9]+$/.test(limit)) return res.status(400).json({ error: "el limite debe ser un numero" })
     const offset = limit * (currentPage - 1)
 
     let where = { [Op.or]: [] }
@@ -69,17 +70,17 @@ productRoutes.get("/", async (req, res) => {
 //get products by categoryId
 productRoutes.get('/category/:idCategory', async (req, res) => {
     let products
-    const categoryId = req.params.idCategory;           
-    const subCategory = await Subcategory.findAll({where: {categoryId: categoryId}})   
-    
+    const categoryId = req.params.idCategory;
+    const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
+
     subCategory.length ?
-    (
-        products = await Product.findAll({where: {subcategoryId: subCategory[0].id}}),
-        res.send(products)
-    )
-    
-    : res.send('No hay resultados.')
-  
+        (
+            products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
+            res.send(products)
+        )
+
+        : res.send('No hay resultados.')
+
 })
 
 
