@@ -1,17 +1,24 @@
+// import { useEffect } from "react";
+// import { useDispatch } from "react-redux";
+
 import LandingProducts from "../../components/LandingProducts";
 import Carousel from "../../components/Carousel";
 import NavBar from "../../components/NavBar";
+import { useSelector } from "react-redux";
 
-import styles from "./index.module.css";
-
+// import style from "./index.module.css";
 
 export default function Landing() {
+ //  const searchedProducts = useSelector((state) => state.searchedProducts);
+ //  useEffect(() => {
+ //   console.log({ searchedProducts: searchedProducts });
+ //  });
 
  return (
   <div>
    <NavBar />
    <Carousel />
-   <LandingProducts/>
+   <LandingProducts />
   </div>
  );
 }
