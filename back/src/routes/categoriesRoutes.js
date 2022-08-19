@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const { Category, Subcategory } = require("../db")
+const { Category, Subcategory, Product } = require("../db")
 const categoriesroutes = Router()
 const { Op } = require("sequelize")
 

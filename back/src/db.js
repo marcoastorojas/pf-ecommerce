@@ -38,9 +38,7 @@ Subcategory.belongsTo(Category, { as: "category" })
 Subcategory.hasMany(Product, { as: "products" })
 Product.belongsTo(Subcategory, { as: "subcategory" })
 
-
-// Aca vendrian las relaciones
-// Product.hasMany(Reviews);
+ //esto es una prueba.
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

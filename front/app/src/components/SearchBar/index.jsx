@@ -1,6 +1,6 @@
 import { useState } from "react";
-// import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 
 import { getProductsByName } from "../../redux/actions";
@@ -13,9 +13,11 @@ export default function SearchBar() {
 
  const [textInput, setTextInput] = useState(null);
 
- //  useEffect(() => {
- //   console.log(textInput);
- //  });
+ const results = useSelector((state) => state.searchedProducts);
+
+ useEffect(() => {
+  console.log(results);
+ });
 
  function onChangeHandler(e) {
   const input = e.target.value;

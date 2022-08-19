@@ -5,8 +5,10 @@ import { Route, Routes } from "react-router-dom";
 
 import Landing from "./pages/Landing";
 import Details from "./pages/Details/Details";
+
 import Form from "./pages/Form/Form";
-import LogIn from "./pages/LogIn";
+import Results from "./pages/Results";
+// import LogIn from "./pages/LogIn";
 
 function App() {
 
@@ -16,9 +18,11 @@ function App() {
         <Route path="/" exact element={<Landing />} />
         <Route path="/product/:id" exact element={<Details />} />
         <Route path="/product/create" exact element={<Form />} />
+        <Route path="/results" exact element={<Results />} />
       </Routes>
     </div>
   );
 }
+
 
 export default App;

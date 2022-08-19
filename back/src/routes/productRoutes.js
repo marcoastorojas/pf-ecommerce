@@ -22,6 +22,17 @@ productRoutes.post("/", async (req, res) => {
 })
 
 
+productRoutes.get('/:id', async (req, res, next) =>{
+    const id = req.params.id;   
+    if (id) {
+      await Product.findByPk(id)
+      .then((data) => res.status(200).json({ data }))
+      .catch((err) => res.send(err))     
+}
+})
+
+
+
 productRoutes.get("/", async (req, res) => {
     const name = req.query.name
     if (name) {
@@ -37,5 +48,23 @@ productRoutes.get("/", async (req, res) => {
     const lista = await Product.findAll()
     res.status(200).json({ data: lista })
 })
+
+//get products by categoryId
+productRoutes.get('/category/:idCategory', async (req, res) => {
+    let products
+    const categoryId = req.params.idCategory;           
+    const subCategory = await Subcategory.findAll({where: {categoryId: categoryId}})   
+    
+    subCategory.length ?
+    (
+        products = await Product.findAll({where: {subcategoryId: subCategory[0].id}}),
+        res.send(products)
+    )
+    
+    : res.send('No hay resultados.')
+  
+})
+
+
 
 module.exports = { productRoutes }
