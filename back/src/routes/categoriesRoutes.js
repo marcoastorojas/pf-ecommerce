@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const { Category, Subcategory } = require("../db")
+const { Category, Subcategory,Product } = require("../db")
 const categoriesroutes = Router()
 const { Op } = require("sequelize")
 
@@ -19,7 +19,10 @@ categoriesroutes.get("/", async (req, res) => {
         return res.status(200).json(categoria)
     }
     const lista = await Category.findAll({
-        include: [{ model: Subcategory, as: "subcategories" }]
+        include: [
+            { model: Subcategory, as: "subcategories" },
+            { model: Product, as: "products" }
+        ]
     })
     res.status(200).json({ data: lista })
 })

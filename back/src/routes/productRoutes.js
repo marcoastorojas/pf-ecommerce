@@ -16,7 +16,7 @@ productRoutes.post("/", async (req, res) => {
     const repetido = await Product.findOne({ where: { title: { [Op.iLike]: title } } })
     if (repetido) return res.status(400).json({ error: "ya esta repetido" })
 
-    const newProduct = await Product.create(req.body)
+    const newProduct = await Product.create({ ...req.body, categoryId: subCategory.categoryId })
     res.status(201).json(newProduct)
 
 })
@@ -25,12 +25,14 @@ productRoutes.post("/", async (req, res) => {
 productRoutes.get("/", async (req, res) => {
     const name = req.query.name
     if (name) {
-        const data = await Product.findAll({ where:{
-            [Op.or]:[
-                { title: { [Op.iLike]: `%${name}%` } },
-                { model: { [Op.iLike]: `%${name}%` } }
-            ]
-        } })
+        const data = await Product.findAll({
+            where: {
+                [Op.or]: [
+                    { title: { [Op.iLike]: `%${name}%` } },
+                    { model: { [Op.iLike]: `%${name}%` } }
+                ]
+            }
+        })
 
         return res.status(200).json({ data })
     }
