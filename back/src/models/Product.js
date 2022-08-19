@@ -9,13 +9,29 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true,
-          },
+        },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         model: {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        price:{
+            type:DataTypes.FLOAT,
+            allowNull:false
+        },
         description: {
+            type: DataTypes.TEXT,
+            allowNull:false
+        },
+        brand: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        images:{
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     });

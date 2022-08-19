@@ -4,6 +4,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Landing from "./pages/Landing";
+
 import Details from "./pages/Details/Details";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       </Routes>
     </div>
   );
+
 }
 
 export default App;

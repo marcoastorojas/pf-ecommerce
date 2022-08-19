@@ -1,15 +1,19 @@
-import { STATE_TEST } from "./actions";
+import { GET_PRODUCTS } from "./actions";
 
 const initialState = {
- testState: "",
+ products: [],
+ allProducts: [],
+ product: {}
 };
 
 export const reducer = (state = initialState, action) => {
  switch (action.type) {
-  case STATE_TEST:
-   return {
-    ...state,
-    testState: action.payload,
+   case GET_PRODUCTS: {
+    return {
+      ...state,
+      products: action.payload,
+      allProducts: action.payload
+    }
    };
   default:
    return state;
