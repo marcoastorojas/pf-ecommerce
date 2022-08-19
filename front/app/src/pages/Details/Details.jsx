@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
+import { getProductId, clearDetail } from "../../redux/actions";
 
 export default function Details() {
   const [loading, setLoading] = useState(true);
@@ -13,12 +14,13 @@ export default function Details() {
   const product = useSelector((store) => store.product);
 
   useEffect(() => {
-    //dispatch(reducer.action(id))
+    dispatch(clearDetail());
+    dispatch(getProductId(id));
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [dispatch, id]);
 
-  if (loading) return <Loading />;
-  else return <ProductDetail />;
+  if (loading && !product.title) return <Loading />;
+  else return <ProductDetail product={product} />;
 }

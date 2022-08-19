@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 
 import Details from "./pages/Details/Details";
+import Form from "./pages/Form/Form";
 
 function App() {
   return (
@@ -13,10 +14,10 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/product/:id" exact element={<Details />} />
+        <Route path="/product/create" exact element={<Form />} />
       </Routes>
     </div>
   );
-
 }
 
 export default App;

@@ -1,21 +1,33 @@
-import { GET_PRODUCTS } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, CLEAR_DETAIL } from "./actions";
 
 const initialState = {
- products: [],
- allProducts: [],
- product: {}
+  products: [],
+  allProducts: [],
+  product: {},
 };
 
 export const reducer = (state = initialState, action) => {
- switch (action.type) {
-   case GET_PRODUCTS: {
-    return {
-      ...state,
-      products: action.payload,
-      allProducts: action.payload
+  switch (action.type) {
+    case GET_PRODUCTS: {
+      return {
+        ...state,
+        products: action.payload,
+        allProducts: action.payload,
+      };
     }
-   };
-  default:
-   return state;
- }
+    case GET_PRODUCT_BY_ID: {
+      return {
+        ...state,
+        product: action.payload,
+      };
+    }
+    case CLEAR_DETAIL: {
+      return {
+        ...state,
+        product: {},
+      };
+    }
+    default:
+      return state;
+  }
 };

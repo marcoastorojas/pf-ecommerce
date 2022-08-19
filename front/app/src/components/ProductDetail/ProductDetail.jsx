@@ -1,29 +1,26 @@
-import React from "react"
-import "./ProductDetail.css"
+import React from "react";
+import "./ProductDetail.css";
 
 import Add from "../../utils/add-cart.svg";
 import Del from "../../utils/delete.svg";
 
-export default function ProductDetail({product}) {
-  return <div className="main-wrapper">
+export default function ProductDetail({ product }) {
+  return (
+    <div className="main-wrapper">
       <div className="container">
         <button className="button-back">GO Back</button>
         <div className="product-div">
           <div className="product-div-left">
             <div className="img-container">
-              <img
-                src="product.images" alt="product.brand"
-              />
+              <img src="product.images" alt="product.brand" />
             </div>
           </div>
           <div className="product-div-right">
-            <span className="product-name">product.title</span>
-            <span className="product-model-name">product.name | product.model</span>
+            <span className="product-name">{product.title}</span>
+            <span className="product-model-name">{product.model}</span>
 
-            <span className="product-price">$product.price</span>
-            <p className="product-description">
-             product.description
-            </p>
+            <span className="product-price">${product.price}</span>
+            <p className="product-description">{product.description}</p>
             <div className="btn-groups">
               <div>
                 <button className="noselect add button-shopping">
@@ -37,7 +34,7 @@ export default function ProductDetail({product}) {
                 <button className="noselect delete button-shopping">
                   <span className="text">Delete</span>
                   <span className="icon">
-                    <img src={Del} alt="delete-cart"  />
+                    <img src={Del} alt="delete-cart" />
                   </span>{" "}
                 </button>
               </div>
@@ -46,4 +43,5 @@ export default function ProductDetail({product}) {
         </div>
       </div>
     </div>
+  );
 }
