@@ -49,6 +49,22 @@ productRoutes.get("/", async (req, res) => {
     res.status(200).json({ data: lista })
 })
 
+//get products by categoryId
+productRoutes.get('/category/:idCategory', async (req, res) => {
+    let products
+    const categoryId = req.params.idCategory;           
+    const subCategory = await Subcategory.findAll({where: {categoryId: categoryId}})   
+    
+    subCategory.length ?
+    (
+        products = await Product.findAll({where: {subcategoryId: subCategory[0].id}}),
+        res.send(products)
+    )
+    
+    : res.send('No hay resultados.')
+  
+})
+
 
 
 module.exports = { productRoutes }
