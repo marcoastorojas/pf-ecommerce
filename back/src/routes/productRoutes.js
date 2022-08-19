@@ -22,6 +22,17 @@ productRoutes.post("/", async (req, res) => {
 })
 
 
+productRoutes.get('/:id', async (req, res, next) =>{
+    const id = req.params.id;   
+    if (id) {
+      await Product.findByPk(id)
+      .then((data) => res.status(200).json({ data }))
+      .catch((err) => res.send(err))     
+}
+})
+
+
+
 productRoutes.get("/", async (req, res) => {
     const name = req.query.name
     if (name) {
@@ -37,5 +48,7 @@ productRoutes.get("/", async (req, res) => {
     const lista = await Product.findAll()
     res.status(200).json({ data: lista })
 })
+
+
 
 module.exports = { productRoutes }
