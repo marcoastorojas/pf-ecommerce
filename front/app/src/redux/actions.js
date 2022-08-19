@@ -4,6 +4,7 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const POST_PRODUCT = "POST_PRODUCT";
 export const CLEAR_DETAIL = "CLEAR_DETAIL";
+export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
 
 export const getProducts = () => {
   return async function (dispatch) {
@@ -53,5 +54,25 @@ export const postProduct = (product) => {
 export const clearDetail = () => {
   return {
     type: CLEAR_DETAIL,
+  };
+};
+
+export const getProductsByName = (textInput) => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:3001/products?name=${textInput}`)
+      .then((response) => {
+        console.log({
+          from: "action creator getProductsById",
+          response: response,
+        });
+        dispatch({
+          type: GET_PRODUCTS_BY_NAME,
+          payload: response.data.data,
+        });
+      })
+      .catch((err) => {
+        console.log({ from: "action creator getProductsByName", err });
+      });
   };
 };

@@ -4,11 +4,12 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Landing from "./pages/Landing";
-
 import Details from "./pages/Details/Details";
 import Form from "./pages/Form/Form";
+import LogIn from "./pages/LogIn";
 
 function App() {
+
   return (
     <div className="App">
       <Routes>
