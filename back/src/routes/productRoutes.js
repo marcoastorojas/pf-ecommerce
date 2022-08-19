@@ -42,9 +42,9 @@ productRoutes.get("/", async (req, res) => {
     const { name, max, min, asc = false, desc = false, limit = 30, page = 1 } = req.query
     const currentPage = Number(page)
     if (limit && !/^[0-9]+$/.test(limit)) return res.status(400).json({ error: "el limite debe ser un numero" })
-    if(min && !/^[0-9]+$/.test(min)) return res.status(400).json({ error: "el minimo debe ser un numero" })
-    if(max && !/^[0-9]+$/.test(max)) return res.status(400).json({ error: "el maximo debe ser un numero" })
-    if(page && !/^[0-9]+$/.test(page)) return res.status(400).json({ error: "la pagina debe ser un numero" })
+    if (min && !/^[0-9]+$/.test(min)) return res.status(400).json({ error: "el minimo debe ser un numero" })
+    if (max && !/^[0-9]+$/.test(max)) return res.status(400).json({ error: "el maximo debe ser un numero" })
+    if (page && !/^[0-9]+$/.test(page)) return res.status(400).json({ error: "la pagina debe ser un numero" })
     const offset = limit * (currentPage - 1)
 
     let where = { [Op.or]: [] }
@@ -56,8 +56,9 @@ productRoutes.get("/", async (req, res) => {
     } else { delete where[Op.or] }
 
 
-    if (asc === !desc) { order = [(asc) ? ['price', 'ASC'] : ['price', 'DESC']] }
-    
+    if (asc && !desc) { order = [['price', 'ASC']] }
+    else if (desc && !asc) { order = [['price', 'DESC']] }
+
     const { count, rows } = await Product.findAndCountAll({
         where,
         order,
