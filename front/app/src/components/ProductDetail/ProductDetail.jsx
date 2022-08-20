@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./ProductDetail.css";
 
-import Add from "../../utils/add-cart.svg";
-import Del from "../../utils/delete.svg";
+import Add from "../../media/images/add-cart.svg";
+import Del from "../../media/images/delete.svg";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
@@ -129,6 +129,9 @@ export default function ProductDetail({ product }) {
           </div>
         </div>
       </div>
+     </div>
     </div>
-  );
+   </div>
+  </div>
+ );
 }

@@ -5,9 +5,12 @@ import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import NavBar from "../../components/NavBar";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
+import SellerDetails from "../../components/SellerDetails";
 import Footer from "../../components/Footer";
 
 import { getProductId, clearDetail } from "../../redux/actions";
+
+import "./index.module.css";
 
 export default function Details() {
 
@@ -26,10 +29,13 @@ export default function Details() {
  if (!product.data) return <Loading />;
  else
   return (
-   <main>
+   <div className="detailPage">
     <NavBar />
     <ProductDetail product={product} />
+    <aside>
+     <SellerDetails />
+    </aside>
     <Footer />
-   </main>
+   </div>
   );
 }
