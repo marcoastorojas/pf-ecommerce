@@ -1,0 +1,9 @@
+.cards{
+    margin: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    overflow: auto;
+    height: 800px;
+    width: 1200px;
+}
