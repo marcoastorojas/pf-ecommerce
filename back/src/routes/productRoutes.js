@@ -3,6 +3,8 @@ const { Op, fn, col } = require("sequelize")
 
 const productRoutes = Router()
 const { Product, Subcategory } = require("../db")
+const { createWhereAndOrder } = require("../helpers/createWhereOrder")
+const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
 
 productRoutes.post("/", async (req, res) => {
     try {
@@ -36,29 +38,14 @@ productRoutes.get('/:id', async (req, res, next) => {
 })
 
 
+//validando los datos ingresados por el query con un middleware "validQueryGetProducts"
+productRoutes.get("/", validQueryGetProducts, async (req, res) => {
 
-productRoutes.get("/", async (req, res) => {
-
-    const { name, max, min, asc = false, desc = false, limit = 30, page = 1 } = req.query
+    const { limit = 30, page = 1 } = req.query
     const currentPage = Number(page)
-    if (limit && !/^[0-9]+$/.test(limit)) return res.status(400).json({ error: "el limite debe ser un numero" })
-    if (min && !/^[0-9]+$/.test(min)) return res.status(400).json({ error: "el minimo debe ser un numero" })
-    if (max && !/^[0-9]+$/.test(max)) return res.status(400).json({ error: "el maximo debe ser un numero" })
-    if (page && !/^[0-9]+$/.test(page)) return res.status(400).json({ error: "la pagina debe ser un numero" })
     const offset = limit * (currentPage - 1)
-
-    let where = { [Op.or]: [] }
-    let order = []
-    if (max || min) { where.price = { [Op.between]: [min || 0, max || 10000000] } }
-    if (name) {
-        where[Op.or][0] = { title: { [Op.iLike]: `%${name}%` } }
-        where[Op.or][1] = { model: { [Op.iLike]: `%${name}%` } }
-    } else { delete where[Op.or] }
-
-
-    if (asc && !desc) { order = [['price', 'ASC']] }
-    else if (desc && !asc) { order = [['price', 'DESC']] }
-
+    //generando el where y el order con una funcion helper que los crea mediante el query
+    const { where, order } = createWhereAndOrder(req.query)
     const { count, rows } = await Product.findAndCountAll({
         where,
         order,
@@ -72,21 +59,67 @@ productRoutes.get("/", async (req, res) => {
 })
 
 //get products by categoryId
-productRoutes.get('/category/:idCategory', async (req, res) => {
+
+//validando los datos ingresados por el query con un middleware "validQueryGetProducts"
+productRoutes.get('/category/:id', validQueryGetProducts, async (req, res) => {
+    const { limit = 30, page = 1 } = req.query
+    const currentPage = Number(page)
+    const offset = limit * (currentPage - 1)
+
+    //generando el where y el order con una funcion helper que los crea mediante el query
+    const { where, order } = createWhereAndOrder(req.query)
+
+
     let products
-    const categoryId = req.params.idCategory;
+    const categoryId = req.params.id;
     const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
 
     subCategory.length ?
         (
-            products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
-            res.send(products)
+            products = await Product.findAndCountAll({
+                //conocando el where y el order creados anteriormente
+                where: { subcategoryId: subCategory[0].id, ...where },
+                order,
+                offset,
+                limit
+            }),
+            res.json({
+                totalPages: Math.ceil(products.count / limit),
+                currentPage,
+                totalResults: products.count,
+                data: products.rows,
+            })
         )
 
         : res.send('No hay resultados.')
 
 })
 
+productRoutes.get('/subcategory/:id', validQueryGetProducts, async (req, res) => {
+    const { limit = 30, page = 1 } = req.query
+    const currentPage = Number(page)
+    const offset = limit * (currentPage - 1)
+
+    //generando el where y el order con una funcion helper que los crea mediante el query
+    const { where, order } = createWhereAndOrder(req.query)
+    const subcategoryId = req.params.id
+
+    const products = await Product.findAndCountAll({
+        //conocando el where y el order creados anteriormente
+        where: { ...where, subcategoryId },
+        order,
+        offset,
+        limit
+    })
+    res.json({
+        totalPages: Math.ceil(products.count / limit),
+        currentPage,
+        totalResults: products.count,
+        data: products.rows,
+    })
+
+
+})
 
 
 module.exports = { productRoutes }
