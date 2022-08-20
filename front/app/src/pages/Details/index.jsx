@@ -10,7 +10,6 @@ import Footer from "../../components/Footer";
 import { getProductId, clearDetail } from "../../redux/actions";
 
 export default function Details() {
- const [loading, setLoading] = useState(true);
 
  const { id } = useParams();
 
@@ -20,12 +19,11 @@ export default function Details() {
  useEffect(() => {
   dispatch(clearDetail());
   dispatch(getProductId(id));
-  setTimeout(() => {
-   setLoading(false);
-  }, 1000);
+
  }, [dispatch, id]);
 
- if (loading) return <Loading />;
+
+ if (!product.data) return <Loading />;
  else
   return (
    <main>
