@@ -6,6 +6,7 @@ export default function Results() {
   <div>
    <NavBar />
    <br />
+   <br />
    <>---ResultsContainer---</>
    <Footer />
   </div>

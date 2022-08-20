@@ -1,12 +1,11 @@
-import "../../Css/CardProducts.css"
+import "../../Css/CardProducts.css";
+import style from "./index.module.css";
 
-export default function ProductCard({title, image}) {
-
-    return (
-        <div className="product-card">
-            <h3 className="product-title">{title}</h3>
-            <img src={image.slice(0)} className="product-image" />
-        </div>
-    );
-   }
-   
+export default function ProductCard({ title, image }) {
+ return (
+  <div className={style.product_card}>
+   <h3 className={style.product_title}>{title}</h3>
+   <img src={image.slice(0)} className={style.product_image} alt={title} />
+  </div>
+ );
+}
