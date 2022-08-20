@@ -72,21 +72,26 @@ productRoutes.get("/", async (req, res) => {
 })
 
 //get products by categoryId
-productRoutes.get('/category/:idCategory', async (req, res) => {
-    let products
-    const categoryId = req.params.idCategory;
-    const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
+// productRoutes.get('/category/:idCategory', async (req, res) => {
+//     let products
+//     const categoryId = req.params.idCategory;
+//     const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
 
-    subCategory.length ?
-        (
-            products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
-            res.send(products)
-        )
+//     subCategory.length ?
+//         (
+//             products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
+//             res.send(products)
+//         )
 
-        : res.send('No hay resultados.')
+//         : res.send('No hay resultados.')
+
+// })
+productRoutes.get('/subCategory/:id', async (req, res) => {
+    const subcategoryId = req.params.id;
+    const products = await Product.findAll({ where: { subcategoryId } })
+    res.status(200).json({data:products})
 
 })
-
 
 
 module.exports = { productRoutes }
