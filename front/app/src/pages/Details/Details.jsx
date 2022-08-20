@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import Loading from "../../components/Loading/Loading";
 import NavBar from "../../components/NavBar";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
+import { getProductId, clearDetail } from "../../redux/actions";
 import Footer from "../../components/Footer";
+import Footer from "../../components/Footer";
+
 
 export default function Details() {
  const [loading, setLoading] = useState(true);
@@ -14,19 +17,21 @@ export default function Details() {
  // const dispatch = useDispatch();
  // const product = useSelector((store) => store.product);
 
- useEffect(() => {
-  //dispatch(reducer.action(id))
-  setTimeout(() => {
-   setLoading(false);
-  }, 1000);
- }, []);
 
- if (loading) return <Loading />;
+  useEffect(() => {
+    dispatch(clearDetail());
+    dispatch(getProductId(id));
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [dispatch, id]);
+
+  if (loading) return <Loading />;
  else
   return (
    <main>
     <NavBar />
-    <ProductDetail />
+    <ProductDetail product={product}/>
     <Footer />
    </main>
   );

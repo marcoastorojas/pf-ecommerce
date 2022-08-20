@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME } from "./actions";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, GET_PRODUCT_BY_ID, CLEAR_DETAIL } from "./actions";
 
 const initialState = {
  products: [],
@@ -20,6 +20,18 @@ export const reducer = (state = initialState, action) => {
     ...state,
     searchedProducts: [...action.payload],
    };
+   case GET_PRODUCT_BY_ID: {
+    return {
+      ...state,
+      product: action.payload,
+    };
+  }
+  case CLEAR_DETAIL: {
+    return {
+      ...state,
+      product: {},
+    };
+  }
   default:
    return state;
  }
