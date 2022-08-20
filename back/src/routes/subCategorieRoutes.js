@@ -25,7 +25,6 @@ subCategoriesroutes.post("/", async (req, res) => {
 
 subCategoriesroutes.get("/", async (req, res) => {
     const { name } = req.query
-    console.log(name)
     if (name) {
         const subcategory = await Subcategory.findOne({ where: { name: { [Op.iLike]: name } } })
         return res.status(200).json(subcategory)

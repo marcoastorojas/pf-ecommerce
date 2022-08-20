@@ -17,10 +17,10 @@ productRoutes.post("/", async (req, res) => {
         const repetido = await Product.findOne({ where: { title: { [Op.iLike]: title } } })
         if (repetido) return res.status(400).json({ error: "ya esta repetido" })
 
-        const newProduct = await Product.create(req.body)
+        const newProduct = await Product.create({...req.body,categoryId:subCategory.categoryId})
         res.status(201).json(newProduct)
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(500).json({ error: error.message })
     }
 
 })
