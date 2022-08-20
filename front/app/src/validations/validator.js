@@ -27,8 +27,18 @@ export function validate(inputs) {
 
   if (!inputs.price) {
     errors.price = "Price is required";
-  } else if (!/^([0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-4][0-9][0-9][0-9])$/.test(inputs.price)) {
+  } else if (
+    !/^([0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-4][0-9][0-9][0-9])$/.test(
+      inputs.price
+    )
+  ) {
     errors.price = "Price is invalid";
+  }
+
+  if (!inputs.images) {
+    errors.images = "Images is required";
+  } else if (!/\.(jpe?g|tiff?|png|webp|bmp)$/i.test(inputs.images)) {
+    errors.images = "Images is format invalid";
   }
 
   return errors;

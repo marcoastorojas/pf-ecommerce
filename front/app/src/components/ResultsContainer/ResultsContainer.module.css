@@ -1,9 +1,12 @@
 .cards{
     margin: 2%;
-    display: flex;
+    display: inline-flex;
     flex-wrap: wrap;
-    justify-content: right;
-    overflow: auto;
+    justify-content: center;
+}
+
+.contain {
+    overflow-y: scroll;
     height: 800px;
-    width: 1200px;
+    width: 1000px;
 }

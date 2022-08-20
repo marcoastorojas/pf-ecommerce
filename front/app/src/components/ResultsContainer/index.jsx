@@ -29,10 +29,8 @@ export default function ResultsContainer() {
     }
 
     return (
-        <div>
-            <div>
-                {searchedProducts.length > 0 ? catalogueCards(searchedProducts) : <Loading />}
-            </div>
+        <div className={style.contain}>
+            {searchedProducts.length > 0 ? catalogueCards(searchedProducts) : <Loading />}
         </div>
     )
 }
