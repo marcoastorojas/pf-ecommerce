@@ -1,4 +1,3 @@
-import "../../Css/CardProducts.css";
 import style from "./index.module.css";
 
 export default function ProductCard({ title, image }) {
