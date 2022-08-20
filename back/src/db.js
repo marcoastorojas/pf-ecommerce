@@ -31,7 +31,6 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const { Category, Subcategory, Product } = sequelize.models
-console.log(sequelize.models);
 Category.hasMany(Subcategory, { as: "subcategories" })
 Subcategory.belongsTo(Category, { as: "category" })
 
