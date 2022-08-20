@@ -45,6 +45,7 @@ export default function SearchBar() {
   <div className={style.input}>
    <form onSubmit={onSearchHandler}>
     <input
+     id='inputBusqueda'
      type="text"
      placeholder="What are you looking for?"
      onChange={onChangeHandler}
