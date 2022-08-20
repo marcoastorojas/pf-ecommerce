@@ -1,8 +1,60 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+/* "Raleway", sans-serif */
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap");
+/* 'Comfortaa', cursive */
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+/* 'Lato', sans-serif */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+/* 'Montserrat', sans-serif */
 
-header {
+.header {
  display: flex;
+ justify-content: space-evenly;
+ flex-direction: row;
 
- font-family: "Roboto Slab", serif;
+ width: 100vw;
+ height: 15vh;
+
  background-color: #f72585;
+
+ text-align: center;
+ font-family: "Raleway", sans-serif;
+}
+
+.sectionOne {
+ display: flex;
+ flex-direction: column;
+ /* justify-content: space-evenly; */
+ width: 60vw;
+}
+
+.logoAndSB {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-evenly;
+}
+
+.logoLink {
+ /* background-color: aqua; */
+ margin: 10px;
+ border: 2px solid black;
+ width: 100px;
+ height: 40px;
+
+ text-decoration: none;
+ text-align: center;
+ color: black;
+}
+
+.logo {
+ display: inline;
+ font-size: 30px;
+}
+
+/* .sectionTwo {
+ display: block;
 } */
+
+.cartNumber {
+ display: inline;
+}

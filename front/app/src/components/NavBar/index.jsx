@@ -1,26 +1,38 @@
 import { useState } from "react";
-import styles from "./index.module.css";
 
+import { Link } from "react-router-dom";
+
+import style from "./index.module.css";
 import SearchBar from "../SearchBar";
 
 export default function NavBar() {
  const [productNumber, setProductNumber] = useState(0);
 
  return (
-  <header className={styles.header}>
-   <div>
-    <h1>Logo</h1>
-    <SearchBar />
-    <button>Login</button>
+  <header className={style.header}>
+   <div className={style.sectionOne}>
+    <div className={style.logoAndSB}>
+     {" "}
+     <Link to={"/"} className={style.logoLink}>
+      <p className={style.logo}>Logo</p>
+     </Link>
+     <SearchBar />
+    </div>
+    <nav>
+     <button>Categories</button>
+     <button>History</button>
+     <button>Sales</button>
+     <button>Upload product</button>
+    </nav>
+   </div>
+
+   <div className={style.sectionTwo}>
+    <Link to={"/log-in"}>
+     <button>Login</button>
+    </Link>
     <button>Signup</button>
     <button>🛒</button>
-    <p>{productNumber}</p>
-   </div>
-   <div>
-    <button>Categories</button>
-    <button>History</button>
-    <button>Sales</button>
-    <button>Upload product</button>
+    <p className={style.cartNumber}>{productNumber}</p>
    </div>
   </header>
  );
