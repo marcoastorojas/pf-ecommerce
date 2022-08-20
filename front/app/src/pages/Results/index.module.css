@@ -1,0 +1,8 @@
+.contenido {
+    border: 1px solid black;
+    display: flex;
+}
+.contenido > div {
+    border: 1px solid red;
+    width: 50%;
+}
