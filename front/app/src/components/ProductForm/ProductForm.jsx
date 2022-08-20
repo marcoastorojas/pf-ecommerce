@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProduct } from "../../redux/actions";
 import { validate } from "../../validations/validator";
+import "./ProductForm.css";
 
 export default function ProductForm() {
   const [inputs, setInputs] = useState({
@@ -14,13 +15,20 @@ export default function ProductForm() {
   });
   const [errors, setErrors] = useState({});
 
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.files) {
+      setInputs({
+        ...inputs,
+        [e.target.name]: e.target.files[0],
+      });
+    } else
+      setInputs({
+        ...inputs,
+        [e.target.name]: e.target.value,
+      });
 
     setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
   };
@@ -41,7 +49,7 @@ export default function ProductForm() {
   return (
     <div>
       <h1>Add product to sell</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => handleSubmit(e)} className="form">
         <div>
           <label>Product name:</label>
           <input
@@ -51,7 +59,7 @@ export default function ProductForm() {
             placeholder="Product name"
             onChange={(e) => handleChange(e)}
           />
-          {errors.title && <p>{errors.title}</p>}
+          {errors.title && <p className="danger">{errors.title}</p>}
         </div>
         <div>
           <label>Product model:</label>
@@ -62,7 +70,7 @@ export default function ProductForm() {
             placeholder="Product model"
             onChange={(e) => handleChange(e)}
           />
-          {errors.model && <p>{errors.model}</p>}
+          {errors.model && <p className="danger">{errors.model}</p>}
         </div>
         <div>
           <label>Product brand:</label>
@@ -73,7 +81,7 @@ export default function ProductForm() {
             placeholder="Product brand"
             onChange={(e) => handleChange(e)}
           />
-          {errors.brand && <p>{errors.brand}</p>}
+          {errors.brand && <p className="danger">{errors.brand}</p>}
         </div>
         <div>
           <label>Product description:</label>
@@ -84,7 +92,7 @@ export default function ProductForm() {
             placeholder="Product description"
             onChange={(e) => handleChange(e)}
           />
-          {errors.description && <p>{errors.description}</p>}
+          {errors.description && <p className="danger">{errors.description}</p>}
         </div>
         <div>
           <label>Product price:</label>
@@ -95,12 +103,21 @@ export default function ProductForm() {
             placeholder="Product price"
             onChange={(e) => handleChange(e)}
           />
+          {errors.price && <p className="danger">{errors.price}</p>}
         </div>
-        {errors.price && <p>{errors.price}</p>}
         <div>
+          <div>
+            <label>Image(s):</label>
+            <input
+              type="file"
+              name="images"
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.images && <p className="danger">{errors.images}</p>}
+          </div>
           <input
             type="submit"
-            value="SELL"
+            value="Submit"
             disabled={!(Object.entries(errors).length === 0)}
           />
         </div>

@@ -5,6 +5,7 @@ export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const POST_PRODUCT = "POST_PRODUCT";
 export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
+export const GET_PRODUCTS_FILTER = 'GET_PRODUCTS_FILTER';
 
 export const getProducts = () => {
   return async function (dispatch) {
@@ -23,7 +24,7 @@ export const getProducts = () => {
 export const getProductId = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`http://localhost:3001/products/${id}`);
+      const response = await axios.get(`http://localhost:3001/products/${id}`);
       return dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: response.data,
@@ -76,3 +77,22 @@ export const getProductsByName = (textInput) => {
       });
   };
 };
+export const getProductsFilter = (name, max, min, asc, desc) => {
+  let url = new URL('http://localhost:3001/products')
+  if (!!name) url.searchParams.append('name', name)
+  if (!!max) url.searchParams.append('max', max)
+  if (!!min) url.searchParams.append('min', min)
+  if (!!asc) url.searchParams.append('asc', asc)
+  if (!!desc) url.searchParams.append('desc', desc)
+  console.log(url.href)
+  return (dispatch) => {
+    axios
+    .get(url.href)
+    .then((response) => {
+      dispatch({type: GET_PRODUCTS_FILTER, payload: response.data.data})
+    })
+    .catch((err) => {
+      console.log({from: 'action creator getProductsFilter', err})
+    })
+  }
+}
