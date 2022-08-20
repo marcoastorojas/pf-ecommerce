@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { getProducts } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import "../../Css/Carousel.css";
+// import "../../Css/Carousel.css";
+import "./index.modules.css";
 
 export default function Carousel() {
  const dispatch = useDispatch();

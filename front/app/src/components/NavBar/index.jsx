@@ -11,20 +11,28 @@ export default function NavBar() {
  return (
   <header className={style.header}>
    <div className={style.sectionOne}>
-    <h1 className={style.logo}>Logo</h1>
-    <SearchBar />
+    <div className={style.logoAndSB}>
+     {" "}
+     <Link to={"/"} className={style.logoLink}>
+      <p className={style.logo}>Logo</p>
+     </Link>
+     <SearchBar />
+    </div>
+    <nav>
+     <button>Categories</button>
+     <button>History</button>
+     <button>Sales</button>
+     <button>Upload product</button>
+    </nav>
+   </div>
+
+   <div className={style.sectionTwo}>
     <Link to={"/log-in"}>
      <button>Login</button>
     </Link>
     <button>Signup</button>
     <button>🛒</button>
-    <p>{productNumber}</p>
-   </div>
-   <div className={style.sectionTwo}>
-    <button>Categories</button>
-    <button>History</button>
-    <button>Sales</button>
-    <button>Upload product</button>
+    <p className={style.cartNumber}>{productNumber}</p>
    </div>
   </header>
  );
