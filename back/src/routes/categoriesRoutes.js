@@ -20,7 +20,7 @@ categoriesroutes.get("/", async (req, res) => {
     const lista = await Category.findAll({
         include: [
             { model: Subcategory, as: "subcategories" }, 
-            { model: Product, as: "products",attributes: ['id','title', 'images','model','brand','subcategoryId'] }
+            // { model: Product, as: "products",attributes: ['id','title', 'images','model','brand','subcategoryId'] }
         ],
     })
     res.status(200).json({ data: lista })

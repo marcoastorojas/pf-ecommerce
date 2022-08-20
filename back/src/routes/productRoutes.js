@@ -9,7 +9,7 @@ const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts"
 productRoutes.post("/", async (req, res) => {
     try {
         const { subcategoryId, title, model, brand, images, price, description } = req.body
-        if (!subcategoryId || !title || !model || !brand || !images || !description || !price) return res.status(400).json("faltan datos")
+        if (!subcategoryId || !title || !model || !brand || !images || !price) return res.status(400).json("faltan datos")
         const expReg = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
         if (!expReg.test(subcategoryId)) return res.status(400).json({ error: "debe ser un uuid valido" })
 
@@ -19,7 +19,7 @@ productRoutes.post("/", async (req, res) => {
         const repetido = await Product.findOne({ where: { title: { [Op.iLike]: title } } })
         if (repetido) return res.status(400).json({ error: "ya esta repetido" })
 
-        const newProduct = await Product.create(req.body)
+        const newProduct = await Product.create({ ...req.body, categoryId: subCategory.categoryId })
         res.status(201).json(newProduct)
     } catch (error) {
         res.status(500).json({ error: error })
@@ -67,6 +67,39 @@ productRoutes.get("/", validQueryGetProducts, async (req, res) => {
 //get products by categoryId
 
 //validando los datos ingresados por el query con un middleware "validQueryGetProducts"
+// productRoutes.get('/category/:id', validQueryGetProducts, async (req, res) => {
+//     const { limit = 30, page = 1 } = req.query
+//     const currentPage = Number(page)
+//     const offset = limit * (currentPage - 1)
+
+//     //generando el where y el order con una funcion helper que los crea mediante el query
+//     const { where, order } = createWhereAndOrder(req.query)
+
+
+//     let products
+//     const categoryId = req.params.id;
+//     const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
+
+//     subCategory.length ?
+//         (
+//             products = await Product.findAndCountAll({
+//                 //conocando el where y el order creados anteriormente
+//                 where: { subcategoryId: subCategory[0].id, ...where },
+//                 order,
+//                 offset,
+//                 limit
+//             }),
+//             res.json({
+//                 totalPages: Math.ceil(products.count / limit),
+//                 currentPage,
+//                 totalResults: products.count,
+//                 data: products.rows,
+//             })
+//         )
+
+//         : res.send('No hay resultados.')
+
+// })
 productRoutes.get('/category/:id', validQueryGetProducts, async (req, res) => {
     const { limit = 30, page = 1 } = req.query
     const currentPage = Number(page)
@@ -74,30 +107,22 @@ productRoutes.get('/category/:id', validQueryGetProducts, async (req, res) => {
 
     //generando el where y el order con una funcion helper que los crea mediante el query
     const { where, order } = createWhereAndOrder(req.query)
+    const categoryId = req.params.id
 
+    const products = await Product.findAndCountAll({
+        //conocando el where y el order creados anteriormente
+        where: { ...where, categoryId },
+        order,
+        offset,
+        limit
+    })
+    res.json({
+        totalPages: Math.ceil(products.count / limit),
+        currentPage,
+        totalResults: products.count,
+        data: products.rows,
+    })
 
-    let products
-    const categoryId = req.params.id;
-    const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
-
-    subCategory.length ?
-        (
-            products = await Product.findAndCountAll({
-                //conocando el where y el order creados anteriormente
-                where: { subcategoryId: subCategory[0].id, ...where },
-                order,
-                offset,
-                limit
-            }),
-            res.json({
-                totalPages: Math.ceil(products.count / limit),
-                currentPage,
-                totalResults: products.count,
-                data: products.rows,
-            })
-        )
-
-        : res.send('No hay resultados.')
 
 })
 
@@ -129,4 +154,3 @@ productRoutes.get('/subcategory/:id', validQueryGetProducts, async (req, res) =>
 
 
 module.exports = { productRoutes }
-Footer
