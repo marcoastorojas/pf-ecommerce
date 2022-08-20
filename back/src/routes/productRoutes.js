@@ -3,6 +3,8 @@ const { Op, fn, col } = require("sequelize")
 
 const productRoutes = Router()
 const { Product, Subcategory } = require("../db")
+const { createWhereAndOrder } = require("../helpers/createWhereOrder")
+const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
 
 productRoutes.post("/", async (req, res) => {
     try {
@@ -17,48 +19,39 @@ productRoutes.post("/", async (req, res) => {
         const repetido = await Product.findOne({ where: { title: { [Op.iLike]: title } } })
         if (repetido) return res.status(400).json({ error: "ya esta repetido" })
 
-        const newProduct = await Product.create({...req.body,categoryId:subCategory.categoryId})
+        const newProduct = await Product.create(req.body)
         res.status(201).json(newProduct)
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: error })
     }
 
 })
 
 
-productRoutes.get('/:id', async (req, res, next) => {
+productRoutes.get('/:id', (req, res) => {
     const id = req.params.id;
-    if (id) {
-        await Product.findByPk(id)
-            .then((data) => res.status(200).json({ data }))
-            .catch((err) => res.send(err))
-    }
+    const expReg = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    if (!expReg.test(id)) return res.status(400).json({ error: "el id debe ser un uui valido" })
+
+    Product.findByPk(id)
+        .then((data) => {
+            (!data) ?
+                res.status(404).json({ error: `no hay ningun producto para el id ${id}` }) :
+                res.status(200).json(data)
+        })
+        .catch((err) => res.send(err))
+
 })
 
 
+//validando los datos ingresados por el query con un middleware "validQueryGetProducts"
+productRoutes.get("/", validQueryGetProducts, async (req, res) => {
 
-productRoutes.get("/", async (req, res) => {
-
-    const { name, max, min, asc = false, desc = false, limit = 30, page = 1 } = req.query
+    const { limit = 30, page = 1 } = req.query
     const currentPage = Number(page)
-    if (limit && !/^[0-9]+$/.test(limit)) return res.status(400).json({ error: "el limite debe ser un numero" })
-    if (min && !/^[0-9]+$/.test(min)) return res.status(400).json({ error: "el minimo debe ser un numero" })
-    if (max && !/^[0-9]+$/.test(max)) return res.status(400).json({ error: "el maximo debe ser un numero" })
-    if (page && !/^[0-9]+$/.test(page)) return res.status(400).json({ error: "la pagina debe ser un numero" })
     const offset = limit * (currentPage - 1)
-
-    let where = { [Op.or]: [] }
-    let order = []
-    if (max || min) { where.price = { [Op.between]: [min || 0, max || 10000000] } }
-    if (name) {
-        where[Op.or][0] = { title: { [Op.iLike]: `%${name}%` } }
-        where[Op.or][1] = { model: { [Op.iLike]: `%${name}%` } }
-    } else { delete where[Op.or] }
-
-
-    if (asc && !desc) { order = [['price', 'ASC']] }
-    else if (desc && !asc) { order = [['price', 'DESC']] }
-
+    //generando el where y el order con una funcion helper que los crea mediante el query
+    const { where, order } = createWhereAndOrder(req.query)
     const { count, rows } = await Product.findAndCountAll({
         where,
         order,
@@ -72,33 +65,68 @@ productRoutes.get("/", async (req, res) => {
 })
 
 //get products by categoryId
-// productRoutes.get('/category/:idCategory', async (req, res) => {
-//     let products
-//     const categoryId = req.params.idCategory;
-//     const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
 
-//     subCategory.length ?
-//         (
-//             products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
-//             res.send(products)
-//         )
+//validando los datos ingresados por el query con un middleware "validQueryGetProducts"
+productRoutes.get('/category/:id', validQueryGetProducts, async (req, res) => {
+    const { limit = 30, page = 1 } = req.query
+    const currentPage = Number(page)
+    const offset = limit * (currentPage - 1)
 
-//         : res.send('No hay resultados.')
+    //generando el where y el order con una funcion helper que los crea mediante el query
+    const { where, order } = createWhereAndOrder(req.query)
 
-// })
-productRoutes.get('/subCategory/:id', async (req, res) => {
-    const subcategoryId = req.params.id;
-    const products = await Product.findAll({ where: { subcategoryId } })
-    res.status(200).json({data:products})
 
-})
-productRoutes.get('/category/:id', async (req, res) => {
+    let products
     const categoryId = req.params.id;
-    const products = await Product.findAll({ where: { categoryId } })
-    res.status(200).json({data:products})
+    const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
+
+    subCategory.length ?
+        (
+            products = await Product.findAndCountAll({
+                //conocando el where y el order creados anteriormente
+                where: { subcategoryId: subCategory[0].id, ...where },
+                order,
+                offset,
+                limit
+            }),
+            res.json({
+                totalPages: Math.ceil(products.count / limit),
+                currentPage,
+                totalResults: products.count,
+                data: products.rows,
+            })
+        )
+
+        : res.send('No hay resultados.')
 
 })
 
+productRoutes.get('/subcategory/:id', validQueryGetProducts, async (req, res) => {
+    const { limit = 30, page = 1 } = req.query
+    const currentPage = Number(page)
+    const offset = limit * (currentPage - 1)
+
+    //generando el where y el order con una funcion helper que los crea mediante el query
+    const { where, order } = createWhereAndOrder(req.query)
+    const subcategoryId = req.params.id
+
+    const products = await Product.findAndCountAll({
+        //conocando el where y el order creados anteriormente
+        where: { ...where, subcategoryId },
+        order,
+        offset,
+        limit
+    })
+    res.json({
+        totalPages: Math.ceil(products.count / limit),
+        currentPage,
+        totalResults: products.count,
+        data: products.rows,
+    })
+
+
+})
 
 
 module.exports = { productRoutes }
+Footer
