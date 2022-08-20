@@ -28,13 +28,19 @@ productRoutes.post("/", async (req, res) => {
 })
 
 
-productRoutes.get('/:id', async (req, res, next) => {
+productRoutes.get('/:id', (req, res) => {
     const id = req.params.id;
-    if (id) {
-        await Product.findByPk(id)
-            .then((data) => res.status(200).json({ data }))
-            .catch((err) => res.send(err))
-    }
+    const expReg = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    if (!expReg.test(id)) return res.status(400).json({ error: "el id debe ser un uui valido" })
+
+    Product.findByPk(id)
+        .then((data) => {
+            (!data) ?
+                res.status(404).json({ error: `no hay ningun producto para el id ${id}` }) :
+                res.status(200).json(data)
+        })
+        .catch((err) => res.send(err))
+
 })
 
 
