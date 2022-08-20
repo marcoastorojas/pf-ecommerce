@@ -92,6 +92,11 @@ productRoutes.get('/subCategory/:id', async (req, res) => {
     res.status(200).json({data:products})
 
 })
+productRoutes.get('/category/:id', async (req, res) => {
+    const categoryId = req.params.id;
+    const products = await Product.findAll({ where: { categoryId } })
+    res.status(200).json({data:products})
 
+})
 
 module.exports = { productRoutes }
