@@ -14,7 +14,7 @@ const updateProduct = (req = request, res = response) => {
     res.send("updateProduct")
 }
 const deleteProduct = (req = request, res = response) => {
-    res.send("deleteProduct")
+    res.send("deleteProduct")   
 }
 module.exports = {
     postProduct,

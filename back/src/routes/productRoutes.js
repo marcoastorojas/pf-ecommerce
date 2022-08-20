@@ -99,4 +99,6 @@ productRoutes.get('/category/:id', async (req, res) => {
 
 })
 
+
+
 module.exports = { productRoutes }
