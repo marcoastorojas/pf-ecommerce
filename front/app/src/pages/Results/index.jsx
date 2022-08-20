@@ -1,15 +1,17 @@
 //import { useEffect } from "react";
 //import { useDispatch } from "react-redux";
-import NavBar from "../../components/NavBar";
 import ResultsContainer from "../../components/ResultsContainer";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/NavBar";
 
 export default function Results() {
-
  return (
   <div>
-    <NavBar />
-    <h1>Pagina de resultados</h1>
-    <ResultsContainer />
+   <NavBar />
+   <br />
+   <br />
+   <ResultsContainer />
+   <Footer />
   </div>
  );
 }

@@ -9,34 +9,52 @@
 
 .header {
  display: flex;
- justify-content: center;
- flex-direction: column;
+ justify-content: space-evenly;
+ flex-direction: row;
 
  width: 100vw;
+ height: 15vh;
 
  background-color: #f72585;
 
+ text-align: center;
  font-family: "Raleway", sans-serif;
 }
 
 .sectionOne {
  display: flex;
+ flex-direction: column;
+ /* justify-content: space-evenly; */
+ width: 60vw;
+}
+
+.logoAndSB {
+ display: flex;
  flex-direction: row;
  justify-content: space-evenly;
 }
 
-.cartNumber {
- display: flex;
-}
-
-.logo {
+.logoLink {
  /* background-color: aqua; */
  margin: 10px;
  border: 2px solid black;
  width: 100px;
  height: 40px;
+
+ text-decoration: none;
+ text-align: center;
+ color: black;
 }
 
-.sectionTwo {
- display: flex;
+.logo {
+ display: inline;
+ font-size: 30px;
+}
+
+/* .sectionTwo {
+ display: block;
+} */
+
+.cartNumber {
+ display: inline;
 }

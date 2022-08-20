@@ -1,6 +1,6 @@
 import { useState } from "react";
-// import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { getProductsByName } from "../../redux/actions";
@@ -12,10 +12,13 @@ export default function SearchBar() {
  const navigate = useNavigate();
 
  const [textInput, setTextInput] = useState(null);
+ const [emptySearch, setEmptySearch] = useState(false);
 
- //  useEffect(() => {
- //   console.log(textInput);
- //  });
+ const results = useSelector((state) => state.searchedProducts);
+
+ useEffect(() => {
+  console.log(results);
+ });
 
  function onChangeHandler(e) {
   const input = e.target.value;
@@ -29,28 +32,25 @@ export default function SearchBar() {
  function onSearchHandler(e) {
   e.preventDefault();
   if (!textInput) {
-   console.log({ m: "nothing to search!" });
+   console.log({ m: "empty search!" });
+   setEmptySearch(true);
   } else {
    dispatch(getProductsByName(textInput));
+   setEmptySearch(false);
    navigate(`/results?name=${textInput}`);
   }
  }
 
  return (
-  <div>
-   <form onSubmit={onSearchHandler} className={style.input}>
+  <div className={style.input}>
+   <form onSubmit={onSearchHandler}>
     <input
      type="text"
      placeholder="What are you looking for?"
      onChange={onChangeHandler}
     />
-    {!textInput ? (
-     <button type="submit" disabled>
-      {">"}
-     </button>
-    ) : (
-     <button type="submit">{">"}</button>
-    )}
+    <button type="submit">{">"}</button>
+    {emptySearch && <p>Try searching something!</p>}
    </form>
   </div>
  );
