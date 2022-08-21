@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getProductsByName } from "../../redux/actions";
 
-import style from "./index.modules.css";
+import style from "./index.module.css";
 
 export default function SearchBar() {
  const dispatch = useDispatch();
@@ -42,9 +42,10 @@ export default function SearchBar() {
  }
 
  return (
-  <div className={style.input}>
+  <div className={style.mainDiv}>
    <form onSubmit={onSearchHandler}>
     <input
+     className={style.textInput}
      id="inputBusqueda"
      type="text"
      placeholder="What are you looking for?"
