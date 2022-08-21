@@ -21,14 +21,14 @@ export function validate(inputs) {
 
   if (!inputs.description) {
     errors.description = "Description is requires";
-  } else if (!/^[a-zA-Z0-9_ ]{15,200}$/.test(inputs.description)) {
+  } else if (!/^.{15,2000}$/.test(inputs.description)) {
     errors.description = "Description is invalid";
   }
 
   if (!inputs.price) {
     errors.price = "Price is required";
   } else if (
-    !/^([0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-4][0-9][0-9][0-9])$/.test(
+    !/^[0-9\.\-\/]+$/.test(
       inputs.price
     )
   ) {

@@ -38,10 +38,10 @@ export default function NavBar() {
      <details id="categories" className={style.details}>
       <summary>Categories</summary>
       {categories[0] &&
-       categories.map((e) => {
+       categories.map((e, index) => {
         const { id, name } = e;
         return (
-         <div>
+         <div key={index}>
           <Link key={id} id={id} to={`/results`} onClick={onCategorySelection}>
            {name}
           </Link>
