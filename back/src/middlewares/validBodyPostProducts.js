@@ -12,7 +12,7 @@ const validBodyPostProducts = async (req, res, next) => {
         }
     });
     if (!/^[0-9]+$/.test(price)) { errors.price = "el precio debe ser un numero valido" }
-    if (Number(price) > 1000000 && Number < 0) { errors.price = "el precio debe estar entre 0 y 1000000" }
+    if (Number(price) > 1000000 || Number(price) < 0) { errors.price = "el precio debe estar entre 0 y 1000000" }
 
     const repetido = await Product.findOne({ where: { title: { [Op.iLike]: title } } })
     if (repetido) { errors.title = "el titulo esta repetido" }
