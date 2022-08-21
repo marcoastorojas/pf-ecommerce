@@ -1,13 +1,17 @@
+//import { useEffect } from "react";
+//import { useDispatch } from "react-redux";
+import ResultsContainer from "../../components/ResultsContainer";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import style from "./index.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductsFilter } from "../../redux/actions";
+import { getProductsFilter, getProducts } from "../../redux/actions";
 import { useState, useEffect } from "react";
 
 export default function Results() {
  const results = useSelector((state) => state.searchedProducts);
  const categories = useSelector((state) => state.categories);
+ const search = useSelector(state => state.search)
  const dispatch = useDispatch();
 
  const [min, setMin] = useState(0);
@@ -54,6 +58,7 @@ const categoryHandle = (e) => {
    <NavBar />
    <br />
    <br />
+   {search && <h1 className={style.titulo}>Results for: {search} </h1>}
    <div className={style.contenido}>
     <div>
      {/* <button onClick={verResults}>ver resultados de búsqueda</button> */}
@@ -65,8 +70,8 @@ const categoryHandle = (e) => {
      <select onChange={categoryHandle}>
         <option hidden>Select Category</option>
         {
-            categories?.map(e => {
-                return <option value={e.id}>{e.name}</option>
+            categories?.map((e, index) => {
+                return <option value={e.id} key={index}>{e.name}</option>
             })
         }
      </select>
@@ -79,20 +84,7 @@ const categoryHandle = (e) => {
      <br></br>
      <button onClick={filtrar}>Filtrar</button>
     </div>
-    <div>
-        {
-            results?.map( e => {
-                return(
-                <div>
-                    <hr></hr>
-                    <p>{e.title}</p>
-                    <p>{e.price}</p>
-                    <hr></hr>
-                </div>
-                ) 
-            })
-        }
-    </div>
+    <ResultsContainer />
    </div>
    <Footer />
   </div>
