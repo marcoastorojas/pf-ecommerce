@@ -8,13 +8,14 @@ export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
+export const GET_SEARCH_NAME = "GET_SEARCH_NAME"; 
 
 export const getProducts = () => {
  return async function (dispatch) {
   try {
    let json = await axios.get("http://localhost:3001/products");
    return dispatch({
-    type: "GET_PRODUCTS",
+    type: GET_PRODUCTS,
     payload: json.data,
    });
   } catch (error) {
@@ -136,3 +137,11 @@ export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) =
    );
  };
 };
+
+
+export const getSearchName = (payload) => {
+  return {
+    type: GET_SEARCH_NAME,
+    payload,
+  }
+}

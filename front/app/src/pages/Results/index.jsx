@@ -1,13 +1,20 @@
+//import { useEffect } from "react";
+//import { useDispatch } from "react-redux";
+import ResultsContainer from "../../components/ResultsContainer";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import style from "./index.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategoryProductsById, getProductsFilter } from "../../redux/actions";
 import { useState, useEffect } from "react";
+
+import { getCategoryProductsById, getProductsFilter, getProducts } from "../../redux/actions";
+
+
 
 export default function Results() {
  const results = useSelector((state) => state.searchedProducts);
  const categories = useSelector((state) => state.categories);
+ const search = useSelector(state => state.search)
  const dispatch = useDispatch();
 
  const [min, setMin] = useState(0);
@@ -60,6 +67,7 @@ useEffect(() => {
    <br />
    <br />
    <button onClick={verResults}>PRUEBA</button>
+   {search && <h1 className={style.titulo}>Results for: {search} </h1>}
    <div className={style.contenido}>
     <div>
      <h4>Order By:</h4>
@@ -69,11 +77,9 @@ useEffect(() => {
      <h4>Categories: </h4>
      <select onChange={categoryHandle}>
         <option hidden>Select Category</option>
-        {
-            categories?.map(e => {
+        {categories?.map(e => {
                 return <option key={e.id} value={e.id}>{e.name}</option>
-            })
-        }
+            })}
      </select>
      <h4>Precio:</h4>
      <label>Min:</label>
@@ -84,6 +90,7 @@ useEffect(() => {
      <br></br>
      <button onClick={filtrar}>Filtrar</button>
     </div>
+    /*
     <div>
         {
             results?.map( e => {
@@ -101,6 +108,8 @@ useEffect(() => {
             results.length<1?<p>No hay resultados</p>:<></>
         }
     </div>
+    */
+    <ResultsContainer />
    </div>
    <Footer />
   </div>
