@@ -47,19 +47,16 @@ export default function Results() {
   dispatch(getProductsFilter(name.value, max, min, asc, desc));
  };
 const categoryHandle = (e) => {
-    setCategory(e.target.value)
+    setCategory(e.target.value);
 }
  return (
   <div>
    <NavBar />
    <br />
    <br />
-   <>---ResultsContainer---</>
    <div className={style.contenido}>
     <div>
-     <>--SearchFilters--</>
-     <br></br>
-     <button onClick={verResults}>ver resultados de búsqueda</button>
+     {/* <button onClick={verResults}>ver resultados de búsqueda</button> */}
      <h4>Order By:</h4>
      <label>Price:</label>
      <button onClick={orderHandle}>Order</button>
@@ -83,7 +80,18 @@ const categoryHandle = (e) => {
      <button onClick={filtrar}>Filtrar</button>
     </div>
     <div>
-     <>--SearchResults--</>
+        {
+            results?.map( e => {
+                return(
+                <div>
+                    <hr></hr>
+                    <p>{e.title}</p>
+                    <p>{e.price}</p>
+                    <hr></hr>
+                </div>
+                ) 
+            })
+        }
     </div>
    </div>
    <Footer />
