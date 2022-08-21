@@ -2,7 +2,7 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import style from "./index.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductsFilter } from "../../redux/actions";
+import { getCategoryProductsById, getProductsFilter } from "../../redux/actions";
 import { useState, useEffect } from "react";
 
 export default function Results() {
@@ -43,20 +43,24 @@ export default function Results() {
  };
  const filtrar = () => {
   const name = document.querySelector("#inputBusqueda");
-  // console.log(name.value, min, max)
   dispatch(getProductsFilter(name.value, max, min, asc, desc));
  };
 const categoryHandle = (e) => {
     setCategory(e.target.value);
+    
 }
+useEffect(() => {
+    const name = document.querySelector("#inputBusqueda");
+    dispatch(getCategoryProductsById(category, name.value, max, min, asc, desc))
+}, [category])
  return (
   <div>
    <NavBar />
    <br />
    <br />
+   <button onClick={verResults}>PRUEBA</button>
    <div className={style.contenido}>
     <div>
-     {/* <button onClick={verResults}>ver resultados de búsqueda</button> */}
      <h4>Order By:</h4>
      <label>Price:</label>
      <button onClick={orderHandle}>Order</button>
@@ -66,7 +70,7 @@ const categoryHandle = (e) => {
         <option hidden>Select Category</option>
         {
             categories?.map(e => {
-                return <option value={e.id}>{e.name}</option>
+                return <option key={e.id} value={e.id}>{e.name}</option>
             })
         }
      </select>
@@ -91,6 +95,9 @@ const categoryHandle = (e) => {
                 </div>
                 ) 
             })
+        }
+        {
+            results.length<1?<p>No hay resultados</p>:<></>
         }
     </div>
    </div>
