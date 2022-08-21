@@ -85,7 +85,7 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
  if (!!min) url.searchParams.append("min", min);
  if (!!asc) url.searchParams.append("asc", asc);
  if (!!desc) url.searchParams.append("desc", desc);
- console.log(url.href);
+//  console.log(url.href);
  return (dispatch) => {
   axios
    .get(url.href)
@@ -115,10 +115,16 @@ export const getCategories = () => {
  };
 };
 
-export const getCategoryProductsById = (id) => {
+export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
+  let url = new URL(`http://localhost:3001/products/category/${categoryId}`);
+  if (!!name) url.searchParams.append("name", name);
+  if (!!max) url.searchParams.append("max", max);
+  if (!!min) url.searchParams.append("min", min);
+  if (!!asc) url.searchParams.append("asc", asc);
+  if (!!desc) url.searchParams.append("desc", desc);
  return (dispatch) => {
   axios
-   .get(`http://localhost:3001/products/category/${id}`)
+   .get(url.href)
    .then((response) => {
     console.log({ from: "action creator getCategoryProductsById", response });
     dispatch({

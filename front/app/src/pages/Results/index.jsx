@@ -5,8 +5,11 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import style from "./index.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductsFilter, getProducts } from "../../redux/actions";
 import { useState, useEffect } from "react";
+
+import { getCategoryProductsById, getProductsFilter, getProducts } from "../../redux/actions";
+
+
 
 export default function Results() {
  const results = useSelector((state) => state.searchedProducts);
@@ -47,21 +50,26 @@ export default function Results() {
  };
  const filtrar = () => {
   const name = document.querySelector("#inputBusqueda");
-  // console.log(name.value, min, max)
-  dispatch(getProductsFilter(name.value, max, min, asc, desc));
+  if(category === '') dispatch(getProductsFilter(name.value, max, min, asc, desc));
+  else dispatch(getCategoryProductsById(category, name.value, max, min, asc, desc))
  };
 const categoryHandle = (e) => {
     setCategory(e.target.value);
+    
 }
+useEffect(() => {
+    const name = document.querySelector("#inputBusqueda");
+    dispatch(getCategoryProductsById(category, name.value, max, min, asc, desc))
+}, [category])
  return (
   <div>
    <NavBar />
    <br />
    <br />
+   <button onClick={verResults}>PRUEBA</button>
    {search && <h1 className={style.titulo}>Results for: {search} </h1>}
    <div className={style.contenido}>
     <div>
-     {/* <button onClick={verResults}>ver resultados de búsqueda</button> */}
      <h4>Order By:</h4>
      <label>Price:</label>
      <button onClick={orderHandle}>Order</button>
@@ -69,11 +77,9 @@ const categoryHandle = (e) => {
      <h4>Categories: </h4>
      <select onChange={categoryHandle}>
         <option hidden>Select Category</option>
-        {
-            categories?.map((e, index) => {
-                return <option value={e.id} key={index}>{e.name}</option>
-            })
-        }
+        {categories?.map(e => {
+                return <option key={e.id} value={e.id}>{e.name}</option>
+            })}
      </select>
      <h4>Precio:</h4>
      <label>Min:</label>
@@ -84,6 +90,25 @@ const categoryHandle = (e) => {
      <br></br>
      <button onClick={filtrar}>Filtrar</button>
     </div>
+    /*
+    <div>
+        {
+            results?.map( e => {
+                return(
+                <div>
+                    <hr></hr>
+                    <p>{e.title}</p>
+                    <p>{e.price}</p>
+                    <hr></hr>
+                </div>
+                ) 
+            })
+        }
+        {
+            results.length<1?<p>No hay resultados</p>:<></>
+        }
+    </div>
+    */
     <ResultsContainer />
    </div>
    <Footer />
