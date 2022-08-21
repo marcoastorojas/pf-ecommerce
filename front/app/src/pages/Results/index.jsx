@@ -7,12 +7,14 @@ import { useState, useEffect } from "react";
 
 export default function Results() {
  const results = useSelector((state) => state.searchedProducts);
+ const categories = useSelector((state) => state.categories);
  const dispatch = useDispatch();
 
  const [min, setMin] = useState(0);
  const [max, setMax] = useState(9999999);
  const [asc, setAsc] = useState("");
  const [desc, setDesc] = useState("");
+ const [category, setCategory] = useState('');
 
  const minPriceHandle = (e) => {
   setMin(e.target.value);
@@ -44,7 +46,9 @@ export default function Results() {
   // console.log(name.value, min, max)
   dispatch(getProductsFilter(name.value, max, min, asc, desc));
  };
-
+const categoryHandle = (e) => {
+    setCategory(e.target.value)
+}
  return (
   <div>
    <NavBar />
@@ -56,8 +60,19 @@ export default function Results() {
      <>--SearchFilters--</>
      <br></br>
      <button onClick={verResults}>ver resultados de búsqueda</button>
-     <button onClick={orderHandle}>Ordenamiento</button>
-     <h4>Categorías:</h4>
+     <h4>Order By:</h4>
+     <label>Price:</label>
+     <button onClick={orderHandle}>Order</button>
+     <br></br>
+     <h4>Categories: </h4>
+     <select onChange={categoryHandle}>
+        <option hidden>Select Category</option>
+        {
+            categories?.map(e => {
+                return <option value={e.id}>{e.name}</option>
+            })
+        }
+     </select>
      <h4>Precio:</h4>
      <label>Min:</label>
      <input onChange={minPriceHandle}></input>
