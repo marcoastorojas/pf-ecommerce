@@ -9,13 +9,15 @@
 
 .header {
  display: flex;
- justify-content: space-evenly;
+ justify-content: center;
  flex-direction: row;
 
  width: 100vw;
  height: 15vh;
 
- background-color: #f72585;
+ /* background-color: #f72585; */
+
+ border-bottom: solid black 3px;
 
  text-align: center;
  font-family: "Raleway", sans-serif;
@@ -24,8 +26,12 @@
 .sectionOne {
  display: flex;
  flex-direction: column;
- /* justify-content: space-evenly; */
- width: 60vw;
+ justify-content: space-evenly;
+ align-items: center;
+ width: 40vw;
+ /* position: absolute; */
+
+ /* background-color: blue; */
 }
 
 .logoAndSB {
@@ -51,16 +57,63 @@
  font-size: 30px;
 }
 
+.searchBarDiv {
+ display: flex;
+ /* justify-content: center; */
+ /* align-items: center; */
+
+ /* background-color: red; */
+ width: 500px;
+}
+
+.navBarLinks {
+ text-decoration: none;
+ color: black;
+}
+
 .navButtons {
  display: flex;
  flex-direction: row;
- justify-content: space-between;
+ justify-content: space-evenly;
+ align-items: center;
+ /* position: absolute; */
+ /* margin: 700px; */
+
  width: 450px;
+ /* background-color: yellow; */
 }
 
-/* .sectionTwo {
- display: block;
-} */
+.details {
+ /* display: fixed; */
+ /* background-color: pink; */
+
+ /* padding: 100px; */
+}
+
+.sectionTwo {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-evenly;
+ align-items: center;
+
+ width: 20vw;
+
+ /* background-color: aquamarine; */
+}
+
+.logIn {
+ text-decoration: none;
+ color: black;
+}
+
+.signUp {
+ /* background-color: blueviolet; */
+ border: 1px solid black;
+ padding: 3px;
+
+ text-decoration: none;
+ color: black;
+}
 
 .cartNumber {
  display: inline;

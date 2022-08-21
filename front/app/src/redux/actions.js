@@ -103,20 +103,20 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
  };
 
 export const getCategories = () => {
-  return (dispatch) => {
-    axios
-      .get("http://localhost:3001/categories")
-      .then((response) => {
-        console.log({ from: "action creator getCategories", response });
-        dispatch({
-          type: GET_CATEGORIES,
-          payload: response.data.data,
-        });
-      })
-      .catch((err) =>
-        console.log({ m: "Error on action creator getCategories", err })
-      );
-  };
+ return (dispatch) => {
+  axios
+   .get("http://localhost:3001/categories")
+   .then((response) => {
+    console.log({ from: "action creator getCategories" });
+    dispatch({
+     type: GET_CATEGORIES,
+     payload: response.data.data,
+    });
+   })
+   .catch((err) =>
+    console.log({ m: "Error on action creator getCategories", err })
+   );
+ };
 };
 
 export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
