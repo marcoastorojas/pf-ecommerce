@@ -102,7 +102,7 @@ export const getCategories = () => {
   axios
    .get("http://localhost:3001/categories")
    .then((response) => {
-    console.log({ from: "action creator getCategories", response });
+    console.log({ from: "action creator getCategories" });
     dispatch({
      type: GET_CATEGORIES,
      payload: response.data.data,

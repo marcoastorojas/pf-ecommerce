@@ -11,7 +11,7 @@ export default function NavBar() {
 
  useEffect(() => {
   dispatch(getCategories());
- }, []);
+ }, [dispatch]);
 
  const [productNumber, setProductNumber] = useState(0);
 
