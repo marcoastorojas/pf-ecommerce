@@ -1,10 +1,21 @@
-import { GET_PRODUCTS, GET_PRODUCTS_BY_NAME, GET_PRODUCT_BY_ID, CLEAR_DETAIL, GET_PRODUCTS_FILTER } from "./actions";
+import {
+ GET_PRODUCTS,
+ GET_PRODUCTS_BY_NAME,
+ GET_PRODUCT_BY_ID,
+ CLEAR_DETAIL,
+ GET_PRODUCTS_FILTER,
+ GET_CATEGORIES,
+ GET_CATEGORY_PRODUCTS_BY_ID,
+ GET_SEARCH_NAME,
+} from "./actions";
 
 const initialState = {
  products: [],
  allProducts: [],
  searchedProducts: [],
  product: {},
+ categories: [],
+ search: ""
 };
 
 export const reducer = (state = initialState, action) => {
@@ -20,24 +31,39 @@ export const reducer = (state = initialState, action) => {
     ...state,
     searchedProducts: [...action.payload],
    };
-   case GET_PRODUCT_BY_ID: {
-    return {
-      ...state,
-      product: action.payload,
-    };
+  case GET_PRODUCT_BY_ID: {
+   return {
+    ...state,
+    product: action.payload,
+   };
   }
   case CLEAR_DETAIL: {
-    return {
-      ...state,
-      product: {},
-    };
+   return {
+    ...state,
+    product: {},
+   };
   }
   case GET_PRODUCTS_FILTER: {
+   return {
+    ...state,
+    searchedProducts: [...action.payload],
+   };
+  }
+  case GET_CATEGORIES:
+   return {
+    ...state,
+    categories: [...action.payload],
+   };
+  case GET_CATEGORY_PRODUCTS_BY_ID:
+   return {
+    ...state,
+    searchedProducts: [...action.payload],
+   };
+   case GET_SEARCH_NAME:
     return {
       ...state,
-      searchedProducts: [...action.payload]
+      search: action.payload,
     }
-  }
   default:
    return state;
  }

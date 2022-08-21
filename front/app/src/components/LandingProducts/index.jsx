@@ -21,6 +21,7 @@ export default function LandingProducts() {
         return (
          <ProductCard
           key={product.id}
+          id={product.id}
           title={product.title}
           image={product.images}
          />

@@ -12,6 +12,12 @@
     padding: 10px;
 }
 
+.titulo {
+    position: relative;
+    justify-content: left;
+    margin-left: 7px;
+}
+
 /* .contenido > div {
     border: 1px solid red;
     width: 50%;
