@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { getProductsByName } from "../../redux/actions";
 
@@ -9,7 +9,7 @@ import style from "./index.modules.css";
 
 export default function SearchBar() {
  const dispatch = useDispatch();
- //  const navigate = useNavigate();
+ const navigate = useNavigate();
 
  const [textInput, setTextInput] = useState(null);
  const [emptySearch, setEmptySearch] = useState(false);
@@ -37,7 +37,7 @@ export default function SearchBar() {
   } else {
    dispatch(getProductsByName(textInput));
    setEmptySearch(false);
-   //  navigate("/results");
+   navigate("/results");
   }
  }
 
@@ -45,7 +45,7 @@ export default function SearchBar() {
   <div className={style.input}>
    <form onSubmit={onSearchHandler}>
     <input
-     id='inputBusqueda'
+     id="inputBusqueda"
      type="text"
      placeholder="What are you looking for?"
      onChange={onChangeHandler}
