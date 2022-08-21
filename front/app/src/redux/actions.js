@@ -9,6 +9,7 @@ export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_SEARCH_NAME = "GET_SEARCH_NAME"; 
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
+export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
 
 export const getProducts = () => {
   return async function (dispatch) {
@@ -148,3 +149,17 @@ export const getSearchName = (payload) => {
     payload,
   }
 }
+
+export const getSubCategories = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get("http://localhost:3001/subCategories");
+      return dispatch({
+        type: GET_SUB_CATEGORIES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(`can not find subcategories`, error);
+    }
+  };
+};
