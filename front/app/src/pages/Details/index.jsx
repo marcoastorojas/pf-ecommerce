@@ -13,29 +13,23 @@ import { getProductId, clearDetail } from "../../redux/actions";
 import "./index.module.css";
 
 export default function Details() {
+  const { id } = useParams();
 
- const { id } = useParams();
+  const dispatch = useDispatch();
+  const product = useSelector((store) => store.product);
 
- const dispatch = useDispatch();
- const product = useSelector((store) => store.product);
+  useEffect(() => {
+    dispatch(clearDetail());
+    dispatch(getProductId(id));
+  }, [dispatch, id]);
 
- useEffect(() => {
-  dispatch(clearDetail());
-  dispatch(getProductId(id));
-
- }, [dispatch, id]);
-
-
- if (!product.data) return <Loading />;
- else
-  return (
-   <div className="detailPage">
-    <NavBar />
-    <ProductDetail product={product} />
-    <aside>
-     <SellerDetails />
-    </aside>
-    <Footer />
-   </div>
-  );
+  if (!product.id) return <Loading />;
+  else
+    return (
+      <div className="detailPage">
+        <NavBar />
+        <ProductDetail product={product} />
+        <Footer />
+      </div>
+    );
 }

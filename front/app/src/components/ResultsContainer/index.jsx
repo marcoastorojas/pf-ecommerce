@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getProductsByName } from "../../redux/actions"
 import CatalogueCards from "../CatalogueCards";
 import Loading from "../Loading/Loading";
 
@@ -8,15 +9,20 @@ import style from "./ResultsContainer.module.css"
 
 export default function ResultsContainer() {
     const dispatch = useDispatch();
-    const searchedProducts = useSelector(state => state.searchedProducts)
+    const searchedProducts = useSelector(state => state.searchedProducts);
+    const search = useSelector(state => state.search)
+
+    useEffect(()=> {
+        dispatch(getProductsByName(search))
+    }, [dispatch])
 
     const catalogueCards = (products) => {
         return (
             <div className={style.cards}>
-                {searchedProducts?.map((product) => {
+                {searchedProducts?.map((product, index) => {
                     return (
                        <CatalogueCards
-                       key={product.id}
+                       key={index}
                        id={product.id}
                        title={product.title}
                        image={product.images.slice(0)}
@@ -34,17 +40,3 @@ export default function ResultsContainer() {
         </div>
     )
 }
-//   return (
-//     <div className="container">
-//         <div className="productsContainer">{searchedProducts && searchedProducts.map((product) => {
-//             return (
-//                 <div className="cardContainer" key={product.id}> 
-//                     <h3>{product.title}</h3>
-//                     <img className="productsImage" src={product.images.slice(0)} alt="Image not found" />
-//                     <p>${product.price}</p>
-//                 </div>
-//             )
-//         })}</div>
-//     </div>
-//   )
-// }

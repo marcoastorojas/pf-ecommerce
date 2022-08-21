@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import style from "./index.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductsFilter } from "../../redux/actions";
+import { getProductsFilter, getProducts } from "../../redux/actions";
 import { useState, useEffect } from "react";
 
 export default function Results() {
@@ -70,8 +70,8 @@ const categoryHandle = (e) => {
      <select onChange={categoryHandle}>
         <option hidden>Select Category</option>
         {
-            categories?.map(e => {
-                return <option value={e.id}>{e.name}</option>
+            categories?.map((e, index) => {
+                return <option value={e.id} key={index}>{e.name}</option>
             })
         }
      </select>
