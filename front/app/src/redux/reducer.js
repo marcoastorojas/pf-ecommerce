@@ -16,7 +16,7 @@ const initialState = {
  searchedProducts: [],
  product: {},
  categories: [],
- search: ""
+ search: "",
  subCategories: [],
 };
 
@@ -66,11 +66,17 @@ export const reducer = (state = initialState, action) => {
         ...state,
         search: action.payload,
       }
-  case GET_CATEGORY_PRODUCTS_BY_ID:
-   return {
-    ...state,
-    searchedProducts: [...action.payload],
-   };
+   case GET_SUB_CATEGORIES:
+    const info = action.payload.data.map((sc) => {
+    return {
+     id: sc.id,
+     name: sc.name
+    }})
+     return {
+        ...state,
+        subCategories: info
+      }
+ 
   default:
    return state;
  }
