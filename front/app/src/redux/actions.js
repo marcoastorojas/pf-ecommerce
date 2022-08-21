@@ -7,6 +7,7 @@ export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 
 export const getProducts = () => {
  return async function (dispatch) {
@@ -101,10 +102,7 @@ export const getCategories = () => {
   axios
    .get("http://localhost:3001/categories")
    .then((response) => {
-    console.log({
-     from: "action creator getCategories",
-     axiosResponse: response,
-    });
+    console.log({ from: "action creator getCategories", response });
     dispatch({
      type: GET_CATEGORIES,
      payload: response.data.data,
@@ -112,6 +110,23 @@ export const getCategories = () => {
    })
    .catch((err) =>
     console.log({ m: "Error on action creator getCategories", err })
+   );
+ };
+};
+
+export const getCategoryProductsById = (id) => {
+ return (dispatch) => {
+  axios
+   .get(`http://localhost:3001/products/category/${id}`)
+   .then((response) => {
+    console.log({ from: "action creator getCategoryProductsById", response });
+    dispatch({
+     type: GET_CATEGORY_PRODUCTS_BY_ID,
+     payload: response.data.data,
+    });
+   })
+   .catch((err) =>
+    console.log({ m: "Error on action creator getCategoryProductsById", err })
    );
  };
 };

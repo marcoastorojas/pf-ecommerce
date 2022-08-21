@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import style from "./index.module.css";
 import SearchBar from "../SearchBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../../redux/actions";
+import { getCategories, getCategoryProductsById } from "../../redux/actions";
 
 export default function NavBar() {
  const dispatch = useDispatch();
@@ -17,6 +17,11 @@ export default function NavBar() {
 
  const categories = useSelector((state) => state.categories);
 
+ const onCategorySelection = (e) => {
+  // console.log(e);
+  dispatch(getCategoryProductsById(e.target.id));
+ };
+
  return (
   <header className={style.header}>
    <div className={style.sectionOne}>
@@ -27,7 +32,7 @@ export default function NavBar() {
      </Link>
      <SearchBar />
     </div>
-    <nav>
+    <nav className={style.navButtons}>
      <details id="categories">
       <summary>Categories</summary>
       {categories[0] &&
@@ -35,7 +40,7 @@ export default function NavBar() {
         const { id, name } = e;
         return (
          <div>
-          <Link key={id} to={`/results`}>
+          <Link key={id} id={id} to={`/results`} onClick={onCategorySelection}>
            {name}
           </Link>
          </div>
