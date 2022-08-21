@@ -5,16 +5,19 @@ const {
     getProducts,
     getProductsByCategoryId,
     getProductsBySubcategoryId,
-    getProductById } = require("../controllers/productControllers")
-    
-    //middlewares
-    const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
-    const { validIdParam } = require("../middlewares/validIdParam")
+    getProductById,
+    deleteProduct } = require("../controllers/productControllers")
+
+//middlewares
+const { validBodyPostProducts } = require("../middlewares/validBodyPostProducts")
+const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
+const { validIdParam } = require("../middlewares/validIdParam")
+
 
 
 const productRoutes = Router()
 
-productRoutes.post("/", postProduct)
+productRoutes.post("/", validBodyPostProducts, postProduct)
 
 
 productRoutes.get('/:id', validIdParam, getProductById)
@@ -28,6 +31,6 @@ productRoutes.get('/category/:id', validIdParam, validQueryGetProducts, getProdu
 
 //validando los datos ingresados por el query con un middleware "validQueryGetProducts"
 productRoutes.get('/subcategory/:id', validIdParam, validQueryGetProducts, getProductsBySubcategoryId)
-
+productRoutes.delete('/:id', validIdParam, deleteProduct)
 
 module.exports = { productRoutes }
