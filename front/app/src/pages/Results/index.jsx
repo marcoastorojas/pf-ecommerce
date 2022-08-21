@@ -43,7 +43,8 @@ export default function Results() {
  };
  const filtrar = () => {
   const name = document.querySelector("#inputBusqueda");
-  dispatch(getProductsFilter(name.value, max, min, asc, desc));
+  if(category === '') dispatch(getProductsFilter(name.value, max, min, asc, desc));
+  else dispatch(getCategoryProductsById(category, name.value, max, min, asc, desc))
  };
 const categoryHandle = (e) => {
     setCategory(e.target.value);
