@@ -5,6 +5,7 @@ import {
  CLEAR_DETAIL,
  GET_PRODUCTS_FILTER,
  GET_CATEGORIES,
+ GET_CATEGORY_PRODUCTS_BY_ID,
 } from "./actions";
 
 const initialState = {
@@ -50,6 +51,11 @@ export const reducer = (state = initialState, action) => {
    return {
     ...state,
     categories: [...action.payload],
+   };
+  case GET_CATEGORY_PRODUCTS_BY_ID:
+   return {
+    ...state,
+    searchedProducts: [...action.payload],
    };
   default:
    return state;
