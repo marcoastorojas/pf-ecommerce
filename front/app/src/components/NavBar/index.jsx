@@ -11,7 +11,7 @@ export default function NavBar() {
 
  useEffect(() => {
   dispatch(getCategories());
- }, []);
+ }, [dispatch]);
 
  const [productNumber, setProductNumber] = useState(0);
 
@@ -28,12 +28,14 @@ export default function NavBar() {
     <div className={style.logoAndSB}>
      {" "}
      <Link to={"/"} className={style.logoLink}>
-      <p className={style.logo}>Logo</p>
+      <p className={style.logo}>PF: e-commerce</p>
      </Link>
-     <SearchBar />
+     <div className={style.searchBarDiv}>
+      <SearchBar />
+     </div>
     </div>
     <nav className={style.navButtons}>
-     <details id="categories">
+     <details id="categories" className={style.details}>
       <summary>Categories</summary>
       {categories[0] &&
        categories.map((e, index) => {
@@ -47,19 +49,33 @@ export default function NavBar() {
         );
        })}
      </details>
-     <Link to="/">History</Link>
-     <Link to="/">Sales</Link>
-     <Link to="/product/create">Upload your product</Link>
+     <Link to="/" className={style.navBarLinks}>
+      History
+     </Link>
+     <Link to="/" className={style.navBarLinks}>
+      Sales
+     </Link>
+     <Link to="/product/create" className={style.navBarLinks}>
+      Upload your product
+     </Link>
     </nav>
    </div>
 
    <div className={style.sectionTwo}>
-    <Link to={"/log-in"}>
-     <button>Login</button>
-    </Link>
-    <button>Signup</button>
-    <button>🛒</button>
-    <p className={style.cartNumber}>{productNumber}</p>
+    <div>
+     <Link to={""} className={style.logIn}>
+      Log in
+     </Link>
+    </div>
+    <div>
+     <Link to={""} className={style.signUp}>
+      Sign up
+     </Link>
+    </div>
+    <div>
+     <button>🛒 {productNumber}</button>
+     {/* <p className={style.cartNumber}>{}</p> */}
+    </div>
    </div>
   </header>
  );
