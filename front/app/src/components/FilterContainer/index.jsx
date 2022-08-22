@@ -17,7 +17,10 @@ export default function FilterContainer() {
  const [max, setMax] = useState(9999999);
  const [asc, setAsc] = useState("");
  const [desc, setDesc] = useState("");
- const [category, setCategory] = useState(searchCategory || '');
+ const [category, setCategory] = useState(search===''?searchCategory:'');
+ useEffect(() => {
+    setCategory(search===''?searchCategory:'')
+ }, [search])
 
  const minPriceHandle = (e) => {
   setMin(e.target.value);
@@ -42,6 +45,7 @@ export default function FilterContainer() {
  }, [asc, category]);
 
  const filtrar = () => {
+    console.log(category, search)
   if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
   else dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
  };
@@ -51,8 +55,12 @@ const categoryHandle = (e) => {
 // useEffect(() => {
 //     if(!!category) dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
 // }, [category])
+const PRUEBA = () => {
+    console.log('Category:', category, 'SearchCategory:', searchCategory, 'Search;', search)
+}
  return (
   <div>
+    <button onClick={PRUEBA}>PRUEBA</button>
         <h4>Order By:</h4>
         <label>Price:</label>
         <button onClick={orderHandle}>Order</button>
