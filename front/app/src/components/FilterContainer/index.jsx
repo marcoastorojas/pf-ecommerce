@@ -55,12 +55,8 @@ const categoryHandle = (e) => {
 // useEffect(() => {
 //     if(!!category) dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
 // }, [category])
-const PRUEBA = () => {
-    console.log('Category:', category, 'SearchCategory:', searchCategory, 'Search;', search)
-}
  return (
   <div>
-    <button onClick={PRUEBA}>PRUEBA</button>
         <h4>Order By:</h4>
         <label>Price:</label>
         <button onClick={orderHandle}>Order</button>
