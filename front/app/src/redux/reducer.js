@@ -8,6 +8,7 @@ import {
  GET_CATEGORY_PRODUCTS_BY_ID,
  GET_SEARCH_NAME,
  GET_SUB_CATEGORIES,
+ GET_SEARCH_CATEGORY
 } from "./actions";
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
  categories: [],
  search: "",
  subCategories: [],
+ searchCategory: ''
 };
 
 export const reducer = (state = initialState, action) => {
@@ -76,7 +78,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         subCategories: info
       }
- 
+      case GET_SEARCH_CATEGORY: 
+      return {
+        ...state,
+        searchCategory: action.payload
+      }
   default:
    return state;
  }
