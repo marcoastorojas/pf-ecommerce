@@ -18,15 +18,20 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        price:{
+            type:DataTypes.FLOAT,
+            allowNull:false
+        },
         description: {
             type: DataTypes.TEXT,
+            // allowNull:false
         },
         brand: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        image:{
-            type: DataTypes.STRING,
+        images:{
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     });

@@ -25,13 +25,12 @@ subCategoriesroutes.post("/", async (req, res) => {
 
 subCategoriesroutes.get("/", async (req, res) => {
     const { name } = req.query
-    console.log(name)
     if (name) {
         const subcategory = await Subcategory.findOne({ where: { name: { [Op.iLike]: name } } })
         return res.status(200).json(subcategory)
     }
     const lista = await Subcategory.findAll({
-        include: [{ model: Product, as: "products" }]
+        include: [{ model: Product, as: "products", attributes: ['id', 'title', 'images', 'model', 'brand', 'subcategoryId'] }]
     })
     res.status(200).json({ data: lista })
 })

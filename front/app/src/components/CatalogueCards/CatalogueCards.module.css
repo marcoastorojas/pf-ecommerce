@@ -1,0 +1,20 @@
+.card {
+    width: 300px;
+    margin: 5px;
+    background-color: #ffe96a;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.imagen{
+    margin-top: 10px;
+    margin-left: 40px;
+    width:220px; 
+    height:220px;
+    border-radius: 3px;
+    border-width: 7px;
+    justify-content: center;
+}
