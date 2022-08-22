@@ -10,13 +10,17 @@ export default function FilterContainer() {
  const results = useSelector((state) => state.searchedProducts);
  const categories = useSelector((state) => state.categories);
  const search = useSelector(state => state.search)
+ const searchCategory = useSelector(state => state.searchCategory)
  const dispatch = useDispatch();
 
  const [min, setMin] = useState(0);
  const [max, setMax] = useState(9999999);
  const [asc, setAsc] = useState("");
  const [desc, setDesc] = useState("");
- const [category, setCategory] = useState('');
+ const [category, setCategory] = useState(search===''?searchCategory:'');
+ useEffect(() => {
+    setCategory(search===''?searchCategory:'')
+ }, [search])
 
  const minPriceHandle = (e) => {
   setMin(e.target.value);
@@ -38,20 +42,19 @@ export default function FilterContainer() {
 
  useEffect(() => {
   filtrar();
- }, [asc]);
+ }, [asc, category]);
 
  const filtrar = () => {
+    console.log(category, search)
   if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
   else dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
  };
 const categoryHandle = (e) => {
     setCategory(e.target.value);
-    
 }
-useEffect(() => {
-    if(!!category) dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
-    // console.log('EOEO')
-}, [category])
+// useEffect(() => {
+//     if(!!category) dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
+// }, [category])
  return (
   <div>
         <h4>Order By:</h4>

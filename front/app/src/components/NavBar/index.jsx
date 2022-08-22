@@ -4,22 +4,25 @@ import { Link } from "react-router-dom";
 import style from "./index.module.css";
 import SearchBar from "../SearchBar";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, getCategoryProductsById } from "../../redux/actions";
+import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName } from "../../redux/actions";
 
 export default function NavBar() {
  const dispatch = useDispatch();
 
+ const categories = useSelector((state) => state.categories);
  useEffect(() => {
   dispatch(getCategories());
+  console.log('NavBar')
  }, [dispatch]);
 
  const [productNumber, setProductNumber] = useState(0);
 
- const categories = useSelector((state) => state.categories);
 
  const onCategorySelection = (e) => {
   // console.log(e);
   dispatch(getCategoryProductsById(e.target.id));
+  dispatch(getSearchCategory(e.target.id))
+  dispatch(getSearchName(''))
  };
 
  return (
