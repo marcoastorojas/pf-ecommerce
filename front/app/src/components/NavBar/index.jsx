@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import SignInGoogle from '../SignInGoogle/SigInGoogle.jsx';
 
 import {
  getCategories,
@@ -107,6 +108,9 @@ export default function NavBar() {
      <div>--Cart--</div>
      {/* <p className={style.cartNumber}>{}</p> */}
     </div>
+   </div>
+   <div>
+    <SignInGoogle/>
    </div>
   </header>
  );
