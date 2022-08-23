@@ -12,6 +12,7 @@ export default function SignInGoogle () {
         dispatch(setUserGoogle(jwt_decode(response.credential)))
         document.getElementById('sigInDiv').hidden = true
     }
+    //pruebaDeploy
     useEffect(() => {
         window.google && window.google.accounts.id.initialize( {
             client_id: '98217127170-vfi6dqi6v82dhj9704ra9gb2go8n6q7l.apps.googleusercontent.com',
