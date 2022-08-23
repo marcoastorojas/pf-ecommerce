@@ -38,7 +38,6 @@ const {
   User,
   Person,
   Status } = sequelize.models
-console.log(sequelize.models)
 // Product - Category - Subcategory
 Category.hasMany(Subcategory, { as: "subcategories" })
 Subcategory.belongsTo(Category, { as: "category" })

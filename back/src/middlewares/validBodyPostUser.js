@@ -4,8 +4,8 @@ const { User, Role } = require("../db")
 
 
 validBodyPostUser = async (req = request, res = response, next) => {
-    const { email, password, role = "USER_ROLE", username = "" } = req.body
-    let errors = { name: "", email: "", password: "", username: "" }
+    const { email, password, role, username = "" } = req.body
+    let errors = { name: "",role:"", email: "", password: "", username: "" }
 
     //Obteniendo validacion por espacios vacios
     Object.keys(errors).forEach((key) => { // esto genera un error en la posicion que en el req no tiene valor   
