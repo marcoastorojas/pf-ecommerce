@@ -3,14 +3,18 @@ import Carousel from "../../components/Carousel";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 
-import "./index.module.css";
+import style from "./index.module.css";
 
 export default function Landing() {
  return (
-  <div className="landing">
+  <div className={style.landing}>
    <NavBar />
-   <Carousel />
-   <LandingProducts />
+   <div className={style.mainDiv}>
+    <Carousel />
+    <br />
+    <LandingProducts />
+    <br />
+   </div>
    <Footer />
   </div>
  );

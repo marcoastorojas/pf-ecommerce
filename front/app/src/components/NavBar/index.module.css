@@ -83,11 +83,15 @@
  /* background-color: yellow; */
 }
 
-.details {
- /* display: fixed; */
- /* background-color: pink; */
+.categoriesButton {
+ background-color: transparent;
 
- /* padding: 100px; */
+ border-color: transparent;
+
+ cursor: pointer;
+
+ font-family: "Raleway", sans-serif;
+ font-size: 17px;
 }
 
 .sectionTwo {
@@ -104,12 +108,14 @@
 .logIn {
  text-decoration: none;
  color: black;
+ border-bottom: 1px solid black;
+ padding: 0px 3px;
 }
 
 .signUp {
  /* background-color: blueviolet; */
  border: 1px solid black;
- padding: 3px;
+ padding: 3px 5px;
 
  text-decoration: none;
  color: black;
