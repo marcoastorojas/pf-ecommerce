@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { postUser } from "../../redux/actions";
 import "./index.modules.css";
 
 export default function SignUp() {
+ const dispatch = useDispatch();
+
  const [name, setName] = useState("");
  const [username, setUsername] = useState("");
  const [email, setEmail] = useState("");
@@ -52,8 +56,9 @@ export default function SignUp() {
   e.preventDefault();
   setSubmitTry(true);
   if (name && username && email && password && confirmedPassword) {
-   let newUser = { name, username, email, password, confirmedPassword };
-   console.log(newUser);
+   let newUser = { name, username, email, password };
+   //  console.log(newUser);
+   dispatch(postUser(newUser));
   }
  };
 
