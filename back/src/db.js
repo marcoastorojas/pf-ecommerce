@@ -36,6 +36,8 @@ const { Category, Subcategory, Product, Order, Order_detail, Order_type } = sequ
 Order.hasMany(Order_detail, { as: "orderdetail" })
 Order_detail.belongsTo(Order, { as: "order" })
 Order.hasOne(Order_type)
+ 
+
 
  
 Category.hasMany(Subcategory, { as: "subcategories" })

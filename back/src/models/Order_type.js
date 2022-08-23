@@ -10,8 +10,8 @@ module.exports = (sequelize) => {
             allowNull: false,
             primaryKey: true,
         },
-        date: {
-            type: DataTypes.DATE,
+        description: {
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     });
