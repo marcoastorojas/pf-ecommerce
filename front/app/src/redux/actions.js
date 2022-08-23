@@ -7,11 +7,13 @@ export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
-export const GET_SEARCH_NAME = "GET_SEARCH_NAME"; 
+export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
-export const GET_SEARCH_CATEGORY = 'GET_SEARCH_CATEGORY';
-export const SET_USER_GOOGLE = 'SET_USER_GOOGLE';
+export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
+export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
+
+const BASE_URL = `http://localhost:3001`;
 
 const BASE_URL = 'http://localhost:3001'
 
@@ -28,6 +30,7 @@ export const getProducts = () => {
    }
   };
  };
+};
 
 export const getProductId = (id) => {
   return async function (dispatch) {
@@ -61,12 +64,13 @@ export const postProduct = (product) => {
 };
 
 export const clearDetail = () => {
-  return {
-    type: CLEAR_DETAIL,
-  };
+ return {
+  type: CLEAR_DETAIL,
+ };
 };
 
 export const getProductsByName = (textInput) => {
+
   return (dispatch) => {
     axios
       .get(`${BASE_URL}/products?name=${textInput}`)
@@ -94,17 +98,17 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   if (!!asc) url.searchParams.append("asc", asc);
   if (!!desc) url.searchParams.append("desc", desc);
  //  console.log(url.href);
-  return (dispatch) => {
-   axios
-    .get(url.href)
-    .then((response) => {
-     dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
-    })
-    .catch((err) => {
-     console.log({ from: "action creator getProductsFilter", err });
-    });
-  };
+ return (dispatch) => {
+  axios
+   .get(url.href)
+   .then((response) => {
+    dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
+   })
+   .catch((err) => {
+    console.log({ from: "action creator getProductsFilter", err });
+   });
  };
+};
 
 export const getCategories = () => {
  return (dispatch) => {
@@ -122,6 +126,7 @@ export const getCategories = () => {
    );
  };
 };
+
 
 export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
   let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
@@ -146,13 +151,12 @@ export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) =
  };
 };
 
-
 export const getSearchName = (payload) => {
-  return {
-    type: GET_SEARCH_NAME,
-    payload,
-  }
-}
+ return {
+  type: GET_SEARCH_NAME,
+  payload,
+ };
+};
 
 export const getSubCategories = () => {
   return async function (dispatch) {
@@ -169,15 +173,15 @@ export const getSubCategories = () => {
 };
 
 export const getSearchCategory = (payload) => {
-  return {
-    type: GET_SEARCH_CATEGORY,
-    payload
-  }
-}
+ return {
+  type: GET_SEARCH_CATEGORY,
+  payload,
+ };
+};
 
 export const setUserGoogle = (payload) => {
-  return {
-    type: SET_USER_GOOGLE,
-    payload
-  }
-}
+ return {
+  type: SET_USER_GOOGLE,
+  payload,
+ };
+};

@@ -16,8 +16,12 @@ export default function SignUp() {
  const [passwordBlur, setPasswordBlur] = useState(false);
  const [confirmedPasswordBlur, setConfirmedPasswordBlur] = useState(false);
 
+ // eslint-disable-next-line
+ const emailRE = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+ const validEmail = emailRE.test(email);
+
  function onInputChangeHandler(e) {
-  if (e.target.id === "firstname") {
+  if (e.target.id === "name") {
    setName(e.target.value);
   } else if (e.target.id === "username") {
    setUsername(e.target.value);
@@ -31,16 +35,13 @@ export default function SignUp() {
  }
 
  function onBlurHandler(e) {
-  // if (e.target.id === "firstname") {
-  //  setName(e.target.value);
-  // } else
-  // if (e.target.id === "username") {
-  //  setUsername(e.target.value);
-  // } else
-  // if (e.target.id === "email") {
-  //  setEmail(e.target.value);
-  // } else
-  if (e.target.id === "password") {
+  if (e.target.id === "name") {
+   setNameBlur(true);
+  } else if (e.target.id === "username") {
+   setUsernameBlur(true);
+  } else if (e.target.id === "email") {
+   setEmailBlur(true);
+  } else if (e.target.id === "password") {
    setPasswordBlur(true);
   } else if (e.target.id === "confirmedpassword") {
    setConfirmedPasswordBlur(true);
@@ -56,9 +57,9 @@ export default function SignUp() {
   }
  };
 
- useEffect(() => {
-  console.log(passwordBlur);
- }, []);
+ //  useEffect(() => {
+ //   console.log(validEmail);
+ //  });
 
  return (
   <div className="general-div">
@@ -68,18 +69,43 @@ export default function SignUp() {
     <div className="register">Register Page</div>
 
     <form onSubmit={submitHandler} className="form">
-     <label htmlFor="firstname">
+     <label htmlFor="name">
       {"First name: \n"}
-      <input type="text" id="firstname" onChange={onInputChangeHandler} />
+      {nameBlur && name.length <= 2 ? (
+       <p style={{ display: "inline", color: "red" }}>
+        *Your name should have more than 2 digits.
+       </p>
+      ) : null}
+      <input
+       type="text"
+       id="name"
+       onChange={onInputChangeHandler}
+       onBlur={onBlurHandler}
+      />
      </label>
 
      <label htmlFor="username">
       {"User name: \n"}
-      <input type="text" id="username" onChange={onInputChangeHandler} />
+      {usernameBlur && username.length <= 6 ? (
+       <p style={{ display: "inline", color: "red" }}>
+        *User name should have more than 6 digits.
+       </p>
+      ) : null}
+      <input
+       type="text"
+       id="username"
+       onChange={onInputChangeHandler}
+       onBlur={onBlurHandler}
+      />
      </label>
 
      <label htmlFor="email">
       {"Email: \n"}
+      {emailBlur && !validEmail ? (
+       <p style={{ display: "inline", color: "red" }}>
+        *You have written an invalid e-mail.
+       </p>
+      ) : null}
       <input
        type="text"
        id="email"
@@ -91,7 +117,9 @@ export default function SignUp() {
      <label htmlFor="password">
       {"Password: \n"}
       {passwordBlur && password.length <= 6 ? (
-       <p>Password should have more than 6 digits</p>
+       <p style={{ display: "inline", color: "red" }}>
+        *Password should have more than 6 digits.
+       </p>
       ) : null}
       <input
        type="text"
@@ -102,11 +130,12 @@ export default function SignUp() {
      </label>
 
      <label htmlFor="confirmedpassword">
-      {`Confirm password: ${
-       confirmedPasswordBlur && password !== confirmedPassword
-        ? "Both passwords should match!"
-        : ""
-      }\n`}
+      {`Confirm password: \n`}
+      {confirmedPasswordBlur && password !== confirmedPassword ? (
+       <p style={{ display: "inline", color: "red" }}>
+        *Both passwords should match!
+       </p>
+      ) : null}
       <input
        type="text"
        id="confirmedpassword"
