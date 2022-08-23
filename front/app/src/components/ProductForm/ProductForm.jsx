@@ -4,6 +4,7 @@ import { getSubCategories, postProduct } from "../../redux/actions";
 import { validate } from "../../validations/validator";
 import "./ProductForm.css";
 import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductForm() {
   const [inputs, setInputs] = useState({
@@ -16,6 +17,7 @@ export default function ProductForm() {
     subcategoryId: "",
   });
   const [errors, setErrors] = useState({});
+  const [next, setNext] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,27 +37,35 @@ export default function ProductForm() {
     setErrors(validate({ ...inputs, [e.target.name]: e.target.value }));
   };
 
+  const handleNext = (e) => {
+    e.preventDefault();
+    setNext(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postProduct(inputs));
-    setInputs({
-      title: "",
-      model: "",
-      brand: "",
-      images: "",
-      description: "",
-      price: 0,
-      subcategoryId: "",
-    });
-    alert("Product was published");
-    navigate("/");
+
+    toast.success("Successfully created!");
+    setTimeout(() => {
+      setInputs({
+        title: "",
+        model: "",
+        brand: "",
+        images: "",
+        description: "",
+        price: 0,
+        subcategoryId: "",
+      });
+      navigate("/");
+    }, 2000);
   };
 
-  if (subCategories.length > 0)
+  if (subCategories.length > 0 && !next)
     return (
       <div>
         <h1>Add product to sell</h1>
-        <form onSubmit={(e) => handleSubmit(e)} className="form">
+        <form onSubmit={(e) => handleNext(e)} className="form">
           <div>
             <label>Product name:</label>
             <input
@@ -114,19 +124,23 @@ export default function ProductForm() {
             {errors.price && <p className="danger">{errors.price}</p>}
           </div>
           <div>
-            <div>
-              <label>Image:</label>
-              <input
-                type="text"
-                name="images"
-                placeholder="Product image"
+            <label>Image:</label>
+            <input
+              type="text"
+              name="images"
+              placeholder="Product image"
+              onChange={(e) => handleChange(e)}
+            />
+            {errors.images && <p className="danger">{errors.images}</p>}
+          </div>
+          <div>
+            <label>Categories:</label>
+            <div className="content-select">
+              <select
+                name="subcategoryId"
+                className="content-select"
                 onChange={(e) => handleChange(e)}
-              />
-              {errors.images && <p className="danger">{errors.images}</p>}
-            </div>
-            <div>
-              <label>Categories:</label>
-              <select name="subcategoryId" onChange={(e) => handleChange(e)}>
+              >
                 <option>CATEGORIES</option>
                 {subCategories &&
                   subCategories.map((sc) => {
@@ -137,16 +151,46 @@ export default function ProductForm() {
                     );
                   })}
               </select>
+              <i></i>
             </div>
+          </div>
+          <div>
             <input
               type="submit"
-              value="Submit"
-              disabled={!(Object.entries(errors).length === 0)}
+              value="NEXT"
+              disabled={
+                !(Object.entries(errors).length === 0)
+              }
             />
           </div>
         </form>
       </div>
     );
+  else if (next) {
+    return (
+      <form className="preview" onSubmit={(e) => handleSubmit(e)}>
+        <h1>Preview product</h1>
+        <div>
+          <img
+            src={inputs.images}
+           
+            alt={inputs.title}
+          />
+          <h2>NAME: {inputs.title}</h2>
+          <h3>MODEL: {inputs.model}</h3>
+          <h3>BRAND: {inputs.brand}</h3>
+          <h3>DESCRIPTION: {inputs.description}</h3>
+          <h3>PRICE: ${Intl.NumberFormat().format(inputs.price)}</h3>
+        </div>
+        <div className="buttons">
+          <h1>WOULD YOU LIKE TO SELL YOUR PRODUCT?</h1>
+          <input type="submit" value="Submit" />
+          <button onClick={() => setNext(false)}>GO BACK</button>
+        </div>
+        <Toaster />
+      </form>
+    );
+  }
 
   return <div>Wating fetching</div>;
 }
