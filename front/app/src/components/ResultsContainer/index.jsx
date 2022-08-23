@@ -8,13 +8,13 @@ import Loading from "../Loading/Loading";
 import style from "./ResultsContainer.module.css"
 
 export default function ResultsContainer() {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const searchedProducts = useSelector(state => state.searchedProducts);
-    const search = useSelector(state => state.search)
+    // const search = useSelector(state => state.search)
 
-    useEffect(()=> {
-        dispatch(getProductsByName(search))
-    }, [dispatch])
+    // useEffect(()=> {
+    //     dispatch(getProductsByName(search))
+    // }, [dispatch])
 
     const catalogueCards = (products) => {
         return (

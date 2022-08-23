@@ -10,6 +10,7 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_SEARCH_NAME = "GET_SEARCH_NAME"; 
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
+export const GET_SEARCH_CATEGORY = 'GET_SEARCH_CATEGORY';
 
 export const getProducts = () => {
   return async function (dispatch) {
@@ -163,3 +164,10 @@ export const getSubCategories = () => {
     }
   };
 };
+
+export const getSearchCategory = (payload) => {
+  return {
+    type: GET_SEARCH_CATEGORY,
+    payload
+  }
+}

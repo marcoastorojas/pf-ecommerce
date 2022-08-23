@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubCategories, postProduct } from "../../redux/actions";
 import { validate } from "../../validations/validator";
 import "./ProductForm.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductForm() {
   const [inputs, setInputs] = useState({
@@ -15,6 +16,8 @@ export default function ProductForm() {
     subcategoryId: "",
   });
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const subCategories = useSelector((state) => state.subCategories);
@@ -44,8 +47,9 @@ export default function ProductForm() {
       price: 0,
       subcategoryId: "",
     });
+    alert("Product was published");
+    navigate("/");
   };
-
 
   if (subCategories.length > 0)
     return (

@@ -8,11 +8,11 @@ export default function CatalogueCards({id, title, image, price}) {
     <div className={style.card}>
         <Link style={{textDecoration:'none'}} to={`/product/${id}`}>
             <h3>{title}</h3>
+            <div>
+                <img src={image} alt="Image not found" className={style.imagen} />
+            </div>
+            <h4>${price}</h4>
         </Link>
-        <div>
-            <img src={image} alt="Image not found" className={style.imagen} />
-        </div>
-        <h4>${price}</h4>
     </div>
   )
 }
