@@ -11,6 +11,7 @@ export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
 export const GET_SEARCH_CATEGORY = 'GET_SEARCH_CATEGORY';
+export const SET_USER_GOOGLE = 'SET_USER_GOOGLE';
 
 export const getProducts = () => {
   return async function (dispatch) {
@@ -168,6 +169,13 @@ export const getSubCategories = () => {
 export const getSearchCategory = (payload) => {
   return {
     type: GET_SEARCH_CATEGORY,
+    payload
+  }
+}
+
+export const setUserGoogle = (payload) => {
+  return {
+    type: SET_USER_GOOGLE,
     payload
   }
 }
