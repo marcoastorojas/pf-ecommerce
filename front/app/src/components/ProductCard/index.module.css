@@ -1,17 +1,21 @@
 .product_card {
- margin: 15px;
+ /* margin: 15px; */
  background-color: grey;
+ border: 3px solid pink;
+
+ height: 300px;
+ width: 400px;
 }
 
 .product_title {
- color: rgb(255, 230, 0);
- text-shadow: 0px 0px 3px black;
+ /* color: rgb(255, 230, 0); */
+ /* text-shadow: 0px 0px 3px black; */
  text-decoration: none;
  font-size: 10px;
 }
 
 .product_image {
  /* width: 250px; */
- height: 200px;
+ max-height: 200px;
  border-radius: 8px;
 }

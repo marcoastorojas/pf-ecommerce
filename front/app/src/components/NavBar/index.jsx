@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName } from "../../redux/actions";
+
+import SearchBar from "../SearchBar";
 
 import style from "./index.module.css";
-import SearchBar from "../SearchBar";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName } from "../../redux/actions";
 
 export default function NavBar() {
  const dispatch = useDispatch();
@@ -16,6 +18,7 @@ export default function NavBar() {
  }, [dispatch]);
 
  const [productNumber, setProductNumber] = useState(0);
+ const [showCategories, setShowCategories] = useState(false);
 
 
  const onCategorySelection = (e) => {
@@ -24,6 +27,10 @@ export default function NavBar() {
   dispatch(getSearchCategory(e.target.id))
   dispatch(getSearchName(''))
  };
+
+ function showCategoriesHandler() {
+  showCategories ? setShowCategories(false) : setShowCategories(true);
+ }
 
  return (
   <header className={style.header}>
@@ -38,7 +45,7 @@ export default function NavBar() {
      </div>
     </div>
     <nav className={style.navButtons}>
-     <details id="categories" className={style.details}>
+     {/* <details id="categories" className={style.details}>
       <summary>Categories</summary>
       {categories[0] &&
        categories.map((e, index) => {
@@ -51,7 +58,24 @@ export default function NavBar() {
          </div>
         );
        })}
-     </details>
+     </details> */}
+     <button onClick={showCategoriesHandler} className={style.categoriesButton}>
+      Categories
+     </button>
+     <div>
+      {categories[0] &&
+       showCategories &&
+       categories.map((e, index) => {
+        const { id, name } = e;
+        return (
+         <div key={index}>
+          <Link key={id} id={id} to={`/results`} onClick={onCategorySelection}>
+           {name}
+          </Link>
+         </div>
+        );
+       })}
+     </div>
      <Link to="/" className={style.navBarLinks}>
       History
      </Link>
@@ -76,7 +100,7 @@ export default function NavBar() {
      </Link>
     </div>
     <div>
-     <button>🛒 {productNumber}</button>
+     <div>--Cart--</div>
      {/* <p className={style.cartNumber}>{}</p> */}
     </div>
    </div>
