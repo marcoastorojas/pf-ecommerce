@@ -7,14 +7,20 @@ export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
-export const GET_SEARCH_NAME = "GET_SEARCH_NAME"; 
+export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
+export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
+export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
+
+const BASE_URL = `http://localhost:3001`;
+
+const BASE_URL = 'http://localhost:3001'
 
 export const getProducts = () => {
   return async function (dispatch) {
    try {
-    let json = await axios.get("http://localhost:3001/products");
+    let json = await axios.get(`${BASE_URL}/products`);
     return dispatch({
      type: GET_PRODUCTS,
      payload: json.data,
@@ -24,11 +30,12 @@ export const getProducts = () => {
    }
   };
  };
+};
 
 export const getProductId = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`http://localhost:3001/products/${id}`);
+      const response = await axios.get(`${BASE_URL}/products/${id}`);
       return dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: response.data,
@@ -43,7 +50,7 @@ export const postProduct = (product) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/products",
+        `${BASE_URL}/products`,
         product
       );
       return dispatch({
@@ -57,15 +64,16 @@ export const postProduct = (product) => {
 };
 
 export const clearDetail = () => {
-  return {
-    type: CLEAR_DETAIL,
-  };
+ return {
+  type: CLEAR_DETAIL,
+ };
 };
 
 export const getProductsByName = (textInput) => {
+
   return (dispatch) => {
     axios
-      .get(`http://localhost:3001/products?name=${textInput}`)
+      .get(`${BASE_URL}/products?name=${textInput}`)
       .then((response) => {
         console.log({
           from: "action creator getProductsById",
@@ -83,29 +91,29 @@ export const getProductsByName = (textInput) => {
 };
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
-  let url = new URL("http://localhost:3001/products");
+  let url = new URL(`${BASE_URL}/products`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
   if (!!min) url.searchParams.append("min", min);
   if (!!asc) url.searchParams.append("asc", asc);
   if (!!desc) url.searchParams.append("desc", desc);
  //  console.log(url.href);
-  return (dispatch) => {
-   axios
-    .get(url.href)
-    .then((response) => {
-     dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
-    })
-    .catch((err) => {
-     console.log({ from: "action creator getProductsFilter", err });
-    });
-  };
+ return (dispatch) => {
+  axios
+   .get(url.href)
+   .then((response) => {
+    dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
+   })
+   .catch((err) => {
+    console.log({ from: "action creator getProductsFilter", err });
+   });
  };
+};
 
 export const getCategories = () => {
  return (dispatch) => {
   axios
-   .get("http://localhost:3001/categories")
+   .get(`${BASE_URL}/categories`)
    .then((response) => {
     console.log({ from: "action creator getCategories" });
     dispatch({
@@ -119,8 +127,9 @@ export const getCategories = () => {
  };
 };
 
+
 export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
-  let url = new URL(`http://localhost:3001/products/category/${categoryId}`);
+  let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
   if (!!min) url.searchParams.append("min", min);
@@ -142,18 +151,17 @@ export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) =
  };
 };
 
-
 export const getSearchName = (payload) => {
-  return {
-    type: GET_SEARCH_NAME,
-    payload,
-  }
-}
+ return {
+  type: GET_SEARCH_NAME,
+  payload,
+ };
+};
 
 export const getSubCategories = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get("http://localhost:3001/subCategories");
+      const response = await axios.get(`${BASE_URL}/subCategories`);
       return dispatch({
         type: GET_SUB_CATEGORIES,
         payload: response.data,
@@ -162,4 +170,18 @@ export const getSubCategories = () => {
       console.log(`can not find subcategories`, error);
     }
   };
+};
+
+export const getSearchCategory = (payload) => {
+ return {
+  type: GET_SEARCH_CATEGORY,
+  payload,
+ };
+};
+
+export const setUserGoogle = (payload) => {
+ return {
+  type: SET_USER_GOOGLE,
+  payload,
+ };
 };

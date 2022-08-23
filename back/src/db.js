@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-ecommerce`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tests-ecommerce`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -31,15 +31,27 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Category, Subcategory, Product, Order, Order_detail, Order_type } = sequelize.models
+const {
+   Order,
+   Order_detail,
+   Order_type
+  } = sequelize.models
 
 Order.hasMany(Order_detail, { as: "orderdetail" })
 Order_detail.belongsTo(Order, { as: "order" })
 Order.hasOne(Order_type)
  
 
+const {
+  Category,
+  Subcategory,
+  Product,
+  Role,
+  User,
+  Person,
+  Status } = sequelize.models
+// Product - Category - Subcategory
 
- 
 Category.hasMany(Subcategory, { as: "subcategories" })
 Subcategory.belongsTo(Category, { as: "category" })
 
@@ -49,8 +61,15 @@ Product.belongsTo(Subcategory, { as: "subcategory" })
 Category.hasMany(Product, { as: "products" })
 Product.belongsTo(Category, { as: "category" })
 
+// User - Person - Rol - Status
+Role.hasMany(User, { as: "users" })
+User.belongsTo(Role, { as: "role" })
 
- 
+User.hasOne(Person, { foreignKey: "userId", as: "info" })
+Person.belongsTo(User, { foreignKey: "userId" })
+
+User.hasOne(Status, { foreignKey: "userId", as: "status" })
+Status.belongsTo(User, { foreignKey: "userId" })
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
