@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
             allowNull: false,
             primaryKey: true,
         },
-        fecha: {
+        date: {
             type: DataTypes.STRING,
             allowNull: false,
         }
