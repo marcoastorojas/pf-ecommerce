@@ -3,14 +3,19 @@ import axios from "axios";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const POST_PRODUCT = "POST_PRODUCT";
-export const CLEAR_DETAIL = "CLEAR_DETAIL";
+
 export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
+export const CLEAR_DETAIL = "CLEAR_DETAIL";
+
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
-export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
-export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
+export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
+
+export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
 export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
+
+export const POST_USER = "POST_USER";
 export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
 
 const BASE_URL = `http://localhost:3001`;
@@ -185,3 +190,20 @@ export const setUserGoogle = (payload) => {
   payload,
  };
 };
+
+export const postUser = (newUser) => {
+ return (dispatch) => {
+  axios
+   .post(`${BASE_URL}/auth/signup`, newUser)
+   .then((response) => {
+    console.log({ from: "postUser action creator", response });
+    dispatch({
+     type: POST_USER,
+     payload: response.data,
+    });
+   })
+   .catch((err) => console.log({ m: "Error on postUser action creator", err }));
+ };
+};
+
+//hola
