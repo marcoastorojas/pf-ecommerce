@@ -34,7 +34,7 @@ const {
   Category,
   Subcategory,
   Product,
-  Rol,
+  Role,
   User,
   Person,
   Status } = sequelize.models
@@ -50,14 +50,15 @@ Category.hasMany(Product, { as: "products" })
 Product.belongsTo(Category, { as: "category" })
 
 // User - Person - Rol - Status
-Rol.hasMany(User, { as: "users" })
-User.belongsTo(Rol, { as: "rol" })
+Role.hasMany(User, { as: "users" })
+User.belongsTo(Role, { as: "role" })
 
-User.hasOne(Person)
-Person.belongsTo(User, { as: "personal-data" })
+User.hasOne(Person, { foreignKey: "userId", as: "info" })
+Person.belongsTo(User, { foreignKey: "userId" })
 
-User.hasOne(Status)
-Status.belongsTo(User, { as: "status" })
+
+User.hasOne(Status, { foreignKey: "userId", as: "status" })
+Status.belongsTo(User, { foreignKey: "userId" })
 //esto es una prueba.
 
 module.exports = {
