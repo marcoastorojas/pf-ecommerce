@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getCategories, getCategoryProductsById } from "../../redux/actions";
+
+import SearchBar from "../SearchBar";
 
 import style from "./index.module.css";
-import SearchBar from "../SearchBar";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories, getCategoryProductsById } from "../../redux/actions";
 
 export default function NavBar() {
  const dispatch = useDispatch();

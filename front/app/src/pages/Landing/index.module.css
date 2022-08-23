@@ -3,7 +3,7 @@
 }
 
 .mainDiv {
- border: 3px solid blue;
+ border: 3px solid transparent;
  /* background-color: blue; */
  display: flex;
  flex-direction: column;

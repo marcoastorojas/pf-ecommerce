@@ -60,7 +60,7 @@ export default function Carousel() {
     </span>
    </div>
    <div className="section-two">
-    <button className="round-button"></button>
+    <button className="round-button" onClick={console.log(1)}></button>
     <button className="round-button"></button>
     <button className="round-button"></button>
     <button className="round-button"></button>

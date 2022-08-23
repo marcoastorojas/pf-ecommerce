@@ -11,7 +11,6 @@ export default function Landing() {
    <NavBar />
    <div className={style.mainDiv}>
     <Carousel />
-    <br />
     <LandingProducts />
     <br />
    </div>
