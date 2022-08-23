@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
             primaryKey: true,
         },
         date: {
-            type: DataTypes.STRING,
+            type: DataTypes.date,
             allowNull: false,
         }
     });
