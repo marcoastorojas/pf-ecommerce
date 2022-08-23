@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName } from "../../redux/actions";
+import {
+ getCategories,
+ getCategoryProductsById,
+ getSearchCategory,
+ getSearchName,
+} from "../../redux/actions";
 
 import SearchBar from "../SearchBar";
 
@@ -14,18 +19,17 @@ export default function NavBar() {
  const categories = useSelector((state) => state.categories);
  useEffect(() => {
   dispatch(getCategories());
-  console.log('NavBar')
+  console.log("NavBar");
  }, [dispatch]);
 
- const [productNumber, setProductNumber] = useState(0);
+ //  const [productNumber, setProductNumber] = useState(0);
  const [showCategories, setShowCategories] = useState(false);
-
 
  const onCategorySelection = (e) => {
   // console.log(e);
   dispatch(getCategoryProductsById(e.target.id));
-  dispatch(getSearchCategory(e.target.id))
-  dispatch(getSearchName(''))
+  dispatch(getSearchCategory(e.target.id));
+  dispatch(getSearchName(""));
  };
 
  function showCategoriesHandler() {
@@ -95,7 +99,7 @@ export default function NavBar() {
      </Link>
     </div>
     <div>
-     <Link to={""} className={style.signUp}>
+     <Link to={"/signup"} className={style.signUp}>
       Sign up
      </Link>
     </div>
