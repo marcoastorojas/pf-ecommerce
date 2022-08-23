@@ -13,10 +13,12 @@ export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
 export const GET_SEARCH_CATEGORY = 'GET_SEARCH_CATEGORY';
 export const SET_USER_GOOGLE = 'SET_USER_GOOGLE';
 
+const BASE_URL = 'http://localhost:3001'
+
 export const getProducts = () => {
   return async function (dispatch) {
    try {
-    let json = await axios.get("http://localhost:3001/products");
+    let json = await axios.get(`${BASE_URL}/products`);
     return dispatch({
      type: GET_PRODUCTS,
      payload: json.data,
@@ -30,7 +32,7 @@ export const getProducts = () => {
 export const getProductId = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`http://localhost:3001/products/${id}`);
+      const response = await axios.get(`${BASE_URL}/products/${id}`);
       return dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: response.data,
@@ -45,7 +47,7 @@ export const postProduct = (product) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/products",
+        `${BASE_URL}/products`,
         product
       );
       return dispatch({
@@ -67,7 +69,7 @@ export const clearDetail = () => {
 export const getProductsByName = (textInput) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3001/products?name=${textInput}`)
+      .get(`${BASE_URL}/products?name=${textInput}`)
       .then((response) => {
         console.log({
           from: "action creator getProductsById",
@@ -85,7 +87,7 @@ export const getProductsByName = (textInput) => {
 };
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
-  let url = new URL("http://localhost:3001/products");
+  let url = new URL(`${BASE_URL}/products`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
   if (!!min) url.searchParams.append("min", min);
@@ -107,7 +109,7 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
 export const getCategories = () => {
  return (dispatch) => {
   axios
-   .get("http://localhost:3001/categories")
+   .get(`${BASE_URL}/categories`)
    .then((response) => {
     console.log({ from: "action creator getCategories" });
     dispatch({
@@ -122,7 +124,7 @@ export const getCategories = () => {
 };
 
 export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
-  let url = new URL(`http://localhost:3001/products/category/${categoryId}`);
+  let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
   if (!!min) url.searchParams.append("min", min);
@@ -155,7 +157,7 @@ export const getSearchName = (payload) => {
 export const getSubCategories = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get("http://localhost:3001/subCategories");
+      const response = await axios.get(`${BASE_URL}/subCategories`);
       return dispatch({
         type: GET_SUB_CATEGORIES,
         payload: response.data,
