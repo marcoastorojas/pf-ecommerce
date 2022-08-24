@@ -8,7 +8,7 @@ import style from "./index.module.css";
 export default function Landing() {
  return (
   <div className={style.landing}>
-   <NavBar />
+   {/* <NavBar /> */}
    <div className={style.mainDiv}>
     <Carousel />
     <LandingProducts />

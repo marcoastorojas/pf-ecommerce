@@ -14,7 +14,7 @@ export default function Results() {
 
  return (
   <div>
-   <NavBar />
+   {/* <NavBar /> */}
    <br />
    <br />
    {search && <h1 className={style.titulo}>Results for: {search} </h1>}

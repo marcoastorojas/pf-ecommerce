@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LogInForm from "../../components/LogInForm";
+import SignInGoogle from "../../components/SignInGoogle/SigInGoogle.jsx";
 
 export default function LogIn() {
  const adminUser = {
@@ -36,17 +37,20 @@ export default function LogIn() {
 
  return (
   <div>
-   <h1>Log in Page</h1>
-   {user.email !== "" ? (
-    <div className="welcome">
-     <h2>
-      Welcome <span>{user.name}</span>
-     </h2>
-     <button onClick={LogOut}>Logout</button>
-    </div>
-   ) : (
-    <LogInForm LogIn={LogIn} error={error} />
-   )}
+        <h1>Log in Page</h1>
+        {user.email !== "" ? (
+            <div className="welcome">
+            <h2>
+            Welcome <span>{user.name}</span>
+            </h2>
+            <button onClick={LogOut}>Logout</button>
+            </div>
+        ) : (
+            <LogInForm LogIn={LogIn} error={error} />
+        )}
+        <div>
+            <SignInGoogle/>
+        </div>
   </div>
  );
 }

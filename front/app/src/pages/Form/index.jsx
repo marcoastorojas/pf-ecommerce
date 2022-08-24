@@ -7,7 +7,7 @@ import ProductForm from "../../components/ProductForm/ProductForm";
 export default function Form() {
   return (
     <main>
-      <NavBar />
+      {/* <NavBar /> */}
       <ProductForm />
       <Footer />
     </main>

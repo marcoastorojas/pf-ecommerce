@@ -27,7 +27,7 @@ export default function Details() {
   else
     return (
       <div className="detailPage">
-        <NavBar />
+        {/* <NavBar /> */}
         <ProductDetail product={product} />
         <Footer />
       </div>
