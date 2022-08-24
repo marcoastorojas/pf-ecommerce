@@ -16,6 +16,7 @@ import {
   REMOVE_ONE_FROM_CART,
   REMOVE_ALL_FROM_CART,
   CLEAR_CART,
+  ADD_ONE_FROM_CART,
 } from "./actions";
 
 const initialState = {
@@ -28,7 +29,9 @@ const initialState = {
   subCategories: [],
   searchCategory: "",
   userGoogle: {},
-  cart: [],
+  cart: localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -97,7 +100,7 @@ export const reducer = (state = initialState, action) => {
     //SHOPPING CART
     case ADD_TO_CART: {
       const getCart = state.cart.filter(
-        (product) => product === action.payload
+        (pt) => pt.product.id === action.payload.product.id
       );
       if (getCart.length === 1) {
         const amountProduct = getCart[0].amount;
@@ -105,9 +108,14 @@ export const reducer = (state = initialState, action) => {
           amount: amountProduct + action.payload.amount,
           product: getCart[0].product,
         };
+        const products = state.cart.filter(
+          (pt) => pt.product.id !== action.payload.product.id
+        );
+        products.push(newProduct);
+
         return {
           ...state,
-          cart: [...state.cart, newProduct],
+          cart: products,
         };
       } else
         return {
@@ -117,22 +125,26 @@ export const reducer = (state = initialState, action) => {
     }
     case REMOVE_ONE_FROM_CART: {
       const getCart = state.cart.filter(
-        (product) => product === action.payload
+        (pt) => pt.product.id === action.payload
       );
       if (getCart.length === 1) {
-        if (getCart[0].amount > 0) {
+        if (getCart[0].amount > 1) {
           const amountProduct = getCart[0].amount;
           const newProduct = {
             amount: amountProduct - 1,
             product: getCart[0].product,
           };
+          const newProducts = state.cart.filter(
+            (pt) => pt.product.id !== action.payload
+          );
+          newProducts.push(newProduct);
           return {
             ...state,
-            cart: [...state.cart, newProduct],
+            cart: newProducts,
           };
         } else {
           const newProducts = state.cart.filter(
-            (product) => product !== action.payload
+            (pt) => pt.product.id !== action.payload
           );
           return {
             ...state,
@@ -146,16 +158,49 @@ export const reducer = (state = initialState, action) => {
     }
     case REMOVE_ALL_FROM_CART: {
       const getCart = state.cart.filter(
-        (product) => product === action.payload
+        (pt) => pt.product.id === action.payload
       );
       if (getCart.length === 1) {
         const newProducts = state.cart.filter(
-          (product) => product !== action.payload
+          (pt) => pt.product.id !== action.payload
         );
         return {
           ...state,
           cart: newProducts,
         };
+      }
+      return {
+        ...state,
+      };
+    }
+    case ADD_ONE_FROM_CART: {
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload
+      );
+      if (getCart.length === 1) {
+        if (getCart[0].amount > 0) {
+          const amountProduct = getCart[0].amount;
+          const newProduct = {
+            amount: amountProduct + 1,
+            product: getCart[0].product,
+          };
+          const newProducts = state.cart.filter(
+            (pt) => pt.product.id !== action.payload
+          );
+          newProducts.push(newProduct);
+          return {
+            ...state,
+            cart: newProducts,
+          };
+        } else {
+          const newProducts = state.cart.filter(
+            (pt) => pt.product.id !== action.payload
+          );
+          return {
+            ...state,
+            cart: newProducts,
+          };
+        }
       }
       return {
         ...state,

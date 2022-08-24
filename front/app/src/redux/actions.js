@@ -24,6 +24,7 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
+export const ADD_ONE_FROM_CART = "ADD_ONE_FROM_CART";
 
 const BASE_URL = `http://localhost:3001`;
 
@@ -203,17 +204,24 @@ export const addToCart = (product, amount) => {
   };
 };
 
-export const removeAllFromCart = (product) => {
+export const removeAllFromCart = (id) => {
   return {
     type: REMOVE_ALL_FROM_CART,
-    payload: product,
+    payload: id,
   };
 };
 
-export const removeOneFromCart = (product) => {
+export const removeOneFromCart = (id) => {
   return {
     type: REMOVE_ONE_FROM_CART,
-    payload: product,
+    payload: id,
+  };
+};
+
+export const addOneFromCart = (id) => {
+  return {
+    type: ADD_ONE_FROM_CART,
+    payload: id,
   };
 };
 
