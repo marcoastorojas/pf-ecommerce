@@ -56,7 +56,7 @@ export default function SignUp() {
   e.preventDefault();
   setSubmitTry(true);
   if (name && username && email && password && confirmedPassword) {
-   let newUser = { name, username, email, password };
+   let newUser = { name, username, email, password, role: "USER_ROLE" };
    //  console.log(newUser);
    dispatch(postUser(newUser));
   }
@@ -123,7 +123,9 @@ export default function SignUp() {
       {"Password: \n"}
       {passwordBlur && password.length <= 6 ? (
        <p style={{ display: "inline", color: "red" }}>
-        *Password should have more than 6 digits.
+        {
+         "*Password should contain more than 6 digits, a number, a special character, and upper and a lower case letter (a-z)."
+        }
        </p>
       ) : null}
       <input
