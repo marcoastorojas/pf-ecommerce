@@ -5,14 +5,26 @@ import "./ProductDetail.css";
 import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
+import { useDispatch } from "react-redux";
+import { addToCart, removeAllFromCart } from "../../redux/actions";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState(product.images.split(" "));
   const [quantity, setQuantity] = useState(1);
 
+  const dispatch = useDispatch();
+
   const changeImage = (e) => {
     setIndex(+e.target.id);
+  };
+
+  const addCart = () => {
+    dispatch(addToCart(product, quantity));
+  };
+
+  const deleteFromCart = () => {
+    dispatch(removeAllFromCart(product));
   };
 
   return (
@@ -97,7 +109,10 @@ export default function ProductDetail({ product }) {
           <div>
             <div className="buttons">
               <div>
-                <button className="noselect add button-shopping">
+                <button
+                  className="noselect add button-shopping"
+                  onClick={() => addCart()}
+                >
                   <span className="text">Add to cart</span>
                   <span className="icon">
                     <img src={Add} alt="add-cart" />
@@ -105,7 +120,10 @@ export default function ProductDetail({ product }) {
                 </button>
               </div>
               <div>
-                <button className="noselect delete button-shopping">
+                <button
+                  className="noselect delete button-shopping"
+                  onClick={() => deleteFromCart()}
+                >
                   <span className="text">Delete</span>
                   <span className="icon">
                     <img src={Del} alt="delete-cart" />

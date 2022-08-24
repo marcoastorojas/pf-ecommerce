@@ -3,7 +3,7 @@ export function validate(inputs) {
 
   if (!inputs.title) {
     errors.title = "Title is required";
-  } else if (!/^[a-zA-Z0-9_ ]{6,70}$/.test(inputs.title)) {
+  } else if (!/^.{4,200}$/.test(inputs.title)) {
     errors.title = "Title is invalid";
   }
 
@@ -15,7 +15,7 @@ export function validate(inputs) {
 
   if (!inputs.brand) {
     errors.brand = "Brand is required";
-  } else if (!/^[a-zA-Z_ ]{4,14}$/.test(inputs.brand)) {
+  } else if (!/^[a-zA-Z_ ]{2,14}$/.test(inputs.brand)) {
     errors.brand = "Brand is invalid";
   }
 
