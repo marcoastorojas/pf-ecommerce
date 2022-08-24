@@ -8,6 +8,7 @@ import {
   getCategoryProductsById,
   getSearchCategory,
   getSearchName,
+  setUserGoogle,
 } from "../../redux/actions";
 
 import SearchBar from "../SearchBar";
@@ -21,6 +22,7 @@ export default function NavBar() {
 
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
+  const user = useSelector(state => state.userGoogle)
 
   useEffect(() => {
     dispatch(getCategories());
@@ -38,6 +40,12 @@ export default function NavBar() {
 
   function showCategoriesHandler() {
     showCategories ? setShowCategories(false) : setShowCategories(true);
+  }
+
+  const handleSignOut = () => {
+    // setUser({})
+    dispatch(setUserGoogle({}))
+    document.getElementById('sigInDiv').hidden = false
   }
 
   return (
@@ -105,15 +113,31 @@ export default function NavBar() {
       </div>
 
       <div className={style.sectionTwo}>
-        <div>
-          <Link to={'/login'} className={style.logIn}>
-            Log in
-          </Link>
-        </div>
-        <div>
-          <Link to={"/signup"} className={style.signUp}>
-            Sign up
-          </Link>
+        <div className={style.user}>
+          {user && 
+            <div>
+                <img src={user.picture} referrerpolicy='no-referrer' ></img>
+                <p>{user.name}</p>
+            </div>}
+            {
+                user && Object.keys(user).length !== 0 &&
+                <button onClick={handleSignOut}>Sign Out</button>
+          }
+          {
+            Object.keys(user).length === 0 ?
+            <div>
+              <div>
+                <Link to={'/login'} className={style.logIn}>
+                  Log in
+                </Link>
+              </div>
+              <div>
+                <Link to={"/signup"} className={style.signUp}>
+                  Sign up
+                </Link>
+              </div>
+            </div> : <></>
+          }
         </div>
         <div>
           <Link to={"/shopping-cart"} className={style.shooping}>
