@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/actions";
+import SignInGoogle from "../../components/SignInGoogle/SigInGoogle.jsx";
 import "./index.modules.css";
 
 export default function SignUp() {
@@ -157,6 +158,9 @@ export default function SignUp() {
       )}
      <button type="submit"> Register </button>
     </form>
+   <div>
+    <SignInGoogle/>
+   </div>
    </main>
 
    <footer className="footer"></footer>

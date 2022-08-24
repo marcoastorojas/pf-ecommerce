@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import SignInGoogle from "../SignInGoogle/SigInGoogle.jsx";
+
 
 import {
   getCategories,
@@ -106,7 +106,7 @@ export default function NavBar() {
 
       <div className={style.sectionTwo}>
         <div>
-          <Link to={""} className={style.logIn}>
+          <Link to={'/login'} className={style.logIn}>
             Log in
           </Link>
         </div>
@@ -124,9 +124,6 @@ export default function NavBar() {
 
           {/* <p className={style.cartNumber}>{}</p> */}
         </div>
-      </div>
-      <div>
-        <SignInGoogle />
       </div>
     </header>
   );
