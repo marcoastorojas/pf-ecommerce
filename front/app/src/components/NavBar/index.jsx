@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import SignInGoogle from '../SignInGoogle/SigInGoogle.jsx';
+import SignInGoogle from "../SignInGoogle/SigInGoogle.jsx";
 
 import {
  getCategories,
@@ -18,9 +18,9 @@ export default function NavBar() {
  const dispatch = useDispatch();
 
  const categories = useSelector((state) => state.categories);
+
  useEffect(() => {
   dispatch(getCategories());
-  console.log("NavBar");
  }, [dispatch]);
 
  //  const [productNumber, setProductNumber] = useState(0);
@@ -110,7 +110,7 @@ export default function NavBar() {
     </div>
    </div>
    <div>
-    <SignInGoogle/>
+    <SignInGoogle />
    </div>
   </header>
  );
