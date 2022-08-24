@@ -7,6 +7,8 @@ import {
   addOneFromCart,
 } from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
+import "./ShoppingCart.css";
+import { Link } from "react-router-dom";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
@@ -70,53 +72,62 @@ export default function ShoppingCart() {
 
   if (cart.length > 0)
     return (
-      <div>
+      <div className="cart">
         <h2>Shopping Cart</h2>
-        <div>
-          <h3>Products:</h3>
+
+        <div className="products-cart">
           {cart.map((pt) => {
             const images = pt.product.images.split(" ");
 
             return (
-              <div key={pt.product.id}>
-                <img src={images[0]} alt={pt.product.title} />
+              <div key={pt.product.id} className="card">
+                <Link to={`/product/${pt.product.id}`}>
+                  <img src={images[0]} alt={pt.product.title} />
+                </Link>
+
                 <h2>{pt.product.title}</h2>
-                <h3>
-                  <span>{pt.product.model}</span>
-                  <span>{pt.product.brand}</span>
-                </h3>
-                <div>
-                  <h2>
-                    <span>Total items: {pt.amount}</span>
-                    <span>
-                      Total price:$
-                      {Intl.NumberFormat().format(pt.amount * pt.product.price)}
-                    </span>
-                  </h2>
-                </div>
-                <div>
-                  <button value={pt.product.id} onClick={(e) => addCart(e)}>
-                    +{quantityAdd}
-                  </button>
-                  <button value={pt.product.id} onClick={(e) => resCart(e)}>
-                    -{quantityRes}
-                  </button>
-                  <button
-                    value={pt.product.id}
-                    onClick={(e) => deleteFromCart(e)}
-                  >
-                    -{pt.amount}
-                  </button>
+                <div className="info">
+                  <h3>
+                    <span>Model: {pt.product.model}</span>
+                    <span>Brand: {pt.product.brand}</span>
+                  </h3>
+                  <div className="price">
+                    <h2>
+                      <span>Total items: {pt.amount}</span>
+                      <span>
+                        Total price:$
+                        {Intl.NumberFormat().format(
+                          pt.amount * pt.product.price
+                        )}
+                      </span>
+                    </h2>
+                  </div>
+                  <div className="buttons-cart">
+                    <button value={pt.product.id} onClick={(e) => addCart(e)}>
+                      +{quantityAdd}
+                    </button>
+                    <button value={pt.product.id} onClick={(e) => resCart(e)}>
+                      -{quantityRes}
+                    </button>
+                    <button
+                      value={pt.product.id}
+                      onClick={(e) => deleteFromCart(e)}
+                    >
+                      -{pt.amount}
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
-          <div>
-            <button onClick={() => deleteAll()}>REMOVE ALL</button>
-          </div>
+        </div>
+        <div>
+          <button className="button-all" onClick={() => deleteAll()}>
+            <span>REMOVE ALL</span>
+          </button>
         </div>
         <Toaster />
       </div>
     );
-  else return <div>Shooping cart is empty</div>;
+  else return <div className="no-data">Shooping cart is empty</div>;
 }
