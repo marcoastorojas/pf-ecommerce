@@ -9,6 +9,7 @@ import Results from "./pages/Results";
 import Details from "./pages/Details";
 import Form from "./pages/Form";
 // import LogIn from "./pages/LogIn";
+import SellerRoutes from "./validations/SellerRoutes";
 
 import Cart from "./pages/Cart/Cart.jsx";
 
@@ -20,7 +21,9 @@ function App() {
         <Route path="/signup" exact element={<SignUp />} />
         <Route path="/results" exact element={<Results />} />
         <Route path="/product/:id" exact element={<Details />} />
-        <Route path="/product/create" exact element={<Form />} />
+        <Route element={<SellerRoutes/>}>
+          <Route path="/product/create" exact element={<Form />} />
+        </Route>
         <Route path="/shopping-cart" exact element={<Cart />} />
       </Routes>
     </div>
