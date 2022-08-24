@@ -18,7 +18,7 @@ export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
 export const POST_USER = "POST_USER";
 export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
 
-const BASE_URL = `https://129.151.112.176`;
+const BASE_URL = `http://localhost:3001`;
 
 export const getProducts = () => {
  return async function (dispatch) {
