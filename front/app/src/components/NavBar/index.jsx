@@ -107,11 +107,7 @@ export default function NavBar() {
      </Link>
     </div>
     <div>
-<<<<<<< HEAD
-     <button> {productNumber}</button>
-=======
-     <div>--Cart--</div>
->>>>>>> 606c42a7335a76b7910092a0bd32cc1c2934271b
+     <img src={cart} alt="cart"/>
      {/* <p className={style.cartNumber}>{}</p> */}
     </div>
    </div>
