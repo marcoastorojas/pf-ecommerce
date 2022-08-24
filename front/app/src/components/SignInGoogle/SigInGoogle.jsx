@@ -11,6 +11,7 @@ export default function SignInGoogle () {
     const user = useSelector(state => state.userGoogle)
     function handleCallbackResponse (response) {
         dispatch(setUserGoogle(jwt_decode(response.credential)))
+        localStorage.setItem('user', JSON.stringify(jwt_decode(response.credential)))
         document.getElementById('sigInDiv').hidden = true
     }
     //pruebaDeploy

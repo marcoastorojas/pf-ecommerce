@@ -45,7 +45,8 @@ export default function NavBar() {
   const handleSignOut = () => {
     // setUser({})
     dispatch(setUserGoogle({}))
-    document.getElementById('sigInDiv').hidden = false
+    localStorage.removeItem('user')
+    // document.getElementById('sigInDiv').hidden = false
   }
 
   return (
@@ -113,6 +114,7 @@ export default function NavBar() {
       </div>
 
       <div className={style.sectionTwo}>
+        <button onClick={() => console.log(localStorage)}>PRUEBA</button>
         <div className={style.user}>
           {user && 
             <div>
