@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import { setUserGoogle } from '../../redux/actions';
+import { Navigate } from 'react-router-dom';
 
 export default function SignInGoogle () {
     const dispatch = useDispatch();
     const user = useSelector(state => state.userGoogle)
     function handleCallbackResponse (response) {
         dispatch(setUserGoogle(jwt_decode(response.credential)))
+        localStorage.setItem('user', JSON.stringify(jwt_decode(response.credential)))
         document.getElementById('sigInDiv').hidden = true
     }
+    //pruebaDeploy
     useEffect(() => {
         window.google && window.google.accounts.id.initialize( {
             client_id: '98217127170-vfi6dqi6v82dhj9704ra9gb2go8n6q7l.apps.googleusercontent.com',
@@ -32,7 +35,10 @@ export default function SignInGoogle () {
         <div className={style.contsigin}>
             {/* <button onClick={()=>console.log(Object.keys(user).length)}></button> */}
             <div id='sigInDiv'></div>
-            {user && 
+            {
+                Object.keys(user).length !== 0 && <Navigate to='/' />
+            }
+            {/* {user && 
             <div>
                 <img src={user.picture}></img>
                 <p>{user.name}</p>
@@ -40,7 +46,7 @@ export default function SignInGoogle () {
             {
                 user && Object.keys(user).length !== 0 &&
                 <button onClick={handleSignOut}>Sign Out</button>
-            }
+            } */}
         </div>
     )
 }

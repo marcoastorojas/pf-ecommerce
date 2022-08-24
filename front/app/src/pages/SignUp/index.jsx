@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { postUser } from "../../redux/actions";
+import SignInGoogle from "../../components/SignInGoogle/SigInGoogle.jsx";
 import "./index.modules.css";
 
 export default function SignUp() {
+ const dispatch = useDispatch();
+
  const [name, setName] = useState("");
  const [username, setUsername] = useState("");
  const [email, setEmail] = useState("");
@@ -52,8 +57,9 @@ export default function SignUp() {
   e.preventDefault();
   setSubmitTry(true);
   if (name && username && email && password && confirmedPassword) {
-   let newUser = { name, username, email, password, confirmedPassword };
-   console.log(newUser);
+   let newUser = { name, username, email, password, role: "USER_ROLE" };
+   //  console.log(newUser);
+   dispatch(postUser(newUser));
   }
  };
 
@@ -118,7 +124,9 @@ export default function SignUp() {
       {"Password: \n"}
       {passwordBlur && password.length <= 6 ? (
        <p style={{ display: "inline", color: "red" }}>
-        *Password should have more than 6 digits.
+        {
+         "*Password should contain more than 6 digits, a number, a special character, and upper and a lower case letter (a-z)."
+        }
        </p>
       ) : null}
       <input
@@ -150,6 +158,9 @@ export default function SignUp() {
       )}
      <button type="submit"> Register </button>
     </form>
+   <div>
+    <SignInGoogle/>
+   </div>
    </main>
 
    <footer className="footer"></footer>

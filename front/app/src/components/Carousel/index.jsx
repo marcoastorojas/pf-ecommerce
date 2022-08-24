@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+// import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { getProducts } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -40,17 +40,17 @@ export default function Carousel() {
      return (
       <div className={index === current ? "slide-active" : "slide"} key={index}>
        {index === current && (
-        <Link to="/product/:id" className="image-text-container">
-         <img
-          src={slide.images.slice(0)}
-          alt="not found"
-          className="image-carousel"
-         />
-         <div className="title-price-container">
-          <span className="slide-name">{slide.title}</span>
-          <span className="slide-price">${slide.price}</span>
-         </div>
-        </Link>
+            <Link to={`/product/${slide.id}`} className="image-text-container">
+            <img
+            src={slide.images.slice(0)}
+            alt="not found"
+            className="image-carousel"
+            />
+            <div className="title-price-container">
+            <span className="slide-name">{slide.title}</span>
+            <span className="slide-price">${slide.price}</span>
+            </div>
+            </Link>
        )}
       </div>
      );
@@ -60,7 +60,7 @@ export default function Carousel() {
     </span>
    </div>
    <div className="section-two">
-    <button className="round-button" onClick={console.log(1)}></button>
+    <button className="round-button"></button>
     <button className="round-button"></button>
     <button className="round-button"></button>
     <button className="round-button"></button>
