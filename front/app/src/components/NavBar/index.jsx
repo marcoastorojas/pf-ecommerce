@@ -6,6 +6,8 @@ import SearchBar from "../SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName } from "../../redux/actions";
 
+import cart from "../../media/images/cart.svg";
+
 export default function NavBar() {
  const dispatch = useDispatch();
 
@@ -76,7 +78,7 @@ export default function NavBar() {
      </Link>
     </div>
     <div>
-     <button>🛒 {productNumber}</button>
+     <button> {productNumber}</button>
      {/* <p className={style.cartNumber}>{}</p> */}
     </div>
    </div>

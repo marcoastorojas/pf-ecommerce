@@ -7,24 +7,30 @@ export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const GET_PRODUCTS_BY_NAME = "GET_PRODUCTS_BY_NAME";
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
-export const GET_SEARCH_NAME = "GET_SEARCH_NAME"; 
+export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
-export const GET_SEARCH_CATEGORY = 'GET_SEARCH_CATEGORY';
+export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
+
+//SHOPPING CART
+export const ADD_TO_CART = "ADD_TO_CART";
+export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
+export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
 
 export const getProducts = () => {
   return async function (dispatch) {
-   try {
-    let json = await axios.get("http://localhost:3001/products");
-    return dispatch({
-     type: GET_PRODUCTS,
-     payload: json.data,
-    });
-   } catch (error) {
-    console.log(error);
-   }
+    try {
+      let json = await axios.get("http://localhost:3001/products");
+      return dispatch({
+        type: GET_PRODUCTS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
- };
+};
 
 export const getProductId = (id) => {
   return async function (dispatch) {
@@ -90,66 +96,78 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   if (!!min) url.searchParams.append("min", min);
   if (!!asc) url.searchParams.append("asc", asc);
   if (!!desc) url.searchParams.append("desc", desc);
- //  console.log(url.href);
+  //  console.log(url.href);
   return (dispatch) => {
-   axios
-    .get(url.href)
-    .then((response) => {
-     dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
-    })
-    .catch((err) => {
-     console.log({ from: "action creator getProductsFilter", err });
-    });
+    axios
+      .get(url.href)
+      .then((response) => {
+        dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
+      })
+      .catch((err) => {
+        console.log({ from: "action creator getProductsFilter", err });
+      });
   };
- };
-
-export const getCategories = () => {
- return (dispatch) => {
-  axios
-   .get("http://localhost:3001/categories")
-   .then((response) => {
-    console.log({ from: "action creator getCategories" });
-    dispatch({
-     type: GET_CATEGORIES,
-     payload: response.data.data,
-    });
-   })
-   .catch((err) =>
-    console.log({ m: "Error on action creator getCategories", err })
-   );
- };
 };
 
-export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
+export const getCategories = () => {
+  return (dispatch) => {
+    axios
+      .get("http://localhost:3001/categories")
+      .then((response) => {
+        console.log({ from: "action creator getCategories" });
+        dispatch({
+          type: GET_CATEGORIES,
+          payload: response.data.data,
+        });
+      })
+      .catch((err) =>
+        console.log({ m: "Error on action creator getCategories", err })
+      );
+  };
+};
+
+export const getCategoryProductsById = (
+  categoryId,
+  name,
+  max,
+  min,
+  asc,
+  desc
+) => {
   let url = new URL(`http://localhost:3001/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
   if (!!min) url.searchParams.append("min", min);
   if (!!asc) url.searchParams.append("asc", asc);
   if (!!desc) url.searchParams.append("desc", desc);
- return (dispatch) => {
-  axios
-   .get(url.href)
-   .then((response) => {
-    console.log({ from: "action creator getCategoryProductsById", response });
-    dispatch({
-     type: GET_CATEGORY_PRODUCTS_BY_ID,
-     payload: response.data.data,
-    });
-   })
-   .catch((err) =>
-    console.log({ m: "Error on action creator getCategoryProductsById", err })
-   );
- };
+  return (dispatch) => {
+    axios
+      .get(url.href)
+      .then((response) => {
+        console.log({
+          from: "action creator getCategoryProductsById",
+          response,
+        });
+        dispatch({
+          type: GET_CATEGORY_PRODUCTS_BY_ID,
+          payload: response.data.data,
+        });
+      })
+      .catch((err) =>
+        console.log({
+          m: "Error on action creator getCategoryProductsById",
+          err,
+        })
+      );
+  };
 };
-
 
 export const getSearchName = (payload) => {
   return {
     type: GET_SEARCH_NAME,
     payload,
-  }
-}
+  };
+};
 
 export const getSubCategories = () => {
   return async function (dispatch) {
@@ -168,6 +186,33 @@ export const getSubCategories = () => {
 export const getSearchCategory = (payload) => {
   return {
     type: GET_SEARCH_CATEGORY,
-    payload
-  }
-}
+    payload,
+  };
+};
+
+export const addToCart = (product, amount) => {
+  return {
+    type: ADD_TO_CART,
+    payload: { amount, product },
+  };
+};
+
+export const removeAllFromCart = (product) => {
+  return {
+    type: REMOVE_ALL_FROM_CART,
+    payload: product,
+  };
+};
+
+export const removeOneFromCart = (product) => {
+  return {
+    type: REMOVE_ONE_FROM_CART,
+    payload: product,
+  };
+};
+
+export const clearCart = () => {
+  return {
+    type: CLEAR_CART,
+  };
+};
