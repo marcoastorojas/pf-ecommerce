@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+
 .mainDiv {
  display: flex;
  justify-content: center;
@@ -8,4 +10,6 @@
 
 .textInput {
  width: 23vw;
+
+ font-family: "Raleway", sans-serif;
 }

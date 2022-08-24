@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+// import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { getProducts } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-// import "../../Css/Carousel.css";
+import { Link } from "react-router-dom";
+
 import "./index.modules.css";
 
 export default function Carousel() {
@@ -31,25 +32,46 @@ export default function Carousel() {
 
  return (
   <section className="carousel">
-   <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
-   <FaArrowAltCircleRight className="right-arrow" onClick={nextSlide} />
-   {sliceArrayProducts?.map((slide, index) => {
-    return (
-     <div className={index === current ? "slide-active" : "slide"} key={index}>
-      {index === current && (
-       <div>
-        <img
-         src={slide.images.slice(0)}
-         alt="not found"
-         className="image-carousel"
-        />
-        <span className="slide-name">{slide.title}</span>
-        <span className="slide-price">${slide.price}</span>
-       </div>
-      )}
-     </div>
-    );
-   })}
+   <div className="section-one">
+    <span className="arrows" onClick={prevSlide}>
+     {"<"}
+    </span>
+    {sliceArrayProducts?.map((slide, index) => {
+     return (
+      <div className={index === current ? "slide-active" : "slide"} key={index}>
+       {index === current && (
+        <Link to="/product/:id" className="image-text-container">
+         <img
+          src={slide.images.slice(0)}
+          alt="not found"
+          className="image-carousel"
+         />
+         <div className="title-price-container">
+          <span className="slide-name">{slide.title}</span>
+          <span className="slide-price">${slide.price}</span>
+         </div>
+        </Link>
+       )}
+      </div>
+     );
+    })}
+    <span className="arrows" onClick={nextSlide}>
+     {">"}
+    </span>
+   </div>
+   <div className="section-two">
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+    <button className="round-button"></button>
+   </div>
   </section>
  );
 }

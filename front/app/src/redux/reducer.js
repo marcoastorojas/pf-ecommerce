@@ -9,6 +9,7 @@ import {
   GET_SEARCH_NAME,
   GET_SUB_CATEGORIES,
   GET_SEARCH_CATEGORY,
+  SET_USER_GOOGLE,
 
   //SHOPPING CART
   ADD_TO_CART,
@@ -26,6 +27,7 @@ const initialState = {
   search: "",
   subCategories: [],
   searchCategory: "",
+  userGoogle: {},
   cart: [],
 };
 
@@ -165,6 +167,11 @@ export const reducer = (state = initialState, action) => {
         cart: [],
       };
     }
+    case SET_USER_GOOGLE:
+      return {
+        ...state,
+        userGoogle: action.payload,
+      };
 
     default:
       return state;
