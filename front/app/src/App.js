@@ -13,10 +13,12 @@ import LogIn from './pages/LogIn';
 import SellerRoutes from "./validations/SellerRoutes";
 
 import Cart from "./pages/Cart/Cart.jsx";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div className="App">
+      <NavBar/>
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/signup" exact element={<SignUp />} />
