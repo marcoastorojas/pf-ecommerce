@@ -14,6 +14,8 @@ import SearchBar from "../SearchBar";
 
 import style from "./index.module.css";
 
+import cart from "../../media/images/cart.svg";
+
 export default function NavBar() {
  const dispatch = useDispatch();
 
@@ -105,7 +107,7 @@ export default function NavBar() {
      </Link>
     </div>
     <div>
-     <div>--Cart--</div>
+     <img src={cart} alt="cart"/>
      {/* <p className={style.cartNumber}>{}</p> */}
     </div>
    </div>
