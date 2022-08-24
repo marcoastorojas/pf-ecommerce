@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+// import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
 import { getProducts } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -60,7 +60,7 @@ export default function Carousel() {
     </span>
    </div>
    <div className="section-two">
-    <button className="round-button" onClick={console.log(1)}></button>
+    <button className="round-button"></button>
     <button className="round-button"></button>
     <button className="round-button"></button>
     <button className="round-button"></button>
