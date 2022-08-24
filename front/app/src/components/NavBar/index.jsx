@@ -116,7 +116,7 @@ export default function NavBar() {
         <div className={style.user}>
           {user && 
             <div>
-                <img src={user.picture} referrerpolicy='no-referrer' ></img>
+                <img src={user.picture} referrerPolicy='no-referrer' ></img>
                 <p>{user.name}</p>
             </div>}
             {

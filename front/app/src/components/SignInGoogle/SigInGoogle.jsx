@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import { setUserGoogle } from '../../redux/actions';
+import { Navigate } from 'react-router-dom';
 
 export default function SignInGoogle () {
     const dispatch = useDispatch();
@@ -33,7 +34,10 @@ export default function SignInGoogle () {
         <div className={style.contsigin}>
             {/* <button onClick={()=>console.log(Object.keys(user).length)}></button> */}
             <div id='sigInDiv'></div>
-            {user && 
+            {
+                Object.keys(user).length !== 0 && <Navigate to='/' />
+            }
+            {/* {user && 
             <div>
                 <img src={user.picture}></img>
                 <p>{user.name}</p>
@@ -41,7 +45,7 @@ export default function SignInGoogle () {
             {
                 user && Object.keys(user).length !== 0 &&
                 <button onClick={handleSignOut}>Sign Out</button>
-            }
+            } */}
         </div>
     )
 }
