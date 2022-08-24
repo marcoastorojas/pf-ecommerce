@@ -28,7 +28,9 @@ const initialState = {
   search: "",
   subCategories: [],
   searchCategory: "",
-  userGoogle: {},
+  userGoogle: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : {},
   cart: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
