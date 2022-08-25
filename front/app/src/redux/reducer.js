@@ -105,19 +105,16 @@ export const reducer = (state = initialState, action) => {
         (pt) => pt.product.id === action.payload.product.id
       );
       if (getCart.length === 1) {
-        const amountProduct = getCart[0].amount;
-        const newProduct = {
-          amount: amountProduct + action.payload.amount,
-          product: getCart[0].product,
-        };
-        const products = state.cart.filter(
-          (pt) => pt.product.id !== action.payload.product.id
-        );
-        products.push(newProduct);
+        state.cart.map((pt) => {
+          if (pt.product.id === action.payload.product.id) {
+            pt.amount += action.payload.amount;
+            return;
+          }
+        });
 
         return {
           ...state,
-          cart: products,
+          cart: [...state.cart],
         };
       } else
         return {
@@ -131,18 +128,16 @@ export const reducer = (state = initialState, action) => {
       );
       if (getCart.length === 1) {
         if (getCart[0].amount > 1) {
-          const amountProduct = getCart[0].amount;
-          const newProduct = {
-            amount: amountProduct - 1,
-            product: getCart[0].product,
-          };
-          const newProducts = state.cart.filter(
-            (pt) => pt.product.id !== action.payload
-          );
-          newProducts.push(newProduct);
+          state.cart.map((pt) => {
+            if (pt.product.id === action.payload) {
+              pt.amount -= 1;
+              return;
+            }
+          });
+          
           return {
             ...state,
-            cart: newProducts,
+            cart: [...state.cart],
           };
         } else {
           const newProducts = state.cart.filter(
@@ -181,18 +176,16 @@ export const reducer = (state = initialState, action) => {
       );
       if (getCart.length === 1) {
         if (getCart[0].amount > 0) {
-          const amountProduct = getCart[0].amount;
-          const newProduct = {
-            amount: amountProduct + 1,
-            product: getCart[0].product,
-          };
-          const newProducts = state.cart.filter(
-            (pt) => pt.product.id !== action.payload
-          );
-          newProducts.push(newProduct);
+          state.cart.map((pt) => {
+            if (pt.product.id === action.payload) {
+              pt.amount += 1;
+              return;
+            }
+          });
+          
           return {
             ...state,
-            cart: newProducts,
+            cart: [...state.cart],
           };
         } else {
           const newProducts = state.cart.filter(
