@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../redux/actions';
+import { Toaster, toast } from 'react-hot-toast';
 
 export default function LogInForm({LogIn, error}) {
     const dispatch = useDispatch();
-    const pepe = useSelector(state => state.user)
+    const userRedux = useSelector(state => state.user);
+    const errorRedux = useSelector(state => state.errors)
 
     const [user, setUser] = useState({email_user: "", password: ""});
     const handleUser = (e) => {
@@ -17,15 +19,12 @@ export default function LogInForm({LogIn, error}) {
 
     const submitHandler = e => {
         e.preventDefault();
-        // LogIn(details);
-        console.log(user)
         dispatch(logIn(user))
-        // localStorage.setItem('user', JSON.stringify(pepe))
     }
-
+    
   return (
     <div>
-        <button onClick={() => {console.log('userLocalStorage: ', pepe); console.log('user form:', user)}}>PRUEBA</button>
+        <button onClick={() => {console.log(Object.keys(errorRedux).length)}}>PRUEBA</button>
       <form onSubmit={submitHandler}>
         <div className="form-inner">
             <h2>Log In</h2>
@@ -40,8 +39,11 @@ export default function LogInForm({LogIn, error}) {
             </div>
             <input type="submit" value="LOGIN" />
         </div>
-        <Link to={"/"}><button>Back to Home</button></Link>
-    </form>
+        </form>
+        {
+            Object.keys(userRedux).length !== 0 && <Navigate to='/'/> 
+        }
+        <Toaster/>
     </div>
   )
 }

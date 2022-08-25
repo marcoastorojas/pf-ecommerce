@@ -19,7 +19,7 @@ export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
 export const POST_USER = "POST_USER";
 export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
 export const LOG_IN = 'LOG_IN';
-
+export const ERROR_HANDLE = 'ERROR_HANDLE';
 //SHOPPING CART
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
@@ -257,7 +257,7 @@ export const postUser = (newUser) => {
 };
 
 export const logIn = (user) => {
-  console.log('ACTIONS: ', user)
+  // console.log('ACTIONS: ', user)
   return (dispatch) => {
     axios({
       method: 'POST',
@@ -265,12 +265,19 @@ export const logIn = (user) => {
       data: user
     })
     .then((response) => {
-      console.log('RESPONSE: ', response)
+      // console.log('RESPONSE: ', response)
       dispatch({
         type: LOG_IN,
         payload: response.data.user
       })
+      // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
+      localStorage.setItem('user',JSON.stringify(response.data.user))
     })
-    .catch((err) => console.log(err.response.data.errors))
+    .catch((err) => {
+      dispatch({
+        type: ERROR_HANDLE,
+        payload: err.response.data
+      })
+    })
   }
 }

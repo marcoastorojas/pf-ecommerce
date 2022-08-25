@@ -16,6 +16,7 @@ import SearchBar from "../SearchBar";
 import style from "./index.module.css";
 
 import cartI from "../../media/images/cart.svg";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ export default function NavBar() {
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
   const user = useSelector(state => state.user)
+  // const user = useSelector(state => state.user);
+  const errorRedux = useSelector(state => state.errors)
 
   useEffect(() => {
     dispatch(getCategories());
@@ -49,6 +52,17 @@ export default function NavBar() {
     // document.getElementById('sigInDiv').hidden = false
   }
 
+  //Toast Inicio de Sesión
+  useEffect(() => {
+    if(Object.keys(errorRedux).length > 0) {
+        toast.error(`${Object.keys(errorRedux.errors)[0]}: ${Object.values(errorRedux.errors)[0]}`)
+        // console.log(`${Object.keys(errorRedux.errors)[0]}: ${Object.values(errorRedux.errors)[0]}`)
+    }
+    if(Object.keys(user).length > 0) {
+        toast.success(`Welcome ${user.username}`)
+    }
+    console.log(user)
+  }, [Object.keys(errorRedux).length?errorRedux.errors:errorRedux, user])
   return (
     <header className={style.header}>
       <div className={style.sectionOne}>
@@ -115,11 +129,11 @@ export default function NavBar() {
 
       <div className={style.sectionTwo}>
         <button onClick={() => console.log(localStorage)}>PRUEBA</button>
-        {/* <div className={style.user}>
+        <div className={style.user}>
           {user && 
             <div>
                 <img src={user.picture} referrerPolicy='no-referrer' ></img>
-                <p>{user.name}</p>
+                <p>{user.username || user.name}</p>
             </div>
           }
           {
@@ -141,7 +155,7 @@ export default function NavBar() {
               </div>
             </div> : <></>
           }
-        </div> */}
+        </div>
         <div>
           <Link to={"/shopping-cart"} className={style.shooping}>
             <h4>
@@ -151,6 +165,7 @@ export default function NavBar() {
 
           {/* <p className={style.cartNumber}>{}</p> */}
         </div>
+        <Toaster/>
       </div>
     </header>
   );
