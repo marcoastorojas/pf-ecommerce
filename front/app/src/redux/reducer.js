@@ -118,7 +118,6 @@ export const reducer = (state = initialState, action) => {
       return;
      }
     });
-
         return {
           ...state,
           cart: [...state.cart],
