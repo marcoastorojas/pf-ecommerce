@@ -12,6 +12,7 @@ import {
  SET_USER_GOOGLE,
  LOG_IN,
  ERROR_HANDLE,
+ POST_USER,
 
  //SHOPPING CART
  ADD_TO_CART,
@@ -31,6 +32,7 @@ const initialState = {
  search: "",
  subCategories: [],
  searchCategory: "",
+ signupResponse: {},
  user: localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : {},
@@ -225,6 +227,11 @@ export const reducer = (state = initialState, action) => {
    return {
     ...state,
     user: action.payload,
+   };
+  case POST_USER:
+   return {
+    ...state,
+    signupResponse: action.payload,
    };
   case LOG_IN:
    return {
