@@ -1,35 +1,46 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../../redux/actions';
 
 export default function LogInForm({LogIn, error}) {
+    const dispatch = useDispatch();
+    const pepe = useSelector(state => state.user)
 
-const [details, setDetails] = useState({name: "", email: "", password: ""});
+    const [user, setUser] = useState({email_user: "", password: ""});
+    const handleUser = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value,
+        })
+    }
 
-const submitHandler = e => {
-    e.preventDefault();
-    LogIn(details);
-}
+    const submitHandler = e => {
+        e.preventDefault();
+        // LogIn(details);
+        console.log(user)
+        dispatch(logIn(user))
+    }
 
   return (
-    <form onSubmit={submitHandler}>
+    <div>
+        <button onClick={() => {console.log('userLocalStorage: ', pepe); console.log('user form:', user)}}>PRUEBA</button>
+      <form onSubmit={submitHandler}>
         <div className="form-inner">
             <h2>Log In</h2>
             {(error !== "") ? (<div className="error">{error}</div>) : ""}
             <div className="form-group">
-                <label htmlFor="name">Name: </label>
-                <input type="text" name="name" id="name" onChange={e => setDetails({...details, name: e.target.value})} value={details.name}/>
-            </div>
-            <div className="form-group">
-                <label htmlFor="email">Email: </label>
-                <input type="email" name="email" id="email" onChange={e => setDetails({...details, email: e.target.value})} value={details.email}/>
+                <label htmlFor="email_user">Email: </label>
+                <input name="email_user" id="email" onChange={handleUser}/>
             </div>
             <div className="form-group">
                 <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
+                <input type="password" name="password" id="password" onChange={handleUser}/>
             </div>
             <input type="submit" value="LOGIN" />
         </div>
         <Link to={"/"}><button>Back to Home</button></Link>
     </form>
+    </div>
   )
 }

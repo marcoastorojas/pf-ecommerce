@@ -10,6 +10,7 @@ import {
   GET_SUB_CATEGORIES,
   GET_SEARCH_CATEGORY,
   SET_USER_GOOGLE,
+  LOG_IN,
 
   //SHOPPING CART
   ADD_TO_CART,
@@ -31,6 +32,7 @@ const initialState = {
   userGoogle: localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user'))
     : {},
+  user: {},
   cart: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
@@ -219,7 +221,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         userGoogle: action.payload,
       };
-
+    case LOG_IN: 
+      return {
+        ...state,
+        user: action.payload,
+      }
     default:
       return state;
   }
