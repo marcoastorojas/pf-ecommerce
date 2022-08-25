@@ -1,46 +1,44 @@
 import {
-  GET_PRODUCTS,
-  GET_PRODUCTS_BY_NAME,
-  GET_PRODUCT_BY_ID,
-  CLEAR_DETAIL,
-  GET_PRODUCTS_FILTER,
-  GET_CATEGORIES,
-  GET_CATEGORY_PRODUCTS_BY_ID,
-  GET_SEARCH_NAME,
-  GET_SUB_CATEGORIES,
-  GET_SEARCH_CATEGORY,
-  SET_USER_GOOGLE,
-  LOG_IN,
-  ERROR_HANDLE,
-  POST_USER,
+ GET_PRODUCTS,
+ GET_PRODUCTS_BY_NAME,
+ GET_PRODUCT_BY_ID,
+ CLEAR_DETAIL,
+ GET_PRODUCTS_FILTER,
+ GET_CATEGORIES,
+ GET_CATEGORY_PRODUCTS_BY_ID,
+ GET_SEARCH_NAME,
+ GET_SUB_CATEGORIES,
+ GET_SEARCH_CATEGORY,
+ SET_USER_GOOGLE,
+ LOG_IN,
+ ERROR_HANDLE,
 
-  //SHOPPING CART
-  ADD_TO_CART,
-  REMOVE_ONE_FROM_CART,
-  REMOVE_ALL_FROM_CART,
-  CLEAR_CART,
-  ADD_ONE_FROM_CART,
-  GET_TOTAL,
+ //SHOPPING CART
+ ADD_TO_CART,
+ REMOVE_ONE_FROM_CART,
+ REMOVE_ALL_FROM_CART,
+ CLEAR_CART,
+ ADD_ONE_FROM_CART,
+ GET_TOTAL,
 } from "./actions";
 
 const initialState = {
-  products: [],
-  allProducts: [],
-  searchedProducts: [],
-  product: {},
-  categories: [],
-  search: "",
-  subCategories: [],
-  searchCategory: "",
-  signUpResponse: {},
-  user: localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user'))
-    : {},
-  errors: {},
-  cart: localStorage.getItem("cart")
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [],
-  cartTotal: 0,
+ products: [],
+ allProducts: [],
+ searchedProducts: [],
+ product: {},
+ categories: [],
+ search: "",
+ subCategories: [],
+ searchCategory: "",
+ user: localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : {},
+ errors: {},
+ cart: localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [],
+ cartTotal: 0,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -118,59 +116,25 @@ export const reducer = (state = initialState, action) => {
       return;
      }
     });
-        return {
-          ...state,
-          cart: [...state.cart],
-        };
-      } else
-        return {
-          ...state,
-          cart: [...state.cart, action.payload],
-        };
-    }
-    case REMOVE_ONE_FROM_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload
-      );
-      if (getCart.length === 1) {
-        if (getCart[0].amount > 1) {
-          state.cart.map((pt) => {
-            if (pt.product.id === action.payload) {
-              pt.amount -= 1;
-              return;
-            }
-          });
 
-          return {
-            ...state,
-            cart: [...state.cart],
-          };
-        } else {
-          const newProducts = state.cart.filter(
-            (pt) => pt.product.id !== action.payload
-          );
-          return {
-            ...state,
-            cart: newProducts,
-          };
-        }
-      }
-      return {
-        ...state,
-      };
-    }
-    case REMOVE_ALL_FROM_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload
-      );
-      if (getCart.length === 1) {
-        const newProducts = state.cart.filter(
-          (pt) => pt.product.id !== action.payload
-        );
-        return {
-          ...state,
-          cart: newProducts,
-        };
+    return {
+     ...state,
+     cart: [...state.cart],
+    };
+   } else
+    return {
+     ...state,
+     cart: [...state.cart, action.payload],
+    };
+  }
+  case REMOVE_ONE_FROM_CART: {
+   const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
+   if (getCart.length === 1) {
+    if (getCart[0].amount > 1) {
+     state.cart.map((pt) => {
+      if (pt.product.id === action.payload) {
+       pt.amount -= 1;
+       return;
       }
      });
 
@@ -187,88 +151,92 @@ export const reducer = (state = initialState, action) => {
       cart: newProducts,
      };
     }
-
-    case ADD_ONE_FROM_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload
-      );
-      if (getCart.length === 1) {
-        if (getCart[0].amount > 0) {
-          state.cart.map((pt) => {
-            if (pt.product.id === action.payload) {
-              pt.amount += 1;
-              return;
-            }
-          });
-
-          return {
-            ...state,
-            cart: [...state.cart],
-          };
-        } else {
-          const newProducts = state.cart.filter(
-            (pt) => pt.product.id !== action.payload
-          );
-          return {
-            ...state,
-            cart: newProducts,
-          };
-        }
-      }
-      return {
-        ...state,
-      };
-    }
-    case GET_TOTAL: {
-      if (state.cart.length > 0) {
-        const total = state.cart.reduce(
-          (acc, pt) => (acc = pt.product.price * pt.amount + acc),
-          0
-        );
-        return {
-          ...state,
-          cartTotal: total,
-        };
-      } else {
-        return {
-          ...state,
-        };
-      }
-    }
-    case CLEAR_CART: {
-      return {
-        ...state,
-        cart: [],
-      };
-    }
-    case SET_USER_GOOGLE:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case LOG_IN: 
-      return {
-        ...state,
-        user: action.payload,
-        errors: {},
-      }
-    case ERROR_HANDLE: 
+   }
+   return {
+    ...state,
+   };
+  }
+  case REMOVE_ALL_FROM_CART: {
+   const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
+   if (getCart.length === 1) {
+    const newProducts = state.cart.filter(
+     (pt) => pt.product.id !== action.payload
+    );
     return {
+     ...state,
+     cart: newProducts,
+    };
+   }
+   return {
+    ...state,
+   };
+  }
+  case ADD_ONE_FROM_CART: {
+   const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
+   if (getCart.length === 1) {
+    if (getCart[0].amount > 0) {
+     state.cart.map((pt) => {
+      if (pt.product.id === action.payload) {
+       pt.amount += 1;
+       return;
+      }
+     });
+
+     return {
       ...state,
-      errors: action.payload,
+      cart: [...state.cart],
+     };
+    } else {
+     const newProducts = state.cart.filter(
+      (pt) => pt.product.id !== action.payload
+     );
+     return {
+      ...state,
+      cart: newProducts,
+     };
     }
-    default:
-      return state;
+   }
+   return {
+    ...state,
+   };
+  }
+  case GET_TOTAL: {
+   if (state.cart.length > 0) {
+    const total = state.cart.reduce(
+     (acc, pt) => (acc = pt.product.price * pt.amount + acc),
+     0
+    );
+    return {
+     ...state,
+     cartTotal: total,
+    };
+   } else {
+    return {
+     ...state,
+    };
+   }
+  }
+  case CLEAR_CART: {
+   return {
+    ...state,
+    cart: [],
+   };
   }
   case SET_USER_GOOGLE:
    return {
     ...state,
-    userGoogle: action.payload,
+    user: action.payload,
    };
-  case POST_USER:
+  case LOG_IN:
    return {
     ...state,
-    signUpResponse: action.payload,
+    user: action.payload,
+    errors: {},
+   };
+  case ERROR_HANDLE:
+   return {
+    ...state,
+    errors: action.payload,
    };
   default:
    return state;

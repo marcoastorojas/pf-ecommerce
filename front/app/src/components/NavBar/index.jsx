@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 import {
- getCategories,
- getCategoryProductsById,
- getSearchCategory,
- getSearchName,
- setUserGoogle,
+  getCategories,
+  getCategoryProductsById,
+  getSearchCategory,
+  getSearchName,
+  setUserGoogle,
 } from "../../redux/actions";
 
 import SearchBar from "../SearchBar";
@@ -18,7 +19,6 @@ import cartI from "../../media/images/cart.svg";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function NavBar() {
-
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.categories);
@@ -90,34 +90,42 @@ export default function NavBar() {
         );
        })}
      </details> */}
-     <button onClick={showCategoriesHandler} className={style.categoriesButton}>
-      Categories
-     </button>
-     <div>
-      {categories[0] &&
-       showCategories &&
-       categories.map((e, index) => {
-        const { id, name } = e;
-        return (
-         <div key={index}>
-          <Link key={id} id={id} to={`/results`} onClick={onCategorySelection}>
-           {name}
+          <button
+            onClick={showCategoriesHandler}
+            className={style.categoriesButton}
+          >
+            Categories
+          </button>
+          <div>
+            {categories[0] &&
+              showCategories &&
+              categories.map((e, index) => {
+                const { id, name } = e;
+                return (
+                  <div key={index}>
+                    <Link
+                      key={id}
+                      id={id}
+                      to={`/results`}
+                      onClick={onCategorySelection}
+                    >
+                      {name}
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
+          <Link to="/" className={style.navBarLinks}>
+            History
           </Link>
-         </div>
-        );
-       })}
-     </div>
-     <Link to="/" className={style.navBarLinks}>
-      History
-     </Link>
-     <Link to="/" className={style.navBarLinks}>
-      Sales
-     </Link>
-     <Link to="/product/create" className={style.navBarLinks}>
-      Upload your product
-     </Link>
-    </nav>
-   </div>
+          <Link to="/" className={style.navBarLinks}>
+            Sales
+          </Link>
+          <Link to="/product/create" className={style.navBarLinks}>
+            Upload your product
+          </Link>
+        </nav>
+      </div>
 
       <div className={style.sectionTwo}>
         <button onClick={() => console.log(localStorage)}>PRUEBA</button>
@@ -159,20 +167,6 @@ export default function NavBar() {
         </div>
         <Toaster/>
       </div>
-     ) : (
-      <></>
-     )}
-    </div>
-    <div>
-     <Link to={"/shopping-cart"} className={style.shooping}>
-      <h4>
-       <img src={cartI} alt="cart" /> {cart.length}
-      </h4>
-     </Link>
-
-     {/* <p className={style.cartNumber}>{}</p> */}
-    </div>
-   </div>
-  </header>
- );
+    </header>
+  );
 }
