@@ -18,6 +18,7 @@ export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
 
 export const POST_USER = "POST_USER";
 export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
+export const LOG_IN = 'LOG_IN';
 
 //SHOPPING CART
 export const ADD_TO_CART = "ADD_TO_CART";
@@ -261,3 +262,17 @@ export const postUser = (newUser) => {
       );
   };
 };
+
+export const logIn = (user) => {
+  return (dispatch) => {
+    axios
+    .post(`${BASE_URL}/auth/signin`, user)
+    .then((response) => {
+      dispatch({
+        type: LOG_IN,
+        payload: response.data
+      })
+    })
+    .catch((err) => console.log('Error: ', err.message))
+  }
+}

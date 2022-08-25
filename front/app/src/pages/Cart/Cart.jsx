@@ -6,7 +6,7 @@ import ShoppingCart from "../../components/ShoppingCart/ShoppingCart.jsx";
 export default function Cart() {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <ShoppingCart />
       <Footer />
     </div>

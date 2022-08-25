@@ -40,17 +40,17 @@ export default function Carousel() {
      return (
       <div className={index === current ? "slide-active" : "slide"} key={index}>
        {index === current && (
-        <Link to="/product/:id" className="image-text-container">
-         <img
-          src={slide.images.slice(0)}
-          alt="not found"
-          className="image-carousel"
-         />
-         <div className="title-price-container">
-          <span className="slide-name">{slide.title}</span>
-          <span className="slide-price">${slide.price}</span>
-         </div>
-        </Link>
+            <Link to={`/product/${slide.id}`} className="image-text-container">
+            <img
+            src={slide.images.slice(0)}
+            alt="not found"
+            className="image-carousel"
+            />
+            <div className="title-price-container">
+            <span className="slide-name">{slide.title}</span>
+            <span className="slide-price">${slide.price}</span>
+            </div>
+            </Link>
        )}
       </div>
      );
