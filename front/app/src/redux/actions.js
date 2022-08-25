@@ -257,15 +257,20 @@ export const postUser = (newUser) => {
 };
 
 export const logIn = (user) => {
+  console.log('ACTIONS: ', user)
   return (dispatch) => {
-    axios
-    .post(`${BASE_URL}/auth/signin`, user)
+    axios({
+      method: 'POST',
+      url: `${BASE_URL}/auth/signin`,
+      data: user
+    })
     .then((response) => {
+      console.log('RESPONSE: ', response)
       dispatch({
         type: LOG_IN,
-        payload: response.data
+        payload: response.data.user
       })
     })
-    .catch((err) => console.log('Error: ', err.message))
+    .catch((err) => console.log(err.response.data.errors))
   }
 }

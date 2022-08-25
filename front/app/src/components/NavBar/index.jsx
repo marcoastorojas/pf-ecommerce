@@ -22,7 +22,7 @@ export default function NavBar() {
 
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
-  const user = useSelector(state => state.userGoogle)
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
     dispatch(getCategories());
@@ -115,15 +115,16 @@ export default function NavBar() {
 
       <div className={style.sectionTwo}>
         <button onClick={() => console.log(localStorage)}>PRUEBA</button>
-        <div className={style.user}>
+        {/* <div className={style.user}>
           {user && 
             <div>
                 <img src={user.picture} referrerPolicy='no-referrer' ></img>
                 <p>{user.name}</p>
-            </div>}
-            {
-                user && Object.keys(user).length !== 0 &&
-                <button onClick={handleSignOut}>Sign Out</button>
+            </div>
+          }
+          {
+              user && Object.keys(user).length !== 0 &&
+              <button onClick={handleSignOut}>Sign Out</button>
           }
           {
             Object.keys(user).length === 0 ?
@@ -140,7 +141,7 @@ export default function NavBar() {
               </div>
             </div> : <></>
           }
-        </div>
+        </div> */}
         <div>
           <Link to={"/shopping-cart"} className={style.shooping}>
             <h4>

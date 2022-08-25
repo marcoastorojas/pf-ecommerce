@@ -20,6 +20,7 @@ export default function LogInForm({LogIn, error}) {
         // LogIn(details);
         console.log(user)
         dispatch(logIn(user))
+        // localStorage.setItem('user', JSON.stringify(pepe))
     }
 
   return (
@@ -28,7 +29,7 @@ export default function LogInForm({LogIn, error}) {
       <form onSubmit={submitHandler}>
         <div className="form-inner">
             <h2>Log In</h2>
-            {(error !== "") ? (<div className="error">{error}</div>) : ""}
+            {/* {(error !== "") ? (<div className="error">{error}</div>) : ""} */}
             <div className="form-group">
                 <label htmlFor="email_user">Email: </label>
                 <input name="email_user" id="email" onChange={handleUser}/>

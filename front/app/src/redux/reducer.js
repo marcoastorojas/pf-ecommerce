@@ -29,10 +29,10 @@ const initialState = {
   search: "",
   subCategories: [],
   searchCategory: "",
-  userGoogle: localStorage.getItem('user')
+  user: localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user'))
     : {},
-  user: {},
+  // user: {},
   cart: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
@@ -212,7 +212,7 @@ export const reducer = (state = initialState, action) => {
     case SET_USER_GOOGLE:
       return {
         ...state,
-        userGoogle: action.payload,
+        user: action.payload,
       };
     case LOG_IN: 
       return {
