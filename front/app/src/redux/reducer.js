@@ -104,6 +104,7 @@ export const reducer = (state = initialState, action) => {
     searchCategory: action.payload,
    };
 
+<<<<<<< HEAD
   //SHOPPING CART
   case ADD_TO_CART: {
    const getCart = state.cart.filter(
@@ -116,6 +117,43 @@ export const reducer = (state = initialState, action) => {
       return;
      }
     });
+=======
+
+    //SHOPPING CART
+    case ADD_TO_CART: {
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload.product.id
+      );
+      if (getCart.length === 1) {
+        state.cart.map((pt) => {
+          if (pt.product.id === action.payload.product.id) {
+            pt.amount += action.payload.amount;
+            return;
+          }
+        });
+        return {
+          ...state,
+          cart: [...state.cart],
+        };
+      } else
+        return {
+          ...state,
+          cart: [...state.cart, action.payload],
+        };
+    }
+    case REMOVE_ONE_FROM_CART: {
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload
+      );
+      if (getCart.length === 1) {
+        if (getCart[0].amount > 1) {
+          state.cart.map((pt) => {
+            if (pt.product.id === action.payload) {
+              pt.amount -= 1;
+              return;
+            }
+          });
+>>>>>>> 880caec32e46b8c29757cc29b93843a6547f6078
 
     return {
      ...state,
