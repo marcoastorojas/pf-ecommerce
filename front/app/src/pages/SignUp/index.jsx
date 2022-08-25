@@ -7,39 +7,24 @@ import "./index.modules.css";
 export default function SignUp() {
  const dispatch = useDispatch();
 
- //estados del form
  const [name, setName] = useState("");
  const [username, setUsername] = useState("");
  const [email, setEmail] = useState("");
  const [password, setPassword] = useState("");
  const [confirmedPassword, setConfirmedPassword] = useState("");
 
- //name reg exp
- // eslint-disable-next-line
- const namedRE = /^[a-zA-Z]+$/g;
- const validName = namedRE.test(name);
-
- //email reg exp
- // eslint-disable-next-line
- const emailRE = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
- const validEmail = emailRE.test(email);
-
- //password reg exp
- // eslint-disable-next-line
- const passwordRE = /^(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*[/*@#$%^&+=]).*$/g;
- const validPassword = passwordRE.test(password);
-
- //indica si el botón de submit ya fue presionado al menos una vez
  const [submitTry, setSubmitTry] = useState(false);
 
- //estados que regulan si los inputs pierden foco (onBlur)
  const [nameBlur, setNameBlur] = useState(false);
  const [usernameBlur, setUsernameBlur] = useState(false);
  const [emailBlur, setEmailBlur] = useState(false);
  const [passwordBlur, setPasswordBlur] = useState(false);
  const [confirmedPasswordBlur, setConfirmedPasswordBlur] = useState(false);
 
- //actualiza los estados del form
+ // eslint-disable-next-line
+ const emailRE = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+ const validEmail = emailRE.test(email);
+
  function onInputChangeHandler(e) {
   if (e.target.id === "name") {
    setName(e.target.value);
@@ -54,7 +39,6 @@ export default function SignUp() {
   }
  }
 
- //reacciona al onBlur de los inputs
  function onBlurHandler(e) {
   if (e.target.id === "name") {
    setNameBlur(true);
@@ -69,29 +53,13 @@ export default function SignUp() {
   }
  }
 
- // reacciona al submit
- // valida los campos antes de enviar y setea en true el intento de submit
  const submitHandler = (e) => {
   e.preventDefault();
   setSubmitTry(true);
-
-  if (
-   name.length <= 40 &&
-   name.length >= 2 &&
-   validName &&
-   username.length <= 40 &&
-   username.length >= 7 &&
-   email &&
-   validEmail &&
-   password &&
-   password.length >= 8 &&
-   password.length <= 40 &&
-   validPassword &&
-   confirmedPassword === password
-  ) {
+  if (name && username && email && password && confirmedPassword) {
    let newUser = { name, username, email, password, role: "USER_ROLE" };
-   dispatch(postUser(newUser));
    //  console.log(newUser);
+   dispatch(postUser(newUser));
   }
  };
 
@@ -101,16 +69,17 @@ export default function SignUp() {
 
  return (
   <div className="general-div">
+   <header className="header">--------------</header>
+
    <main className="main-div">
     <div className="register">Register Page</div>
 
     <form onSubmit={submitHandler} className="form">
      <label htmlFor="name">
       {"First name: \n"}
-      {nameBlur && (name.length <= 1 || name.length > 40 || !validName) ? (
-       <p style={{ display: "inline", color: "red", fontSize: 14 }}>
-        *Your name should have between 2 and 40 digits, and contain only a-z
-        letters.
+      {nameBlur && name.length <= 2 ? (
+       <p style={{ display: "inline", color: "red" }}>
+        *Your name should have more than 2 digits.
        </p>
       ) : null}
       <input
@@ -123,9 +92,9 @@ export default function SignUp() {
 
      <label htmlFor="username">
       {"User name: \n"}
-      {usernameBlur && (username.length <= 6 || username.length > 40) ? (
-       <p style={{ display: "inline", color: "red", fontSize: 14 }}>
-        *User name should have between 7 and 40 digits.
+      {usernameBlur && username.length <= 6 ? (
+       <p style={{ display: "inline", color: "red" }}>
+        *User name should have more than 6 digits.
        </p>
       ) : null}
       <input
@@ -139,7 +108,7 @@ export default function SignUp() {
      <label htmlFor="email">
       {"Email: \n"}
       {emailBlur && !validEmail ? (
-       <p style={{ display: "inline", color: "red", fontSize: 14 }}>
+       <p style={{ display: "inline", color: "red" }}>
         *You have written an invalid e-mail.
        </p>
       ) : null}
@@ -153,12 +122,11 @@ export default function SignUp() {
 
      <label htmlFor="password">
       {"Password: \n"}
-      {passwordBlur &&
-      (password.length <= 8 || password.length > 40 || !validPassword) ? (
-       <p style={{ display: "inline", color: "red", fontSize: 14 }}>
-        "*Password should contain between 8 and 40 digits, one upper and one
-        lower case letter (a-z), a number, and a special character
-        (/*@#$%^&+=)."
+      {passwordBlur && password.length <= 6 ? (
+       <p style={{ display: "inline", color: "red" }}>
+        {
+         "*Password should contain more than 6 digits, a number, a special character, and upper and a lower case letter (a-z)."
+        }
        </p>
       ) : null}
       <input
@@ -172,7 +140,7 @@ export default function SignUp() {
      <label htmlFor="confirmedpassword">
       {`Confirm password: \n`}
       {confirmedPasswordBlur && password !== confirmedPassword ? (
-       <p style={{ display: "inline", color: "red", fontSize: 14 }}>
+       <p style={{ display: "inline", color: "red" }}>
         *Both passwords should match!
        </p>
       ) : null}
@@ -186,13 +154,13 @@ export default function SignUp() {
 
      {submitTry &&
       (!name || !username || !email || !password || !confirmedPassword) && (
-       <p style={{ color: "red" }}>All fields must be filled!</p>
+       <p>All fields must be filled!</p>
       )}
      <button type="submit"> Register </button>
     </form>
-    <div>
-     <SignInGoogle />
-    </div>
+   <div>
+    <SignInGoogle/>
+   </div>
    </main>
 
    <footer className="footer"></footer>
