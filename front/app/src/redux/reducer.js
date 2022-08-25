@@ -12,7 +12,6 @@ import {
   SET_USER_GOOGLE,
   LOG_IN,
   ERROR_HANDLE,
-  POST_USER,
 
   //SHOPPING CART
   ADD_TO_CART,
@@ -32,7 +31,6 @@ const initialState = {
   search: "",
   subCategories: [],
   searchCategory: "",
-  signUpResponse: {},
   user: localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user'))
     : {},
@@ -44,80 +42,80 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
- switch (action.type) {
-  case GET_PRODUCTS:
-   return {
-    ...state,
-    products: action.payload,
-    allProducts: action.payload,
-   };
-  case GET_PRODUCTS_BY_NAME:
-   return {
-    ...state,
-    searchedProducts: [...action.payload],
-   };
-  case GET_PRODUCT_BY_ID: {
-   return {
-    ...state,
-    product: action.payload,
-   };
-  }
-  case CLEAR_DETAIL: {
-   return {
-    ...state,
-    product: {},
-   };
-  }
-  case GET_PRODUCTS_FILTER: {
-   return {
-    ...state,
-    searchedProducts: [...action.payload],
-   };
-  }
-  case GET_CATEGORIES:
-   return {
-    ...state,
-    categories: [...action.payload],
-   };
-  case GET_CATEGORY_PRODUCTS_BY_ID:
-   return {
-    ...state,
-    searchedProducts: [...action.payload],
-   };
-  case GET_SEARCH_NAME:
-   return {
-    ...state,
-    search: action.payload,
-   };
-  case GET_SUB_CATEGORIES:
-   const info = action.payload.data.map((sc) => {
-    return {
-     id: sc.id,
-     name: sc.name,
-    };
-   });
-   return {
-    ...state,
-    subCategories: info,
-   };
-  case GET_SEARCH_CATEGORY:
-   return {
-    ...state,
-    searchCategory: action.payload,
-   };
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+        allProducts: action.payload,
+      };
+    case GET_PRODUCTS_BY_NAME:
+      return {
+        ...state,
+        searchedProducts: [...action.payload],
+      };
+    case GET_PRODUCT_BY_ID: {
+      return {
+        ...state,
+        product: action.payload,
+      };
+    }
+    case CLEAR_DETAIL: {
+      return {
+        ...state,
+        product: {},
+      };
+    }
+    case GET_PRODUCTS_FILTER: {
+      return {
+        ...state,
+        searchedProducts: [...action.payload],
+      };
+    }
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        categories: [...action.payload],
+      };
+    case GET_CATEGORY_PRODUCTS_BY_ID:
+      return {
+        ...state,
+        searchedProducts: [...action.payload],
+      };
+    case GET_SEARCH_NAME:
+      return {
+        ...state,
+        search: action.payload,
+      };
+    case GET_SUB_CATEGORIES:
+      const info = action.payload.data.map((sc) => {
+        return {
+          id: sc.id,
+          name: sc.name,
+        };
+      });
+      return {
+        ...state,
+        subCategories: info,
+      };
+    case GET_SEARCH_CATEGORY:
+      return {
+        ...state,
+        searchCategory: action.payload,
+      };
 
-  //SHOPPING CART
-  case ADD_TO_CART: {
-   const getCart = state.cart.filter(
-    (pt) => pt.product.id === action.payload.product.id
-   );
-   if (getCart.length === 1) {
-    state.cart.map((pt) => {
-     if (pt.product.id === action.payload.product.id) {
-      pt.amount += action.payload.amount;
-      return;
-     }
-    });
+    //SHOPPING CART
+    case ADD_TO_CART: {
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload.product.id
+      );
+      if (getCart.length === 1) {
+        state.cart.map((pt) => {
+          if (pt.product.id === action.payload.product.id) {
+            pt.amount += action.payload.amount;
+            return;
+          }
+        });
 
         return {
           ...state,
@@ -173,22 +171,10 @@ export const reducer = (state = initialState, action) => {
           cart: newProducts,
         };
       }
-     });
-
-     return {
-      ...state,
-      cart: [...state.cart],
-     };
-    } else {
-     const newProducts = state.cart.filter(
-      (pt) => pt.product.id !== action.payload
-     );
-     return {
-      ...state,
-      cart: newProducts,
-     };
+      return {
+        ...state,
+      };
     }
-
     case ADD_ONE_FROM_CART: {
       const getCart = state.cart.filter(
         (pt) => pt.product.id === action.payload
@@ -261,17 +247,4 @@ export const reducer = (state = initialState, action) => {
     default:
       return state;
   }
-  case SET_USER_GOOGLE:
-   return {
-    ...state,
-    userGoogle: action.payload,
-   };
-  case POST_USER:
-   return {
-    ...state,
-    signUpResponse: action.payload,
-   };
-  default:
-   return state;
- }
 };
