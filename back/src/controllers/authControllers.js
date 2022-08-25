@@ -66,7 +66,7 @@ const loginUser = async (req = request, res = response) => {
         //validando contraseña con la contraseña encriptada solo si encontro un usuario con el email o username
         const isValidPassword = bcrypt.compareSync(password, user.password)
         if (!isValidPassword) {
-            return res.status(200)
+            return res.status(401)
                 .json({ errors: { password: `la contraseña es incorrecta` } })
         }
 
