@@ -29,228 +29,232 @@ export const ADD_ONE_FROM_CART = "ADD_ONE_FROM_CART";
 const BASE_URL = `http://localhost:3001`;
 
 export const getProducts = () => {
-  return async function (dispatch) {
-    try {
-      let json = await axios.get(`${BASE_URL}/products`);
-      return dispatch({
-        type: GET_PRODUCTS,
-        payload: json.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ return async function (dispatch) {
+  try {
+   let json = await axios.get(`${BASE_URL}/products`);
+   return dispatch({
+    type: GET_PRODUCTS,
+    payload: json.data,
+   });
+  } catch (error) {
+   console.log(error);
+  }
+ };
 };
 
 export const getProductId = (id) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/products/${id}`);
-      return dispatch({
-        type: GET_PRODUCT_BY_ID,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(`can not find product with id: ${id}`, error);
-    }
-  };
+ return async function (dispatch) {
+  try {
+   const response = await axios.get(`${BASE_URL}/products/${id}`);
+   return dispatch({
+    type: GET_PRODUCT_BY_ID,
+    payload: response.data,
+   });
+  } catch (error) {
+   console.log(`can not find product with id: ${id}`, error);
+  }
+ };
 };
 
 export const postProduct = (product) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post(`${BASE_URL}/products`, product);
-      return dispatch({
-        type: POST_PRODUCT,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log("can not post product", error);
-    }
-  };
+ return async function (dispatch) {
+  try {
+   const response = await axios.post(`${BASE_URL}/products`, product);
+   return dispatch({
+    type: POST_PRODUCT,
+    payload: response.data,
+   });
+  } catch (error) {
+   console.log("can not post product", error);
+  }
+ };
 };
 
 export const clearDetail = () => {
-  return {
-    type: CLEAR_DETAIL,
-  };
+ return {
+  type: CLEAR_DETAIL,
+ };
 };
 
 export const getProductsByName = (textInput) => {
-  return (dispatch) => {
-    axios
-      .get(`${BASE_URL}/products?name=${textInput}`)
-      .then((response) => {
-        console.log({
-          from: "action creator getProductsById",
-          response: response,
-        });
-        dispatch({
-          type: GET_PRODUCTS_BY_NAME,
-          payload: response.data.data,
-        });
-      })
-      .catch((err) => {
-        console.log({ from: "action creator getProductsByName", err });
-      });
-  };
+ return (dispatch) => {
+  axios
+   .get(`${BASE_URL}/products?name=${textInput}`)
+   .then((response) => {
+    console.log({
+     from: "action creator getProductsById",
+     response: response,
+    });
+    dispatch({
+     type: GET_PRODUCTS_BY_NAME,
+     payload: response.data.data,
+    });
+   })
+   .catch((err) => {
+    console.log({ from: "action creator getProductsByName", err });
+   });
+ };
 };
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
-  let url = new URL(`${BASE_URL}/products`);
-  if (!!name) url.searchParams.append("name", name);
-  if (!!max) url.searchParams.append("max", max);
-  if (!!min) url.searchParams.append("min", min);
-  if (!!asc) url.searchParams.append("asc", asc);
-  if (!!desc) url.searchParams.append("desc", desc);
-  //  console.log(url.href);
-  return (dispatch) => {
-    axios
-      .get(url.href)
-      .then((response) => {
-        dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
-      })
-      .catch((err) => {
-        console.log({ from: "action creator getProductsFilter", err });
-      });
-  };
+ let url = new URL(`${BASE_URL}/products`);
+ if (!!name) url.searchParams.append("name", name);
+ if (!!max) url.searchParams.append("max", max);
+ if (!!min) url.searchParams.append("min", min);
+ if (!!asc) url.searchParams.append("asc", asc);
+ if (!!desc) url.searchParams.append("desc", desc);
+ //  console.log(url.href);
+ return (dispatch) => {
+  axios
+   .get(url.href)
+   .then((response) => {
+    dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
+   })
+   .catch((err) => {
+    console.log({ from: "action creator getProductsFilter", err });
+   });
+ };
 };
 
 export const getCategories = () => {
-  return (dispatch) => {
-    axios
-      .get(`${BASE_URL}/categories`)
-      .then((response) => {
-        console.log({ from: "action creator getCategories" });
-        dispatch({
-          type: GET_CATEGORIES,
-          payload: response.data.data,
-        });
-      })
-      .catch((err) =>
-        console.log({ m: "Error on action creator getCategories", err })
-      );
-  };
+ return (dispatch) => {
+  axios
+   .get(`${BASE_URL}/categories`)
+   .then((response) => {
+    console.log({ from: "action creator getCategories" });
+    dispatch({
+     type: GET_CATEGORIES,
+     payload: response.data.data,
+    });
+   })
+   .catch((err) =>
+    console.log({ m: "Error on action creator getCategories", err })
+   );
+ };
 };
 
 export const getCategoryProductsById = (
-  categoryId,
-  name,
-  max,
-  min,
-  asc,
-  desc
+ categoryId,
+ name,
+ max,
+ min,
+ asc,
+ desc
 ) => {
-  let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
-  if (!!name) url.searchParams.append("name", name);
-  if (!!max) url.searchParams.append("max", max);
-  if (!!min) url.searchParams.append("min", min);
-  if (!!asc) url.searchParams.append("asc", asc);
-  if (!!desc) url.searchParams.append("desc", desc);
-  return (dispatch) => {
-    axios
-      .get(url.href)
-      .then((response) => {
-        console.log({
-          from: "action creator getCategoryProductsById",
-          response,
-        });
-        dispatch({
-          type: GET_CATEGORY_PRODUCTS_BY_ID,
-          payload: response.data.data,
-        });
-      })
-      .catch((err) =>
-        console.log({
-          m: "Error on action creator getCategoryProductsById",
-          err,
-        })
-      );
-  };
+ let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
+ if (!!name) url.searchParams.append("name", name);
+ if (!!max) url.searchParams.append("max", max);
+ if (!!min) url.searchParams.append("min", min);
+ if (!!asc) url.searchParams.append("asc", asc);
+ if (!!desc) url.searchParams.append("desc", desc);
+ return (dispatch) => {
+  axios
+   .get(url.href)
+   .then((response) => {
+    console.log({
+     from: "action creator getCategoryProductsById",
+     response,
+    });
+    dispatch({
+     type: GET_CATEGORY_PRODUCTS_BY_ID,
+     payload: response.data.data,
+    });
+   })
+   .catch((err) =>
+    console.log({
+     m: "Error on action creator getCategoryProductsById",
+     err,
+    })
+   );
+ };
 };
 
 export const getSearchName = (payload) => {
-  return {
-    type: GET_SEARCH_NAME,
-    payload,
-  };
+ return {
+  type: GET_SEARCH_NAME,
+  payload,
+ };
 };
 
 export const getSubCategories = () => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/subCategories`);
-      return dispatch({
-        type: GET_SUB_CATEGORIES,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(`can not find subcategories`, error);
-    }
-  };
+ return async function (dispatch) {
+  try {
+   const response = await axios.get(`${BASE_URL}/subCategories`);
+   return dispatch({
+    type: GET_SUB_CATEGORIES,
+    payload: response.data,
+   });
+  } catch (error) {
+   console.log(`can not find subcategories`, error);
+  }
+ };
 };
 
 export const getSearchCategory = (payload) => {
-  return {
-    type: GET_SEARCH_CATEGORY,
-    payload,
-  };
+ return {
+  type: GET_SEARCH_CATEGORY,
+  payload,
+ };
 };
 
 export const addToCart = (product, amount) => {
-  return {
-    type: ADD_TO_CART,
-    payload: { amount, product },
-  };
+ return {
+  type: ADD_TO_CART,
+  payload: { amount, product },
+ };
 };
 
 export const removeAllFromCart = (id) => {
-  return {
-    type: REMOVE_ALL_FROM_CART,
-    payload: id,
-  };
+ return {
+  type: REMOVE_ALL_FROM_CART,
+  payload: id,
+ };
 };
 
 export const removeOneFromCart = (id) => {
-  return {
-    type: REMOVE_ONE_FROM_CART,
-    payload: id,
-  };
+ return {
+  type: REMOVE_ONE_FROM_CART,
+  payload: id,
+ };
 };
 
 export const addOneFromCart = (id) => {
-  return {
-    type: ADD_ONE_FROM_CART,
-    payload: id,
-  };
+ return {
+  type: ADD_ONE_FROM_CART,
+  payload: id,
+ };
 };
 
 export const clearCart = () => {
-  return {
-    type: CLEAR_CART,
-  };
+ return {
+  type: CLEAR_CART,
+ };
 };
 
 export const setUserGoogle = (payload) => {
-  return {
-    type: SET_USER_GOOGLE,
-    payload,
-  };
+ return {
+  type: SET_USER_GOOGLE,
+  payload,
+ };
 };
 
 export const postUser = (newUser) => {
-  return (dispatch) => {
-    axios
-      .post(`${BASE_URL}/auth/signup`, newUser)
-      .then((response) => {
-        console.log({ from: "postUser action creator", response });
-        dispatch({
-          type: POST_USER,
-          payload: response.data,
-        });
-      })
-      .catch((err) =>
-        console.log({ m: "Error on postUser action creator", err })
-      );
-  };
+ return (dispatch) => {
+  axios
+   .post(`${BASE_URL}/auth/signup`, newUser)
+   .then((response) => {
+    console.log({ from: "postUser action creator", response });
+    dispatch({
+     type: POST_USER,
+     payload: response.data,
+    });
+   })
+   .catch((err) => {
+    console.log({ m: "Error on postUser action creator", err });
+    dispatch({
+     type: POST_USER,
+     payload: err.data,
+    });
+   });
+ };
 };
