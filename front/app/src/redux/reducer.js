@@ -104,6 +104,7 @@ export const reducer = (state = initialState, action) => {
         searchCategory: action.payload,
       };
 
+
     //SHOPPING CART
     case ADD_TO_CART: {
       const getCart = state.cart.filter(
@@ -116,7 +117,6 @@ export const reducer = (state = initialState, action) => {
             return;
           }
         });
-
         return {
           ...state,
           cart: [...state.cart],
