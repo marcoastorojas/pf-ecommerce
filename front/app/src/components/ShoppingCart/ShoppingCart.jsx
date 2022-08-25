@@ -1,30 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearCart,
   removeAllFromCart,
   removeOneFromCart,
   addOneFromCart,
+  getTotal,
 } from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 import "./ShoppingCart.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const cart = useSelector((state) => state.cart);
+  const cartTotal = useSelector((state) => state.cartTotal);
 
   const [quantityAdd, setQuantityAdd] = useState(1);
   const [quantityRes, setQuantityRes] = useState(1);
 
+  useEffect(() => {
+    dispatch(getTotal());
+  }, [dispatch]);
+
   const addCart = (e) => {
     dispatch(addOneFromCart(e.target.value));
+    dispatch(getTotal());
     toast.success(`Successfully added ${quantityAdd} items to the cart!`);
   };
 
   const resCart = (e) => {
     dispatch(removeOneFromCart(e.target.value));
+    dispatch(getTotal());
     toast.success(`Successfully removed ${quantityRes} items to the cart!`, {
       style: {
         border: "1px solid #713200",
@@ -40,6 +50,7 @@ export default function ShoppingCart() {
 
   const deleteFromCart = (e) => {
     dispatch(removeAllFromCart(e.target.value));
+    dispatch(getTotal());
     toast.success(`Successfully deleted product from the cart!`, {
       style: {
         border: "1px solid #FF2301",
@@ -54,6 +65,7 @@ export default function ShoppingCart() {
   };
 
   const deleteAll = () => {
+    dispatch(getTotal());
     toast.success(`Successfully cleared cart!`, {
       style: {
         border: "1px solid  #F32013",
@@ -70,15 +82,18 @@ export default function ShoppingCart() {
     }, 1200);
   };
 
+  const goToCheckout = () => {
+    navigate("/checkout");
+  };
+
   if (cart.length > 0)
     return (
       <div className="cart">
         <h2>Shopping Cart</h2>
-
+        <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
         <div className="products-cart">
           {cart.map((pt) => {
             const images = pt.product.images.split(" ");
-
             return (
               <div key={pt.product.id} className="card">
                 <Link to={`/product/${pt.product.id}`}>
@@ -124,6 +139,9 @@ export default function ShoppingCart() {
         <div>
           <button className="button-all" onClick={() => deleteAll()}>
             <span>REMOVE ALL</span>
+          </button>
+          <button className="checkout" onClick={() => goToCheckout()}>
+            <span>CHECKOUT</span>
           </button>
         </div>
         <Toaster />

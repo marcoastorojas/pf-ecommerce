@@ -18,13 +18,15 @@ export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
 
 export const POST_USER = "POST_USER";
 export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
-
+export const LOG_IN = 'LOG_IN';
+export const ERROR_HANDLE = 'ERROR_HANDLE';
 //SHOPPING CART
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const ADD_ONE_FROM_CART = "ADD_ONE_FROM_CART";
+export const GET_TOTAL = "GET_TOTAL";
 
 const BASE_URL = `http://localhost:3001`;
 
@@ -225,6 +227,12 @@ export const addOneFromCart = (id) => {
  };
 };
 
+export const getTotal = () => {
+  return {
+    type: GET_TOTAL,
+  };
+};
+
 export const clearCart = () => {
  return {
   type: CLEAR_CART,
@@ -258,3 +266,29 @@ export const postUser = (newUser) => {
    });
  };
 };
+
+export const logIn = (user) => {
+  // console.log('ACTIONS: ', user)
+  return (dispatch) => {
+    axios({
+      method: 'POST',
+      url: `${BASE_URL}/auth/signin`,
+      data: user
+    })
+    .then((response) => {
+      // console.log('RESPONSE: ', response)
+      dispatch({
+        type: LOG_IN,
+        payload: response.data.user
+      })
+      // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
+      localStorage.setItem('user',JSON.stringify(response.data.user))
+    })
+    .catch((err) => {
+      dispatch({
+        type: ERROR_HANDLE,
+        payload: err.response.data
+      })
+    })
+  }
+}
