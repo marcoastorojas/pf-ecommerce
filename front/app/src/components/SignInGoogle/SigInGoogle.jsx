@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 
 export default function SignInGoogle () {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.userGoogle)
+    const user = useSelector(state => state.user)
     function handleCallbackResponse (response) {
         dispatch(setUserGoogle(jwt_decode(response.credential)))
         localStorage.setItem('user', JSON.stringify(jwt_decode(response.credential)))
@@ -36,7 +36,7 @@ export default function SignInGoogle () {
             {/* <button onClick={()=>console.log(Object.keys(user).length)}></button> */}
             <div id='sigInDiv'></div>
             {
-                Object.keys(user).length !== 0 && <Navigate to='/' />
+                // Object.keys(user).length !== 0 && <Navigate to='/' />
             }
             {/* {user && 
             <div>
