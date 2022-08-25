@@ -17,6 +17,7 @@ import {
   REMOVE_ALL_FROM_CART,
   CLEAR_CART,
   ADD_ONE_FROM_CART,
+  GET_TOTAL,
 } from "./actions";
 
 const initialState = {
@@ -32,6 +33,7 @@ const initialState = {
   cart: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
+  cartTotal: 0,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -132,7 +134,7 @@ export const reducer = (state = initialState, action) => {
               return;
             }
           });
-          
+
           return {
             ...state,
             cart: [...state.cart],
@@ -180,7 +182,7 @@ export const reducer = (state = initialState, action) => {
               return;
             }
           });
-          
+
           return {
             ...state,
             cart: [...state.cart],
@@ -198,6 +200,22 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    }
+    case GET_TOTAL: {
+      if (state.cart.length > 0) {
+        const total = state.cart.reduce(
+          (acc, pt) => (acc = pt.product.price * pt.amount + acc),
+          0
+        );
+        return {
+          ...state,
+          cartTotal: total,
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
     }
     case CLEAR_CART: {
       return {

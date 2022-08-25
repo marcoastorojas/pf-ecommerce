@@ -11,6 +11,7 @@ import Form from "./pages/Form";
 // import LogIn from "./pages/LogIn";
 
 import Cart from "./pages/Cart/Cart.jsx";
+import CheckoutPay from "./pages/CheckoutPay/CheckoutPay";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/product/:id" exact element={<Details />} />
         <Route path="/product/create" exact element={<Form />} />
         <Route path="/shopping-cart" exact element={<Cart />} />
+        <Route path="/checkout/" exact element={<CheckoutPay />} />
       </Routes>
     </div>
   );
