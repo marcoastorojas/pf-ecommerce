@@ -109,6 +109,7 @@
  border-radius: 5px;
  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
  background: #e62222;
+ margin-right: 2rem;
 }
 
 .button-all span {
@@ -121,4 +122,28 @@
 
 .button-all:hover {
   background: #ff3636;
+ }
+
+.checkout {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  background: blue;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  background: #2225e6;
+  margin-left: 2rem;
+}
+
+.checkout span {
+  display: flex;
+ align-items: center;
+ justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.checkout:hover {
+  background: #3936ff;
  }

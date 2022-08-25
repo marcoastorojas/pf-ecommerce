@@ -13,7 +13,10 @@ import LogIn from './pages/LogIn';
 import SellerRoutes from "./validations/SellerRoutes";
 
 import Cart from "./pages/Cart/Cart.jsx";
-import NavBar from "./components/NavBar";
+
+import NavBar from "./components/NavBar
+import CheckoutPay from "./pages/CheckoutPay/CheckoutPay";
+
 
 function App() {
   return (
@@ -29,6 +32,7 @@ function App() {
           <Route path="/product/create" exact element={<Form />} />
         </Route>
         <Route path="/shopping-cart" exact element={<Cart />} />
+        <Route path="/checkout/" exact element={<CheckoutPay />} />
       </Routes>
     </div>
   );
