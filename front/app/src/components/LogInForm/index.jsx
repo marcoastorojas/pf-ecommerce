@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../redux/actions';
-import { Toaster, toast } from 'react-hot-toast';
+// import { Toaster, toast } from 'react-hot-toast';
+import style from './index.module.css';
+
 
 export default function LogInForm({LogIn, error}) {
     const dispatch = useDispatch();
@@ -23,27 +25,32 @@ export default function LogInForm({LogIn, error}) {
     }
     
   return (
-    <div>
-        <button onClick={() => {console.log(Object.keys(errorRedux).length)}}>PRUEBA</button>
-      <form onSubmit={submitHandler}>
-        <div className="form-inner">
-            <h2>Log In</h2>
-            {/* {(error !== "") ? (<div className="error">{error}</div>) : ""} */}
-            <div className="form-group">
-                <label htmlFor="email_user">Email: </label>
-                <input name="email_user" id="email" onChange={handleUser}/>
+    <div className={style.contForm}>
+        {/* <button onClick={() => {console.log(Object.keys(errorRedux).length)}}>PRUEBA</button> */}
+        <form onSubmit={submitHandler}>
+            <div className={style.form}>
+                <h2>Account Login</h2>
+                <div>
+                    <label htmlFor="email_user">Email or Username: </label>
+                    <br></br>
+                    <input className={style.input} name="email_user" id="email" onChange={handleUser}/>
+                </div>
+                <div>
+                    <label htmlFor="password">Password: </label>
+                    <br></br>
+                    <input className={style.input} type="password" name="password" id="password" onChange={handleUser}/>
+                </div>
+                <input className={style.button} type="submit" value="Log In" />
             </div>
-            <div className="form-group">
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" onChange={handleUser}/>
-            </div>
-            <input type="submit" value="LOGIN" />
-        </div>
         </form>
+        <div  className={style.link}>
+            <Link to='/signup' className={style.p}>
+                <p>Create a new account</p>
+            </Link>
+        </div>
         {
             Object.keys(userRedux).length !== 0 && <Navigate to='/'/> 
         }
-        <Toaster/>
     </div>
   )
 }

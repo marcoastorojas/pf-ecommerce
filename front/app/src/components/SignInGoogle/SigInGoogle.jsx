@@ -33,20 +33,10 @@ export default function SignInGoogle () {
     }
     return (
         <div className={style.contsigin}>
-            {/* <button onClick={()=>console.log(Object.keys(user).length)}></button> */}
-            <div id='sigInDiv'></div>
-            {
-                // Object.keys(user).length !== 0 && <Navigate to='/' />
-            }
-            {/* {user && 
             <div>
-                <img src={user.picture}></img>
-                <p>{user.name}</p>
-            </div>}
-            {
-                user && Object.keys(user).length !== 0 &&
-                <button onClick={handleSignOut}>Sign Out</button>
-            } */}
+                <h5>Or continue with</h5>
+            </div>
+            <div id='sigInDiv'></div>
         </div>
     )
 }
