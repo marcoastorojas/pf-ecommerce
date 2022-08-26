@@ -15,11 +15,15 @@ export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
 
 export const GET_SEARCH_NAME = "GET_SEARCH_NAME";
 export const GET_SEARCH_CATEGORY = "GET_SEARCH_CATEGORY";
-
+// SIGNUP
 export const POST_USER = "POST_USER";
+export const POST_USER_ERROR = "POST_USER_ERROR";
+export const POST_USER_ERROR_CLEANSE = "POST_USER_ERROR_CLEANSE";
+// LOGIN
 export const SET_USER_GOOGLE = "SET_USER_GOOGLE";
 export const LOG_IN = "LOG_IN";
 export const ERROR_HANDLE = "ERROR_HANDLE";
+
 //SHOPPING CART
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
@@ -263,10 +267,18 @@ export const postUser = (newUser) => {
    .catch((err) => {
     console.log({ m: "Error on postUser action creator", err });
     dispatch({
-     type: POST_USER,
-     payload: err.data,
+     type: POST_USER_ERROR,
+     payload: err.response.data.errors,
     });
    });
+ };
+};
+
+export const cleanSignupErrors = () => {
+ return (dispatch) => {
+  dispatch({
+   type: POST_USER_ERROR_CLEANSE,
+  });
  };
 };
 

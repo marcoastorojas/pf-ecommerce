@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { postUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { cleanSignupErrors, postUser } from "../../redux/actions";
 import SignInGoogle from "../../components/SignInGoogle/SigInGoogle.jsx";
+
+import { Toaster, toast } from "react-hot-toast";
+
 import "./index.modules.css";
 
 export default function SignUp() {
  const dispatch = useDispatch();
+ const navigate = useNavigate();
 
  //estados del form
  const [name, setName] = useState("");
@@ -38,6 +44,10 @@ export default function SignUp() {
  const [emailBlur, setEmailBlur] = useState(false);
  const [passwordBlur, setPasswordBlur] = useState(false);
  const [confirmedPasswordBlur, setConfirmedPasswordBlur] = useState(false);
+
+ //estados globales
+ const signupResponse = useSelector((state) => state.signupResponse);
+ const signupErrors = useSelector((state) => state.signupErrors);
 
  //actualiza los estados del form
  function onInputChangeHandler(e) {
@@ -95,13 +105,40 @@ export default function SignUp() {
   }
  };
 
- //  useEffect(() => {
- //   console.log(validEmail);
- //  });
+ useEffect(() => {
+  signupErrors &&
+   toast.error(
+    // (t) => {
+    //  <span>
+    //   <p>{toastMessage()}</p>
+    //   <button>X</button>
+    //  </span>;
+    // },
+    toastMessage(),
+    {
+     duration: 10000,
+    }
+   );
+  return function cleanse() {
+   dispatch(cleanSignupErrors());
+  };
+  // eslint-disable-next-line
+ }, [signupErrors]);
+
+ const toastMessage = () => {
+  const { email: emailError, username: usernameError } = signupErrors;
+  let message;
+  if (emailError) message = `email: ${emailError}`;
+  if (usernameError) message = message + `\n username: ${usernameError}`;
+  return message;
+ };
+
+ signupResponse.username === username && navigate("/login");
 
  return (
   <div className="general-div">
    <main className="main-div">
+    <Toaster />
     <div className="register">Register Page</div>
 
     <form onSubmit={submitHandler} className="form">
