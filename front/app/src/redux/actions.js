@@ -272,6 +272,9 @@ export const logIn = (user) => {
       })
       // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
       localStorage.setItem('user',JSON.stringify(response.data.user))
+      console.log(response.data.token)
+      document.cookie ='token = ' + response.data.token
+      // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
     })
     .catch((err) => {
       dispatch({
