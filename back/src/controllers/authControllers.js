@@ -36,7 +36,7 @@ const registerUser = async (req = request, res = response) => {
 const googleAuth = async (req = request, res = response) => {
     try {
         const { token } = req.headers
-        const { name, email, image, lastname} = await googleVerify(token)
+        const { name, email, image, lastname } = await googleVerify(token)
         const [role, roleCreated] = await Role.findOrCreate({ where: { name: "USER_ROLE" }, defaults: { name: "USER_ROLE" } })
         let user = await User.findOne({ where: { email } })
         if (!user) { // crea si no existe
@@ -111,8 +111,9 @@ const loginUser = async (req = request, res = response) => {
 
 const renewJWT = async (req = request, res = response) => {
     const { uid } = req.userJWT
+    const user = await User.findOne({ where: { uid } })
     const token = await generateJWT(uid)
-    res.json({ token })
+    res.status(200).json({ user, token })
 }
 
 
