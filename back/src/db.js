@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tests-ecommerce`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pf-ecommerce`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -54,7 +54,6 @@ User.belongsTo(Role, { as: "role" })
 
 User.hasOne(Person, { foreignKey: "userId", as: "info" })
 Person.belongsTo(User, { foreignKey: "userId" })
-
 
 User.hasOne(Status, { foreignKey: "userId", as: "status" })
 Status.belongsTo(User, { foreignKey: "userId" })
