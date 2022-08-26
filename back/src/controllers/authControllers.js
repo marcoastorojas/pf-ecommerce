@@ -44,6 +44,7 @@ const googleAuth = async (req = request, res = response) => {
                 email,
                 password: "",
                 google: true,
+                username: "",
                 image,
                 roleId: role.id || roleCreated.id
             })
@@ -55,7 +56,7 @@ const googleAuth = async (req = request, res = response) => {
 
         const newtoken = await generateJWT(user.uid)
 
-        res.status(201).json({ data: user, token: newtoken })
+        res.status(201).json({ user, token: newtoken })
 
     } catch (error) {
         res.status(400).json({ msg: "el token de google no es valido" })
