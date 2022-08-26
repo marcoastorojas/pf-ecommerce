@@ -120,11 +120,13 @@ export const reducer = (state = initialState, action) => {
       return;
      }
     });
+    localStorage.setItem("cart", JSON.stringify([...state.cart]));
     return {
      ...state,
      cart: [...state.cart],
     };
    } else
+   localStorage.setItem("cart", JSON.stringify([...state.cart, action.payload]));
     return {
      ...state,
      cart: [...state.cart, action.payload],
@@ -140,7 +142,7 @@ export const reducer = (state = initialState, action) => {
        return;
       }
      });
-
+     localStorage.setItem("cart", JSON.stringify([...state.cart]));
      return {
       ...state,
       cart: [...state.cart],
@@ -149,6 +151,7 @@ export const reducer = (state = initialState, action) => {
      const newProducts = state.cart.filter(
       (pt) => pt.product.id !== action.payload
      );
+     localStorage.setItem("cart", JSON.stringify(newProducts));
      return {
       ...state,
       cart: newProducts,
@@ -165,6 +168,7 @@ export const reducer = (state = initialState, action) => {
     const newProducts = state.cart.filter(
      (pt) => pt.product.id !== action.payload
     );
+    localStorage.setItem("cart", JSON.stringify(newProducts));
     return {
      ...state,
      cart: newProducts,
@@ -184,7 +188,7 @@ export const reducer = (state = initialState, action) => {
        return;
       }
      });
-
+     localStorage.setItem("cart", JSON.stringify([...state.cart]));
      return {
       ...state,
       cart: [...state.cart],
@@ -193,6 +197,7 @@ export const reducer = (state = initialState, action) => {
      const newProducts = state.cart.filter(
       (pt) => pt.product.id !== action.payload
      );
+     localStorage.setItem("cart", JSON.stringify(newProducts));
      return {
       ...state,
       cart: newProducts,
@@ -220,6 +225,7 @@ export const reducer = (state = initialState, action) => {
    }
   }
   case CLEAR_CART: {
+    localStorage.setItem("cart", JSON.stringify([]));
    return {
     ...state,
     cart: [],
