@@ -1,13 +1,11 @@
-
-
-
 const { request, response } = require("express")
 const { Op } = require("sequelize")
 const bcrypt = require("bcrypt")
 
+
 const { User, Role, Person, Status } = require("../db")
-const { generateJWT } = require("../helpers/generateJWT")
-// const { generateJWT } = require("../helpers/generateJWT")
+const { generateJWT } = require("../helpers/generateJWT");
+const { googleVerify } = require("../helpers/googleVerify");
 
 const postRol = async (req = request, res = response) => {
     const { name } = req.body
@@ -16,7 +14,6 @@ const postRol = async (req = request, res = response) => {
     const newRol = await Role.create({ name })
     res.status(201).json(newRol)
 }
-// const getRoles
 
 const registerUser = async (req = request, res = response) => {
     const { password, role, name, ...rest } = req.body
@@ -30,7 +27,39 @@ const registerUser = async (req = request, res = response) => {
         Person.create({ name, userId: newUser.uid }),
         Status.create({ userId: newUser.uid })
     ])
-    res.status(201).json(newUser)
+    const token = await generateJWT(newUser.uid)
+    res.status(200).json({ user: newUser, token })
+
+
+}
+
+const googleAuth = async (req = request, res = response) => {
+    try {
+        const { token } = req.headers
+        const { name, email, image, lastname } = await googleVerify(token)
+        const [role, roleCreated] = await Role.findOrCreate({ where: { name: "USER_ROLE" }, defaults: { name: "USER_ROLE" } })
+        let user = await User.findOne({ where: { email } })
+        if (!user) { // crea si no existe
+            user = await User.create({
+                email,
+                password: "",
+                google: true,
+                image,
+                roleId: role.id || roleCreated.id
+            })
+            await Promise.allSettled([
+                Person.create({ name, lastname, userId: user.uid }),
+                await Status.create({ userId: user.uid })
+            ])
+        }
+
+        const newtoken = await generateJWT(user.uid)
+
+        res.status(201).json({ data: user, token: newtoken })
+
+    } catch (error) {
+        res.status(400).json({ msg: "el token de google no es valido" })
+    }
 
 }
 
@@ -80,10 +109,12 @@ const loginUser = async (req = request, res = response) => {
     }
 }
 
-
-
-
-
+const renewJWT = async (req = request, res = response) => {
+    const { uid } = req.userJWT
+    const user = await User.findOne({ where: { uid } })
+    const token = await generateJWT(uid)
+    res.status(200).json({ user, token })
+}
 
 
 
@@ -106,10 +137,13 @@ const infoUser = async (req = request, res = response) => {
 }
 
 
+
 module.exports = {
     postRol,
     registerUser,
     getAllUsers,
     infoUser,
-    loginUser
+    loginUser,
+    renewJWT,
+    googleAuth
 }
