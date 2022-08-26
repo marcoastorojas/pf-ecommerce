@@ -21,6 +21,7 @@ import {
  CLEAR_CART,
  ADD_ONE_FROM_CART,
  GET_TOTAL,
+ SEND_PAYMENT
 } from "./actions";
 
 const initialState = {
@@ -41,6 +42,7 @@ const initialState = {
   ? JSON.parse(localStorage.getItem("cart"))
   : [],
  cartTotal: 0,
+ dataPayment: {}
 };
 
 export const reducer = (state = initialState, action) => {
@@ -244,6 +246,12 @@ export const reducer = (state = initialState, action) => {
     ...state,
     errors: action.payload,
    };
+   case SEND_PAYMENT: {
+    return {
+      ...state,
+      dataPayment: action.payload,
+    };
+   }
   default:
    return state;
  }
