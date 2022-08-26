@@ -32,7 +32,7 @@ export default function Checkout() {
   } else
     return (
       <div>
-      <button onCick={() => handlePay()}>PAY</button>
+      <button onClick={() => handlePay()}>PAY</button>
       <Toaster />
     </div>
     );

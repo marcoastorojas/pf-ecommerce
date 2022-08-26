@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 export default function CheckoutPay() {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <Checkout />
       <Footer />
     </div>
