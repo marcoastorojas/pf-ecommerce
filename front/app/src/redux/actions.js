@@ -35,7 +35,7 @@ export const GET_TOTAL = "GET_TOTAL";
 //PAYMENT
 export const SEND_PAYMENT = "SEND_PAYMENT";
 
-const BASE_URL = `http://localhost:3001`;
+const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = () => {
  return async function (dispatch) {
