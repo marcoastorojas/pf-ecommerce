@@ -303,9 +303,10 @@ export const sendPayment = (dataPayment) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
+      console.log(response)
       return dispatch({
         type: SEND_PAYMENT,
-        payload: response,
+        payload: response.data,
       });
     } catch (error) {
       console.log("Error, can not fetch payment", { error: error });
