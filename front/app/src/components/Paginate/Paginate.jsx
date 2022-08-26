@@ -28,7 +28,7 @@ export default function Paginate({
   };
 
   return (
-    <div className="container">
+    <div className="container-paginate">
       <ul className="page">
         <li>
           <a className="prev" onClick={() => prevHandler()}>
