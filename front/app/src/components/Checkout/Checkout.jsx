@@ -5,18 +5,20 @@ import { Toaster, toast } from "react-hot-toast";
 import { sendPayment } from "../../redux/actions";
 
 export default function Checkout() {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-  
-    const cart = useSelector((state) => state.cart);
-    const cartTotal = useSelector((state) => state.getTotal);
-    //RECIBE LO QUE EL POST DEL BACK RETORNA
-    const dataPayment = useSelector((state) => state.dataPayment);
-    const navigate = useNavigate();
-  
-    const handlePay = () => {
-      dispatch(sendPayment({ totalPriceProducts: cartTotal, products: cart }));
-    };
+  const cart = useSelector((state) => state.cart);
+  const cartTotal = useSelector((state) => state.getTotal);
+  const user = useSelector((state) => state.user);
+  //RECIBE LO QUE EL POST DEL BACK RETORNA
+  const dataPayment = useSelector((state) => state.dataPayment);
+  const navigate = useNavigate();
+
+  const handlePay = () => {
+    dispatch(
+      sendPayment({ totalPriceProducts: cartTotal, products: cart, user_id: user.uid })
+    );
+  };
 
   if (cart.length < 1) {
     toast.error("Shopping cart is empty");
@@ -32,8 +34,8 @@ export default function Checkout() {
   } else
     return (
       <div>
-      <button onClick={() => handlePay()}>PAY</button>
-      <Toaster />
-    </div>
+        <button onClick={() => handlePay()}>PAY</button>
+        <Toaster />
+      </div>
     );
 }

@@ -37,10 +37,10 @@ export const SEND_PAYMENT = "SEND_PAYMENT";
 
 const BASE_URL = `http://localhost:3001/api`;
 
-export const getProducts = () => {
+export const getProducts = (page) => {
  return async function (dispatch) {
   try {
-   let json = await axios.get(`${BASE_URL}/products`);
+   let json = await axios.get(`${BASE_URL}/products?page=${page}`);
    return dispatch({
     type: GET_PRODUCTS,
     payload: json.data,
@@ -315,7 +315,9 @@ export const sendPayment = (dataPayment) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
+      const response_1 = await axios.get(`${BASE_URL}/payment`);
       console.log(response)
+      console.log(response_1)
       return dispatch({
         type: SEND_PAYMENT,
         payload: response.data,
