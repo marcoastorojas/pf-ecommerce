@@ -28,7 +28,7 @@ const registerUser = async (req = request, res = response) => {
         Status.create({ userId: newUser.uid })
     ])
     const token = await generateJWT(newUser.uid)
-    res.status(200).json({ user: newUser, token })
+    res.status(200).json({ user: { ...newUser.dataValues, name }, token })
 
 
 }
@@ -44,6 +44,7 @@ const googleAuth = async (req = request, res = response) => {
                 email,
                 password: "",
                 google: true,
+                username: "",
                 image,
                 roleId: role.id || roleCreated.id
             })
@@ -55,10 +56,10 @@ const googleAuth = async (req = request, res = response) => {
 
         const newtoken = await generateJWT(user.uid)
 
-        res.status(201).json({ data: user, token: newtoken })
+        res.status(201).json({ user: { ...user.dataValues, name }, token: newtoken })
 
     } catch (error) {
-        res.status(400).json({ msg: "el token de google no es valido" })
+        res.status(400).json({ msg: error.message })
     }
 
 }
@@ -100,8 +101,8 @@ const loginUser = async (req = request, res = response) => {
         }
 
         const token = await generateJWT(user.uid)
-
-        res.status(200).json({ user, token })
+        const { name } = await Person.findOne({ where: { userId: uid } })
+        res.status(200).json({ user: { ...user.dataValues, name }, token })
 
 
     } catch (error) {
@@ -112,8 +113,9 @@ const loginUser = async (req = request, res = response) => {
 const renewJWT = async (req = request, res = response) => {
     const { uid } = req.userJWT
     const user = await User.findOne({ where: { uid } })
+    const { name } = await Person.findOne({ where: { userId: uid } })
     const token = await generateJWT(uid)
-    res.status(200).json({ user, token })
+    res.status(200).json({ user: { ...user.dataValues, name }, token })
 }
 
 
