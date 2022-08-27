@@ -153,7 +153,23 @@ const getRol = async (req = request, res = response) => {
     if (!rol) return res.status(404).json({ error: `el rol con el id: ${id} no existe` })
     res.status(200).json(rol)
 }
+const changeRol = async (req = request, res = response) => {
+    const { id } = req.params
+    const { role } = req.body
+    if (!id || !role) return res.status(400).json({ message: "los campos id y role son obligatorios" })
 
+    const user = await User.findByPk(id)
+    if (!user) return res.status(400).json({ errors: { userId: "el usuario no existe" } })
+    const rol = await Role.findOne({ where: { name: role } })
+    if (!rol) {
+        const validRoles = await Role.findAll()
+        return res.status(400).json({ errors: { role: `el rol: ${role} no esta contenido en los roles validos ${validRoles.map(rol => rol.name)}` } })
+    }
+
+    await User.update({ roleId: rol.id }, { where: { uid: user.uid } })
+    return res.status(200).json({ message: `rol cambiado a ${role}` })
+
+}
 
 module.exports = {
     postRol,
@@ -164,5 +180,6 @@ module.exports = {
     renewJWT,
     googleAuth,
     getRol,
-    getRols
+    getRols,
+    changeRol
 }

@@ -1,7 +1,7 @@
 
 
 const { Router } = require("express")
-const { registerUser, postRol, getAllUsers, infoUser, loginUser, renewJWT, googleAuth, getRol, getRols } = require("../controllers/authControllers")
+const { registerUser, postRol, getAllUsers, infoUser, loginUser, renewJWT, googleAuth, getRol, getRols, changeRol } = require("../controllers/authControllers")
 const { validBodyLogin } = require("../middlewares/validBodyLogin")
 const { validBodyPostUser } = require("../middlewares/validBodyPostUser")
 const { validIdParam } = require("../middlewares/validIdParam")
@@ -11,6 +11,7 @@ const authRoutes = Router()
 authRoutes.post("/rol", postRol)
 authRoutes.get("/rol", getRols)
 authRoutes.get("/rol/:id", validIdParam, getRol)
+authRoutes.put("/changerol/:id", validIdParam, changeRol)
 
 authRoutes.post("/signup", validBodyPostUser, registerUser)
 authRoutes.post("/signin", validBodyLogin, loginUser)
