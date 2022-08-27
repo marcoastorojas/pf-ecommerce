@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;1,100&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200&display=swap");
 
 :root {
- --background-button-color: rgba(0, 0, 0, 0.9);
- --border-color: rgba(0, 0, 0, 0.2);
- --soft-shadow: rgba(255, 255, 255, 0.5);
+  --background-button-color: rgba(0, 0, 0, 0.9);
+  --border-color: rgba(0, 0, 0, 0.2);
+  --soft-shadow: rgba(255, 255, 255, 0.5);
 }
 
 .App {
- font-family: "Raleway", sans-serif;
+  font-family: "Raleway", sans-serif;
 }
