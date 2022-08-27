@@ -61,9 +61,9 @@ export default function ProductForm() {
     }, 2000);
   };
 
-  if (subCategories.length > 0 && !next)
+  if ( !next)
     return (
-      <div>
+      <div className='contFormPro' >
         <h1>Add product to sell</h1>
         <form onSubmit={(e) => handleNext(e)} className="form">
           <div>
@@ -141,7 +141,7 @@ export default function ProductForm() {
                 className="content-select"
                 onChange={(e) => handleChange(e)}
               >
-                <option>CATEGORIES</option>
+                <option hidden>Select a category</option>
                 {subCategories &&
                   subCategories.map((sc) => {
                     return (
@@ -154,15 +154,14 @@ export default function ProductForm() {
               <i></i>
             </div>
           </div>
-          <div>
             <input
+            className="buttonFormPro"
               type="submit"
               value="NEXT"
               disabled={
                 !(Object.entries(errors).length === 0)
               }
             />
-          </div>
         </form>
       </div>
     );
@@ -176,18 +175,18 @@ export default function ProductForm() {
            
             alt={inputs.title}
           />
-          <h2>NAME: {inputs.title}</h2>
-          <h3>MODEL: {inputs.model}</h3>
-          <h3>BRAND: {inputs.brand}</h3>
-          <h3>DESCRIPTION: {inputs.description}</h3>
-          <h3>PRICE: ${Intl.NumberFormat().format(inputs.price)}</h3>
+          <h3>Name: {inputs.title}</h3>
+          <h3>Model: {inputs.model}</h3>
+          <h3>Brand: {inputs.brand}</h3>
+          <h3>Description: {inputs.description}</h3>
+          <h3>Price: ${Intl.NumberFormat().format(inputs.price)}</h3>
         </div>
         <div className="buttons">
-          <h1>WOULD YOU LIKE TO SELL YOUR PRODUCT?</h1>
-          <input type="submit" value="Submit" />
-          <button onClick={() => setNext(false)}>GO BACK</button>
+          <h1>Would you like to sell your product?</h1>
         </div>
-        <Toaster />
+          <input className="buttonFormPro" type="submit" value="Publish" />
+          <button className="buttonFormPro" onClick={() => setNext(false)}>Go Back</button>
+        {/* <Toaster /> */}
       </form>
     );
   }
