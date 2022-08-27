@@ -1,4 +1,4 @@
-.cards{
+/* .cards{
     margin: 2%;
     display: inline-flex;
     flex-wrap: wrap;
@@ -6,7 +6,15 @@
 }
 
 .contain {
-    overflow-y: scroll;
-    height: 800px;
     width: 1000px;
+} */
+.contResults {
+    height: 800px;
+    margin: 2%;
+    overflow-y: scroll;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px 0 0 10px;
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
 }
