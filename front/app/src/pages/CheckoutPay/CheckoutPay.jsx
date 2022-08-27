@@ -8,7 +8,7 @@ export default function CheckoutPay() {
     <div>
       {/* <NavBar /> */}
       <Checkout />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

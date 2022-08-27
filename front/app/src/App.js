@@ -15,6 +15,7 @@ import SellerRoutes from "./validations/SellerRoutes";
 import BuyerRoutes from './validations/BuyerRoutes';
 import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
+import Footer from "./components/Footer";
 
 import "./App.css";
 
@@ -36,11 +37,11 @@ function App() {
             <Route path="/product/create" exact element={<Form />} />
         </Route>
     </Route>
-        <Route path="/shopping-cart" exact element={<Cart />} />
-        <Route path="/checkout/" exact element={<CheckoutPay />} />
-      </Routes>
-    </div>
-  );
+    <Route path="/shopping-cart" exact element={<Cart />} />
+   </Routes>
+   <Footer/>
+  </div>
+ );
 }
 
 export default App;
