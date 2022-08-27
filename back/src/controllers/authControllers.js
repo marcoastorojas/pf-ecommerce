@@ -7,14 +7,6 @@ const { User, Role, Person, Status } = require("../db")
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
 
-const postRol = async (req = request, res = response) => {
-    const { name } = req.body
-    if (!name) res.status(400).json({ errors: { name: "este campo es obligatorio" } })
-    if (await Role.findOne({ where: { name } })) return res.status(400).json({ errors: { name: "el nombre esta repetido" } })
-    const newRol = await Role.create({ name })
-    res.status(201).json(newRol)
-}
-
 const registerUser = async (req = request, res = response) => {
     const { password, role, name, ...rest } = req.body
     const { id: roleId } = await Role.findOne({ where: { name: role } })
@@ -27,8 +19,11 @@ const registerUser = async (req = request, res = response) => {
         Person.create({ name, userId: newUser.uid }),
         Status.create({ userId: newUser.uid })
     ])
+
+    const { dataValues } = newUser
+    const { password: pass, ...userWithoutPass } = dataValues
     const token = await generateJWT(newUser.uid)
-    res.status(200).json({ user: { ...newUser.dataValues, name }, token })
+    res.status(200).json({ user: { ...userWithoutPass, name }, token })
 
 
 }
@@ -53,10 +48,11 @@ const googleAuth = async (req = request, res = response) => {
                 await Status.create({ userId: user.uid })
             ])
         }
-
+        const { dataValues } = user
+        const { password, ...userWithoutPass } = dataValues
         const newtoken = await generateJWT(user.uid)
 
-        res.status(201).json({ user: { ...user.dataValues, name }, token: newtoken })
+        res.status(201).json({ user: { ...userWithoutPass, name }, token: newtoken })
 
     } catch (error) {
         res.status(400).json({ msg: error.message })
@@ -76,10 +72,6 @@ const loginUser = async (req = request, res = response) => {
                     { username: email_user }
                 ],
             },
-            include: [
-                { model: Person, as: "info" },
-                { model: Status, as: "status" }
-            ]
         })
 
         if (!user) {
@@ -101,8 +93,10 @@ const loginUser = async (req = request, res = response) => {
         }
 
         const token = await generateJWT(user.uid)
-        const { name } = await Person.findOne({ where: { userId: uid } })
-        res.status(200).json({ user: { ...user.dataValues, name }, token })
+        const { name } = await Person.findOne({ where: { userId: user.uid } })
+        const { dataValues } = user
+        const { password: pass, ...userWithoutPass } = dataValues
+        res.status(200).json({ user: { ...userWithoutPass, name }, token })
 
 
     } catch (error) {
@@ -110,12 +104,14 @@ const loginUser = async (req = request, res = response) => {
     }
 }
 
+
 const renewJWT = async (req = request, res = response) => {
     const { uid } = req.userJWT
-    const user = await User.findOne({ where: { uid } })
+    const { dataValues } = await User.findOne({ where: { uid } })
+    const { password, ...user } = dataValues
     const { name } = await Person.findOne({ where: { userId: uid } })
     const token = await generateJWT(uid)
-    res.status(200).json({ user: { ...user.dataValues, name }, token })
+    res.status(200).json({ user: { ...user, name }, token })
 }
 
 
@@ -127,18 +123,53 @@ const getAllUsers = async (req = request, res = response) => {
 }
 const infoUser = async (req = request, res = response) => {
     const { id: uid } = req.params
-    const user = await User.findOne({
+    const { dataValues } = await User.findOne({
         where: { uid },
         include: [
             { model: Person, as: "info" },
             { model: Status, as: "status" }
         ]
     })
-    res.status(201).json(user)
+    const { password, ...rest } = dataValues
+
+    res.status(201).json(rest)
 
 }
 
+const postRol = async (req = request, res = response) => {
+    const { name } = req.body
+    if (!name) res.status(400).json({ errors: { name: "este campo es obligatorio" } })
+    if (await Role.findOne({ where: { name } })) return res.status(400).json({ errors: { name: "el nombre esta repetido" } })
+    const newRol = await Role.create({ name })
+    res.status(201).json(newRol)
+}
+const getRols = async (req = request, res = response) => {
+    const rols = await Role.findAll({})
+    res.status(200).json({ data: rols })
+}
+const getRol = async (req = request, res = response) => {
+    const { id } = req.params
+    const rol = await Role.findByPk(id)
+    if (!rol) return res.status(404).json({ error: `el rol con el id: ${id} no existe` })
+    res.status(200).json(rol)
+}
+const changeRol = async (req = request, res = response) => {
+    const { id } = req.params
+    const { role } = req.body
+    if (!id || !role) return res.status(400).json({ message: "los campos id y role son obligatorios" })
 
+    const user = await User.findByPk(id)
+    if (!user) return res.status(400).json({ errors: { userId: "el usuario no existe" } })
+    const rol = await Role.findOne({ where: { name: role } })
+    if (!rol) {
+        const validRoles = await Role.findAll()
+        return res.status(400).json({ errors: { role: `el rol: ${role} no esta contenido en los roles validos ${validRoles.map(rol => rol.name)}` } })
+    }
+
+    await User.update({ roleId: rol.id }, { where: { uid: user.uid } })
+    return res.status(200).json({ message: `rol cambiado a ${role}` })
+
+}
 
 module.exports = {
     postRol,
@@ -147,5 +178,8 @@ module.exports = {
     infoUser,
     loginUser,
     renewJWT,
-    googleAuth
+    googleAuth,
+    getRol,
+    getRols,
+    changeRol
 }
