@@ -247,40 +247,39 @@ export const clearCart = () => {
 };
 
 export const setUserGoogle = (payload, logOut = false) => {
-  if(logOut) {
-    return (dispatch) => {
-      dispatch({
-        type: SET_USER_GOOGLE,
-        payload
-      })
-    }
-  }
-  else {
-    return (dispatch) => {
-    axios({
-      method:'POST',
-      url: `${BASE_URL}/auth/google`,
-      headers: {
-        token: payload
-      }
+ if (logOut) {
+  return (dispatch) => {
+   dispatch({
+    type: SET_USER_GOOGLE,
+    payload,
+   });
+  };
+ } else {
+  return (dispatch) => {
+   axios({
+    method: "POST",
+    url: `${BASE_URL}/auth/google`,
+    headers: {
+     token: payload,
+    },
+   })
+    .then((response) => {
+     console.log(response.data.user);
+     dispatch({
+      type: SET_USER_GOOGLE,
+      payload: response.data.user,
+     });
+     localStorage.setItem("user", JSON.stringify(response.data.user));
     })
-    .then(response => {
-      console.log(response.data.user)
-      dispatch({
-        type: SET_USER_GOOGLE,
-        payload: response.data.user,
-      })
-      localStorage.setItem('user', JSON.stringify(response.data.user))
-    })
-    .catch( err => {
-      console.log('ErrorCATCHGOOGLE', err.response)
-      dispatch({
-        type: ERROR_HANDLE,
-        payload: err?.response
-      })
-    })
-    }
-  }
+    .catch((err) => {
+     console.log("ErrorCATCHGOOGLE", err.response);
+     dispatch({
+      type: ERROR_HANDLE,
+      payload: err?.response,
+     });
+    });
+  };
+ }
 };
 
 export const postUser = (newUser) => {
@@ -313,47 +312,47 @@ export const cleanSignupErrors = () => {
 };
 
 export const logIn = (user) => {
-  // console.log('ACTIONS: ', user)
-  return (dispatch) => {
-    axios({
-      method: 'POST',
-      url: `${BASE_URL}/auth/signin`,
-      data: user
-    })
-    .then((response) => {
-      // console.log('RESPONSE: ', response)
-      dispatch({
-        type: LOG_IN,
-        payload: response.data.user
-      })
-      // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
-      localStorage.setItem('user',JSON.stringify(response.data.user))
-      // console.log(response.data.token)
-      // document.cookie ='token = ' + response.data.token
-      // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-    })
-    .catch((err) => {
-      dispatch({
-        type: ERROR_HANDLE,
-        payload: err.response.data
-      })
-    })
-  }
-}
+ // console.log('ACTIONS: ', user)
+ return (dispatch) => {
+  axios({
+   method: "POST",
+   url: `${BASE_URL}/auth/signin`,
+   data: user,
+  })
+   .then((response) => {
+    // console.log('RESPONSE: ', response)
+    dispatch({
+     type: LOG_IN,
+     payload: response.data.user,
+    });
+    // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    // console.log(response.data.token)
+    // document.cookie ='token = ' + response.data.token
+    // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
+   })
+   .catch((err) => {
+    dispatch({
+     type: ERROR_HANDLE,
+     payload: err.response.data,
+    });
+   });
+ };
+};
 
 export const sendPayment = (dataPayment) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
-      const response_1 = await axios.get(`${BASE_URL}/payment`);
-      console.log(response)
-      console.log(response_1)
-      return dispatch({
-        type: SEND_PAYMENT,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log("Error, can not fetch payment", { error: error });
-    }
-  };
+ return async function (dispatch) {
+  try {
+   const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
+   const response_1 = await axios.get(`${BASE_URL}/payment`);
+   console.log(response);
+   console.log(response_1);
+   return dispatch({
+    type: SEND_PAYMENT,
+    payload: response.data,
+   });
+  } catch (error) {
+   console.log("Error, can not fetch payment", { error: error });
+  }
+ };
 };
