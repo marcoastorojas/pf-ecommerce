@@ -246,11 +246,41 @@ export const clearCart = () => {
  };
 };
 
-export const setUserGoogle = (payload) => {
- return {
-  type: SET_USER_GOOGLE,
-  payload,
- };
+export const setUserGoogle = (payload, logOut = false) => {
+  if(logOut) {
+    return (dispatch) => {
+      dispatch({
+        type: SET_USER_GOOGLE,
+        payload
+      })
+    }
+  }
+  else {
+    return (dispatch) => {
+    axios({
+      method:'POST',
+      url: `${BASE_URL}/auth/google`,
+      headers: {
+        token: payload
+      }
+    })
+    .then(response => {
+      console.log(response.data.user)
+      dispatch({
+        type: SET_USER_GOOGLE,
+        payload: response.data.user,
+      })
+      localStorage.setItem('user', JSON.stringify(response.data.user))
+    })
+    .catch( err => {
+      console.log('ErrorCATCHGOOGLE', err.response)
+      dispatch({
+        type: ERROR_HANDLE,
+        payload: err?.response
+      })
+    })
+    }
+  }
 };
 
 export const postUser = (newUser) => {
@@ -298,8 +328,8 @@ export const logIn = (user) => {
       })
       // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
       localStorage.setItem('user',JSON.stringify(response.data.user))
-      console.log(response.data.token)
-      document.cookie ='token = ' + response.data.token
+      // console.log(response.data.token)
+      // document.cookie ='token = ' + response.data.token
       // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
     })
     .catch((err) => {
