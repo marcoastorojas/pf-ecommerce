@@ -35,7 +35,7 @@ export const GET_TOTAL = "GET_TOTAL";
 //PAYMENT
 export const SEND_PAYMENT = "SEND_PAYMENT";
 
-const BASE_URL = `http://localhost:3001`;
+const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = () => {
  return async function (dispatch) {
@@ -283,45 +283,45 @@ export const cleanSignupErrors = () => {
 };
 
 export const logIn = (user) => {
-  // console.log('ACTIONS: ', user)
-  return (dispatch) => {
-    axios({
-      method: 'POST',
-      url: `${BASE_URL}/auth/signin`,
-      data: user
-    })
-    .then((response) => {
-      // console.log('RESPONSE: ', response)
-      dispatch({
-        type: LOG_IN,
-        payload: response.data.user
-      })
-      // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
-      localStorage.setItem('user',JSON.stringify(response.data.user))
-      console.log(response.data.token)
-      document.cookie ='token = ' + response.data.token
-      // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-    })
-    .catch((err) => {
-      dispatch({
-        type: ERROR_HANDLE,
-        payload: err.response.data
-      })
-    })
-  }
-}
+ // console.log('ACTIONS: ', user)
+ return (dispatch) => {
+  axios({
+   method: "POST",
+   url: `${BASE_URL}/auth/signin`,
+   data: user,
+  })
+   .then((response) => {
+    // console.log('RESPONSE: ', response)
+    dispatch({
+     type: LOG_IN,
+     payload: response.data.user,
+    });
+    // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    console.log(response.data.token);
+    document.cookie = "token = " + response.data.token;
+    // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
+   })
+   .catch((err) => {
+    dispatch({
+     type: ERROR_HANDLE,
+     payload: err.response.data,
+    });
+   });
+ };
+};
 
 export const sendPayment = (dataPayment) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
-      console.log(response)
-      return dispatch({
-        type: SEND_PAYMENT,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log("Error, can not fetch payment", { error: error });
-    }
-  };
+ return async function (dispatch) {
+  try {
+   const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
+   console.log(response);
+   return dispatch({
+    type: SEND_PAYMENT,
+    payload: response.data,
+   });
+  } catch (error) {
+   console.log("Error, can not fetch payment", { error: error });
+  }
+ };
 };

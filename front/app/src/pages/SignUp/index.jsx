@@ -7,7 +7,7 @@ import SignInGoogle from "../../components/SignInGoogle/SigInGoogle.jsx";
 
 import { Toaster, toast } from "react-hot-toast";
 
-import "./index.modules.css";
+import style from "./index.module.css";
 
 export default function SignUp() {
  const dispatch = useDispatch();
@@ -136,60 +136,60 @@ export default function SignUp() {
  signupResponse.username === username && navigate("/login");
 
  return (
-  <div className="general-div">
-   <main className="main-div">
+  <div className={style.container}>
+   <main className={style.mainDiv}>
     <Toaster />
-    <div className="register">Register Page</div>
+    <h2 className={style.register}>Register Page</h2>
 
-    <form onSubmit={submitHandler} className="form">
-     <label htmlFor="name">
-      {"First name: \n"}
+    <form onSubmit={submitHandler} className={style.form}>
+     <div className={style.formDiv}>
+      <label htmlFor="name">First name:</label>
       {nameBlur && (name.length <= 1 || name.length > 40 || !validName) ? (
        <p style={{ display: "inline", color: "red", fontSize: 14 }}>
         *Your name should have between 2 and 40 digits, and contain only a-z
         letters.
        </p>
       ) : null}
+      <br />
       <input
        type="text"
        id="name"
        onChange={onInputChangeHandler}
        onBlur={onBlurHandler}
       />
-     </label>
+      <br />
 
-     <label htmlFor="username">
-      {"User name: \n"}
+      <label htmlFor="username">User name:</label>
       {usernameBlur && (username.length <= 6 || username.length > 40) ? (
        <p style={{ display: "inline", color: "red", fontSize: 14 }}>
         *User name should have between 7 and 40 digits.
        </p>
       ) : null}
+      <br />
       <input
        type="text"
        id="username"
        onChange={onInputChangeHandler}
        onBlur={onBlurHandler}
       />
-     </label>
+      <br />
 
-     <label htmlFor="email">
-      {"Email: \n"}
+      <label htmlFor="email">Email:</label>
       {emailBlur && !validEmail ? (
        <p style={{ display: "inline", color: "red", fontSize: 14 }}>
         *You have written an invalid e-mail.
        </p>
       ) : null}
+      <br />
       <input
        type="text"
        id="email"
        onChange={onInputChangeHandler}
        onBlur={onBlurHandler}
       />
-     </label>
+      <br />
 
-     <label htmlFor="password">
-      {"Password: \n"}
+      <label htmlFor="password">Password:</label>
       {passwordBlur &&
       (password.length <= 8 || password.length > 40 || !validPassword) ? (
        <p style={{ display: "inline", color: "red", fontSize: 14 }}>
@@ -198,41 +198,44 @@ export default function SignUp() {
         (/*@#$%^&+=)."
        </p>
       ) : null}
+      <br />
       <input
        type="text"
        id="password"
        onChange={onInputChangeHandler}
        onBlur={onBlurHandler}
       />
-     </label>
+      <br />
 
-     <label htmlFor="confirmedpassword">
-      {`Confirm password: \n`}
+      <label htmlFor="confirmedpassword">Confirm password:</label>
       {confirmedPasswordBlur && password !== confirmedPassword ? (
        <p style={{ display: "inline", color: "red", fontSize: 14 }}>
         *Both passwords should match!
        </p>
       ) : null}
+      <br />
       <input
        type="text"
        id="confirmedpassword"
        onChange={onInputChangeHandler}
        onBlur={onBlurHandler}
       />
-     </label>
+      <br />
 
-     {submitTry &&
-      (!name || !username || !email || !password || !confirmedPassword) && (
-       <p style={{ color: "red" }}>All fields must be filled!</p>
-      )}
-     <button type="submit"> Register </button>
+      {submitTry &&
+       (!name || !username || !email || !password || !confirmedPassword) && (
+        <p style={{ color: "red" }}>All fields must be filled!</p>
+       )}
+      <button type="submit" className={style.submitButton}>
+       Register
+      </button>
+     </div>
     </form>
+
     <div>
      <SignInGoogle />
     </div>
    </main>
-
-   <footer className="footer"></footer>
   </div>
  );
 }
