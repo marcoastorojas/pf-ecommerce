@@ -14,7 +14,7 @@ import CheckoutPay from "./pages/CheckoutPay/CheckoutPay";
 import Cart from "./pages/Cart/Cart.jsx";
 
 import SellerRoutes from "./validations/SellerRoutes";
-
+import BuyerRoutes from './validations/BuyerRoutes';
 import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
 
@@ -34,11 +34,13 @@ function App() {
     <Route path="/login" exact element={<LogIn />} />
     <Route path="/results" exact element={<Results />} />
     <Route path="/product/:id" exact element={<Details />} />
-    <Route element={<SellerRoutes />}>
-     <Route path="/product/create" exact element={<Form />} />
+    <Route element={<BuyerRoutes />}>
+        <Route path="/checkout/" exact element={<CheckoutPay />} />
+        <Route element={<SellerRoutes />}> 
+            <Route path="/product/create" exact element={<Form />} />
+        </Route>
     </Route>
     <Route path="/shopping-cart" exact element={<Cart />} />
-    <Route path="/checkout/" exact element={<CheckoutPay />} />
    </Routes>
   </div>
  );
