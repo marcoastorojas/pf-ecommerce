@@ -37,10 +37,10 @@ export const SEND_PAYMENT = "SEND_PAYMENT";
 
 const BASE_URL = `http://localhost:3001/api`;
 
-export const getProducts = () => {
+export const getProducts = (page) => {
  return async function (dispatch) {
   try {
-   let json = await axios.get(`${BASE_URL}/products`);
+   let json = await axios.get(`${BASE_URL}/products?page=${page}`);
    return dispatch({
     type: GET_PRODUCTS,
     payload: json.data,
@@ -246,11 +246,40 @@ export const clearCart = () => {
  };
 };
 
-export const setUserGoogle = (payload) => {
- return {
-  type: SET_USER_GOOGLE,
-  payload,
- };
+export const setUserGoogle = (payload, logOut = false) => {
+ if (logOut) {
+  return (dispatch) => {
+   dispatch({
+    type: SET_USER_GOOGLE,
+    payload,
+   });
+  };
+ } else {
+  return (dispatch) => {
+   axios({
+    method: "POST",
+    url: `${BASE_URL}/auth/google`,
+    headers: {
+     token: payload,
+    },
+   })
+    .then((response) => {
+     console.log(response.data.user);
+     dispatch({
+      type: SET_USER_GOOGLE,
+      payload: response.data.user,
+     });
+     localStorage.setItem("user", JSON.stringify(response.data.user));
+    })
+    .catch((err) => {
+     console.log("ErrorCATCHGOOGLE", err.response);
+     dispatch({
+      type: ERROR_HANDLE,
+      payload: err?.response,
+     });
+    });
+  };
+ }
 };
 
 export const postUser = (newUser) => {
@@ -298,8 +327,8 @@ export const logIn = (user) => {
     });
     // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
     localStorage.setItem("user", JSON.stringify(response.data.user));
-    console.log(response.data.token);
-    document.cookie = "token = " + response.data.token;
+    // console.log(response.data.token)
+    // document.cookie ='token = ' + response.data.token
     // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
    })
    .catch((err) => {
@@ -315,7 +344,9 @@ export const sendPayment = (dataPayment) => {
  return async function (dispatch) {
   try {
    const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
+   const response_1 = await axios.get(`${BASE_URL}/payment`);
    console.log(response);
+   console.log(response_1);
    return dispatch({
     type: SEND_PAYMENT,
     payload: response.data,

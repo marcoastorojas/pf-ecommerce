@@ -46,7 +46,7 @@ export default function NavBar() {
 
  const handleSignOut = () => {
   // setUser({})
-  dispatch(setUserGoogle({}));
+  dispatch(setUserGoogle({}, true));
   localStorage.removeItem("user");
   // document.getElementById('sigInDiv').hidden = false
  };
