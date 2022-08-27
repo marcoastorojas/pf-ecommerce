@@ -48,7 +48,7 @@ export default function FilterContainer() {
  }, [asc, desc, category]);
 
  const filtrar = () => {
-    console.log(category, search)
+    // console.log(category, search)
   if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
   else dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
  };

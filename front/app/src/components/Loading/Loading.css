@@ -15,6 +15,7 @@
   border: 16.08px solid #000;
   border-color: #292664 transparent #292664 transparent;
   animation: ldio-dq0fl7ccams 1.25s linear infinite;
+  /* border: 1px solid green; */
 }
 
 .ldio-dq0fl7ccams > div:nth-child(2), .ldio-dq0fl7ccams > div:nth-child(4) {
@@ -25,7 +26,7 @@
   animation: ldio-dq0fl7ccams 1.25s linear infinite reverse;
 }
 .ldio-dq0fl7ccams > div:nth-child(2) {
-  border-color: transparent #667395 transparent #667395
+  border-color: transparent rgba(0, 0, 0, 0.9) transparent rgba(0, 0, 0, 0.9)
 }
 .ldio-dq0fl7ccams > div:nth-child(3) { border-color: transparent }
 .ldio-dq0fl7ccams > div:nth-child(3) div {
@@ -42,14 +43,14 @@
   height: 16.08px;
   top: -16.08px;
   left: 48.239999999999995px;
-  background: #292664;
+  background: black;
   border-radius: 50%;
-  box-shadow: 0 128.64px 0 0 #292664;
+  box-shadow: 0 128.64px 0 0 black;
 }
 .ldio-dq0fl7ccams > div:nth-child(3) div:after {
   left: -16.08px;
   top: 48.239999999999995px;
-  box-shadow: 128.64px 0 0 0 #292664;
+  box-shadow: 128.64px 0 0 0 black;
 }
 
 .ldio-dq0fl7ccams > div:nth-child(4) { border-color: transparent; }
@@ -67,24 +68,26 @@
   height: 16.08px;
   top: -16.08px;
   left: 30.15px;
-  background: #667395;
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 50%;
-  box-shadow: 0 92.46px 0 0 #667395;
+  box-shadow: 0 92.46px 0 0 rgba(0, 0, 0, 0.9);
 }
 .ldio-dq0fl7ccams > div:nth-child(4) div:after {
   left: -16.08px;
   top: 30.15px;
-  box-shadow: 92.46px 0 0 0 #667395;
+  box-shadow: 92.46px 0 0 0 rgba(0, 0, 0, 0.9);
 }
 .loadingio-spinner-double-ring-sps9acplpie {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  /* align-items: center; */
+  width: 100%;
+  /* justify-content: center; */
+  /* overflow: hidden; */
   
-  height: 100vh;
-  width: 100vh;
-  margin-left: 35rem;
+  /* height: 100vh; */
+  /* width: 100vh; */
+  /* margin-left: 35rem; */
+  /* border: 1px solid red; */
   
 }
 .ldio-dq0fl7ccams {
@@ -94,5 +97,8 @@
   transform: translateZ(0) scale(1);
   backface-visibility: hidden;
   transform-origin: 0 0; /* see note above */
+  /* border: 5px solid green; */
+  margin: 0;
+  padding: 0;
 }
 .ldio-dq0fl7ccams div { box-sizing: content-box; }
