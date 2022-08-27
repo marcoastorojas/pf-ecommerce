@@ -1,15 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 .mainDiv {
- display: flex;
- justify-content: center;
- align-items: center;
- /* background-color: yellow; */
- width: 27vw;
+  background-color: aquamarine;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 27vw;
+}
+
+.form {
+  border: 2px solid black;
+  width: 100%;
+  /* height: 90%; */
 }
 
 .textInput {
- width: 23vw;
+  width: 84%;
+  height: 30px;
 
- font-family: "Raleway", sans-serif;
+  font-family: "Raleway", sans-serif;
 }
