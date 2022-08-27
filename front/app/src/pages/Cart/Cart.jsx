@@ -8,7 +8,7 @@ export default function Cart() {
     <div>
       {/* <NavBar /> */}
       <ShoppingCart />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

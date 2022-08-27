@@ -29,7 +29,7 @@ export default function Details() {
       <div className="detailPage">
         {/* <NavBar /> */}
         <ProductDetail product={product} />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
 }

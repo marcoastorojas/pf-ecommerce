@@ -17,6 +17,7 @@ import SellerRoutes from "./validations/SellerRoutes";
 import BuyerRoutes from './validations/BuyerRoutes';
 import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
+import Footer from "./components/Footer";
 
 function App() {
  const { pathname } = useLocation();
@@ -42,6 +43,7 @@ function App() {
     </Route>
     <Route path="/shopping-cart" exact element={<Cart />} />
    </Routes>
+   <Footer/>
   </div>
  );
 }

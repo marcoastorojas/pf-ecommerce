@@ -9,7 +9,7 @@ export default function Form() {
     <main>
       {/* <NavBar /> */}
       <ProductForm />
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 }

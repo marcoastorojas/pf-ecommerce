@@ -19,7 +19,7 @@ export default function Results() {
     <FilterContainer/>
     <ResultsContainer />
    </div>
-   <Footer />
+   {/* <Footer /> */}
   </div>
  );
 }
