@@ -312,7 +312,7 @@ export const cleanSignupErrors = () => {
 };
 
 export const logIn = (user) => {
- // console.log('ACTIONS: ', user)
+ console.log('ACTIONS: ', user)
  return (dispatch) => {
   axios({
    method: "POST",
@@ -328,13 +328,14 @@ export const logIn = (user) => {
     // console.log('RESOUESTA DE REXU ANTES DE AAAAA.', response)
     localStorage.setItem("user", JSON.stringify(response.data.user));
     // console.log(response.data.token)
-    // document.cookie ='token = ' + response.data.token
+    document.cookie ='token=' + response.data.token
     // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
    })
    .catch((err) => {
+    console.log(err.response.data.errors)
     dispatch({
      type: ERROR_HANDLE,
-     payload: err.response.data,
+     payload: err.response.data.errors,
     });
    });
  };
