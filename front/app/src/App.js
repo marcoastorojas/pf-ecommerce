@@ -18,7 +18,7 @@ import SimpleNavBar from "./components/SimpleNavBar";
 import Footer from "./components/Footer";
 
 import "./App.css";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   const { pathname } = useLocation();
 
@@ -40,6 +40,7 @@ function App() {
     <Route path="/shopping-cart" exact element={<Cart />} />
    </Routes>
    <Footer/>
+   <Toaster/>
   </div>
  );
 }

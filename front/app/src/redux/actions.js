@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import axios from "axios";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
@@ -330,6 +331,7 @@ export const logIn = (user) => {
     // console.log(response.data.token)
     document.cookie ='token=' + response.data.token
     // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
+    toast.success(`Welcome ${response.data.user.username}`)
    })
    .catch((err) => {
     console.log(err.response.data.errors)
@@ -337,6 +339,7 @@ export const logIn = (user) => {
      type: ERROR_HANDLE,
      payload: err.response.data.errors,
     });
+    toast.error(`${Object.keys(err.response.data.errors)[0]}: ${Object.values(err.response.data.errors)[0]}`)
    });
  };
 };
