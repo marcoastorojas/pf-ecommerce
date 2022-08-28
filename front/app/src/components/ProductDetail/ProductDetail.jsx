@@ -108,14 +108,14 @@ export default function ProductDetail({ product }) {
             </div>
             <div className={style.buttons}>
               <button className={style.buttonProdDet} onClick={() => addCart()}>
-                <span className="text">Add to cart</span>
-                <span className="icon">
+                <span className={style.text}>Add to cart</span>
+                <span className={style.icon}>
                   <img src={Add} alt="add-cart" />
                 </span>
               </button>
               <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
-                <span className="text">Delete All</span>
-                <span className="icon">
+                <span className={style.text}>Delete All</span>
+                <span className={style.icon}>
                   <img src={Del} alt="delete-cart" />
                 </span>
               </button>

@@ -113,10 +113,6 @@
   -webkit-appearance: none;
   background-color: red;
 } */
-.buttons {
-  border: 1px solid green;
-  padding: 2%;
-}
 
 .pricing > input[type="range"] {
   -webkit-appearance: none;
@@ -170,6 +166,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2%;
 }
 .buttonProdDet {
   border: 1px solid var(--border-color);
@@ -179,12 +176,26 @@
   width: 80%;
   background-color: var(--background-button-color);
   color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transition: all 0.2s ease;
 }
-.buttonProdDet > span > img {
-  /* color: white; */
+.buttonProdDet:hover {
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 0 10px 1px var(--border-color);
+}
+.buttonProdDet:active {
+  background-color: white;
+  color: black;
+}
+.buttonProdDet > .icon {
   filter: invert(100%);
 }
-
+.buttonProdDet:active > .icon {
+  filter: invert(0%);
+}
 
 
 
