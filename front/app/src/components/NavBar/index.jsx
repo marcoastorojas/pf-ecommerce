@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName, setUserGoogle } from "../../redux/actions";
 
@@ -13,11 +14,12 @@ import style from "./index.module.css";
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user);
-  // const user = useSelector(state => state.user);
+  // const user = JSON.parse(localStorage.getItem('user'))
+  const user = useSelector(state => state.user);
   const errorRedux = useSelector((state) => state.errors);
 
   useEffect(() => {
@@ -42,20 +44,23 @@ export default function NavBar() {
     // setUser({})
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
+    navigate('/')
     // document.getElementById('sigInDiv').hidden = false
   };
 
   //Toast Inicio de Sesión
   useEffect(() => {
+    if (Object.keys(user).length > 0) {
+      toast.success(`Welcome ${user.username}`);
+    }
+    // console.log(localStorage.user?Object.keys(JSON.parse(localStorage.user)):'pepe');
+  }, [localStorage.user]);
+  useEffect(() => {
     if (Object.keys(errorRedux).length > 0) {
       toast.error(`${Object.keys(errorRedux.errors)[0]}: ${Object.values(errorRedux.errors)[0]}`);
       // console.log(`${Object.keys(errorRedux.errors)[0]}: ${Object.values(errorRedux.errors)[0]}`)
     }
-    if (Object.keys(user).length > 0) {
-      toast.success(`Welcome ${user.username}`);
-    }
-    console.log(user);
-  }, [Object.keys(errorRedux).length ? errorRedux.errors : errorRedux, user]);
+  }, [Object.keys(errorRedux).length ? errorRedux.errors : errorRedux])
 
   return (
     <header className={style.header}>
