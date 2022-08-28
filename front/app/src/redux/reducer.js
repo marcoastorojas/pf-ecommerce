@@ -42,7 +42,7 @@ const initialState = {
   ? JSON.parse(localStorage.getItem("user"))
   : {},
  signupErrors: null,
- errors: {},
+ errorsLogIn: {},
  cart: localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
   : [],
@@ -268,7 +268,7 @@ export const reducer = (state = initialState, action) => {
   case ERROR_HANDLE:
    return {
     ...state,
-    errors: action.payload,
+    errorsLogIn: action.payload,
    };
    case SEND_PAYMENT: {
     return {

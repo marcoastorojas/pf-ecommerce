@@ -20,7 +20,7 @@ export default function NavBar() {
   const cart = useSelector((state) => state.cart);
   // const user = JSON.parse(localStorage.getItem('user'))
   const user = useSelector(state => state.user);
-  const errorRedux = useSelector((state) => state.errors);
+  const errorRedux = useSelector((state) => state.errorsLogIn);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -53,14 +53,13 @@ export default function NavBar() {
     if (Object.keys(user).length > 0) {
       toast.success(`Welcome ${user.username}`);
     }
-    // console.log(localStorage.user?Object.keys(JSON.parse(localStorage.user)):'pepe');
   }, [localStorage.user]);
   useEffect(() => {
     if (Object.keys(errorRedux).length > 0) {
-      toast.error(`${Object.keys(errorRedux.errors)[0]}: ${Object.values(errorRedux.errors)[0]}`);
-      // console.log(`${Object.keys(errorRedux.errors)[0]}: ${Object.values(errorRedux.errors)[0]}`)
+      toast.error(`${Object.keys(errorRedux)[0]}: ${Object.values(errorRedux)[0]}`);
     }
-  }, [Object.keys(errorRedux).length ? errorRedux.errors : errorRedux])
+    console.log('ERROR REDUX', Object.keys(errorRedux).length)
+  }, [errorRedux])
 
   return (
     <header className={style.header}>

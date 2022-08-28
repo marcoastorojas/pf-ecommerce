@@ -312,7 +312,7 @@ export const cleanSignupErrors = () => {
 };
 
 export const logIn = (user) => {
- // console.log('ACTIONS: ', user)
+ console.log('ACTIONS: ', user)
  return (dispatch) => {
   axios({
    method: "POST",
@@ -332,9 +332,10 @@ export const logIn = (user) => {
     // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
    })
    .catch((err) => {
+    console.log(err.response.data.errors)
     dispatch({
      type: ERROR_HANDLE,
-     payload: err.response.data,
+     payload: err.response.data.errors,
     });
    });
  };
