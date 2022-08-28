@@ -101,21 +101,21 @@ export const getProductsByName = (textInput) => {
   axios
    .get(`${BASE_URL}/products?name=${textInput}`)
    .then((response) => {
-    toast.dismiss()
-    // console.log({
-    //  from: "action creator getProductsById",
-    //  response: response,
-    // });
-    console.log('BY NAME; ', response.data.data)
-    response.data.data.length>0 ?
-    dispatch({
-     type: GET_PRODUCTS_BY_NAME,
+     // console.log({
+       //  from: "action creator getProductsById",
+       //  response: response,
+       // });
+      //  console.log('BY NAME; ', response.data.data)
+       response.data.data.length>0 ?
+       dispatch({
+         type: GET_PRODUCTS_BY_NAME,
      payload: response.data.data,
     })
     :  dispatch({
       type: RESULTS_FOUND,
       payload: false
     })
+    toast.dismiss()
    })
    .catch((err) => {
     toast.err('No results')
