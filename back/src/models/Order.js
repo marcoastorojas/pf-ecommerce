@@ -9,10 +9,7 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true,
-        },
-        date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        }        
-    });
+        }    
+    },
+    { timestamps: false });
 };
