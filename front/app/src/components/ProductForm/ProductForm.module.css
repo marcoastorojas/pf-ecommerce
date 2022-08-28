@@ -35,22 +35,22 @@ h1 {
   padding-left: 30px;
 }
 
-.content-select {
+.contentSelect {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-.content-select select::-ms-expand {
+.contentSelect select::-ms-expand {
   display: none;
 }
 
-.content-select {
+.contentSelect {
   max-width: 250px;
   position: relative;
 }
 
-.content-select select {
+.contentSelect select {
   display: inline-block;
   width: 100%;
   cursor: pointer;
@@ -70,11 +70,11 @@ h1 {
   transition: all 0.25s ease;
 }
 
-.content-select select:hover {
+.contentSelect select:hover {
   background: #ffffff;
 }
 
-.content-select i {
+.contentSelect i {
   position: absolute;
   right: 20px;
   top: calc(50% - 13px);
@@ -87,7 +87,7 @@ h1 {
   transition: all 0.25s ease;
 }
 
-.content-select:hover i {
+.contentSelect:hover i {
   margin-top: 3px;
 }
 
@@ -111,7 +111,8 @@ h1 {
   word-break: keep-all;
 }
 
-.buttons button, input {
+.buttons button,
+.form input {
   width: 100%;
   max-width: 600px;
   margin: 20px auto;

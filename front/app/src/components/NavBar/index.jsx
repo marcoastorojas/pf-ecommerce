@@ -66,9 +66,9 @@ export default function NavBar() {
           <Link to={"/"} className={style.logoLink}>
             <p className={style.logo}>PF: e-commerce</p>
           </Link>
-          <div className={style.searchBarDiv}>
-            <SearchBar />
-          </div>
+          {/* <div className={style.searchBarDiv}> */}
+          <SearchBar />
+          {/* </div> */}
         </div>
         <nav className={style.navButtons}>
           <button onClick={showCategoriesHandler} className={style.categoriesButton}>

@@ -40,14 +40,14 @@ export default function SearchBar() {
   }
 
   return (
-    <div className={style.mainDiv}>
-      <form onSubmit={onSearchHandler} className={style.form}>
-        <input className={style.textInput} id="inputBusqueda" type="text" placeholder="What are you looking for?" onChange={onChangeHandler} />
-        <button type="submit" className={style.button}>
-          {">"}
-        </button>
-        {emptySearch && <p>Try searching something!</p>}
-      </form>
-    </div>
+    // <div className={style.mainDiv}>
+    <form onSubmit={onSearchHandler} className={style.form}>
+      <input className={style.textInput} id="inputBusqueda" type="text" placeholder="What are you looking for?" onChange={onChangeHandler} />
+      <button type="submit" className={style.button}>
+        {"🔎"}
+      </button>
+      {emptySearch && <p>Try searching something!</p>}
+    </form>
+    // </div> */
   );
 }
