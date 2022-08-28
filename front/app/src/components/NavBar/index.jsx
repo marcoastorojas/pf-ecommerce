@@ -49,21 +49,21 @@ export default function NavBar() {
   };
 
   //Toast Inicio de Sesión
-  useEffect(() => {
-    if (Object.keys(user).length > 0) {
-      toast.success(`Welcome ${user.username}`);
-    }
-  }, [localStorage.user]);
-  useEffect(() => {
-    if (Object.keys(errorRedux).length > 0) {
-      toast.error(`${Object.keys(errorRedux)[0]}: ${Object.values(errorRedux)[0]}`);
-    }
-    console.log('ERROR REDUX', Object.keys(errorRedux).length)
-  }, [errorRedux])
+  // useEffect(() => {
+  //   if (Object.keys(user).length > 0) {
+  //     toast.success(`Welcome ${user.username}`);
+  //   }
+  // }, [localStorage.user]);
+  // useEffect(() => {
+  //   if (Object.keys(errorRedux).length > 0) {
+  //     toast.error(`${Object.keys(errorRedux)[0]}: ${Object.values(errorRedux)[0]}`);
+  //   }
+  //   console.log('ERROR REDUX', Object.keys(errorRedux).length)
+  // }, [errorRedux])
 
   return (
     <header className={style.header}>
-      <Toaster />
+      {/* <Toaster /> */}
       <div className={style.sectionOne}>
         <div className={style.logoAndSB}>
           {" "}

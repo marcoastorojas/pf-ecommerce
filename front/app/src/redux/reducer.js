@@ -12,6 +12,7 @@ import {
  SET_USER_GOOGLE,
  LOG_IN,
  ERROR_HANDLE,
+ RESULTS_FOUND,
 
  //SIGNUP
  POST_USER,
@@ -32,6 +33,7 @@ const initialState = {
  products: [],
  allProducts: [],
  searchedProducts: [],
+ resultsFound: true,
  product: {},
  categories: [],
  search: "",
@@ -275,6 +277,12 @@ export const reducer = (state = initialState, action) => {
       ...state,
       dataPayment: action.payload,
     };
+   }
+   case RESULTS_FOUND: {
+    return {
+      ...state,
+      resultsFound: action.payload
+    }
    }
   default:
    return state;

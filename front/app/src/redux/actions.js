@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import axios from "axios";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
@@ -9,6 +10,7 @@ export const CLEAR_DETAIL = "CLEAR_DETAIL";
 
 export const GET_PRODUCTS_FILTER = "GET_PRODUCTS_FILTER";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const RESULTS_FOUND = 'RESULTS_FOUND';
 
 export const GET_SUB_CATEGORIES = "GET_SUB_CATEGORIES";
 export const GET_CATEGORY_PRODUCTS_BY_ID = "GET_CATEGORY_PRODUCTS_BY_ID";
@@ -86,26 +88,48 @@ export const clearDetail = () => {
 };
 
 export const getProductsByName = (textInput) => {
- return (dispatch) => {
+  toast.loading('Searching...')
+  return (dispatch) => {
+   dispatch({
+     type: RESULTS_FOUND,
+     payload: true
+   })
+  dispatch({
+    type:GET_PRODUCTS_BY_NAME,
+    payload: []
+  })
   axios
    .get(`${BASE_URL}/products?name=${textInput}`)
    .then((response) => {
-    console.log({
-     from: "action creator getProductsById",
-     response: response,
-    });
-    dispatch({
-     type: GET_PRODUCTS_BY_NAME,
+     // console.log({
+       //  from: "action creator getProductsById",
+       //  response: response,
+       // });
+      //  console.log('BY NAME; ', response.data.data)
+       response.data.data.length>0 ?
+       dispatch({
+         type: GET_PRODUCTS_BY_NAME,
      payload: response.data.data,
-    });
+    })
+    :  dispatch({
+      type: RESULTS_FOUND,
+      payload: false
+    })
+    toast.dismiss()
    })
    .catch((err) => {
-    console.log({ from: "action creator getProductsByName", err });
+    toast.err('No results')
+    // console.log({ from: "action creator getProductsByName", err });
+    dispatch({
+      type: RESULTS_FOUND,
+      payload: false
+    })
    });
  };
 };
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
+  toast.loading('Searching...')
  let url = new URL(`${BASE_URL}/products`);
  if (!!name) url.searchParams.append("name", name);
  if (!!max) url.searchParams.append("max", max);
@@ -114,12 +138,19 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
  if (!!desc) url.searchParams.append("desc", desc);
  //  console.log(url.href);
  return (dispatch) => {
+  toast.dismiss()
+  dispatch({ type: RESULTS_FOUND, payload: true })
+
   axios
    .get(url.href)
    .then((response) => {
-    dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data });
+    response.data.data.length > 0
+    ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data })
+    : dispatch({ type: RESULTS_FOUND, payload: false })
    })
    .catch((err) => {
+    toast.err('No results')
+    dispatch({ type: RESULTS_FOUND, payload: false })
     console.log({ from: "action creator getProductsFilter", err });
    });
  };
@@ -150,6 +181,7 @@ export const getCategoryProductsById = (
  asc,
  desc
 ) => {
+  toast.loading('Searching...')
  let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
  if (!!name) url.searchParams.append("name", name);
  if (!!max) url.searchParams.append("max", max);
@@ -157,23 +189,43 @@ export const getCategoryProductsById = (
  if (!!asc) url.searchParams.append("asc", asc);
  if (!!desc) url.searchParams.append("desc", desc);
  return (dispatch) => {
+   dispatch({
+     type: GET_CATEGORY_PRODUCTS_BY_ID,
+     payload: []
+   })
+   dispatch({
+     type: RESULTS_FOUND,
+     payload: true
+   })
   axios
    .get(url.href)
    .then((response) => {
-    console.log({
-     from: "action creator getCategoryProductsById",
-     response,
-    });
-    dispatch({
+    // console.log({
+    //  from: "action creator getCategoryProductsById",
+    //  response,
+    // });
+    toast.dismiss()
+    response.data.data.length
+    ? dispatch({
      type: GET_CATEGORY_PRODUCTS_BY_ID,
      payload: response.data.data,
-    });
-   })
-   .catch((err) =>
-    console.log({
-     m: "Error on action creator getCategoryProductsById",
-     err,
     })
+    : dispatch({
+      type: RESULTS_FOUND,
+      payload: false
+    })
+   })
+   .catch((err) => {
+     // console.log({
+     //  m: "Error on action creator getCategoryProductsById",
+     //  err,
+     // })
+     dispatch({
+       type: RESULTS_FOUND,
+       payload: false
+     })
+     toast.error('No results')
+   }
    );
  };
 };
@@ -312,7 +364,8 @@ export const cleanSignupErrors = () => {
 };
 
 export const logIn = (user) => {
- console.log('ACTIONS: ', user)
+//  console.log('ACTIONS: ', user)
+  toast.loading('Loading...');
  return (dispatch) => {
   axios({
    method: "POST",
@@ -320,6 +373,7 @@ export const logIn = (user) => {
    data: user,
   })
    .then((response) => {
+    toast.dismiss()
     // console.log('RESPONSE: ', response)
     dispatch({
      type: LOG_IN,
@@ -330,13 +384,16 @@ export const logIn = (user) => {
     // console.log(response.data.token)
     document.cookie ='token=' + response.data.token
     // axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
+    toast.success(`Welcome ${response.data.user.username}`)
    })
    .catch((err) => {
-    console.log(err.response.data.errors)
+     toast.dismiss()
+    // console.log(err.response.data.errors)
     dispatch({
      type: ERROR_HANDLE,
      payload: err.response.data.errors,
     });
+    toast.error(`${Object.keys(err.response.data.errors)[0]}: ${Object.values(err.response.data.errors)[0]}`)
    });
  };
 };
