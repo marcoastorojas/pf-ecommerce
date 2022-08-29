@@ -299,16 +299,17 @@ export const clearCart = () => {
 };
 
 export const setUserGoogle = (payload, logOut = false) => {
- if (logOut) {
-  return (dispatch) => {
-   dispatch({
+  if (logOut) {
+    return (dispatch) => {
+      dispatch({
     type: SET_USER_GOOGLE,
     payload,
-   });
-  };
- } else {
+  });
+};
+} else {
   return (dispatch) => {
-   axios({
+    toast.loading('Loading...')
+    axios({
     method: "POST",
     url: `${BASE_URL}/auth/google`,
     headers: {
@@ -316,19 +317,23 @@ export const setUserGoogle = (payload, logOut = false) => {
     },
    })
     .then((response) => {
+      toast.dismiss()
      console.log(response.data.user);
      dispatch({
       type: SET_USER_GOOGLE,
       payload: response.data.user,
      });
      localStorage.setItem("user", JSON.stringify(response.data.user));
+     toast.success('Welcome ' + response.data.user.name)
     })
     .catch((err) => {
+      toast.dismiss()
      console.log("ErrorCATCHGOOGLE", err.response);
      dispatch({
       type: ERROR_HANDLE,
       payload: err?.response,
      });
+     toast.error('Error when signing in with google')
     });
   };
  }

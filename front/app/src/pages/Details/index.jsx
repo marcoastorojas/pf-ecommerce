@@ -17,6 +17,10 @@ export default function Details() {
 
   const dispatch = useDispatch();
   const product = useSelector((store) => store.product);
+  useEffect(() => {
+    // console.log(Object.keys(product).length)
+    document.title = Object.keys(product).length>0?product.title:'Loading...'
+  }, [Object.keys(product).length])
 
   useEffect(() => {
     dispatch(clearDetail());
