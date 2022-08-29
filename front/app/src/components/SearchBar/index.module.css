@@ -1,23 +1,60 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
-.mainDiv {
-  background-color: aquamarine;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.form {
+  position: relative;
 
-  width: 27vw;
+  display: flex;
+
+  border: 1px solid black;
+  border-radius: 8px;
+
+  width: 70%;
+  /* height: 70%; */
 }
 
-.form {
-  border: 2px solid black;
+.form::before {
+  content: "";
+
+  background-color: rgba(1, 1, 1, 0.08);
+
+  position: absolute;
+
+  z-index: -1;
+
   width: 100%;
-  /* height: 90%; */
+  height: 100%;
+
+  border-radius: inherit;
+
+  transition: transform 1s;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.form:focus-within::before {
+  transform: scaleX(1);
 }
 
 .textInput {
-  width: 84%;
-  height: 30px;
+  flex: 1;
+
+  border: none;
+  background-color: transparent;
+  padding: 7px;
 
   font-family: "Raleway", sans-serif;
+}
+
+.textInput:focus {
+  outline: none;
+}
+
+.button {
+  background-color: transparent;
+
+  border: none;
+
+  font-size: 13px;
+
+  cursor: pointer;
 }
