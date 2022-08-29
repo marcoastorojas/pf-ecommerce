@@ -423,6 +423,7 @@ export const sendPayment = (dataPayment) => {
 };
 
 export const upgradeToSeller = (idUser, role) => {
+  console.log(idUser, role)
   return () => {
     toast.loading('Upgrading account')
     try {
@@ -433,10 +434,11 @@ export const upgradeToSeller = (idUser, role) => {
       })
       .then(response => {
         toast.dismiss()
-        localStorage.setItem('user', JSON.stringify({...JSON.parse(localStorage.user), roleId: response.data.roleIde}))
+        localStorage.setItem('user', JSON.stringify({...JSON.parse(localStorage.user), roleId: response.data.newRole.id}))
         toast.success('You can publish your products now')
       })
     } catch (err) {
+      toast.dismiss()
       console.log(err)
       toast.error('error')
     }

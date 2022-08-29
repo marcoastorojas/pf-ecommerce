@@ -11,6 +11,7 @@ import SearchBar from "../SearchBar";
 import cartI from "../../media/images/cart.svg";
 
 import style from "./index.module.css";
+import { SELLER_ROLE } from "../../validations/usersTypes";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -62,8 +63,9 @@ export default function NavBar() {
   // }, [errorRedux])
 
   //Mejorar de comprador a vendedor
-  const upgradeToSeller = () => {
-    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid), 'SELLER_ROLE')
+  const btnUpSel = () => {
+    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, 'SELLER_ROLE'))
+    // console.log('pepe')
   }
 
   return (
@@ -136,7 +138,7 @@ export default function NavBar() {
           ) : null}
         </div>
         <div>
-          <button onClick={upgradeToSeller}>Upgrade to  Seller</button>
+        {user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to  Seller</button>}    
         </div>
         <div className={style.cartDiv}>
           <Link to={"/shopping-cart"} className={style.cartLink}>
