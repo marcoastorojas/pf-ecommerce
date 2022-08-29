@@ -13,6 +13,11 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //Cambiar título
+  useEffect(() => {
+    document.title='Sign up'
+  }, [])
+
   //estados del form
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
