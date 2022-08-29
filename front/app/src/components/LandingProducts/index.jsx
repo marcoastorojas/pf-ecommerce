@@ -34,6 +34,7 @@ export default function LandingProducts() {
                   id={product.id}
                   title={product.title}
                   image={product.images}
+                  price={product.price}
                 />
               );
             })
