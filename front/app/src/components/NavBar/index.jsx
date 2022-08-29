@@ -19,7 +19,7 @@ export default function NavBar() {
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
   // const user = JSON.parse(localStorage.getItem('user'))
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const errorRedux = useSelector((state) => state.errorsLogIn);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function NavBar() {
     // setUser({})
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
-    navigate('/')
+    navigate("/");
     // document.getElementById('sigInDiv').hidden = false
   };
 
@@ -116,16 +116,13 @@ export default function NavBar() {
           {user && Object.keys(user).length !== 0 && <button onClick={handleSignOut}>Sign Out</button>}
           {Object.keys(user).length === 0 ? (
             <div className={style.logAndSign}>
-              {/* <div> */}
               <Link to={"/login"} className={style.logIn}>
                 Log in
               </Link>
-              {/* </div> */}
-              {/* <div> */}
+
               <Link to={"/signup"} className={style.signUp}>
                 Sign up
               </Link>
-              {/* </div> */}
             </div>
           ) : null}
         </div>
