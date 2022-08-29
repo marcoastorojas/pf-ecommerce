@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import { setUserGoogle } from '../../redux/actions';
 import { Navigate } from 'react-router-dom';
+// import { toast } from 'react-hot-toast';
 
 export default function SignInGoogle () {
     const dispatch = useDispatch();
