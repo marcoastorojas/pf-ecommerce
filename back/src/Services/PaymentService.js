@@ -1,13 +1,12 @@
 const axios = require("axios");
 
 class PaymentService {
-    //async createPayment() {
-    async createPayment(req) {
-     
+   
+    async createPayment(req) {     
 
       const items = req.body.products.map(product=>{
 
-        return {
+        return {          
           "title": product.product.title,
           "description": product.product.description,
           //"picture_url": "http://www.myapp.com/myimage.jpg",
