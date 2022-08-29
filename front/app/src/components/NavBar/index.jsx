@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName, setUserGoogle } from "../../redux/actions";
+import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName, setUserGoogle, upgradeToSeller } from "../../redux/actions";
 
 import SearchBar from "../SearchBar";
 
@@ -60,6 +60,11 @@ export default function NavBar() {
   //   }
   //   console.log('ERROR REDUX', Object.keys(errorRedux).length)
   // }, [errorRedux])
+
+  //Mejorar de comprador a vendedor
+  const upgradeToSeller = () => {
+    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid), 'SELLER_ROLE')
+  }
 
   return (
     <header className={style.header}>
@@ -129,6 +134,9 @@ export default function NavBar() {
               {/* </div> */}
             </div>
           ) : null}
+        </div>
+        <div>
+          <button onClick={upgradeToSeller}>Upgrade to  Seller</button>
         </div>
         <div className={style.cartDiv}>
           <Link to={"/shopping-cart"} className={style.cartLink}>

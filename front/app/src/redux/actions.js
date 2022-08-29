@@ -163,7 +163,7 @@ export const getCategories = () => {
   axios
    .get(`${BASE_URL}/categories`)
    .then((response) => {
-    console.log({ from: "action creator getCategories" });
+    // console.log({ from: "action creator getCategories" });
     dispatch({
      type: GET_CATEGORIES,
      payload: response.data.data,
@@ -421,3 +421,24 @@ export const sendPayment = (dataPayment) => {
   }
  };
 };
+
+export const upgradeToSeller = (idUser, role) => {
+  return () => {
+    toast.loading('Upgrading account')
+    try {
+      axios({
+        method: 'PUT',
+        url: `${BASE_URL}/auth/changerol/${idUser}`,
+        data: {role: role}
+      })
+      .then(response => {
+        toast.dismiss()
+        localStorage.setItem('user', JSON.stringify({...JSON.parse(localStorage.user), roleId: response.data.roleIde}))
+        toast.success('You can publish your products now')
+      })
+    } catch (err) {
+      console.log(err)
+      toast.error('error')
+    }
+  }
+}
