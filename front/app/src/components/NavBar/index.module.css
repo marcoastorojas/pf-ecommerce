@@ -163,3 +163,30 @@
 
   cursor: pointer;
 }
+
+.categoriesButton:hover > .categoriasChikito {
+visibility: visible;
+}
+.categoriasChikito {
+  visibility: hidden;
+  position: absolute;
+  margin-top: 10px;
+  padding: 1%;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  z-index: 5;
+  background-color: white;
+  text-align: left;
+}
+.categoriasChikito > div {
+  margin-top: 2%;
+
+}
+.enlace {
+
+  text-decoration: none;
+  color: black;
+}
+.enlace:hover {
+  text-decoration: underline;
+}
