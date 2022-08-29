@@ -406,24 +406,25 @@ export const logIn = (user) => {
 };
 
 export const sendPayment = (dataPayment) => {
- return async function (dispatch) {
-  try {
-   const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
-   const response_1 = await axios.get(`${BASE_URL}/payment`);
-   console.log(response);
-   console.log(response_1);
-   return dispatch({
-    type: SEND_PAYMENT,
-    payload: response.data,
-   });
-  } catch (error) {
-   console.log("Error, can not fetch payment", { error: error });
-  }
+  return async function (dispatch) {
+   try {
+    const response = await axios.post(${BASE_URL}/payment, dataPayment);
+    //const response_1 = await axios.get(${BASE_URL}/payment);
+    console.log(response);
+    //console.log(response_1);
+    window.open(response.data.toString());
+    return dispatch({
+     type: SEND_PAYMENT,
+     payload: response.data,
+    });
+   } catch (error) {
+    console.log("Error, can not fetch payment", { error: error });
+   }
+  };
  };
-};
 
 export const upgradeToSeller = (idUser, role) => {
-  console.log(idUser, role)
+  // console.log(idUser, role)
   return () => {
     toast.loading('Upgrading account')
     try {
