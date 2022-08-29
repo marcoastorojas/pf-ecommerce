@@ -161,7 +161,7 @@ export const getCategories = () => {
     axios
       .get(`${BASE_URL}/categories`)
       .then((response) => {
-        console.log({ from: "action creator getCategories" });
+        // console.log({ from: "action creator getCategories" });
         dispatch({
           type: GET_CATEGORIES,
           payload: response.data.data,
@@ -397,9 +397,9 @@ export const sendPayment = (dataPayment) => {
   return async function (dispatch) {
     try {
       const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
-      //  const response_1 = await axios.get(`${BASE_URL}/payment`);
+      //const response_1 = await axios.get(${BASE_URL}/payment);
       console.log(response);
-      // console.log(response_1);
+      //console.log(response_1);
       window.open(response.data.toString());
       return dispatch({
         type: SEND_PAYMENT,
@@ -407,6 +407,28 @@ export const sendPayment = (dataPayment) => {
       });
     } catch (error) {
       console.log("Error, can not fetch payment", { error: error });
+    }
+  };
+};
+
+export const upgradeToSeller = (idUser, role) => {
+  console.log(idUser, role);
+  return () => {
+    toast.loading("Upgrading account");
+    try {
+      axios({
+        method: "PUT",
+        url: `${BASE_URL}/auth/changerol/${idUser}`,
+        data: { role: role },
+      }).then((response) => {
+        toast.dismiss();
+        localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.user), roleId: response.data.newRole.id }));
+        toast.success("You can publish your products now");
+      });
+    } catch (err) {
+      toast.dismiss();
+      console.log(err);
+      toast.error("error");
     }
   };
 };

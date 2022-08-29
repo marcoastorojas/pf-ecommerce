@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName, setUserGoogle } from "../../redux/actions";
+import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName, setUserGoogle, upgradeToSeller } from "../../redux/actions";
 
 import SearchBar from "../SearchBar";
 
 import cartI from "../../media/images/cart.svg";
 
 import style from "./index.module.css";
+import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -61,6 +62,12 @@ export default function NavBar() {
   //   console.log('ERROR REDUX', Object.keys(errorRedux).length)
   // }, [errorRedux])
 
+  //Mejorar de comprador a vendedor
+  const btnUpSel = () => {
+    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, 'SELLER_ROLE'))
+    // console.log('pepe')
+  }
+
   return (
     <header className={style.header}>
       {/* <Toaster /> */}
@@ -75,22 +82,23 @@ export default function NavBar() {
           {/* </div> */}
         </div>
         <nav className={style.navButtons}>
-          <button onClick={showCategoriesHandler} className={style.categoriesButton}>
-            Categories
-          </button>
-          <div>
-            {categories[0] &&
-              showCategories &&
-              categories.map((e, index) => {
-                const { id, name } = e;
-                return (
-                  <div key={index}>
-                    <Link key={id} id={id} to={`/results`} onClick={onCategorySelection}>
-                      {name}
-                    </Link>
-                  </div>
-                );
-              })}
+          <div className={style.contCate}>
+            <h3 onClick={showCategoriesHandler} className={style.categoriesButton}>
+              Categories
+              <div className={style.categoriasChikito}>
+                {categories[0] &&
+                  categories.map((e, index) => {
+                    const { id, name } = e;
+                    return (
+                      <div key={index}>
+                        <Link className={style.enlace} key={id} id={id} to={`/results`} onClick={onCategorySelection}>
+                          {name}
+                        </Link>
+                      </div>
+                    );
+                  })}
+              </div>
+            </h3>
           </div>
           <Link to="/" className={style.navBarLinks}>
             History
@@ -98,7 +106,7 @@ export default function NavBar() {
           <Link to="/" className={style.navBarLinks}>
             Sales
           </Link>
-          <Link to="/product/create" className={style.navBarLinks}>
+          <Link to="/product/create" className={style.navBarLinks} hidden={ user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE? false: true}>
             Upload your product
           </Link>
         </nav>
@@ -125,6 +133,9 @@ export default function NavBar() {
               </Link>
             </div>
           ) : null}
+        </div>
+        <div>
+        {user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to  Seller</button>}    
         </div>
         <div className={style.cartDiv}>
           <Link to={"/shopping-cart"} className={style.cartLink}>
