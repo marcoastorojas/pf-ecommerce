@@ -11,7 +11,7 @@ import SearchBar from "../SearchBar";
 import cartI from "../../media/images/cart.svg";
 
 import style from "./index.module.css";
-import { SELLER_ROLE } from "../../validations/usersTypes";
+import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -106,7 +106,7 @@ export default function NavBar() {
           <Link to="/" className={style.navBarLinks}>
             Sales
           </Link>
-          <Link to="/product/create" className={style.navBarLinks}>
+          <Link to="/product/create" className={style.navBarLinks} hidden={ user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE? false: true}>
             Upload your product
           </Link>
         </nav>
