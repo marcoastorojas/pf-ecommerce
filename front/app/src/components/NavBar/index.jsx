@@ -75,22 +75,24 @@ export default function NavBar() {
           {/* </div> */}
         </div>
         <nav className={style.navButtons}>
-          <h3 onClick={showCategoriesHandler} className={style.categoriesButton}>
-            Categories
-            <div className={style.categoriasChikito}>
-              {categories[0] &&
-                categories.map((e, index) => {
-                  const { id, name } = e;
-                  return (
-                    <div key={index}>
-                      <Link className={style.enlace} key={id} id={id} to={`/results`} onClick={onCategorySelection}>
-                        {name}
-                      </Link>
-                    </div>
-                  );
-                })}
-            </div>
-          </h3>
+          <div className={style.contCate}>
+            <h3 onClick={showCategoriesHandler} className={style.categoriesButton}>
+              Categories
+              <div className={style.categoriasChikito}>
+                {categories[0] &&
+                  categories.map((e, index) => {
+                    const { id, name } = e;
+                    return (
+                      <div key={index}>
+                        <Link className={style.enlace} key={id} id={id} to={`/results`} onClick={onCategorySelection}>
+                          {name}
+                        </Link>
+                      </div>
+                    );
+                  })}
+              </div>
+            </h3>
+          </div>
           <Link to="/" className={style.navBarLinks}>
             History
           </Link>

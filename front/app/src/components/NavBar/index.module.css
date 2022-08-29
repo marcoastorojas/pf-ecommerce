@@ -150,10 +150,10 @@
   color: whitesmoke;
 }
 
-.cartDiv {
+/* .cartDiv { */
   /* padding: 5px; */
   /* background-color: blue; */
-}
+/* } */
 
 .cartLink {
   display: flex;
@@ -170,7 +170,7 @@
   cursor: pointer;
 }
 
-.categoriesButton:hover > .categoriasChikito {
+.contCate:hover .categoriasChikito {
 visibility: visible;
 }
 .categoriasChikito {
