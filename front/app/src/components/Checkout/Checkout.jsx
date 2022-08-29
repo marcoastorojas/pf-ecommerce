@@ -8,7 +8,7 @@ export default function Checkout() {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-  const cartTotal = useSelector((state) => state.getTotal);
+  const cartTotal = useSelector((state) => state.cartTotal);
   const user = useSelector((state) => state.user);
   //RECIBE LO QUE EL POST DEL BACK RETORNA
   const dataPayment = useSelector((state) => state.dataPayment);
