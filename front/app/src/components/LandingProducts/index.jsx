@@ -19,16 +19,10 @@ export default function LandingProducts() {
 
   return (
     <main>
-      <Paginate
-        totalData={60}
-        dataPerPage={dataPerPage}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
       <div className="container-lProducts">
         {Array.isArray(sliceArrayProduct)
           ? sliceArrayProduct.map((product) => {
-              return (
+            return (
                 <ProductCard
                   key={product.id}
                   id={product.id}
@@ -38,8 +32,14 @@ export default function LandingProducts() {
                 />
               );
             })
-          : null}
+            : null}
       </div>
+            <Paginate
+              totalData={60}
+              dataPerPage={dataPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+            />
     </main>
   );
 }
