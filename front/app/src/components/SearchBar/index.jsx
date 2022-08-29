@@ -8,54 +8,46 @@ import { getProductsByName, getSearchCategory, getSearchName } from "../../redux
 import style from "./index.module.css";
 
 export default function SearchBar() {
- const dispatch = useDispatch();
- const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
- const [textInput, setTextInput] = useState(null);
- const [emptySearch, setEmptySearch] = useState(false);
+  const [textInput, setTextInput] = useState(null);
+  const [emptySearch, setEmptySearch] = useState(false);
 
- const results = useSelector((state) => state.searchedProducts);
+  const results = useSelector((state) => state.searchedProducts);
 
- //  useEffect(() => {
- //   console.log(results);
- //  });
-
- function onChangeHandler(e) {
-  const input = e.target.value;
-  if (input === "") {
-   setTextInput(null);
-  } else {
-   setTextInput(input);
+  function onChangeHandler(e) {
+    const input = e.target.value;
+    if (input === "") {
+      setTextInput(null);
+    } else {
+      setTextInput(input);
+    }
   }
- }
 
- function onSearchHandler(e) {
-  e.preventDefault();
-  if (!textInput) {
-   console.log({ m: "empty search!" });
-   setEmptySearch(true);
-  } else {
-   dispatch(getProductsByName(textInput));
-   dispatch(getSearchName(textInput));
-   dispatch(getSearchCategory(''))
-   setEmptySearch(false);
-   navigate("/results");
+  function onSearchHandler(e) {
+    e.preventDefault();
+    if (!textInput) {
+      console.log({ m: "empty search!" });
+      setEmptySearch(true);
+    } else {
+      dispatch(getProductsByName(textInput));
+      dispatch(getSearchName(textInput));
+      dispatch(getSearchCategory(""));
+      setEmptySearch(false);
+      navigate("/results");
+    }
   }
- }
 
- return (
-  <div className={style.mainDiv}>
-   <form onSubmit={onSearchHandler}>
-    <input
-     className={style.textInput}
-     id="inputBusqueda"
-     type="text"
-     placeholder="What are you looking for?"
-     onChange={onChangeHandler}
-    />
-    <button type="submit">{">"}</button>
-    {emptySearch && <p>Try searching something!</p>}
-   </form>
-  </div>
- );
+  return (
+    // <div className={style.mainDiv}>
+    <form onSubmit={onSearchHandler} className={style.form}>
+      <input className={style.textInput} id="inputBusqueda" type="text" placeholder="What are you looking for?" onChange={onChangeHandler} />
+      <button type="submit" className={style.button}>
+        {"🔎"}
+      </button>
+      {emptySearch && <p>Try searching something!</p>}
+    </form>
+    // </div> */
+  );
 }

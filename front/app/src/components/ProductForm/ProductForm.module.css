@@ -1,7 +1,16 @@
+.contFormPro {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  width: 50%;
+  padding: 2%;
+  padding-right: 3%;
+  margin: 2%;
+}
+
 .form {
   width: 100%;
   max-width: 600px;
-  margin: 40px auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,11 +18,17 @@
   font-family: "Quicksand", sans-serif;
 }
 
-.form input {
+.form > div > input {
   min-width: 80vh;
   height: 30px;
   margin: 10px;
   margin-left: 30px;
+  padding: 1% 2%;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+.form > div > input:hover {
+  border: 1px solid black;
 }
 
 .form label {
@@ -21,8 +36,8 @@
   color: #10182f;
 }
 
-h1 {
-  color: #10182f;
+.contFormPro > h1 {
+  color: var(--background-button-color);
   margin: 40px auto;
   display: flex;
   justify-content: center;
@@ -35,22 +50,22 @@ h1 {
   padding-left: 30px;
 }
 
-.content-select {
+.contentSelect {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-.content-select select::-ms-expand {
+.contentSelect select::-ms-expand {
   display: none;
 }
 
-.content-select {
+.contentSelect {
   max-width: 250px;
   position: relative;
 }
 
-.content-select select {
+.contentSelect select {
   display: inline-block;
   width: 100%;
   cursor: pointer;
@@ -64,17 +79,17 @@ h1 {
   font-size: 1em;
   color: #999;
   font-family: "Quicksand", sans-serif;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   position: relative;
   transition: all 0.25s ease;
 }
 
-.content-select select:hover {
+.contentSelect select:hover {
   background: #ffffff;
 }
 
-.content-select i {
+.contentSelect i {
   position: absolute;
   right: 20px;
   top: calc(50% - 13px);
@@ -87,11 +102,14 @@ h1 {
   transition: all 0.25s ease;
 }
 
-.content-select:hover i {
+.contentSelect:hover i {
   margin-top: 3px;
 }
 
 .preview {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 2%;
   width: 100%;
   max-width: 600px;
   margin: 40px auto;
@@ -102,17 +120,38 @@ h1 {
   font-family: "Quicksand", sans-serif;
 }
 
-.preview img {
-  max-width: 100%;
-  max-height: 100%;
+.preview > div > img {
+  /* max-width: 100%; */
+  /* max-height: 100%; */
+  width: 100%;
 }
 
 .buttons {
   word-break: keep-all;
 }
 
-.buttons button, input {
+.buttons button,
+.form input {
   width: 100%;
   max-width: 600px;
   margin: 20px auto;
+}
+
+.buttonFormPro {
+  background-color: var(--background-button-color);
+  color: white;
+  width: 50%;
+  border-radius: 10px;
+  padding: 2%;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+}
+.buttonFormPro:hover {
+  cursor: pointer;
+  width: 100%;
+}
+.buttonFormPro:active {
+  background-color: white;
+  color: black;
+  box-shadow: 0 0 10px 1px var(--border-color);
 }

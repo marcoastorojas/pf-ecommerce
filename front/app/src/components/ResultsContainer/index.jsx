@@ -7,7 +7,7 @@ import style from "./ResultsContainer.module.css"
 
 export default function ResultsContainer() {
     const searchedProducts = useSelector(state => state.searchedProducts);
-
+    const resultsFound = useSelector(state => state.resultsFound);
     return (
         <div className={style.contResults}>
             {/* <button onClick={() => console.log(searchedProducts[0])}>PRUEBA</button> */}
@@ -27,7 +27,13 @@ export default function ResultsContainer() {
                     )
                 })
                  : 
-                <Loading />
+                <></>
+            }
+            {
+                resultsFound && searchedProducts.length === 0?<Loading/>:<></>
+            }
+            {
+                !resultsFound?<p>No results found</p>:<></>
             }
         </div>
     )

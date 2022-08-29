@@ -12,6 +12,7 @@ import {
  SET_USER_GOOGLE,
  LOG_IN,
  ERROR_HANDLE,
+ RESULTS_FOUND,
 
  //SIGNUP
  POST_USER,
@@ -32,6 +33,7 @@ const initialState = {
  products: [],
  allProducts: [],
  searchedProducts: [],
+ resultsFound: true,
  product: {},
  categories: [],
  search: "",
@@ -42,7 +44,7 @@ const initialState = {
   ? JSON.parse(localStorage.getItem("user"))
   : {},
  signupErrors: null,
- errors: {},
+ errorsLogIn: {},
  cart: localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
   : [],
@@ -268,13 +270,19 @@ export const reducer = (state = initialState, action) => {
   case ERROR_HANDLE:
    return {
     ...state,
-    errors: action.payload,
+    errorsLogIn: action.payload,
    };
    case SEND_PAYMENT: {
     return {
       ...state,
       dataPayment: action.payload,
     };
+   }
+   case RESULTS_FOUND: {
+    return {
+      ...state,
+      resultsFound: action.payload
+    }
    }
   default:
    return state;

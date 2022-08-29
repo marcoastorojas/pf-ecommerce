@@ -12,7 +12,7 @@
   justify-content: center;
   flex-direction: row;
 
-  width: 100vw;
+  width: 100%;
   height: 15vh;
 
   /* background-color: #f72585; */
@@ -24,20 +24,23 @@
 }
 
 .sectionOne {
+  /* border: 2px solid blue; */
+
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 40vw;
-  /* position: absolute; */
-
-  /* background-color: blue; */
+  width: 40%;
 }
 
 .logoAndSB {
+  /* border: 2px solid red; */
+
   display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
+
+  width: 85%;
 }
 
 .logoLink {
@@ -57,14 +60,16 @@
   font-size: 30px;
 }
 
-.searchBarDiv {
+/* .searchBarDiv {
+  border: 2px solid red;
+  width: 70%;
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
+  justify-content: center;
+  align-items: center;
 
-  /* background-color: red; */
+  background-color: red;
   width: 500px;
-}
+} */
 
 .navBarLinks {
   text-decoration: none;
@@ -105,33 +110,62 @@
   /* background-color: aquamarine; */
 }
 
+.userOrLoginDiv {
+  /* border: 2px solid green; */
+
+  display: flex;
+  justify-content: space-evenly;
+
+  width: 45%;
+}
+
+.logAndSign {
+  /* background-color: blueviolet; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  width: 100%;
+}
+
 .logIn {
-  text-decoration: none;
-  color: black;
   border-bottom: 1px solid black;
   padding: 0px 3px;
+
+  text-decoration: none;
+  color: black;
 }
 
 .signUp {
-  /* background-color: blueviolet; */
+  background-color: black;
+
   border: 1px solid black;
-  padding: 3px 5px;
+  border-radius: 10px;
+  padding: 8px 8px;
+
+  box-shadow: 0 0 10px 10px rgba(255, 255, 255, 0.5);
+  /* var(--soft-shadow); */
 
   text-decoration: none;
-  color: black;
+  color: whitesmoke;
 }
 
-.cartNumber {
-  display: inline;
+.cartDiv {
+  /* padding: 5px; */
+  /* background-color: blue; */
 }
 
-.shopping {
-  border: 1px solid black;
-  padding: 3px 5px;
-  color: black;
-  cursor: pointer;
+.cartLink {
   display: flex;
   justify-items: center;
   align-items: center;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 8px 20px;
+
+  color: black;
   text-decoration: none;
+
+  cursor: pointer;
 }
