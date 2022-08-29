@@ -33,17 +33,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const {
    Order,
-   OrderDetail,
+   Orderdetail,
    OrderType
   } = sequelize.models
-
-Order.hasMany(OrderDetail, { as: "orderdetail" })
-OrderDetail.belongsTo(Order, { as: "order" })
-
-//Order_detail.hasMany(Product)
-//Product.belongsToMany(Order_detail)
-
-Order.hasOne(OrderType)
+ 
+Order.hasMany(Orderdetail);
+Orderdetail.belongsTo(Order);
  
 
 const {

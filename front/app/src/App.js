@@ -15,9 +15,10 @@ import SellerRoutes from "./validations/SellerRoutes";
 import BuyerRoutes from './validations/BuyerRoutes';
 import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
+import Footer from "./components/Footer";
 
 import "./App.css";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   const { pathname } = useLocation();
 
@@ -30,15 +31,16 @@ function App() {
         <Route path="/login" exact element={<LogIn />} />
         <Route path="/results" exact element={<Results />} />
         <Route path="/product/:id" exact element={<Details />} />
-    <Route element={<BuyerRoutes />}>
-        <Route path="/checkout/" exact element={<CheckoutPay />} />
-        <Route element={<SellerRoutes />}> 
+        <Route element={<BuyerRoutes />}>
+          <Route path="/checkout/" exact element={<CheckoutPay />} />
+          <Route element={<SellerRoutes />}> 
             <Route path="/product/create" exact element={<Form />} />
+          </Route>
         </Route>
-    </Route>
         <Route path="/shopping-cart" exact element={<Cart />} />
-        <Route path="/checkout/" exact element={<CheckoutPay />} />
       </Routes>
+      <Footer/>
+      <Toaster/>
     </div>
   );
 }

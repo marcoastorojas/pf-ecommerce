@@ -1,0 +1,11 @@
+.contSeller {
+    /* border: 1px solid green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contSeller > img {
+    width: 50%;
+    border-radius: 100px;
+}
