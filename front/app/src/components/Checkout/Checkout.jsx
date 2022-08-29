@@ -15,9 +15,7 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   const handlePay = () => {
-    dispatch(
-      sendPayment({ totalPriceProducts: cartTotal, products: cart, user_id: user.uid })
-    );
+    dispatch(sendPayment({ totalPriceProducts: cartTotal, products: cart, user_id: user.uid }));
   };
 
   if (cart.length < 1) {
