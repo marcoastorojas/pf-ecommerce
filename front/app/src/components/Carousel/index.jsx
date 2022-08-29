@@ -48,7 +48,7 @@ export default function Carousel() {
             />
             <div className="title-price-container">
             <span className="slide-name">{slide.title}</span>
-            <span className="slide-price">${slide.price}</span>
+            <span className="slide-price">${Number(slide.price).toLocaleString()}</span>
             </div>
             </Link>
        )}

@@ -6,8 +6,9 @@
  justify-content: space-evenly;
  align-items: center;
 
- border: 2px solid aqua;
-
+ /* border: 2px solid aqua; */
+ margin-top: 2%;
+ margin-bottom: 2%;
  position: relative;
  height: 35vh;
  width: 84vw;
@@ -20,7 +21,9 @@
 }
 
 .image-text-container {
- border: 2px solid green;
+ /* border: 2px solid green; */
+ border: 1px solid var(--border-color);
+ border-radius: 10px;
  width: 60vw;
  height: 31.5vh;
 
@@ -32,6 +35,10 @@
  text-decoration: none;
  color: black;
  font-family: "Raleway", sans-serif;
+ transition: all 0.2s ease;
+}
+.image-text-container:hover {
+    border: 1px solid black;
 }
 
 .image-carousel {
@@ -67,6 +74,16 @@
  font-size: 30px;
 
  cursor: pointer;
+ border: 1px solid transparent;
+ border-radius: 100px;
+ margin: 0 1%;
+ padding: 0 2%;
+ text-align: center;
+ transition: all 0.2s ease;
+}
+.arrows:hover {
+    border: 1px solid black;
+    border-radius: 100px;
 }
 
 .right-arrow {

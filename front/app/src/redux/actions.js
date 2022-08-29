@@ -40,9 +40,11 @@ export const SEND_PAYMENT = "SEND_PAYMENT";
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
+  const url = new URL(`${BASE_URL}/products`)
+  if(page > 0) url.searchParams.append('page', page)
  return async function (dispatch) {
   try {
-   let json = await axios.get(`${BASE_URL}/products?page=${page}`);
+   let json = await axios.get(url.href);
    return dispatch({
     type: GET_PRODUCTS,
     payload: json.data,

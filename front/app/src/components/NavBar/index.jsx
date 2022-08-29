@@ -32,8 +32,8 @@ export default function NavBar() {
   const onCategorySelection = (e) => {
     // console.log(e);
     dispatch(getCategoryProductsById(e.target.id));
-    dispatch(getSearchCategory(e.target.id));
-    dispatch(getSearchName(""));
+    // dispatch(getSearchCategory(e.target.id));
+    // dispatch(getSearchName(""));
   };
 
   function showCategoriesHandler() {
