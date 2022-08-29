@@ -167,7 +167,7 @@ const changeRol = async (req = request, res = response) => {
     }
 
     await User.update({ roleId: rol.id }, { where: { uid: user.uid } })
-    return res.status(200).json({ message: `rol cambiado a ${role}` })
+    return res.status(200).json({ message: `rol cambiado a ${role}`,newRole:rol })
 
 }
 
