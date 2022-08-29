@@ -86,7 +86,7 @@
     border-radius: 100px;
 }
 
-.right-arrow {
+/* .right-arrow { */
  /* position: absolute; */
  /* top: 50%; */
  /* right: 90px; */
@@ -95,9 +95,9 @@
  /* z-index: 10; */
  /* cursor: pointer; */
  /* user-select: none; */
-}
+/* } */
 
-.left-arrow {
+/* .left-arrow { */
  /* position: absolute; */
  /* top: 50%; */
  /* left: 90px; */
@@ -106,7 +106,7 @@
  /* z-index: 10; */
  /* cursor: pointer; */
  /* user-select: none; */
-}
+/* } */
 
 .slide {
  opacity: 0;
