@@ -409,9 +409,10 @@ export const sendPayment = (dataPayment) => {
  return async function (dispatch) {
   try {
    const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
-   const response_1 = await axios.get(`${BASE_URL}/payment`);
+   //const response_1 = await axios.get(${BASE_URL}/payment);
    console.log(response);
-   console.log(response_1);
+   //console.log(response_1);
+   window.open(response.data.toString());
    return dispatch({
     type: SEND_PAYMENT,
     payload: response.data,
