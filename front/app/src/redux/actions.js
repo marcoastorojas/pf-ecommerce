@@ -437,6 +437,7 @@ export const upgradeToSeller = (idUser, role) => {
         toast.dismiss()
         localStorage.setItem('user', JSON.stringify({...JSON.parse(localStorage.user), roleId: response.data.newRole.id}))
         toast.success('You can publish your products now')
+        
       })
     } catch (err) {
       toast.dismiss()
