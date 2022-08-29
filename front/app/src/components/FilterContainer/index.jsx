@@ -32,50 +32,60 @@ export default function FilterContainer() {
   if (!asc) {
    setAsc("true");
    setDesc("");
-   e.target.innerText = "ASC";
+   e.target.innerText = "Order: Asc";
   } else {
    setAsc("");
    setDesc("true");
-   e.target.innerText = "DESC";
+   e.target.innerText = "Order: Desc";
   }
  };
 
  useEffect(() => {
   filtrar();
- }, [asc, category]);
+  if(asc !== '') document.querySelector('#orderButton').className = style.buttonOrderSelected
+  else if(desc !== '') document.querySelector('#orderButton').className = style.buttonOrderSelected
+  else document.querySelector('#orderButton').className = style.buttonOrder
+ }, [asc, desc, category]);
 
  const filtrar = () => {
-    console.log(category, search)
+    // console.log(category, search)
   if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
   else dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
  };
 const categoryHandle = (e) => {
     setCategory(e.target.value);
 }
-// useEffect(() => {
-//     if(!!category) dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
-// }, [category])
  return (
-  <div>
-        <h4>Order By:</h4>
-        <label>Price:</label>
-        <button onClick={orderHandle}>Order</button>
+  <div className={style.contFilter}>
+    <div className={style.eachFilter}>
+        {/* <h4>Order By:</h4> */}
+        {/* <label>Price: </label> */}
+        <button id='orderButton' className={style.buttonOrder} onClick={orderHandle}>Price: Order</button>
         <br></br>
+    </div>
+    <div className={style.eachFilter}>
         <h4>Categories: </h4>
-        <select onChange={categoryHandle}>
+        <select className={style.selectCategories} onChange={categoryHandle}>
             <option hidden>Select Category</option>
             {categories?.map(e => {
                     return <option key={e.id} value={e.id}>{e.name}</option>
                 })}
         </select>
+    </div>
+    <div className={style.eachFilter}>
         <h4>Precio:</h4>
         <label>Min:</label>
-        <input onChange={minPriceHandle}></input>
+        <br></br>
+        <input className={style.inputFilter} onChange={minPriceHandle}></input>
         <br></br>
         <label>Max:</label>
-        <input onChange={maxPriceHandle}></input>
         <br></br>
-        <button onClick={filtrar}>Filtrar</button>
+        <input className={style.inputFilter} onChange={maxPriceHandle}></input>
+        <br></br>
+    </div>
+    {/* <div className={style.eachFilter}> */}
+        <button className={style.buttonFilter} onClick={filtrar}>Filtrar</button>
+    {/* </div> */}
     </div>
  );
 }

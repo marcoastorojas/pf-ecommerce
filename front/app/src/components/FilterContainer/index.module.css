@@ -1,0 +1,99 @@
+.contFilter {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    height: fit-content;
+    padding: 2%;
+    padding-right: 3%;
+    margin: 2%;
+    box-shadow: 0 0 15px 2px var(--soft-shadow);
+    transition: all 0.2s ease;
+}
+.contFilter:hover {
+    border: 1px solid black;
+}
+.eachFilter {
+    /* border: 1px solid green; */
+    margin-bottom: 5%;
+}
+.buttonOrder {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 3% 7%;
+    background-color: transparent;
+    transition: all 0.2s ease;
+}
+.buttonOrder:hover {
+    cursor: pointer;
+    background-color: var(--border-color);
+    /* color: white; */
+}
+.buttonOrder:active {
+    box-shadow: 0 0 10px 1px var(--border-color);
+}
+.buttonOrderSelected {
+    background-color: var(--background-button-color);
+    border: none;
+    border-radius: 10px;
+    padding: 3% 7%;
+    color: white;
+    transition: all 0.2 ease;
+}
+.buttonOrderSelected:hover {
+    cursor: pointer;
+    background-color: var(--border-color);
+    color: var(--background-button-color);
+}
+.buttonOrderSelected:active {
+    box-shadow: 0 0 10px 1px var(--border-color);
+}
+
+.selectCategories {
+    outline: none;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 3% 7%;
+    transition: all 0.2s ease;
+}
+.selectCategories:hover {
+    cursor: pointer;
+}
+.selectCategories:focus {
+    border: 1px solid var(--background-button-color);
+}
+
+.inputFilter {
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin: 2% 0 15% 0;
+    padding: 3% 7%;
+    width: 50%;
+    transition: all 0.2s ease;
+}
+.inputFilter:focus {
+    border: 1px solid var(--background-button-color);
+}
+
+.buttonFilter {
+    border: none;
+    border-radius: 10px;
+    background-color: var(--background-button-color);
+    color: white;
+    padding: 5% 10%;
+    width: 50%;
+    align-self: center;
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+.buttonFilter:hover {
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 0 10px 1px var(--border-color);
+}
+.buttonFilter:active {
+    background-color: white;
+    color: black;
+}

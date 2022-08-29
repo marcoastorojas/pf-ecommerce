@@ -1,6 +1,10 @@
 .container-lProducts {
- position: relative;
- height: 200px;
+ /* position: relative; */
+ /* height: 200px; */
  display: flex;
- align-items: center;
+ flex-direction: row;
+ flex-wrap: wrap;
+
+ /* align-items: center; */
+ /* justify-content: space-evenly; */
 }

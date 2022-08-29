@@ -1,35 +1,56 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../../redux/actions';
+// import { Toaster, toast } from 'react-hot-toast';
+import style from './index.module.css';
+
 
 export default function LogInForm({LogIn, error}) {
+    const dispatch = useDispatch();
+    const userRedux = useSelector(state => state.user);
+    const errorRedux = useSelector(state => state.errors)
 
-const [details, setDetails] = useState({name: "", email: "", password: ""});
+    const [user, setUser] = useState({email_user: "", password: ""});
+    const handleUser = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value,
+        })
+    }
 
-const submitHandler = e => {
-    e.preventDefault();
-    LogIn(details);
-}
-
+    const submitHandler = e => {
+        e.preventDefault();
+        dispatch(logIn(user))
+    }
+    
   return (
-    <form onSubmit={submitHandler}>
-        <div className="form-inner">
-            <h2>Log In</h2>
-            {(error !== "") ? (<div className="error">{error}</div>) : ""}
-            <div className="form-group">
-                <label htmlFor="name">Name: </label>
-                <input type="text" name="name" id="name" onChange={e => setDetails({...details, name: e.target.value})} value={details.name}/>
+    <div className={style.contForm}>
+        {/* <button onClick={() => {console.log(Object.keys(errorRedux).length)}}>PRUEBA</button> */}
+        <form onSubmit={submitHandler}>
+            <div className={style.form}>
+                <h2>Account Login</h2>
+                <div>
+                    <label htmlFor="email_user">Email or Username: </label>
+                    <br></br>
+                    <input className={style.input} name="email_user" id="email" onChange={handleUser}/>
+                </div>
+                <div>
+                    <label htmlFor="password">Password: </label>
+                    <br></br>
+                    <input className={style.input} type="password" name="password" id="password" onChange={handleUser}/>
+                </div>
+                <input className={style.button} type="submit" value="Log In" />
             </div>
-            <div className="form-group">
-                <label htmlFor="email">Email: </label>
-                <input type="email" name="email" id="email" onChange={e => setDetails({...details, email: e.target.value})} value={details.email}/>
-            </div>
-            <div className="form-group">
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
-            </div>
-            <input type="submit" value="LOGIN" />
+        </form>
+        <div  className={style.link}>
+            <Link to='/signup' className={style.p}>
+                <p>Create a new account</p>
+            </Link>
         </div>
-        <Link to={"/"}><button>Back to Home</button></Link>
-    </form>
+        {
+            Object.keys(userRedux).length !== 0 && <Navigate to='/'/> 
+        }
+    </div>
   )
 }

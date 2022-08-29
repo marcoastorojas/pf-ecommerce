@@ -1,0 +1,68 @@
+.contForm {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin: 2%;
+    padding: 2%;
+    width: 30%;
+    /* background-color: black; */
+    box-shadow: 0 0 15px 2px var(--soft-shadow);
+
+}
+
+.form {
+    background-color: white;
+    /* margin: 5%; */
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.input {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 3% 5%;
+    margin: 2% 0;
+    margin-bottom: 5%;
+    width: 80%;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.input:focus {
+    border-color: var(--background-button-color);
+}
+
+.button {
+    border: none;
+    border-radius: 10px;
+    padding: 2%;
+    color: white;
+    font-size: 20px;
+    background-color: var(--background-button-color);
+    width: 50%;
+    transition: all 0.2s ease;
+    margin: 0;
+    align-self: center;
+}
+
+.button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px 1px var(--border-color);
+    width: 100%;
+}
+.button:active {
+    background-color: white;
+    color: black;
+}
+
+.link {
+    width:fit-content;
+}
+.p {
+    color: var(--background-button-color);
+    text-decoration: none;
+}
+.p:hover {
+    text-decoration: underline;
+}
