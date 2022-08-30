@@ -12,7 +12,7 @@ import Form from "./pages/Form";
 import LogIn from "./pages/LogIn";
 import CheckoutPay from "./pages/CheckoutPay/CheckoutPay";
 import Cart from "./pages/Cart/Cart.jsx";
-import InfoUserB from "./pages/InfoUserB/index.jsx";
+import InfoUserB from "./pages/infoUserB";
 
 // import SellerRoutes from "./validations/SellerRoutes";
 // import BuyerRoutes from "./validations/BuyerRoutes";
