@@ -10,20 +10,21 @@ const { Order, Orderdetail, Product, User } = require("../db")
 const { postOrder } = require("../controllers/paymentModelController")
 
 paymentRoutes.post("/", function (req, res, next) {
-  //Persiste el pedido en la b.d. y devuelve el link de pago.
   let arr = [];
-  const idOrder = postOrder(req, res).then((idOrder) => {    
-    const order = Order.findByPk(idOrder, {
+  const idOrder = postOrder(req, res).then((idorder) => {
+    const order = Order.findByPk(idorder, {
       include: [{ model: Orderdetail, include: [Product] }],
     })
     .then((order) => {
-      const userName = User.findOne({ where: { uid: order.userId } });
-      userName.then((username) => {
+      const user = User.findOne({ where: { uid: order.userId } });
+
+      user.then((user) => {
         const filteredOrder = {
           orderId: order.id,
-          orderUser: {
-            idUser: order.userId,
-            userName: username,
+          user: {
+            id: user.uid,
+            userName: user.username,
+            email: user.email,
           },
           orderDetail: order.orderdetails.map((product) => {
             return {
@@ -34,16 +35,19 @@ paymentRoutes.post("/", function (req, res, next) {
             };
           }),
         };
-
-        link = PaymentInstance.getPaymentLink(req, res).then((link) =>{
+        //console.log(filteredOrder);
+        link = PaymentInstance.getPaymentLink(req, res)
+        .then((link) =>{
+          //console.log(link)
           console.log([{ link: link, order: JSON.stringify(filteredOrder) }])
-          res.status(200).send([{ link: link, order: JSON.stringify(filteredOrder) }])          
-        });
+          res.status(200).send([{ link: link, order: JSON.stringify(filteredOrder) }])
+        })
       });
     });
   });
 });
-//
+
 module.exports = {
   paymentRoutes,
 };
+ 
