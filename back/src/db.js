@@ -41,6 +41,7 @@ Order.hasMany(Orderdetail);
 Orderdetail.belongsTo(Order);
  
 
+
 const {
   Category,
   Subcategory,
@@ -50,6 +51,11 @@ const {
   Person,
   Status } = sequelize.models
 // Product - Category - Subcategory
+ 
+
+Product.hasMany( Orderdetail );
+Orderdetail.belongsTo( Product );
+ 
 
 Category.hasMany(Subcategory, { as: "subcategories" })
 Subcategory.belongsTo(Category, { as: "category" })
