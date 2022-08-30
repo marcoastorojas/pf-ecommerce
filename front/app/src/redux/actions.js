@@ -36,7 +36,11 @@ export const GET_TOTAL = "GET_TOTAL";
 
 //PAYMENT
 export const SEND_PAYMENT = "SEND_PAYMENT";
-export const SET_SUCCESS_PAYMENT = 'SET_SUCCESS_PAYMENT';
+export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
+
+//Wishlist
+export const ADD_FAVOURITES = "ADD_FAVOURITES";
+export const DEL_FAVOURITES = "DEL_FAVOURITES";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -147,7 +151,9 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
     axios
       .get(url.href)
       .then((response) => {
-        response.data.data.length > 0 ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data }) : dispatch({ type: RESULTS_FOUND, payload: false });
+        response.data.data.length > 0
+          ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data })
+          : dispatch({ type: RESULTS_FOUND, payload: false });
       })
       .catch((err) => {
         toast.err("No results");
@@ -168,11 +174,20 @@ export const getCategories = () => {
           payload: response.data.data,
         });
       })
-      .catch((err) => console.log({ m: "Error on action creator getCategories", err }));
+      .catch((err) =>
+        console.log({ m: "Error on action creator getCategories", err })
+      );
   };
 };
 
-export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
+export const getCategoryProductsById = (
+  categoryId,
+  name,
+  max,
+  min,
+  asc,
+  desc
+) => {
   toast.loading("Searching...");
   let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
@@ -389,7 +404,11 @@ export const logIn = (user) => {
           type: ERROR_HANDLE,
           payload: err.response.data.errors,
         });
-        toast.error(`${Object.keys(err.response.data.errors)[0]}: ${Object.values(err.response.data.errors)[0]}`);
+        toast.error(
+          `${Object.keys(err.response.data.errors)[0]}: ${
+            Object.values(err.response.data.errors)[0]
+          }`
+        );
       });
   };
 };
@@ -397,21 +416,20 @@ export const logIn = (user) => {
 export const sendPayment = (dataPayment) => {
   return (dispatch) => {
     try {
-      axios.post(`${BASE_URL}/payment`, dataPayment)
-      .then( (response) => {
+      axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
         dispatch({
           type: SEND_PAYMENT,
           payload: response.data,
-        })
+        });
         console.log(response);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
         window.open(response.data.link.toString());
         dispatch({
           type: SET_SUCCESS_PAYMENT,
-          payload: response.data.order
-        })
-      })
+          payload: response.data.order,
+        });
+      });
     } catch (error) {
       console.log("Error, can not fetch payment", { error: error });
     }
@@ -429,7 +447,13 @@ export const upgradeToSeller = (idUser, role) => {
         data: { role: role },
       }).then((response) => {
         toast.dismiss();
-        localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.user), roleId: response.data.newRole.id }));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...JSON.parse(localStorage.user),
+            roleId: response.data.newRole.id,
+          })
+        );
         toast.success("You can publish your products now");
       });
     } catch (err) {
@@ -440,6 +464,20 @@ export const upgradeToSeller = (idUser, role) => {
   };
 };
 
+export const addFav = (product) => {
+  return {
+    type: ADD_FAVOURITES,
+    payload: product,
+  };
+};
+
+export const delFav = (id) => {
+  return {
+    type: DEL_FAVOURITES,
+    payload: id,
+  };
+};
+
 export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
-}
+};
