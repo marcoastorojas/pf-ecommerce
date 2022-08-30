@@ -34,14 +34,14 @@ function App() {
         <Route path="/login" exact element={<LogIn />} />
         <Route path="/results" exact element={<Results />} />
         <Route path="/product/:id" exact element={<Details />} />
-        <Route element={<BuyerRoutes />}>
+        {/* <Route element={<BuyerRoutes />}> */}
           <Route path="/checkout/" exact element={<CheckoutPay />} />
           <Route path='/successpay' exact element={<SuccessOperation/>} />
           <Route path='/user' exact element={<InfoUserB/>} />
-          <Route element={<SellerRoutes />}> 
+          {/* <Route element={<SellerRoutes />}>  */}
             <Route path="/product/create" exact element={<Form />} />
-          </Route>
-        </Route>
+          {/* </Route> */}
+        {/* </Route> */}
         <Route path="/shopping-cart" exact element={<Cart />} />
       </Routes>
       <Footer/>
