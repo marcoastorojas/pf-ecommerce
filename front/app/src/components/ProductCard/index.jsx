@@ -4,8 +4,8 @@ import style from "./index.module.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import star from "../../media/images/bx-start.svg";
-import starF from "../../media/images/bxs-start.svg";
+import star from "../../media/images/bx-star.svg";
+import starF from "../../media/images/bxs-star.svg";
 import { addFav, delFav } from "../../redux/actions";
 
 
