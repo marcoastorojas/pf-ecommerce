@@ -42,6 +42,8 @@ export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
 export const DEL_FAVOURITES = "DEL_FAVOURITES";
 
+//
+
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
@@ -151,9 +153,7 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
     axios
       .get(url.href)
       .then((response) => {
-        response.data.data.length > 0
-          ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data })
-          : dispatch({ type: RESULTS_FOUND, payload: false });
+        response.data.data.length > 0 ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data }) : dispatch({ type: RESULTS_FOUND, payload: false });
       })
       .catch((err) => {
         toast.err("No results");
@@ -174,20 +174,11 @@ export const getCategories = () => {
           payload: response.data.data,
         });
       })
-      .catch((err) =>
-        console.log({ m: "Error on action creator getCategories", err })
-      );
+      .catch((err) => console.log({ m: "Error on action creator getCategories", err }));
   };
 };
 
-export const getCategoryProductsById = (
-  categoryId,
-  name,
-  max,
-  min,
-  asc,
-  desc
-) => {
+export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
   toast.loading("Searching...");
   let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
@@ -404,11 +395,7 @@ export const logIn = (user) => {
           type: ERROR_HANDLE,
           payload: err.response.data.errors,
         });
-        toast.error(
-          `${Object.keys(err.response.data.errors)[0]}: ${
-            Object.values(err.response.data.errors)[0]
-          }`
-        );
+        toast.error(`${Object.keys(err.response.data.errors)[0]}: ${Object.values(err.response.data.errors)[0]}`);
       });
   };
 };

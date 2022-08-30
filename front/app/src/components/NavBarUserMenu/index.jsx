@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,15 +15,11 @@ export default function NavBarUserMenu() {
 
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  useEffect(() => {
-    console.log(showUserMenu);
-  });
-
-  const handleUserMenuClick = () => {
+  const handleUserNavDivClick = () => {
     setShowUserMenu(!showUserMenu);
   };
 
-  const handleSignOut = () => {
+  const handleLogOut = () => {
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
     navigate("/");
@@ -31,25 +27,25 @@ export default function NavBarUserMenu() {
 
   return (
     <div className={style.userContainer}>
-      <div className={style.userNavDiv} onClick={handleUserMenuClick}>
+      <div className={style.userNavDiv} onClick={handleUserNavDivClick}>
         <div className={style.imageDiv}>
           <img className={style.profilePic} src={!user.picture ? noProfilePic : user.picture} alt="user profile" referrerPolicy="no-referrer"></img>
         </div>
         <p className={style.username}>{user.username}</p>
         <div className={showUserMenu ? style.userMenu : style.hiddenUserMenu}>
-          <Link to="/" className={style.menuLink}>
+          <Link to="/user/info" className={style.menuLink}>
             Profile
           </Link>
-          <Link to="/" className={style.menuLink}>
+          <Link to="/user/orders" className={style.menuLink}>
             Orders
           </Link>
-          <Link to="/" className={style.menuLink}>
+          <Link to="/user/wishlist" className={style.menuLink}>
             Wishlist
           </Link>
-          <Link to="/" className={style.menuLink}>
+          <Link to="/user/reviews" className={style.menuLink}>
             Reviews
           </Link>
-          <button className={style.userMenuButton} onClick={handleSignOut}>
+          <button className={style.userMenuButton} onClick={handleLogOut}>
             Log out
           </button>
         </div>
