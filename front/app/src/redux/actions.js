@@ -424,7 +424,7 @@ export const sendPayment = (dataPayment) => {
         console.log(response);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
-        window.open(response.data.link.toString());
+        window.open(response.data[0].link.toString());
         dispatch({
           type: SET_SUCCESS_PAYMENT,
           payload: response.data.order,
