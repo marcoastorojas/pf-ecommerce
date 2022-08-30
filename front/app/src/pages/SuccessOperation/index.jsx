@@ -2,7 +2,7 @@ import SuccessPayment from "../../components/SuccessPayment/SuccessPayment";
 import { useSelector } from "react-redux";
 
 
-export default function () {
+export default function SuccessOperation () {
     // const datos = useSelector(state => state.SuccessPayment)
 
     return (
