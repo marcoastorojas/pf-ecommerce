@@ -30,7 +30,7 @@ paymentRoutes.post("/", function(req, res, next){
     });
     order.then((order)=> PaymentInstance.getPaymentLink(req,res).then((link)=> res.status(200).send([{link: link, order: order}])))   
   })
-
+})
 module.exports = {
   paymentRoutes,
 };
