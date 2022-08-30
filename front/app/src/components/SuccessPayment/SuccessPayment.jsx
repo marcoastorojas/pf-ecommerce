@@ -6,7 +6,7 @@ import style from './SuccessPayment.module.css';
 
 
 
-export default function () {
+export default function SuccessPayment () {
     useEffect(() => {
         //Dispatch para llamar a los datos de la compra
     }, [])
