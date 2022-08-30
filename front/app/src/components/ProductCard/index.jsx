@@ -4,10 +4,9 @@ import style from "./index.module.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import star from "../../media/images/bx-start.svg";
-import starF from "../../media/images/bxs-start.svg";
+import star from "../../media/images/bx-star.svg";
+import starF from "../../media/images/bxs-star.svg";
 import { addFav, delFav } from "../../redux/actions";
-
 
 export default function ProductCard({ id, title, image, price, model, brand }) {
   const dispatch = useDispatch();
@@ -38,9 +37,7 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
         {/* <div></div> */}
         <img src={image.slice(0)} className={style.product_image} alt={title} />
         <h3 className={style.product_title}>{title}</h3>
-        <h3 className={style.product_price}>
-          ${Number(price).toLocaleString()}
-        </h3>
+        <h3 className={style.product_price}>${Number(price).toLocaleString()}</h3>
       </Link>
     </div>
   );

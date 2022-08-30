@@ -23,6 +23,7 @@ import Footer from "./components/Footer";
 // import SuccessPayment from "./pages/SuccessOperation";
 
 import "./App.css";
+import GenericError from "./pages/GenericError";
 
 // import closeButton from "./media/svg/cross_on_circle.svg";
 // import toastLogo from "./media/svg/tick_on_circle.svg";
@@ -60,11 +61,12 @@ function App() {
         {/* <Route element={<BuyerRoutes />}> */}
         <Route path="/checkout/" exact element={<CheckoutPay />} />
         {/* <Route path='/successpay' exact element={<SuccessOperation/>} /> */}
-        <Route path="/user" exact element={<InfoUserB />} />
+        <Route path="/user/:component" exact element={<InfoUserB />} />
         {/* <Route element={<SellerRoutes />}> */}
         <Route path="/product/create" exact element={<Form />} />
         {/* </Route> */}
         {/* </Route> */}
+        <Route path="/error" exact element={<GenericError />} />
       </Routes>
       <Footer />
       {/* <Toaster /> */}

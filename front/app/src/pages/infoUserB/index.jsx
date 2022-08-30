@@ -1,11 +1,15 @@
 import React from "react";
 
+import UserComponentContainer from "../../components/UserComponentContainer";
+import UserInfoSideBar from "../../components/UserInfoSideBar";
+
+import style from "./index.module.css";
+
 export default function InfoUserB() {
-
-
- return (
-  <div>
-    <h1>soy el userinfo</h1>
-  </div>
- );
+  return (
+    <main className={style.mainDiv}>
+      <UserInfoSideBar />
+      <UserComponentContainer />
+    </main>
+  );
 }

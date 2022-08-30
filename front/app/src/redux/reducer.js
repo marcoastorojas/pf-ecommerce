@@ -45,20 +45,15 @@ const initialState = {
   subCategories: [],
   searchCategory: "",
   signupResponse: {},
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : {},
+  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   signupErrors: null,
   errorsLogIn: {},
-  cart: localStorage.getItem("cart")
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [],
+  cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
   cartTotal: 0,
   dataPayment: {},
   dataSuccessPayment: {},
-  favourites: localStorage.getItem("fav")
-    ? JSON.parse(localStorage.getItem("fav"))
-    : [],
+  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
+  userInfoPage: "",
 };
 
 export const reducer = (state = initialState, action) => {
@@ -126,9 +121,7 @@ export const reducer = (state = initialState, action) => {
 
     //SHOPPING CART
     case ADD_TO_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload.product.id
-      );
+      const getCart = state.cart.filter((pt) => pt.product.id === action.payload.product.id);
       if (getCart.length === 1) {
         state.cart.map((pt) => {
           if (pt.product.id === action.payload.product.id) {
@@ -141,20 +134,14 @@ export const reducer = (state = initialState, action) => {
           ...state,
           cart: [...state.cart],
         };
-      } else
-        localStorage.setItem(
-          "cart",
-          JSON.stringify([...state.cart, action.payload])
-        );
+      } else localStorage.setItem("cart", JSON.stringify([...state.cart, action.payload]));
       return {
         ...state,
         cart: [...state.cart, action.payload],
       };
     }
     case REMOVE_ONE_FROM_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload
-      );
+      const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
       if (getCart.length === 1) {
         if (getCart[0].amount > 1) {
           state.cart.map((pt) => {
@@ -169,9 +156,7 @@ export const reducer = (state = initialState, action) => {
             cart: [...state.cart],
           };
         } else {
-          const newProducts = state.cart.filter(
-            (pt) => pt.product.id !== action.payload
-          );
+          const newProducts = state.cart.filter((pt) => pt.product.id !== action.payload);
           localStorage.setItem("cart", JSON.stringify(newProducts));
           return {
             ...state,
@@ -184,13 +169,9 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case REMOVE_ALL_FROM_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload
-      );
+      const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
       if (getCart.length === 1) {
-        const newProducts = state.cart.filter(
-          (pt) => pt.product.id !== action.payload
-        );
+        const newProducts = state.cart.filter((pt) => pt.product.id !== action.payload);
         localStorage.setItem("cart", JSON.stringify(newProducts));
         return {
           ...state,
@@ -202,9 +183,7 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case ADD_ONE_FROM_CART: {
-      const getCart = state.cart.filter(
-        (pt) => pt.product.id === action.payload
-      );
+      const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
       if (getCart.length === 1) {
         if (getCart[0].amount > 0) {
           state.cart.map((pt) => {
@@ -219,9 +198,7 @@ export const reducer = (state = initialState, action) => {
             cart: [...state.cart],
           };
         } else {
-          const newProducts = state.cart.filter(
-            (pt) => pt.product.id !== action.payload
-          );
+          const newProducts = state.cart.filter((pt) => pt.product.id !== action.payload);
           localStorage.setItem("cart", JSON.stringify(newProducts));
           return {
             ...state,
@@ -235,10 +212,7 @@ export const reducer = (state = initialState, action) => {
     }
     case GET_TOTAL: {
       if (state.cart.length > 0) {
-        const total = state.cart.reduce(
-          (acc, pt) => (acc = pt.product.price * pt.amount + acc),
-          0
-        );
+        const total = state.cart.reduce((acc, pt) => (acc = pt.product.price * pt.amount + acc), 0);
         return {
           ...state,
           cartTotal: total,
@@ -309,9 +283,7 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case ADD_FAVOURITES: {
-      const getFavourites = state.favourites.find(
-        (product) => product.id === action.payload.id
-      );
+      const getFavourites = state.favourites.find((product) => product.id === action.payload.id);
 
       if (getFavourites) {
         return {
@@ -324,9 +296,7 @@ export const reducer = (state = initialState, action) => {
         };
     }
     case DEL_FAVOURITES: {
-      const newFavourites = state.favourites.filter(
-        (product) => product.id !== action.payload
-      );
+      const newFavourites = state.favourites.filter((product) => product.id !== action.payload);
       return {
         ...state,
         favourites: newFavourites,
