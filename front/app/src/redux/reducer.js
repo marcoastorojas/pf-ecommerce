@@ -26,7 +26,8 @@ import {
  CLEAR_CART,
  ADD_ONE_FROM_CART,
  GET_TOTAL,
- SEND_PAYMENT
+ SEND_PAYMENT,
+ SET_SUCCESS_PAYMENT
 } from "./actions";
 
 const initialState = {
@@ -49,7 +50,8 @@ const initialState = {
   ? JSON.parse(localStorage.getItem("cart"))
   : [],
  cartTotal: 0,
- dataPayment: {}
+ dataPayment: {},
+ dataSuccessPayment: {},
 };
 
 export const reducer = (state = initialState, action) => {
@@ -282,6 +284,12 @@ export const reducer = (state = initialState, action) => {
     return {
       ...state,
       resultsFound: action.payload
+    }
+   }
+   case SET_SUCCESS_PAYMENT: {
+    return {
+      ...state,
+      dataSuccessPayment: action.payload
     }
    }
   default:

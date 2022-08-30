@@ -19,6 +19,8 @@ import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
 import Footer from "./components/Footer";
 
+import SuccessPayment from "./pages/SuccessPayment";
+
 import "./App.css";
 
 import closeButton from "./media/svg/cross_on_circle.svg";
@@ -55,6 +57,7 @@ function App() {
         <Route path="/product/:id" exact element={<Details />} />
         <Route element={<BuyerRoutes />}>
           <Route path="/checkout/" exact element={<CheckoutPay />} />
+          <Route path="/successpay" exact element={<SuccessPayment />} />
           <Route element={<SellerRoutes />}>
             <Route path="/product/create" exact element={<Form />} />
           </Route>

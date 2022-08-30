@@ -36,6 +36,7 @@ export const GET_TOTAL = "GET_TOTAL";
 
 //PAYMENT
 export const SEND_PAYMENT = "SEND_PAYMENT";
+export const SET_SUCCESS_PAYMENT = 'SET_SUCCESS_PAYMENT';
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -394,17 +395,23 @@ export const logIn = (user) => {
 };
 
 export const sendPayment = (dataPayment) => {
-  return async function (dispatch) {
+  return (dispatch) => {
     try {
-      const response = await axios.post(`${BASE_URL}/payment`, dataPayment);
-      //const response_1 = await axios.get(${BASE_URL}/payment);
-      console.log(response);
-      //console.log(response_1);
-      window.open(response.data.toString());
-      return dispatch({
-        type: SEND_PAYMENT,
-        payload: response.data,
-      });
+      axios.post(`${BASE_URL}/payment`, dataPayment)
+      .then( (response) => {
+        dispatch({
+          type: SEND_PAYMENT,
+          payload: response.data,
+        })
+        console.log(response);
+        //const response_1 = await axios.get(${BASE_URL}/payment);
+        //console.log(response_1);
+        window.open(response.data.link.toString());
+        dispatch({
+          type: SET_SUCCESS_PAYMENT,
+          payload: response.data.order
+        })
+      })
     } catch (error) {
       console.log("Error, can not fetch payment", { error: error });
     }
@@ -432,3 +439,7 @@ export const upgradeToSeller = (idUser, role) => {
     }
   };
 };
+
+export const setSuccessPaymentData = () => {
+  //{type: SET_SUCCESS_PAYMENT}
+}
