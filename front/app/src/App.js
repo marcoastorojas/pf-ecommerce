@@ -10,7 +10,7 @@ import Form from "./pages/Form";
 import LogIn from "./pages/LogIn";
 import CheckoutPay from "./pages/CheckoutPay/CheckoutPay";
 import Cart from "./pages/Cart/Cart.jsx";
-import infoUserB from "./pages/infoUserB";
+import InfoUserB from './pages/InfoUserB/index.jsx';
 
 import SellerRoutes from "./validations/SellerRoutes";
 import BuyerRoutes from './validations/BuyerRoutes';
@@ -25,7 +25,6 @@ import { Toaster } from "react-hot-toast";
 import SuccessOperation from "./pages/SuccessOperation";
 function App() {
   const { pathname } = useLocation();
-
   return (
     <div className="App">
       {pathname === "/signup" || pathname === "/login" ? <SimpleNavBar /> : <NavBar />}
@@ -35,10 +34,10 @@ function App() {
         <Route path="/login" exact element={<LogIn />} />
         <Route path="/results" exact element={<Results />} />
         <Route path="/product/:id" exact element={<Details />} />
-        <Route path='/user' exact element={<infoUserB/>} />
         <Route element={<BuyerRoutes />}>
           <Route path="/checkout/" exact element={<CheckoutPay />} />
           <Route path='/successpay' exact element={<SuccessOperation/>} />
+          <Route path='/user' exact element={<InfoUserB/>} />
           <Route element={<SellerRoutes />}> 
             <Route path="/product/create" exact element={<Form />} />
           </Route>
