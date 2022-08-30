@@ -20,6 +20,12 @@ module.exports = (sequelize) => {
         },
         dni:{
             type:DataTypes.STRING,
+        },
+        phone:{
+            type:DataTypes.STRING
+        },
+        direction:{
+            type:DataTypes.STRING
         }
     },
         { timestamps: false });

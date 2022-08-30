@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt")
 const { User, Role, Person, Status } = require("../db")
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
+const { isValidEmail } = require("../helpers/isValidEmail");
 
 const registerUser = async (req = request, res = response) => {
     const { password, role, name, ...rest } = req.body
@@ -167,9 +168,54 @@ const changeRol = async (req = request, res = response) => {
     }
 
     await User.update({ roleId: rol.id }, { where: { uid: user.uid } })
-    return res.status(200).json({ message: `rol cambiado a ${role}`,newRole:rol })
+    return res.status(200).json({ message: `rol cambiado a ${role}`, newRole: rol })
 
 }
+const modifyUser = async (req = request, res = response) => {
+    const { id } = req.params
+    const { uid, userId, password, google, roleId, ...rest } = req.body
+
+    const user = await User.findByPk(id, {
+    })
+    if (!user) return res.status(400).json(`no existe un usuario con el id.: ${id}`)
+
+    const { email, username } = req.body
+
+    if (email && !isValidEmail(email)) {
+        return res.status(400).json({ berror: { email: "debe ser un email valido" } })
+    }
+    if (email && await User.findOne({ where: { email } })) {
+        return res.status(400).json({ error: { email: "el email ya existe" } })
+    }
+
+    if (username && await User.findOne({ where: { username } })) {
+        return res.status(400).json({ error: { username: "el usuername ya existe" } })
+    }
+
+    const dataUser = await Person.findOne({ where: { userId: user.uid } })
+
+    dataUser.set(rest)
+    user.set(rest)
+
+    await user.save()
+    await dataUser.save()
+    res.json({ user: { ...user.dataValues, info: dataUser } })
+
+
+}
+
+const deleteUser = async (req = request, res = response) => {
+    const { id } = req.params
+    const user = await User.findByPk(id)
+    if (!user) return res.status(400).json(`no existe un usuario con el id.: ${id}`)
+
+
+    await Status.update({ active: false }, { where: { userId: id } })
+
+
+    res.send({ userDeleted: user })
+}
+
 
 module.exports = {
     postRol,
@@ -181,5 +227,7 @@ module.exports = {
     googleAuth,
     getRol,
     getRols,
-    changeRol
+    changeRol,
+    modifyUser,
+    deleteUser
 }
