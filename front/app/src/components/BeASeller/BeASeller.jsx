@@ -88,7 +88,7 @@ export default function () {
             document.querySelector('#dateYear').className = style.inputFechaInc
             document.querySelector('#dateMonth').className = style.inputFechaInc
             document.querySelector('#dateDay').className = style.inputFechaInc
-            document.querySelector('#labelErrores').innerText = 'Debe ser mayor de edad'
+            document.querySelector('#labelErrores').innerText = 'You must be +18 years old'
         }
     }
 
@@ -145,7 +145,7 @@ export default function () {
             setStatePass(e.target.name==='state'?false:statePass)
             setCityPass(e.target.name==='city'?false:cityPass)
             e.target.className = style.inputDatosFail
-            document.querySelector('#labelErrores').innerText = 'Introduzca una nombre valido'
+            document.querySelector('#labelErrores').innerText = 'Please enter a valid name'
         } 
             // console.log(regNoNumbers.test(e.target.value)?'verdadero':'falso')
     }
