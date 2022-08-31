@@ -106,9 +106,10 @@
 }
 
 .infoForm {
-  padding: 25px;
-  /* border: 1px solid var(--border-color); */
-  /* border-width: 0 0 0 1px; */
+  padding: 25px 20px;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 0 1px;
+  margin: 0 0 0 15px;
 
   flex: 1;
 }

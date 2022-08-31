@@ -17,7 +17,7 @@ export default function ProfileInfo() {
   useEffect(() => {
     // console.log(uid);
     dispatch(getUserInfo(uid));
-  }, []);
+  }, [dispatch, uid]);
 
   const ableOrDisableForm = () => {
     setDisabledForm(!disabledForm);
