@@ -11,7 +11,7 @@ export default function ProfileInfo() {
 
   useEffect(() => {
     console.log(user);
-  }, []);
+  }, [user]);
 
   return (
     <div className={style.mainDiv}>

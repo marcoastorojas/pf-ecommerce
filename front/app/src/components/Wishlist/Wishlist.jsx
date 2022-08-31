@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { delFav } from "../../redux/actions";
 import starF from "../../media/images/bxs-star.svg";
 import { NavLink } from "react-router-dom";
+
 import style from "./Wishlist.css";
 
 export default function Wishlist() {
@@ -19,12 +20,8 @@ export default function Wishlist() {
         {favourites.map((product) => {
           return (
             <div key={product.id} className={style.card}>
-              <div className={style.star-data}>
-                <img
-                  src={starF}
-                  alt="fill-star"
-                  onClick={() => handleDel(product.id)}
-                />
+              <div className={style.starData}>
+                <img src={starF} alt="fill-star" onClick={() => handleDel(product.id)} />
               </div>
               <div className={style.info}>
                 <NavLink to={`/product/${product.id}`}>
