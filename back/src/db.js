@@ -34,7 +34,7 @@ const { Order, Orderdetail, OrderType } = sequelize.models;
 Order.hasMany(Orderdetail);
 Orderdetail.belongsTo(Order);
 
-const { Category, Subcategory, Product, Role, User, Person, Status } = sequelize.models;
+const { Category, Subcategory, Product, Role, User, Person, Status, Favorite, Review } = sequelize.models;
 
 // Product - Category - Subcategory
 
@@ -63,6 +63,18 @@ Status.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Order, { foreignKey: "userId" });
 Order.belongsTo(User, { foreignKey: "userId" });
 
+// User - Favorite - Product - Review
+User.hasMany(Favorite)
+Favorite.belongsTo(User)
+
+Product.hasMany(Favorite)
+Favorite.belongsTo(Product)
+
+User.hasMany(Review)
+Review.belongsTo(User)
+
+Product.hasMany(Review)
+Review.belongsTo(Product)
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

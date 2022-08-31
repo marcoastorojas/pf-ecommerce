@@ -28,10 +28,14 @@ export default function NavBarUserMenu() {
   return (
     <div className={style.userContainer}>
       <div className={style.userNavDiv} onClick={handleUserNavDivClick}>
-        <div className={style.imageDiv}>
-          <img className={style.profilePic} src={!user.picture ? noProfilePic : user.picture} alt="user profile" referrerPolicy="no-referrer"></img>
+        <div className={style.visibleData}>
+          <div className={style.imageDiv}>
+            <img className={style.profilePic} src={!user.image ? noProfilePic : user.image} alt="user profile" referrerPolicy="no-referrer"></img>
+          </div>
+          <div className={style.usernameDiv}>
+            <p className={style.username}>{user.username}</p>
+          </div>
         </div>
-        <p className={style.username}>{user.username}</p>
         <div className={showUserMenu ? style.userMenu : style.hiddenUserMenu}>
           <Link to="/user/info" className={style.menuLink}>
             Profile

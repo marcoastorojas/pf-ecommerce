@@ -18,15 +18,37 @@ module.exports = (sequelize) => {
         lastname: {
             type: DataTypes.STRING,
         },
-        dni:{
-            type:DataTypes.STRING,
+        dni: {
+            type: DataTypes.STRING,
         },
-        phone:{
-            type:DataTypes.STRING
+        phone: {
+            type: DataTypes.STRING
         },
-        direction:{
-            type:DataTypes.STRING
+        direction: {
+            type: DataTypes.STRING
+        },
+        gender: {
+            type: DataTypes.STRING
+        },
+        street: {
+            type: DataTypes.STRING
+        },
+        zipcode: {
+            type: DataTypes.STRING
+        },
+        height: {
+            type: DataTypes.DECIMAL
+        },
+        country: {
+            type: DataTypes.STRING
+        },
+        state: {
+            type: DataTypes.STRING
+        },
+        color:{
+            type: DataTypes.STRING
+
         }
     },
-        { timestamps: false });
+    { timestamps: false });
 };

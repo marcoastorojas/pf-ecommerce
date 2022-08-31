@@ -3,7 +3,7 @@ const { Op } = require("sequelize")
 const bcrypt = require("bcrypt")
 
 
-const { User, Role, Person, Status } = require("../db")
+const { User, Role, Person, Status, Review, Favorite, Product } = require("../db")
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
 const { isValidEmail } = require("../helpers/isValidEmail");
@@ -124,16 +124,20 @@ const getAllUsers = async (req = request, res = response) => {
 }
 const infoUser = async (req = request, res = response) => {
     const { id: uid } = req.params
-    const { dataValues } = await User.findOne({
+    const user = await User.findOne({
         where: { uid },
         include: [
             { model: Person, as: "info" },
-            { model: Status, as: "status" }
+            { model: Status, as: "status" },
+            { model: Role, as: "role" },
+            { model: Review },
+            { model: Favorite, attributes: ["id"],include:Product }
         ]
     })
-    const { password, ...rest } = dataValues
+    if (!user) return res.status(200).json(user)
+    const { password, ...rest } = user.dataValues
 
-    res.status(201).json(rest)
+    res.status(200).json(rest)
 
 }
 

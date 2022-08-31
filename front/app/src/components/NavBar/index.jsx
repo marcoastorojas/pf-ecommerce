@@ -133,12 +133,13 @@ export default function NavBar() {
                 Sign up
               </Link>
             </div>
-          ) : null}
+          ) : <></>}
         </div>
-        <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div>
+        {/* <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div> */}
         <div className={style.cartDiv}>
           <Link to={"/shopping-cart"} className={style.cartLink}>
-            <img src={cartI} alt="Cart" /> {cart.length}
+            <img src={cartI} alt="Cart" />
+            <span> {cart.length}</span>
           </Link>
         </div>
       </div>
