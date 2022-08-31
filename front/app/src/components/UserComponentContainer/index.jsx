@@ -6,20 +6,42 @@ import Wishlist from "../Wishlist/Wishlist.jsx";
 import Reviews from "../Reviews/Reviews.jsx";
 import BeASeller from "../BeASeller/BeASeller.jsx";
 
+import style from "./index.module.css";
+
 export default function UserComponentContainer() {
   const params = useParams();
 
   switch (params.component) {
     case "info":
-      return <ProfileInfo />;
+      return (
+        <div className={style.mainContainer}>
+          <ProfileInfo />;
+        </div>
+      );
     case "orders":
-      return <MyShopping />;
+      return (
+        <div className={style.mainContainer}>
+          <MyShopping />;
+        </div>
+      );
     case "wishlist":
-      return <Wishlist />;
+      return (
+        <div className={style.mainContainer}>
+          <Wishlist />;
+        </div>
+      );
     case "reviews":
-      return <Reviews />;
+      return (
+        <div className={style.mainContainer}>
+          <Reviews />;
+        </div>
+      );
     case "upgrade":
-      return <BeASeller />;
+      return (
+        <div className={style.mainContainer}>
+          <BeASeller />;
+        </div>
+      );
 
     default:
       return <Navigate to="/" />;

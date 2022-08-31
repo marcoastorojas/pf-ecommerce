@@ -42,6 +42,9 @@ export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
 export const DEL_FAVOURITES = "DEL_FAVOURITES";
 
+//USER DATA
+export const GET_USER_INFO = "GET_USER_INFO";
+
 //
 
 const BASE_URL = `http://localhost:3001/api`;
@@ -411,7 +414,7 @@ export const sendPayment = (dataPayment) => {
         console.log(response.data);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
-        localStorage.setItem('mp', JSON.stringify(response.data))
+        localStorage.setItem("mp", JSON.stringify(response.data));
         window.open(response.data[0].link.toString());
         dispatch({
           type: SET_SUCCESS_PAYMENT,
@@ -468,21 +471,37 @@ export const delFav = (id) => {
 
 export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
-}
+};
 
-export const cancelOperation = (idOper) => {  //CANCELAR LA OPERACION EN MYSHOPPING
+export const cancelOperation = (idOper) => {
+  //CANCELAR LA OPERACION EN MYSHOPPING
   return (dispatch) => {
     axios({
-      method: 'POST',
+      method: "POST",
       data: {
-        id: idOper
-      }
-    })
-    .then( response => {
+        id: idOper,
+      },
+    }).then((response) => {
       // dispatch({
       //   type:
       // })
       //Mensaje de confirmación
-    })
-  }
-}
+    });
+  };
+};
+
+export const getUserInfo = (id) => {
+  return (dispatch) => {
+    console.log(id);
+    axios
+      .get(`${BASE_URL}/auth/users/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        dispatch({
+          type: GET_USER_INFO,
+          payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};

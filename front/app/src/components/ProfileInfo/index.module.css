@@ -1,6 +1,12 @@
 .mainDiv {
-  border: 2px solid blue;
+  border: 2px solid var(--border-color);
+  border-width: 0 0 0 1px;
   padding: 20px 40px;
+  margin: 1px;
+
+  display: flex;
+  flex-direction: column;
+
   flex: 1;
 }
 
@@ -23,4 +29,87 @@
 
 .changeInfoButton:hover {
   text-decoration: underline;
+}
+
+.infoDiv {
+  /* border: 1px solid green; */
+  flex: 1;
+
+  display: flex;
+}
+
+.imageDiv {
+  padding: 10px;
+  /* border: 2px solid blue; */
+
+  width: 200px;
+
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  align-items: center;
+}
+
+.formImg {
+  border-radius: 6px;
+  margin-top: 10px;
+
+  width: 150px;
+}
+
+.changeImgButton {
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  padding: 3px;
+  margin-top: 4px;
+
+  background-color: transparent;
+
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.newUrlDiv {
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.newUrlInput {
+  margin-top: 6px;
+
+  width: 200px;
+  height: 25px;
+}
+
+.changeAndCloseButtonsDiv {
+  display: flex;
+  justify-content: space-evenly;
+
+  width: 130px;
+}
+
+.changeAndCloseButtons {
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  padding: 3px;
+  margin-top: 4px;
+
+  background-color: transparent;
+
+  cursor: pointer;
+}
+
+.infoForm {
+  padding: 25px 20px;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 0 1px;
+  margin: 0 0 0 15px;
+
+  flex: 1;
 }

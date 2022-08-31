@@ -32,33 +32,33 @@ import {
   //WISHLIST
   ADD_FAVOURITES,
   DEL_FAVOURITES,
+
+  //USER DATA
+  GET_USER_INFO,
 } from "./actions";
 
 const initialState = {
- products: [],
- allProducts: [],
- searchedProducts: [],
- resultsFound: true,
- product: {},
- categories: [],
- search: "",
- subCategories: [],
- searchCategory: "",
- signupResponse: {},
- user: localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : {},
- signupErrors: null,
- errorsLogIn: {},
- cart: localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : [],
- cartTotal: 0,
- dataPayment: localStorage.mp?JSON.parse(localStorage.getItem('mp')):{},
-//  dataSuccessPayment: {},
- shoppingList: {}, //Guarda todas las compras del usuario activo
- favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
- userInfoPage: "",
+  products: [],
+  allProducts: [],
+  searchedProducts: [],
+  resultsFound: true,
+  product: {},
+  categories: [],
+  search: "",
+  subCategories: [],
+  searchCategory: "",
+  signupResponse: {},
+  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+  userInfo: {},
+  signupErrors: null,
+  errorsLogIn: {},
+  cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
+  cartTotal: 0,
+  dataPayment: localStorage.mp ? JSON.parse(localStorage.getItem("mp")) : {},
+  //  dataSuccessPayment: {},
+  shoppingList: {}, //Guarda todas las compras del usuario activo
+  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
+  userInfoPage: "",
 };
 
 export const reducer = (state = initialState, action) => {
@@ -307,6 +307,18 @@ export const reducer = (state = initialState, action) => {
         favourites: newFavourites,
       };
     }
+    case GET_USER_INFO:
+      const { email, google, info: information, status } = action.payload;
+      const { name, lastname, dni, phone, direction } = information;
+      return {
+        ...state,
+        userInfo: {
+          email,
+          google,
+          info: { name, lastname, dni, phone, direction },
+          status,
+        },
+      };
     default:
       return state;
   }
