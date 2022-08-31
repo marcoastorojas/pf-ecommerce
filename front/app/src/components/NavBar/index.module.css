@@ -10,7 +10,7 @@
 .header {
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  /* flex-direction: row; */
 
   width: 100%;
   height: 15vh;
@@ -120,6 +120,9 @@
 
   /* border: 2px solid red; */
 }
+/* .sectionTwo > div {
+  border: 1px solid blue;
+} */
 
 .userOrLoginDiv {
   /* border: 2px solid lightblue; */
@@ -129,7 +132,7 @@
   align-items: center;
 
   width: 75%;
-
+height: 50%;
   padding: 4px;
   margin: 1%;
 }
@@ -165,11 +168,15 @@
   color: whitesmoke;
 }
 
+
+.cartDiv {
+  width: 30%;
+}
 .cartLink {
   display: flex;
   justify-items: center;
   align-items: center;
-
+  /* width: 30%; */
   border: 1px solid black;
   border-radius: 10px;
   padding: 8px 20px;
