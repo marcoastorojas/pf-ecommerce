@@ -44,6 +44,7 @@ export const DEL_FAVOURITES = "DEL_FAVOURITES";
 
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
+export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
 
 //
 
@@ -492,14 +493,31 @@ export const cancelOperation = (idOper) => {
 
 export const getUserInfo = (id) => {
   return (dispatch) => {
-    console.log(id);
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const putUserImage = (url, id) => {
+  return (dispatch) => {
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/users/${id}`,
+      data: { image: url },
+    })
+      .then((response) => {
+        console.log(response.data.user.image);
+        dispatch({
+          type: PUT_USER_IMAGE,
+          payload: response.data.user.image,
         });
       })
       .catch((err) => console.log(err));

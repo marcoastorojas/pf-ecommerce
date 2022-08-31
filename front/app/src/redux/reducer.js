@@ -35,6 +35,7 @@ import {
 
   //USER DATA
   GET_USER_INFO,
+  PUT_USER_IMAGE,
 } from "./actions";
 
 const initialState = {
@@ -314,10 +315,19 @@ export const reducer = (state = initialState, action) => {
         ...state,
         userInfo: {
           email,
+          name,
+          lastname,
+          dni,
+          phone,
+          direction,
           google,
-          info: { name, lastname, dni, phone, direction },
           status,
         },
+      };
+    case PUT_USER_IMAGE:
+      return {
+        ...state,
+        user: { ...state.user, image: action.payload },
       };
     default:
       return state;
