@@ -42,7 +42,7 @@ class PaymentService {
                 "receiver_address": {}
               },
               "back_urls": {
-                "success": "http://localhost:3000",			         
+                "success": "http://localhost:3000/successpay",			         
               },              
           		auto_return: "approved",
               "differential_pricing": {},

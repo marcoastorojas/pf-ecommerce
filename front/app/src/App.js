@@ -20,7 +20,7 @@ import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
 import Footer from "./components/Footer";
 
-// import SuccessPayment from "./pages/SuccessOperation";
+import SuccessPayment from "./pages/SuccessOperation";
 
 import "./App.css";
 import GenericError from "./pages/GenericError";
@@ -60,7 +60,7 @@ function App() {
         <Route path="/shopping-cart" exact element={<Cart />} />
         {/* <Route element={<BuyerRoutes />}> */}
         <Route path="/checkout/" exact element={<CheckoutPay />} />
-        {/* <Route path='/successpay' exact element={<SuccessOperation/>} /> */}
+        <Route path='/successpay' element={<SuccessPayment/>} />
         <Route path="/user/:component" exact element={<InfoUserB />} />
         {/* <Route element={<SellerRoutes />}> */}
         <Route path="/product/create" exact element={<Form />} />

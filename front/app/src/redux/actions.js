@@ -408,9 +408,10 @@ export const sendPayment = (dataPayment) => {
           type: SEND_PAYMENT,
           payload: response.data,
         });
-        console.log(response);
+        console.log(response.data);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
+        localStorage.setItem('mp', JSON.stringify(response.data))
         window.open(response.data[0].link.toString());
         dispatch({
           type: SET_SUCCESS_PAYMENT,
