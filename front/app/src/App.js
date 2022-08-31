@@ -2,7 +2,7 @@ import React from "react";
 // import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
-// import toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
@@ -69,7 +69,7 @@ function App() {
         <Route path="/error" exact element={<GenericError />} />
       </Routes>
       <Footer />
-      {/* <Toaster /> */}
+      <Toaster />
     </div>
   );
 }
