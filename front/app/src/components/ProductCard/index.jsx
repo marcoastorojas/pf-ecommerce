@@ -23,21 +23,23 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
   };
 
   return (
-    <div>
+    <div className={style.product_card}>
       {favourites.find((product) => product.id === id) ? (
         <div>
-          <img src={star} alt="star" onClick={() => addFavourites()} />
+          <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
         </div>
       ) : (
         <div>
-          <img src={starF} alt="fill-star" onClick={() => delFavourites()} />
+          <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
         </div>
       )}
-      <Link to={`/product/${id}`} className={style.product_card}>
+      <Link to={`/product/${id}`} className={style.product_data}>
         {/* <div></div> */}
-        <img src={image.slice(0)} className={style.product_image} alt={title} />
+        <img src={image.slice(0)} alt={title} />
         <h3 className={style.product_title}>{title}</h3>
-        <h3 className={style.product_price}>${Number(price).toLocaleString()}</h3>
+        <h3 className={style.product_price}>
+          ${Number(price).toLocaleString()}
+        </h3>
       </Link>
     </div>
   );
