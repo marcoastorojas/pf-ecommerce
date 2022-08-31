@@ -150,7 +150,7 @@ const addFavorite = async (req = request, res = response) => {
 const addReview = async (req = request, res = response) => {
     const { id: productId } = req.params
     const { userId: userUid, score, description } = req.body
-    if (!score || !description) res.status(400).json({ message: "score y description son obligatorioa" })
+    if (!score || !description) return res.status(400).json({ message: "score y description son obligatorioa" })
     try {
         if (!await Product.findByPk(productId)) {
             return res.status(400).json({ message: `El producto con el id ${productId} no existe` })
