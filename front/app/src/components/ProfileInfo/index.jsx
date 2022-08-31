@@ -1,23 +1,29 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import sample from "../../media/images/sample-image-square.jpg";
-import { getUserInfo } from "../../redux/actions";
+import { getUserInfo, putUserImage } from "../../redux/actions";
+
+import emptyUser from "../../media/images/empty_user_profilepic.png";
 
 import style from "./index.module.css";
 
 export default function ProfileInfo() {
   const dispatch = useDispatch();
-  const { uid } = useSelector((state) => state.user);
+
+  const urlRegExp =
+    /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
+
+  const user = useSelector((state) => state.user);
+  const userInfo = useSelector((state) => state.userInfo);
 
   const [disabledForm, setDisabledForm] = useState(true);
-  const [profPicDivVisibility, setProfPicDivVisibility] = useState(false);
+  const [profPicDivVisibility, setProfPicDivVisibility] = useState(true);
   const [newImgUrl, setNewImgUrl] = useState(null);
 
   useEffect(() => {
     // console.log(uid);
-    dispatch(getUserInfo(uid));
-  }, [dispatch, uid]);
+    dispatch(getUserInfo(user.uid));
+  }, [dispatch, user.uid]);
 
   const ableOrDisableForm = () => {
     setDisabledForm(!disabledForm);
@@ -28,15 +34,16 @@ export default function ProfileInfo() {
   };
 
   const changeProfilePic = () => {
-    console.log(newImgUrl);
+    // console.log({ newImgUrl, test: urlRegExp.test(newImgUrl) });
+    urlRegExp.test(newImgUrl) && dispatch(putUserImage(newImgUrl, user.uid));
   };
 
-  const testUser = {
-    name: "andi",
-    username: "ousiarca",
-    email: "a@a.com",
-    image: sample,
-  };
+  // const testUser = {
+  //   name: "andi",
+  //   username: "ousiarca",
+  //   email: "a@a.com",
+  //   image: sample,
+  // };
 
   return (
     <div className={style.mainDiv}>
@@ -48,7 +55,7 @@ export default function ProfileInfo() {
       </div>
       <div className={style.infoDiv}>
         <div className={style.imageDiv}>
-          <img className={style.formImg} src={sample} alt="sample" />
+          <img className={style.formImg} src={user.image ? user.image : emptyUser} alt="sample" />
           <button className={profPicDivVisibility ? style.changeImgButton : style.hidden} onClick={showProfPicDiv}>
             Change profile picture
           </button>
@@ -66,10 +73,21 @@ export default function ProfileInfo() {
         </div>
         {disabledForm ? (
           <form className={style.infoForm}>
-            {Object.entries(testUser).map((kv) => {
+            {Object.entries(user).map((kv) => {
               let key = kv[0];
               let value = kv[1];
-              if (!value) return <></>;
+              if (!value || key === "uid" || key === "roleId") return <></>;
+              return (
+                <div key={key}>
+                  <label htmlFor={key}>{key}</label>
+                  <input id={key} type="text" placeholder={value} value={value} disabled />
+                </div>
+              );
+            })}
+            {Object.entries(userInfo).map((kv) => {
+              let key = kv[0];
+              let value = kv[1];
+              if (!value || key === "google" || key === "status") return <></>;
               return (
                 <div key={key}>
                   <label htmlFor={key}>{key}</label>
@@ -80,10 +98,21 @@ export default function ProfileInfo() {
           </form>
         ) : (
           <form className={style.infoForm}>
-            {Object.entries(testUser).map((kv) => {
+            {Object.entries(user).map((kv) => {
               let key = kv[0];
               let value = kv[1];
-              if (!value) return <></>;
+              if (!value || key === "uid" || key === "roleId") return <></>;
+              return (
+                <div key={key}>
+                  <label htmlFor={key}>{key}</label>
+                  <input id={key} type="text" placeholder={value} />
+                </div>
+              );
+            })}
+            {Object.entries(userInfo).map((kv) => {
+              let key = kv[0];
+              let value = kv[1];
+              if (!value || key === "google" || key === "status") return <></>;
               return (
                 <div key={key}>
                   <label htmlFor={key}>{key}</label>
