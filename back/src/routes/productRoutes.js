@@ -6,7 +6,12 @@ const {
     getProductsByCategoryId,
     getProductsBySubcategoryId,
     getProductById,
-    deleteProduct } = require("../controllers/productControllers")
+    deleteProduct,
+    addFavorite,
+    addReview, 
+    deleteFavorite,
+    deleteReview,
+    updateReview} = require("../controllers/productControllers")
 
 //middlewares
 const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
@@ -80,31 +85,21 @@ productRoutes.get('/:id', validIdParam, getProductById)
 productRoutes.get("/", validQueryGetProducts, getProducts)
 
 
-//validando los datos ingresados por el query con un middleware "validQueryGetProducts" 
-//Get products by categoryId
-//Query 
-// productRoutes.get('/category/:idCategory', async (req, res) => {
-//     let products
-//     const categoryId = req.params.idCategory;
-//     const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
-
-//     subCategory.length ?
-//         (
-//             products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
-//             res.send(products)
-//         )
-
-//         : res.send('No hay resultados.')
-
-// })
-
-
 productRoutes.get('/category/:id', validIdParam, validQueryGetProducts, getProductsByCategoryId)
 
 //validando los datos ingresados por el query con un middleware "validQueryGetProducts"
 productRoutes.get('/subcategory/:id', validIdParam, validQueryGetProducts, getProductsBySubcategoryId)
 
+
+
 productRoutes.delete('/:id', validIdParam, deleteProduct)
+
+productRoutes.post('/favorite/:id', validIdParam, addFavorite)
+productRoutes.delete('/favorite/:id', validIdParam, deleteFavorite  )
+
+productRoutes.post('/review/:id', validIdParam, addReview)
+productRoutes.delete('/review/:id', validIdParam, deleteReview)
+productRoutes.put('/review/:id', validIdParam, updateReview)
 
 module.exports = {
     productRoutes
