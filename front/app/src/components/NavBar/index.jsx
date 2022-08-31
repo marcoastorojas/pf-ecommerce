@@ -4,7 +4,14 @@ import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import { getCategories, getCategoryProductsById, getSearchCategory, getSearchName, setUserGoogle, upgradeToSeller } from "../../redux/actions";
+import {
+  getCategories,
+  getCategoryProductsById,
+  // getSearchCategory,
+  // getSearchName,
+  setUserGoogle,
+  upgradeToSeller,
+} from "../../redux/actions";
 
 import SearchBar from "../SearchBar";
 
@@ -12,6 +19,7 @@ import cartI from "../../media/images/cart.svg";
 
 import style from "./index.module.css";
 import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
+import NavBarUserMenu from "../NavBarUserMenu";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -20,21 +28,17 @@ export default function NavBar() {
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
   // const user = JSON.parse(localStorage.getItem('user'))
-  const user = useSelector(state => state.user);
-  const errorRedux = useSelector((state) => state.errorsLogIn);
+  const user = useSelector((state) => state.user);
+  // const errorRedux = useSelector((state) => state.errorsLogIn);
 
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
 
-  //  const [productNumber, setProductNumber] = useState(0);
   const [showCategories, setShowCategories] = useState(false);
 
   const onCategorySelection = (e) => {
-    // console.log(e);
     dispatch(getCategoryProductsById(e.target.id));
-    // dispatch(getSearchCategory(e.target.id));
-    // dispatch(getSearchName(""));
   };
 
   function showCategoriesHandler() {
@@ -45,7 +49,7 @@ export default function NavBar() {
     // setUser({})
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
-    navigate('/')
+    navigate("/");
     // document.getElementById('sigInDiv').hidden = false
   };
 
@@ -64,9 +68,9 @@ export default function NavBar() {
 
   //Mejorar de comprador a vendedor
   const btnUpSel = () => {
-    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, 'SELLER_ROLE'))
+    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, "SELLER_ROLE"));
     // console.log('pepe')
-  }
+  };
 
   return (
     <header className={style.header}>
@@ -106,40 +110,32 @@ export default function NavBar() {
           <Link to="/" className={style.navBarLinks}>
             Sales
           </Link>
-          <Link to="/product/create" className={style.navBarLinks} hidden={ user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE? false: true}>
+          <Link
+            to="/product/create"
+            className={style.navBarLinks}
+            hidden={user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE ? false : true}
+          >
             Upload your product
           </Link>
         </nav>
       </div>
 
       <div className={style.sectionTwo}>
-        {/* <button onClick={() => console.log(localStorage)}>PRUEBA</button> */}
         <div className={style.userOrLoginDiv}>
-          {user && Object.keys(user).length !== 0 && (
-            <div>
-              <img src={user.picture} alt="user profile" referrerPolicy="no-referrer"></img>
-              <p>{user.username || user.name}</p>
-            </div>
-          )}
-          {user && Object.keys(user).length !== 0 && <button onClick={handleSignOut}>Sign Out</button>}
+          {user && Object.keys(user).length !== 0 && <NavBarUserMenu />}
+          {/* {user && Object.keys(user).length !== 0 && <button onClick={handleSignOut}>Sign Out</button>} */}
           {Object.keys(user).length === 0 ? (
             <div className={style.logAndSign}>
-              {/* <div> */}
               <Link to={"/login"} className={style.logIn}>
                 Log in
               </Link>
-              {/* </div> */}
-              {/* <div> */}
               <Link to={"/signup"} className={style.signUp}>
                 Sign up
               </Link>
-              {/* </div> */}
             </div>
           ) : null}
         </div>
-        <div>
-        {user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to  Seller</button>}    
-        </div>
+        <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div>
         <div className={style.cartDiv}>
           <Link to={"/shopping-cart"} className={style.cartLink}>
             <img src={cartI} alt="Cart" /> {cart.length}

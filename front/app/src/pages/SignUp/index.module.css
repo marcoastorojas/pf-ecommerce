@@ -1,35 +1,55 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 .container {
- /* display: flex; */
+ display: flex;
  /* flex-direction: column; */
- /* justify-content: center; */
+ justify-content: center;
  /* align-items: center; */
 
- border: 1px solid green;
+ /* border: 1px solid green; */
 }
 
 .mainDiv {
- /* display: flex; */
- /* flex-direction: column; */
- /* align-items: center; */
- /* justify-content: space-evenly; */
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ /* justify-content: center; */
 
- width: 35%;
+ width: 30%;
 
  margin: 3%;
- margin-left: 35%;
+ /* margin-left: 30%; */
+ /* posit; */
  padding: 2%;
  border: 1px solid var(--border-color);
  border-radius: 10px;
 
  box-shadow: 0 0 15px 2px var(--soft-shadow);
 }
-
-.formDiv > input {
- padding: 1% 3%;
+.form {
+    width: 100%;
+    align-self: flex-start;
+    /* border: 1px solid black; */
 }
 
+.formDiv {
+    display: flex;
+    flex-direction: column;
+}
+.formDiv > input {
+ padding: 1% 3%;
+ /* margin-top: 1%; */
+ /* margin-bottom: 5%; */
+
+ border: 1px solid var(--border-color);
+ border-radius: 10px;
+ /* width: 80%; */
+ outline: none;
+ transition: all 0.2s ease;
+}
+.formDiv > input:focus {
+    border: 1px solid black;
+}
 /* .register {
  padding: 20px;
  border: 2px solid black;
@@ -58,7 +78,7 @@
  border-radius: 10px;
  width: 50%;
  padding: 2%;
-
+align-self: center;
  transition: all 0.2s ease-out;
 }
 
@@ -66,4 +86,14 @@
  cursor: pointer;
  width: 100%;
  box-shadow: 0 0 10px 1px var(--soft-shadow);
+}
+.submitButton:active {
+    box-shadow: 0 0 10px 1px var(--border-color);
+    background-color: white;
+    color: black;
+}
+.signInGoogle {
+    margin: 5% 0;
+    /* border: 1px solid black; */
+    /* width: 100%; */
 }

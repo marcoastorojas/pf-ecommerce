@@ -41,7 +41,10 @@ class PaymentService {
                 ],
                 "receiver_address": {}
               },
-              "back_urls": {},
+              "back_urls": {
+                "success": "http://localhost:3000/successpay",			         
+              },              
+          		auto_return: "approved",
               "differential_pricing": {},
               "metadata": {}             
         };

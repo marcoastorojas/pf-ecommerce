@@ -9,3 +9,48 @@
 .App {
   font-family: "Raleway", sans-serif;
 }
+
+.toast-border {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  background-color: whitesmoke;
+
+  width: 20vw;
+  height: 5vw;
+
+  border: 1px solid rgb(179, 166, 166);
+  border-radius: 10px;
+
+  padding: 20px 5px;
+
+  box-shadow: 0 0 30px 5px rgb(0, 0, 0, 0.1);
+}
+
+.toast-logo {
+  width: 1.5vw;
+  padding: 0px 20px;
+}
+
+.toast-text {
+  /* background-color: aqua; */
+  width: 90%;
+
+  text-align: center;
+}
+
+.toast-button {
+  background-color: transparent;
+
+  border: none;
+  /* 1px solid rgb(179, 166, 166); */
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.button-image {
+  border: none;
+  width: 1vw;
+}

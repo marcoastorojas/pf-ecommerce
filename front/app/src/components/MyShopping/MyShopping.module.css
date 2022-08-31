@@ -1,0 +1,24 @@
+.contMyShopping {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.operInfo {
+    /* border: 1px solid var(--border-color); */
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.operInfo > div {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+
+.status {
+    display: flex;
+}

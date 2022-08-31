@@ -198,7 +198,7 @@ export default function SignUp() {
           </div>
         </form>
 
-        <div>
+        <div className={style.signInGoogle}>
           <SignInGoogle />
         </div>
       </main>
