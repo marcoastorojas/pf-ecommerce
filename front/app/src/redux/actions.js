@@ -485,4 +485,3 @@ export const cancelOperation = (idOper) => {  //CANCELAR LA OPERACION EN MYSHOPP
     })
   }
 }
-};
