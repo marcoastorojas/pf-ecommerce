@@ -52,6 +52,7 @@ const initialState = {
  cartTotal: 0,
  dataPayment: {},
  dataSuccessPayment: {},
+ shoppingList: {}, //Guarda todas las compras del usuario activo
 };
 
 export const reducer = (state = initialState, action) => {
