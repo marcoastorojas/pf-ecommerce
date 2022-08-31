@@ -54,8 +54,8 @@ const initialState = {
   ? JSON.parse(localStorage.getItem("cart"))
   : [],
  cartTotal: 0,
- dataPayment: {},
- dataSuccessPayment: {},
+ dataPayment: localStorage.mp?JSON.parse(localStorage.getItem('mp')):{},
+//  dataSuccessPayment: {},
  shoppingList: {}, //Guarda todas las compras del usuario activo
  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
  userInfoPage: "",
@@ -281,12 +281,12 @@ export const reducer = (state = initialState, action) => {
         resultsFound: action.payload,
       };
     }
-    case SET_SUCCESS_PAYMENT: {
-      return {
-        ...state,
-        dataSuccessPayment: action.payload,
-      };
-    }
+    // case SET_SUCCESS_PAYMENT: {
+    //   return {
+    //     ...state,
+    //     dataSuccessPayment: action.payload,
+    //   };
+    // }
     case ADD_FAVOURITES: {
       const getFavourites = state.favourites.find((product) => product.id === action.payload.id);
 
