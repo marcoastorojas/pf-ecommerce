@@ -49,7 +49,7 @@ export default function NavBarUserMenu() {
           <Link to="/user/reviews" className={style.menuLink}>
             Reviews
           </Link>
-          <button className={style.userMenuButton} onClick={handleLogOut}>
+          <button className={style.menuLink} onClick={handleLogOut}>
             Log out
           </button>
         </div>
