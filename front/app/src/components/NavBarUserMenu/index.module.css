@@ -8,7 +8,8 @@
 
   /* margin: 2px; */
 
-  width: 200px;
+  width: 100%;
+  /* height: 100%; */
 }
 
 .userNavDiv {
@@ -17,52 +18,84 @@
   border: 1px solid var(--border-color);
   border-radius: 10px;
 
+  /* display: flex; */
+  /* align-items: center; */
+  
+  width: 90%;
+  /* height: 100%; */
+  padding: 2px;
+  
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.userNavDiv:hover {
+  border: 1px solid black;
+}
+/* .userNavDiv > div {
+  border: 1px solid green;
+} */
+.visibleData {
+  /* border: 1px solid violet; */
   display: flex;
   align-items: center;
-
-  width: 100%;
-
-  padding: 2px;
-
-  cursor: pointer;
+  justify-content: center;
+  /* height: 50%; */
+  width: 80%;
+  /* margin: 0; */
+  /* padding: 0; */
 }
+/* .visibleData > div {
+  border: 1px solid red;
+} */
+/* .visibleData > p {
+  border: 1px solid red;
+} */
 
 .imageDiv {
-  width: 25px;
-  height: 25px;
-
+  /* height: 100%; */
+  
   margin: 2%;
   padding: 6%;
-
+  
   border: 1px solid black;
   border-radius: 40px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
+  /* border: 1px solid red; */
+  width: 20%;
+  /* height: 70%; */
+  /* object-fit: contain; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+.usernameDiv {
+  width: 50%;
 }
 
 .profilePic {
-  width: 23px;
+  width: 70%;
+  /* height: 80%; */
+  object-fit: contain;
   margin: 0 1px 0 0;
 }
 
 .username {
   /* border: 1px solid green; */
   /* background-color: aqua; */
-
+  /* width: 90%; */
   margin: 0% 17%;
 }
 
 .hiddenUserMenu {
   visibility: hidden;
+  display: none;
 }
 
 .userMenu {
   /* border: 2px solid blue; */
 
   position: absolute;
-  margin-top: 210px;
+  margin-top: 40px;
 
   padding: 1%;
   border: 1px solid var(--border-color);
