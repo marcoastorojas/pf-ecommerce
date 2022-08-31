@@ -15,6 +15,7 @@ paymentRoutes.post("/", function (req, res, next) {
     const order = Order.findByPk(idorder, {
       include: [{ model: Orderdetail, include: [Product] }],
     })
+    //probar bien esta parte que no pinche si hubo problemas para crear la orden
     .then((order) => {
       const user = User.findOne({ where: { uid: order.userId } });
 
@@ -35,10 +36,9 @@ paymentRoutes.post("/", function (req, res, next) {
             };
           }),
         };
-        //console.log(filteredOrder);
+        
         link = PaymentInstance.getPaymentLink(req, res)
-        .then((link) =>{
-          //console.log(link)
+        .then((link) =>{          
           console.log([{ link: link, order: JSON.stringify(filteredOrder) }])
           res.status(200).send([{ link: link, order: JSON.stringify(filteredOrder) }])
         })
