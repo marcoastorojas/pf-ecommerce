@@ -30,7 +30,7 @@ export default function NavBarUserMenu() {
       <div className={style.userNavDiv} onClick={handleUserNavDivClick}>
         <div className={style.visibleData}>
           <div className={style.imageDiv}>
-            <img className={style.profilePic} src={!user.picture ? noProfilePic : user.picture} alt="user profile" referrerPolicy="no-referrer"></img>
+            <img className={style.profilePic} src={!user.image ? noProfilePic : user.image} alt="user profile" referrerPolicy="no-referrer"></img>
           </div>
           <div className={style.usernameDiv}>
             <p className={style.username}>{user.username}</p>
