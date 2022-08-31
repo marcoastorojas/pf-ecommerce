@@ -1,0 +1,26 @@
+.mainDiv {
+  border: 2px solid blue;
+  padding: 20px 40px;
+  flex: 1;
+}
+
+.headDiv {
+  display: flex;
+  align-items: center;
+}
+
+.changeInfoButton {
+  background-color: transparent;
+
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+
+  padding: 4px 4px;
+  margin: 0 0 0 170px;
+
+  cursor: pointer;
+}
+
+.changeInfoButton:hover {
+  text-decoration: underline;
+}

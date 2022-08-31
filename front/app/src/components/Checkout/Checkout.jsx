@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
@@ -20,13 +20,36 @@ export default function Checkout() {
 
   if (cart.length < 1) {
     toast.error("Shopping cart is empty");
+    toast.custom(
+      (t) => (
+        <div className="toast-border">
+          <img
+            className="toast-logo"
+            // src={toastLogo}
+            alt="toast logo"
+          />
+          <div className="toast-text">
+            <span>This toast has been succesfully arranged!</span>
+          </div>
+          <button className="toast-button" onClick={() => toast.dismiss(t.id)}>
+            <img
+              className="button-image"
+              // src={closeButton}
+              alt="close button"
+            />
+          </button>
+        </div>
+      ),
+      { duration: 10000 }
+    );
     setTimeout(() => {
       navigate("/");
     }, 1500);
 
     return (
       <div>
-        Shopping cart is empty <Toaster />
+        <Toaster />
+        Shopping cart is empty
       </div>
     );
   } else
