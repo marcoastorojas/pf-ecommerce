@@ -26,13 +26,16 @@ export default function UserInfoSideBar(selectedPage) {
           Profile information
         </div>
         <div className={style.userPage} onClick={() => setComponentToRender("orders")}>
-          Your orders
+          My shopping
         </div>
         <div className={style.userPage} onClick={() => setComponentToRender("wishlist")}>
           Wishlist
         </div>
-        <div className={style.lastUserPage} onClick={() => setComponentToRender("reviews")}>
-          Your product reviews
+        <div className={style.userPage} onClick={() => setComponentToRender("reviews")}>
+          My reviews
+        </div>
+        <div className={style.lastUserPage} onClick={() => setComponentToRender("upgrade")}>
+          Be a Seller
         </div>
       </div>
       <div className={style.logOutDiv} onClick={handleLogOut}>

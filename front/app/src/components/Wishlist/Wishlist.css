@@ -16,7 +16,7 @@
   border: 1px solid black;
 }
 
-.star-data {
+.starData {
   position: absolute;
   font-weight: bolder;
 }
@@ -30,7 +30,6 @@
 
 .info img {
   cursor: pointer;
-
 }
 
 .title {
@@ -56,4 +55,3 @@
   justify-content: center;
   align-items: center;
 }
-
