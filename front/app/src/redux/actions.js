@@ -467,4 +467,22 @@ export const delFav = (id) => {
 
 export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
+}
+
+export const cancelOperation = (idOper) => {  //CANCELAR LA OPERACION EN MYSHOPPING
+  return (dispatch) => {
+    axios({
+      method: 'POST',
+      data: {
+        id: idOper
+      }
+    })
+    .then( response => {
+      // dispatch({
+      //   type:
+      // })
+      //Mensaje de confirmación
+    })
+  }
+}
 };

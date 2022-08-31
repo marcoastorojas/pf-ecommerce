@@ -35,25 +35,30 @@ import {
 } from "./actions";
 
 const initialState = {
-  products: [],
-  allProducts: [],
-  searchedProducts: [],
-  resultsFound: true,
-  product: {},
-  categories: [],
-  search: "",
-  subCategories: [],
-  searchCategory: "",
-  signupResponse: {},
-  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
-  signupErrors: null,
-  errorsLogIn: {},
-  cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
-  cartTotal: 0,
-  dataPayment: {},
-  dataSuccessPayment: {},
-  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
-  userInfoPage: "",
+ products: [],
+ allProducts: [],
+ searchedProducts: [],
+ resultsFound: true,
+ product: {},
+ categories: [],
+ search: "",
+ subCategories: [],
+ searchCategory: "",
+ signupResponse: {},
+ user: localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : {},
+ signupErrors: null,
+ errorsLogIn: {},
+ cart: localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : [],
+ cartTotal: 0,
+ dataPayment: {},
+ dataSuccessPayment: {},
+ shoppingList: {}, //Guarda todas las compras del usuario activo
+ favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
+ userInfoPage: "",
 };
 
 export const reducer = (state = initialState, action) => {
