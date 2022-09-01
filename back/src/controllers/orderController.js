@@ -9,7 +9,8 @@ const getOrderbyUser = async (req = request, res = response) => {
   const userId = req.params.userId  
   
     const order = Order.findAll({
-      include: [{ model: Orderdetail, include: [Product] }]
+      include: [{ model: Orderdetail, include: [Product] }],
+      where: {userId: userId}
     })
  
   order.then((order)=>{
