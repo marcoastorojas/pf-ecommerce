@@ -131,7 +131,7 @@ const infoUser = async (req = request, res = response) => {
             { model: Status, as: "status" },
             { model: Role, as: "role" },
             { model: Review },
-            { model: Favorite, attributes: ["id"],include:Product }
+            { model: Favorite, attributes: ["id"], include: Product }
         ]
     })
     if (!user) return res.status(200).json(user)
@@ -177,7 +177,7 @@ const changeRol = async (req = request, res = response) => {
 }
 const modifyUser = async (req = request, res = response) => {
     const { id } = req.params
-    const { uid, userId, password, google, roleId, ...rest } = req.body
+    const { uid, userId, google, roleId, password, ...rest } = req.body
 
     const user = await User.findByPk(id, {
     })
@@ -194,6 +194,9 @@ const modifyUser = async (req = request, res = response) => {
 
     if (username && await User.findOne({ where: { username } })) {
         return res.status(400).json({ error: { username: "el usuername ya existe" } })
+    }
+    if (password) {
+        user.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     }
 
     const dataUser = await Person.findOne({ where: { userId: user.uid } })
@@ -219,7 +222,21 @@ const deleteUser = async (req = request, res = response) => {
 
     res.send({ userDeleted: user })
 }
+const verifyPassword = async (req = request, res = response) => {
+    const { id: userId } = req.params
+    const { oldPassword } = req.body
+    const user = await User.findByPk(userId)
+    if (!user) return res.status(400).json({ message: `el usuario con el id ${userId} no existe` })
+    if (!oldPassword) return res.status(400).json({ message: "el campo oldPassword es necesario" })
 
+    const isEqual = bcrypt.compareSync(oldPassword, user.password)
+    res.status(200).json({
+        oldPasswordEncryp: user.password,
+        oldPasswordInput: oldPassword,
+        equal: isEqual
+    })
+
+}
 
 module.exports = {
     postRol,
@@ -233,5 +250,6 @@ module.exports = {
     getRols,
     changeRol,
     modifyUser,
-    deleteUser
+    deleteUser,
+    verifyPassword
 }
