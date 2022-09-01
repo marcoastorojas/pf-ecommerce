@@ -585,13 +585,13 @@ export const getOrders = (idUser) => {
   }
 }
 
-export const getUserReviews = (productId, userId) => {
+export const getUserReviews = (id) => {
   return async function(dispatch) {
     try {
-      const response = await axios.get(`${BASE_URL}/products/review`, userId)
+      const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
       return dispatch({
         type: GET_USER_REVIEWS,
-        payload: response.data
+        payload: response.data.Reviews
       })
 
     } catch(error) {
@@ -600,26 +600,10 @@ export const getUserReviews = (productId, userId) => {
   }
 }
 
-export const getProductReview = (productId) => {
+export const addReview = (review, id) => {
   return async function(dispatch) {
     try {
-      const response = await axios.get(`${BASE_URL}/products/review`)
-
-      return dispatch({
-        type: GET_PRODUCT_REVIEWS,
-        payload: response.data,
-      })
-
-    } catch(error) {
-      console.log(error)
-    }
-  }
-}
-
-export const addReview = (review, productId) => {
-  return async function(dispatch) {
-    try {
-      const response = await axios.post(`${BASE_URL}/products/review/${productId}`, {userId: review.id, score: review.score, description: review.description})
+      const response = await axios.post(`${BASE_URL}/products/review/${id}`, {userId: review.id, score: review.score, description: review.description})
 
       return dispatch({
         type:ADD_REVIEW,
@@ -631,10 +615,10 @@ export const addReview = (review, productId) => {
   }
 }
 
-export const delReview = (userId, productId) => {
+export const delReview = (userId, id) => {
   return async function(dispatch) {
     try {
-      const response = await axios.delete(`${BASE_URL}/products/review/${productId}`, userId)
+      const response = await axios.delete(`${BASE_URL}/products/review/${id}`, {userId: userId})
 
       return dispatch({
         type: DEL_REVIEW,
@@ -646,10 +630,10 @@ export const delReview = (userId, productId) => {
   }
 }
 
-export const updateReview = (review, productId) => {
+export const updateReview = (review, id) => {
   return async function(dispatch) {
     try {
-      const response = await axios.put(`${BASE_URL}/products/review/${productId}`, {score: review.score, description: review.description, idUser: review.id});
+      const response = await axios.put(`${BASE_URL}/products/review/${id}`, {score: review.score, description: review.description, userId: review.id});
 
       return dispatch({
         type:UPDATE_REVIEW,

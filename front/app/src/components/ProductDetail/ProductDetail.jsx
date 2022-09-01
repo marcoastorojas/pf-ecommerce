@@ -6,7 +6,7 @@ import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeAllFromCart, addReview, delReview, getReview, updateReview} from "../../redux/actions";
+import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
@@ -14,10 +14,12 @@ export default function ProductDetail({ product }) {
   const [images, setImages] = useState(product.images.split(" "));
   const [quantity, setQuantity] = useState(1);
 
+  const [showEdit, setShowEdit] = useState(false);
+
   const user = useSelector((state) => state.user);
+  const reviews = useSelector((state) => state.reviews)
 
   //Review
-  const [reviews, setReviews] = useState([]);
   const [review, setReview] = useState({
     id: user.uid ? user.uid : "",
     score:0,
@@ -29,7 +31,13 @@ export default function ProductDetail({ product }) {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
+    
+    dispatch(getUserReviews(user.uid));
   }, [cart]);
+
+  useEffect(() => {
+    dispatch(getUserReviews(user.uid));
+  }, [review])
 
   const changeImage = (e) => {
     setIndex(+e.target.id);
@@ -58,24 +66,39 @@ export default function ProductDetail({ product }) {
   const addRw = (e) => {
     e.preventDefault()
     dispatch(addReview(review, product.id))
-    console.log(review);
-    setReviews([...reviews, review]);
+  
     setTimeout(() => {
       setReview({
         id: user.uid,
         score: 0,
         description: "",
       })
-    }, 2000)
+    }, 1500)
   }
 
   const delRw = () => {
-    console.log(user.id);
-    dispatch(delReview(review.id, product.id))
+    console.log([user.uid, review.id]);
+    dispatch(delReview(user.uid, product.id))
+
+    setReview({
+      id: user.uid,
+      score: 0,
+      description: "",
+    })
   }
 
-  const updateRw = () => {
+  const updateRw = (e) => {
+    e.preventDefault()
     dispatch(updateReview(review, product.id));
+
+    setTimeout(() => {
+      setShowEdit(false)
+      setReview({
+        id: user.uid,
+        score:0,
+        description: "",
+      })
+    }, 1500)
   }
 
   const handleChange= (e) => {
@@ -166,33 +189,52 @@ export default function ProductDetail({ product }) {
       <div className={style.comments}>
         <h2>Comments:</h2>
         {reviews.length > 0 && reviews.map((rw, index) => {
-          return <div className={style.commentSec} key={index}>
-            <h3>User Name</h3>
+          if(product.id === rw.productId) return <div className={style.commentSec} key={index}>
+            <h3>{user.username}</h3>
               <div className={style.commentData}>
-                <h4>{rw.rating}</h4>
+                <h4>{rw.score}</h4>
                 <p>{rw.description}</p>
               </div>
             <div>
               <button onClick={() => delRw()}>Delete</button>
-              <button onClick={() => updateRw()}>Edit</button>
+              {!showEdit ? <button onClick={() => setShowEdit(true)}>Edit</button>: null}
             </div>
             </div>
-        })}
+           })
+          }
+          
+          <div>
+      {reviews.length > 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
+                <form onSubmit={(e) => addRw(e)}>
+                    <div>
+                        <label>Score:</label>
+                    <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
+                    {review.score}
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
+                    </div>
+                    <input type="submit" value="Add comment"/>
+                </form>
+            </div> : null}
+      </div>
       <div>
-        {user.uid ? <form onSubmit={(e) => addRw(e)}>
+        {showEdit ? <form onSubmit={(e) => updateRw(e)}>
           <div>
             <label>Score:</label>
-            <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)}/>
+            <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
             {review.score}
           </div>
           <div>
             <label>Description:</label>
-            <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)}/>
+            <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
           </div>
-          <input type="submit" value="Add comment"/>
-        </form> : null}
+          <input type="submit" value="Add edit"/>
+        </form>: null}
       </div>
-    </div>
+          
+      </div>
       <Toaster />
   </div>
   );
