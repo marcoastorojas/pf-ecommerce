@@ -153,7 +153,7 @@
   display: flex;
   justify-content: space-evenly;
 }
-.buttonsShopCart > button {
+.buttonEnabled {
   border: 1px solid var(--border-color);
   border-radius: 10px;
   background-color: var(--background-button-color);
@@ -162,14 +162,22 @@
   margin: 3%;
   transition: all 0.2s ease;
 }
-.buttonsShopCart > button:hover {
+.buttonEnabled:hover {
   padding: 2% 6%;
   cursor: pointer;
   box-shadow: 0 0 10px 1px var(--border-color);
 }
-.buttonsShopCart > button:active {
+.buttonEnabled:active {
   background-color: white;
   color: black;
+}
+.buttonDisabled {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: gray;
+  color: white;
+  padding: 2% 4%;
+  margin: 3%;
 }
 
 

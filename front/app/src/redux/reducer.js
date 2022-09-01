@@ -230,6 +230,7 @@ export const reducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
+          cartTotal: 0
         };
       }
     }

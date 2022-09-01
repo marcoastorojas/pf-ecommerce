@@ -142,15 +142,17 @@ export default function NavBar() {
           ) : <></>}
         </div>
         {/* <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div> */}
-        <div className={style.cartDiv} onClick={HideShoppCart}>
+        <div className={style.cartDiv}>
           {/* <Link to={"/shopping-cart"} className={style.cartLink}> */}
+          <div className={style.cartDivInfo}  onClick={HideShoppCart}>
             <img src={cartI} alt="Cart" />
             <span>
               {cart.length}
             </span>
-            <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
-              <ShoppingCart/>
-            </div>
+          </div>
+          <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
+            <ShoppingCart/>
+          </div>
           {/* </Link> */}
         </div>
       </div>
