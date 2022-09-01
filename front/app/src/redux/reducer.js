@@ -230,7 +230,7 @@ export const reducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
-          cartTotal: 0
+          cartTotal: 0,
         };
       }
     }
@@ -314,20 +314,9 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case GET_USER_INFO:
-      const { email, google, info: information, status } = action.payload;
-      const { name, lastname, dni, phone, direction } = information;
       return {
         ...state,
-        userInfo: {
-          email,
-          name,
-          lastname,
-          dni,
-          phone,
-          direction,
-          google,
-          status,
-        },
+        userInfo: action.payload,
       };
     case PUT_USER_IMAGE:
       return {
