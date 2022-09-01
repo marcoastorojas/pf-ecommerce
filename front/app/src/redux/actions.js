@@ -46,7 +46,8 @@ export const DEL_FAVOURITES = "DEL_FAVOURITES";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
 
-//
+//ORDERS
+export const GET_ORDERS = 'GET_ORDERS';
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -470,9 +471,9 @@ export const delFav = (id) => {
   };
 };
 
-export const setSuccessPaymentData = () => {
+// export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
-};
+// };
 
 export const cancelOperation = (idOper) => {
   //CANCELAR LA OPERACION EN MYSHOPPING
@@ -523,3 +524,22 @@ export const putUserImage = (url, id) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const getOrders = (idUser) => {
+  return (dispatch) => {
+    axios({
+      method: 'GET',
+      url: `${BASE_URL}/order/${idUser}`
+    })
+    .then( response => {
+      console.log(response.data)
+      dispatch({
+        type: GET_ORDERS,
+        payload: response.data
+      })
+    })
+    .catch( err => {
+      console.log(err)
+    })
+  }
+}

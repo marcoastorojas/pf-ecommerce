@@ -148,7 +148,7 @@ export default function NavBar() {
             <span>
               {cart.length}
             </span>
-            <div id="shoppCartNavBar" className={style.shoppCartMenu}>
+            <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
               <ShoppingCart/>
             </div>
           {/* </Link> */}

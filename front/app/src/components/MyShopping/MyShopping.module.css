@@ -17,10 +17,103 @@
 .operInfo > div {
     border: 1px solid var(--border-color);
     border-radius: 10px;
+}
+.infoUser {
     width: 20%;
+}
+.infoSell {
+    width: 20%;
+}
+.inforOper {
+    width: 40%;
 }
 
 
 .status {
     display: flex;
+}
+
+
+
+
+
+.contMiniOrder {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin: 4%;
+    padding: 2%;
+    /* display: flex;
+    flex-direction: column; */
+    transition: all 0.2s ease;
+}
+.contMiniOrder:hover {
+    border: 1px solid black;
+}
+.contMiniOrder:hover .buttonLinkMS {
+    background-color: var(--background-button-color);
+    color: white;
+    border: 1px solid var(--border-color);
+}
+.contMiniOrder p {
+    margin: 0;
+    padding: 0;
+}
+/* .contMiniOrder > div {
+    border: 1px solid green;
+} */
+.orderProductTitle {
+    text-align: center;
+    padding: 2%;
+}
+.titleProduct {
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modelNbrand {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2%;
+}
+.priceXquanXtotal {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2%;
+    /* align-items: center; */
+    text-align: center;
+}
+.priceXquanXtotal  p {
+    margin: 2% 0;
+}
+/* .prodButton {
+    display: flex;
+    justify-content: center;
+} */
+.buttonLinkMS {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: transparent;
+    color: transparent;
+    margin: 2%;
+    padding: 3%;
+    width: 45%;
+    transition: all 0.2s ease;
+}
+.buttonLinkMS:hover {
+    cursor: pointer;
+    /* background-color: white; */
+    /* color: black; */
+    width: 60%;
+    box-shadow: 0 0 10px 1px var(--border-color);
+}
+.contMiniOrder:hover .buttonLinkMS:active {
+    background-color: white;
+    color: black;
+}
+.link {
+    /* border: 1px solid black; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
 }
