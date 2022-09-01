@@ -142,10 +142,10 @@ export default function ShoppingCart() {
           })}
         </div>
         <div className={style.buttonsShopCart}>
-          <button className="button-all" onClick={() => deleteAll()}>
+          <button className={style.buttonEnabled} onClick={() => deleteAll()}>
             <span>REMOVE ALL</span>
           </button>
-          <button className="checkout" onClick={() => goToCheckout()}>
+          <button className={style.buttonEnabled} onClick={() => goToCheckout()}>
             <span>CHECKOUT</span>
           </button>
         </div>
@@ -161,10 +161,10 @@ export default function ShoppingCart() {
         <p>Shooping cart is empty</p>;
       </div>
       <div className={style.buttonsShopCart}>
-          <button onClick={() => deleteAll()}>
+          <button className={style.buttonDisabled} disabled>
             <span>REMOVE ALL</span>
           </button>
-          <button onClick={() => goToCheckout()}>
+          <button className={style.buttonDisabled} disabled>
             <span>CHECKOUT</span>
           </button>
         </div>
