@@ -22,6 +22,7 @@ paymentRoutes.post("/", function (req, res, next) {
       user.then((user) => {
         const filteredOrder = {
           orderId: order.id,
+          orderDate: order.createdAt,
           user: {
             id: user.uid,
             userName: user.username,
