@@ -24,7 +24,7 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     dispatch(getTotal());
-  }, [dispatch]);
+  }, [cart.length]);
 
   const addCart = (e) => {
     dispatch(addOneFromCart(e.target.value));
@@ -152,5 +152,23 @@ export default function ShoppingCart() {
         {/* <Toaster /> */}
       </div>
     );
-  else return <div className="no-data">Shooping cart is empty</div>;
+  else return (
+    <div className={style.contShoppingCart}>
+      <div className={style.headShopCart}>
+          <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
+      </div>
+      <div className={style.productsShopCart}>
+        <p>Shooping cart is empty</p>;
+      </div>
+      <div className={style.buttonsShopCart}>
+          <button onClick={() => deleteAll()}>
+            <span>REMOVE ALL</span>
+          </button>
+          <button onClick={() => goToCheckout()}>
+            <span>CHECKOUT</span>
+          </button>
+        </div>
+    </div>
+
+  )
 }
