@@ -243,7 +243,7 @@ export default function () {
         if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass, phonePass) {
             //dispatch
             if(user.roleId === BUYER_ROLE) {
-                dispatch(upgradeToSeller(user.uid))
+                dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
             }
             dispatch(putUserImage(user.uid, info))
         }
