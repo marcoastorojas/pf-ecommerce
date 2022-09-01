@@ -20,6 +20,7 @@ import cartI from "../../media/images/cart.svg";
 import style from "./index.module.css";
 import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
 import NavBarUserMenu from "../NavBarUserMenu";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -72,6 +73,11 @@ export default function NavBar() {
     // console.log('pepe')
   };
 
+  const HideShoppCart = () => {
+    const cartDisp = document.querySelector('#shoppCartNavBar');
+    if(cartDisp.className === style.shoppCartMenuHidden) cartDisp.className = style.shoppCartMenu
+    else cartDisp.className = style.shoppCartMenuHidden
+  }
   return (
     <header className={style.header}>
       {/* <Toaster /> */}
@@ -136,11 +142,16 @@ export default function NavBar() {
           ) : <></>}
         </div>
         {/* <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div> */}
-        <div className={style.cartDiv}>
-          <Link to={"/shopping-cart"} className={style.cartLink}>
+        <div className={style.cartDiv} onClick={HideShoppCart}>
+          {/* <Link to={"/shopping-cart"} className={style.cartLink}> */}
             <img src={cartI} alt="Cart" />
-            <span> {cart.length}</span>
-          </Link>
+            <span>
+              {cart.length}
+            </span>
+            <div id="shoppCartNavBar" className={style.shoppCartMenu}>
+              <ShoppingCart/>
+            </div>
+          {/* </Link> */}
         </div>
       </div>
     </header>
