@@ -9,6 +9,7 @@ import BuyerUserInfoForm from "../BuyerUserInfoForm";
 import SellerUserInfoForm from "../SellerUserInfoForm";
 
 import style from "./index.module.css";
+import BeASeller from "../BeASeller/BeASeller";
 
 export default function ProfileInfo() {
   const dispatch = useDispatch();
@@ -66,8 +67,15 @@ export default function ProfileInfo() {
             </div>
           </div>
         </div>
-        {userInfo.role && userInfo.role.name === "USER_ROLE" && <BuyerUserInfoForm disabledForm={disabledForm} />}
-        {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <SellerUserInfoForm disabledForm={disabledForm} />}
+        <div>
+          {userInfo.role && userInfo.role.name === "USER_ROLE" && <BuyerUserInfoForm disabledForm={disabledForm} />}
+          {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <BuyerUserInfoForm disabledForm={disabledForm} />}
+        </div>
+        <div>
+          {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <BeASeller />}
+        {/* {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <SellerUserInfoForm disabledForm={disabledForm} />} */}
+        </div>
+        {/* <button onClick={() => console.log(userInfo.role.name)}>PRUEBA</button> */}
       </div>
     </div>
   );

@@ -330,11 +330,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         dataOrders: action.payload
       }
-    case GET_USER_INFO_EXTRA:
-      return {
-        ...state,
-        userInfoExtra: action.payload
-      }
+    // case GET_USER_INFO_EXTRA:
+    //   return {
+    //     ...state,
+    //     userInfoExtra: action.payload
+    //   }
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInfoUserExtra } from '../../redux/actions';
+import { getUserInfo, putUserImage, upgradeToSeller } from '../../redux/actions';
+import { BUYER_ROLE, SELLER_ROLE } from '../../validations/usersTypes';
 import style from './BeASeller.module.css';
 
 
@@ -38,18 +39,23 @@ export default function () {
     const [ lastnamePass, setLastnamePass ] = useState(false)
     const [ dniPass, setDNIPass ] = useState(false)
     const [ phonePass, setPhonePass ] = useState(false)
+
     //SET INFO IF THE USER IS A SELLER            START
     const user = useSelector(state => state.user)
-    const userInfoExtra = useSelector(state => state.userInfoExtra)
+    const userInfoExtra = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getInfoUserExtra(user.uid))
+        dispatch(getUserInfo(user.uid))
     }, [dispatch])
 
 
 
 
     //SET INFO IF THE USER IS A SELLER              END
+    //CHANGE THE FUNCTION OF THE BUTTON 
+    // useEffect(() => {
+    //     document.querySelector('#buttonBeASeller').value = user.roleId === SELLER_ROLE? 'Save' : 'Send'
+    // }, [Object.keys(user).length])
     const handleYear = (e) => {
         const days = ['01', '03', '05' , '07', '08', '10', '12']
         const maxDay = days.includes(date[1])?31:30
@@ -236,17 +242,25 @@ export default function () {
         e.preventDefault()
         if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass, phonePass) {
             //dispatch
+            if(user.roleId === BUYER_ROLE) {
+                dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
+            }
+            dispatch(putUserImage(user.uid, info))
         }
         else {
             console.log('pepe')
         }
     }
+    const PRUEBAUPROl = () => {
+        dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
+    }
 
     return (
         <div className={style.contBeASeller}>
-            <button onClick={PRUEBA}>PRUEBA</button>
-            <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
-            <h1>Soy el form de alta de vendedor</h1>
+            {/* <button onClick={PRUEBAUPROl} >PRUEBACHANGEROL</button> */}
+            {/* <button onClick={PRUEBA}>PRUEBA</button> */}
+            {/* <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button> */}
+            {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
                 <div>
                     <label htmlFor="street">Lastname: </label>
@@ -317,7 +331,7 @@ export default function () {
                     <br />
                 </div>
                 <label id='labelErrores' style={{color: 'rgb(255, 0, 0)'}}></label>
-                <input id='buttonBeASeller' className={style.buttonBeASellerFail} type='submit' disabled/>
+                <input id='buttonBeASeller' className={style.buttonBeASellerFail} type='submit' value={user.roleId===BUYER_ROLE?'Send':'Save'} disabled/>
             </form>
         </div>
     )
