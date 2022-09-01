@@ -41,6 +41,7 @@ import {
   //USER DATA
   GET_USER_INFO,
   PUT_USER_IMAGE,
+  GET_ORDERS,
 } from "./actions";
 
 const initialState = {
@@ -67,6 +68,7 @@ const initialState = {
   userInfoPage: "",
   reviews: [],
   productReview: [],
+  dataOrders: {}, 
 };
 
 export const reducer = (state = initialState, action) => {
@@ -233,6 +235,7 @@ export const reducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
+          cartTotal: 0
         };
       }
     }
@@ -348,19 +351,23 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, image: action.payload },
       };
-
-    case GET_USER_REVIEWS: {
+      case GET_USER_REVIEWS: {
+        return {
+          ...state,
+          reviews: action.payload,
+        }
+      }
+      case CLEAR_REVIEWS: {
+        return {
+          ...state,
+          reviews: [],
+        }
+      }
+      case GET_ORDERS: 
       return {
         ...state,
-        reviews: action.payload,
+        dataOrders: action.payload
       }
-    }
-    case CLEAR_REVIEWS: {
-      return {
-        ...state,
-        reviews: [],
-      }
-    }
     default:
       return state;
   }

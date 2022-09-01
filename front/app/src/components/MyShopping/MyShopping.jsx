@@ -1,18 +1,25 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrders } from '../../redux/actions';
 import style from './MyShopping.module.css';
+import { Link } from 'react-router-dom';
 
 
 
 
 
+export default function MyShopping (props) {
+    const dispatch = useDispatch()
 
-export default function MyShopping () {
-
-
+    const user = useSelector(state => state.user)
     const shoppingList = useSelector(state => state.shoppingList)
+    const CONSOLELOGPROPS= () => {
+        // dispatch(getOrders(user.uid))    
+        console.log(props.orders)
+    }
 
     return (
         <div className={style.contMyShopping}>
+            <button onClick={CONSOLELOGPROPS}>CONSOLELOGPROPS</button>
             <div className={style.titulo}>
                 <h3>Date: </h3>
             </div>
@@ -24,10 +31,40 @@ export default function MyShopping () {
                     <h3>Cel:</h3>
                 </div>
                 <div className={style.inforOper}>
-                    <div>
-                        <h5>ProductName</h5>
-                        <h5>ProductPrice</h5>
-                    </div>
+                    {
+                        props.orders?.map( e => {
+                            return (
+                                <div key={e.id} className={style.contMiniOrder}>
+                                    <div className={style.orderProductTitle}>
+                                        <p className={style.titleProduct}>{e.product.title}</p>
+                                    </div>
+                                    <div className={style.modelNbrand}>
+                                        <p>M: {e.product.model}</p>
+                                        <p>B: {e.product.brand}</p>
+                                    </div>
+                                    <div className={style.priceXquanXtotal}>
+                                        <div>
+                                            <p>Price</p>
+                                            <p>${e.price}</p>
+                                        </div>
+                                        <div>
+                                            <p>Quantity</p>
+                                            <p>x{e.quantity}</p>
+                                        </div>
+                                        <div>
+                                            <p>Total</p>
+                                            <p>${e.quantity * e.price}</p>
+                                        </div>
+                                    </div>
+                                    <div className={style.prodButton}>
+                                        <Link to={`/product/${e.product.id}`} className={style.link}>
+                                            <button className={style.buttonLinkMS}>Go to product...</button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div className={style.infoSell}>
                     <h3>Seller Info</h3>
@@ -38,6 +75,7 @@ export default function MyShopping () {
                 </div>
             </div>
             <div className={style.status}>
+                <h3>Total: </h3>
                 <h3>Status: </h3>
                 <button>Cancel Operation</button>
             </div>

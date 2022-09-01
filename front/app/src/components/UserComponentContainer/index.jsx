@@ -7,6 +7,7 @@ import Reviews from "../Reviews/Reviews.jsx";
 import BeASeller from "../BeASeller/BeASeller.jsx";
 
 import style from "./index.module.css";
+import MyShoppingContainer from "../MyShoppingContainer/MyShoppingContainer";
 
 export default function UserComponentContainer() {
   const params = useParams();
@@ -21,7 +22,7 @@ export default function UserComponentContainer() {
     case "orders":
       return (
         <div className={style.mainContainer}>
-          <MyShopping />;
+          <MyShoppingContainer />;
         </div>
       );
     case "wishlist":

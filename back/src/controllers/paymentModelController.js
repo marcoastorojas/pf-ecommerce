@@ -4,10 +4,9 @@ const { request, response } = require("express");
 
 const postOrder = async (req = request, res = response) => {  
 
-  //console.log('--->>>'+JSON.stringify(req.body.user_id))
+  
 let order = {
-    userId: req.body.user_id
-    //userId: "df2468c1-3695-3e2c-b9a3-d8d64db911e2"
+    userId: req.body.user_id    
 };
 
   try {

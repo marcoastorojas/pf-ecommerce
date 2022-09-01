@@ -56,6 +56,9 @@ export const DEL_REVIEW = "DEL_REVIEW";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
 export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
 
+//ORDERS
+export const GET_ORDERS = 'GET_ORDERS';
+
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
@@ -509,9 +512,9 @@ export const clearFav = () => {
   }
 }
 
-export const setSuccessPaymentData = () => {
+// export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
-};
+// };
 
 export const cancelOperation = (idOper) => {
   //CANCELAR LA OPERACION EN MYSHOPPING
@@ -562,6 +565,25 @@ export const putUserImage = (url, id) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const getOrders = (idUser) => {
+  return (dispatch) => {
+    axios({
+      method: 'GET',
+      url: `${BASE_URL}/order/${idUser}`
+    })
+    .then( response => {
+      console.log(response.data)
+      dispatch({
+        type: GET_ORDERS,
+        payload: response.data
+      })
+    })
+    .catch( err => {
+      console.log(err)
+    })
+  }
+}
 
 export const getUserReviews = (productId, userId) => {
   return async function(dispatch) {
