@@ -431,7 +431,7 @@ export const sendPayment = (dataPayment) => {
 };
 
 export const upgradeToSeller = (idUser, role) => {
-  console.log(idUser, role);
+  console.log('Entró a upgradeToSeller');
   return () => {
     toast.loading("Upgrading account");
     try {
@@ -440,6 +440,7 @@ export const upgradeToSeller = (idUser, role) => {
         url: `${BASE_URL}/auth/changerol/${idUser}`,
         data: { role: role },
       }).then((response) => {
+        console.log('Success en upgradeToSeller');
         toast.dismiss();
         localStorage.setItem(
           "user",
@@ -451,6 +452,7 @@ export const upgradeToSeller = (idUser, role) => {
         toast.success("You can publish your products now");
       });
     } catch (err) {
+      console.log('Failed en upgradeToSeller');
       toast.dismiss();
       console.log(err);
       toast.error("error");
@@ -509,20 +511,25 @@ export const getUserInfo = (id) => {
 };
 
 export const putUserImage = (id, changes) => {
+  console.log('Entró en putUserImage')
   return (dispatch) => {
     axios({
       method: "PUT",
       url: `${BASE_URL}/auth/users/${id}`,
       data: changes,
     })
-      .then((response) => {
-        console.log(response.data.user.image);
+    .then((response) => {
+        console.log('Success en putUserImage')
+        // console.log(response.data.user.image);
         dispatch({
           type: PUT_USER_IMAGE,
           payload: response.data.user.image,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // console.log(err);
+        console.log('Failed en putUserImage')
+      })
   };
 };
 
