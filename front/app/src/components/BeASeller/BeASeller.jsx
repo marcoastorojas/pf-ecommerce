@@ -251,11 +251,15 @@ export default function () {
             console.log('pepe')
         }
     }
+    const PRUEBAUPROl = () => {
+        dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
+    }
 
     return (
         <div className={style.contBeASeller}>
-            <button onClick={PRUEBA}>PRUEBA</button>
-            <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
+            {/* <button onClick={PRUEBAUPROl} >PRUEBACHANGEROL</button> */}
+            {/* <button onClick={PRUEBA}>PRUEBA</button> */}
+            {/* <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button> */}
             {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
                 <div>

@@ -440,7 +440,7 @@ export const upgradeToSeller = (idUser, role) => {
         url: `${BASE_URL}/auth/changerol/${idUser}`,
         data: { role: role },
       }).then((response) => {
-        console.log('Success en upgradeToSeller');
+        console.log(response.data);
         toast.dismiss();
         localStorage.setItem(
           "user",
@@ -450,6 +450,7 @@ export const upgradeToSeller = (idUser, role) => {
           })
         );
         toast.success("You can publish your products now");
+        window.location.reload(false)
       });
     } catch (err) {
       console.log('Failed en upgradeToSeller');
