@@ -27,6 +27,7 @@ import {
   ADD_ONE_FROM_CART,
   GET_TOTAL,
   SEND_PAYMENT,
+  //eslint-disable-next-line
   SET_SUCCESS_PAYMENT,
 
   //WISHLIST
@@ -133,7 +134,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         searchCategory: action.payload,
       };
-
+    /*eslint-disable */
     //SHOPPING CART
     case ADD_TO_CART: {
       const getCart = state.cart.filter((pt) => pt.product.id === action.payload.product.id);
@@ -225,6 +226,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
       };
     }
+    /*eslint-enable */
     case GET_TOTAL: {
       if (state.cart.length > 0) {
         const total = state.cart.reduce((acc, pt) => (acc = pt.product.price * pt.amount + acc), 0);
@@ -351,6 +353,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, image: action.payload },
       };
+    case GET_ORDERS: 
+      return {
+        ...state,
+        dataOrders: action.payload,
+      };
       case GET_USER_REVIEWS: {
         return {
           ...state,
@@ -362,11 +369,6 @@ export const reducer = (state = initialState, action) => {
           ...state,
           reviews: [],
         }
-      }
-      case GET_ORDERS: 
-      return {
-        ...state,
-        dataOrders: action.payload
       }
     default:
       return state;

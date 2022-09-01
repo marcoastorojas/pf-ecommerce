@@ -16,31 +16,31 @@ export default function UserComponentContainer() {
     case "info":
       return (
         <div className={style.mainContainer}>
-          <ProfileInfo />;
+          <ProfileInfo />
         </div>
       );
     case "orders":
       return (
         <div className={style.mainContainer}>
-          <MyShoppingContainer />;
+          <MyShoppingContainer />
         </div>
       );
     case "wishlist":
       return (
         <div className={style.mainContainer}>
-          <Wishlist />;
+          <Wishlist />
         </div>
       );
     case "reviews":
       return (
         <div className={style.mainContainer}>
-          <Reviews />;
+          <Reviews />
         </div>
       );
     case "upgrade":
       return (
         <div className={style.mainContainer}>
-          <BeASeller />;
+          <BeASeller />
         </div>
       );
 
