@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInfoUserExtra } from '../../redux/actions';
+import { getUserInfo } from '../../redux/actions';
 import style from './BeASeller.module.css';
 
 
@@ -40,10 +40,10 @@ export default function () {
     const [ phonePass, setPhonePass ] = useState(false)
     //SET INFO IF THE USER IS A SELLER            START
     const user = useSelector(state => state.user)
-    const userInfoExtra = useSelector(state => state.userInfoExtra)
+    const userInfoExtra = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getInfoUserExtra(user.uid))
+        dispatch(getUserInfo(user.uid))
     }, [dispatch])
 
 
@@ -244,9 +244,9 @@ export default function () {
 
     return (
         <div className={style.contBeASeller}>
-            <button onClick={PRUEBA}>PRUEBA</button>
-            <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
-            <h1>Soy el form de alta de vendedor</h1>
+            {/* <button onClick={PRUEBA}>PRUEBA</button> */}
+            {/* <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button> */}
+            {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
                 <div>
                     <label htmlFor="street">Lastname: </label>

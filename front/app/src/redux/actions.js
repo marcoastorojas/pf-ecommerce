@@ -526,22 +526,22 @@ export const putUserImage = (id, changes) => {
   };
 };
 
-export const getInfoUserExtra = (userId, data) => {
-  return (dispatch) => {
-    axios({
-      method: 'PUT',
-      url: `${BASE_URL}/auth/users/${userId}`,
-      data: data
-    })
-    .then(response => {
-      dispatch({
-        type: GET_USER_INFO_EXTRA,
-        payload: response.data
-      })
-    })
-    .catch(err => console.log(err))
-  }
-}
+// export const getInfoUserExtra = (userId, data) => {
+//   return (dispatch) => {
+//     axios({
+//       method: 'PUT',
+//       url: `${BASE_URL}/auth/users/${userId}`,
+//       data: data
+//     })
+//     .then(response => {
+//       dispatch({
+//         type: GET_USER_INFO_EXTRA,
+//         payload: response.data
+//       })
+//     })
+//     .catch(err => console.log(err))
+//   }
+// }
 
 export const getOrders = (idUser) => {
   return (dispatch) => {
