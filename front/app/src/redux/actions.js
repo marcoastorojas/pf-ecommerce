@@ -47,7 +47,7 @@ export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
 
 //ORDERS
-export const GET_ORDERS = 'GET_ORDERS';
+export const GET_ORDERS = "GET_ORDERS";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -472,7 +472,7 @@ export const delFav = (id) => {
 };
 
 // export const setSuccessPaymentData = () => {
-  //{type: SET_SUCCESS_PAYMENT}
+//{type: SET_SUCCESS_PAYMENT}
 // };
 
 export const cancelOperation = (idOper) => {
@@ -507,12 +507,12 @@ export const getUserInfo = (id) => {
   };
 };
 
-export const putUserImage = (url, id) => {
+export const putUserImage = (id, changes) => {
   return (dispatch) => {
     axios({
       method: "PUT",
       url: `${BASE_URL}/auth/users/${id}`,
-      data: { image: url },
+      data: changes,
     })
       .then((response) => {
         console.log(response.data.user.image);
@@ -528,18 +528,18 @@ export const putUserImage = (url, id) => {
 export const getOrders = (idUser) => {
   return (dispatch) => {
     axios({
-      method: 'GET',
-      url: `${BASE_URL}/order/${idUser}`
+      method: "GET",
+      url: `${BASE_URL}/order/${idUser}`,
     })
-    .then( response => {
-      console.log(response.data)
-      dispatch({
-        type: GET_ORDERS,
-        payload: response.data
+      .then((response) => {
+        console.log(response.data);
+        dispatch({
+          type: GET_ORDERS,
+          payload: response.data,
+        });
       })
-    })
-    .catch( err => {
-      console.log(err)
-    })
-  }
-}
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
