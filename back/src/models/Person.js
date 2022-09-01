@@ -36,19 +36,12 @@ module.exports = (sequelize) => {
         zipcode: {
             type: DataTypes.STRING
         },
-        height: {
-            type: DataTypes.DECIMAL
-        },
         country: {
             type: DataTypes.STRING
         },
-        state: {
+        city: {
             type: DataTypes.STRING
         },
-        color:{
-            type: DataTypes.STRING
-
-        }
     },
     { timestamps: false });
 };
