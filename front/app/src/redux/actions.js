@@ -396,7 +396,7 @@ export const logIn = (user) => {
       })
       .catch((err) => {
         toast.dismiss();
-        console.log(err.response.data)
+        // console.log(err.response.data)
         dispatch({
           type: ERROR_HANDLE,
           payload: err.response.data.errors,

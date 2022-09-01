@@ -15,13 +15,15 @@ export default function () {
     const actualDay = +actualDate.split('-')[2]
     
     const [ info, setInfo ] = useState({
-        dateB:'',
+        lastname: '',
+        dni: '',
+        // dateB:'',
         gender: '',
         street: '',
-        number: '',
-        postalCode: '',
+        // number: '',
+        zipcode: '',
         country: '',
-        state: '',
+        // state: '',
         city: ''
     })
     const [ date, setDate ] = useState([99, 99, 2099])
@@ -33,7 +35,9 @@ export default function () {
     const [ countryPass, setCountryPass ] = useState(false)
     const [ statePass, setStatePass ] = useState(false)
     const [ cityPass, setCityPass ] = useState(false)
-    
+    const [ lastnamePass, setLastnamePass ] = useState(false)
+    const [ dniPass, setDNIPass ] = useState(false)
+    const [ phonePass, setPhonePass ] = useState(false)
     //SET INFO IF THE USER IS A SELLER            START
     const user = useSelector(state => state.user)
     const userInfoExtra = useSelector(state => state.userInfoExtra)
@@ -63,10 +67,10 @@ export default function () {
             setDate([date[0], date[1], e.target.value])
             // if(e.target.value < 1800) e.target.value = 1800
         }
-        setInfo({
-            ...info,
-            dateB: date.join('-')
-        })
+        // setInfo({
+        //     ...info,
+        //     dateB: date.join('-')
+        // })
     }
     useEffect(() => {
         if((+actualYear - +date[2]) > 18 && +date[0] !== 99 && +date[1] !== 99) setDatePass(true)
@@ -121,10 +125,10 @@ export default function () {
     const handleNumber = (e) => {
         if(e.target.value > 99999) e.target.value = 99999
         if(e.target.value < 1) e.target.value = 1
-        setInfo({
-            ...info,
-            number: e.target.value
-        })
+        // setInfo({
+        //     ...info,
+        //     number: e.target.value
+        // })
         setNumberPass(e.target.value!==''?true:false)
     }
     const handlePostal = (e) => {
@@ -132,22 +136,25 @@ export default function () {
         if(e.target.value < 1) e.target.value = 1
         setInfo({
             ...info,
-            postalCode: e.target.value
+            zipcode: e.target.value
         })
         setPostalPass(e.target.value!==''?true:false)
     }
     const handleCountry = (e) => {
         const regNoNumbers = /^([^0-9]*)$/
         if(regNoNumbers.test(e.target.value) && e.target.value !== '') {
-            setInfo({
-                ...info,
-                [e.target.name]: e.target.value
-            })
+            if(e.target.name !== 'state') {
+                setInfo({
+                    ...info,
+                    [e.target.name]: e.target.value
+                })
+            }
             e.target.className = style.inputDatos
             setStreetPass(e.target.name==='street'?true:streetPass)
             setCountryPass(e.target.name==='country'?true:countryPass)
             setStatePass(e.target.name==='state'?true:statePass)
             setCityPass(e.target.name==='city'?true:cityPass)
+            setLastnamePass(e.target.name==='lastname'?true:cityPass)
             document.querySelector('#labelErrores').innerText = ''
         }
         else {
@@ -156,10 +163,44 @@ export default function () {
             setCountryPass(e.target.name==='country'?false:countryPass)
             setStatePass(e.target.name==='state'?false:statePass)
             setCityPass(e.target.name==='city'?false:cityPass)
+            setLastnamePass(e.target.name==='lastname'?false:cityPass)
             e.target.className = style.inputDatosFail
             document.querySelector('#labelErrores').innerText = 'Please enter a valid name'
         } 
-            // console.log(regNoNumbers.test(e.target.value)?'verdadero':'falso')
+        // console.log(regNoNumbers.test(e.target.value)?'verdadero':'falso')
+    }
+    const handleDNI = (e) => {
+        if(e.target.value > 99999999 || e.target.value < 11111111) {
+            e.target.className = style.inputDatosFail
+            document.querySelector('#labelErrores').innerText = 'Please enter a valid DNI'
+            setDNIPass(false)
+        }
+        else {
+            e.target.className = style.inputDatos
+            document.querySelector('#labelErrores').innerText = ''
+            setDNIPass(true)
+            setInfo({
+                ...info,
+                dni: e.target.value
+            })
+        } 
+    }
+    const handlePhone = (e) => {
+        if(e.target.value > 9999999999 || e.target.value < 1111111111) {
+            e.target.className = style.inputDatosFail
+            document.querySelector('#labelErrores').innerText = 'Please enter a valid phone'
+            setPhonePass(false)
+        }
+        else {
+            e.target.className = style.inputDatosFail
+            e.target.className = style.inputDatos
+            document.querySelector('#labelErrores').innerText = ''
+            setPhonePass(true)
+            setInfo({
+                ...info,
+                phone: e.target.value
+            })    
+        }
     }
     // useEffect(() => {
     //     // console.log(Object.values(info))
@@ -180,7 +221,7 @@ export default function () {
             document.querySelector('#buttonBeASeller').disabled = false
         }
 
-    }, [datePass, genderPass, streetPass, numberPass, postalPass, countryPass, statePass, cityPass])
+    }, [datePass, genderPass, streetPass, numberPass, postalPass, countryPass, statePass, cityPass, lastnamePass, dniPass, phonePass])
 
 
 
@@ -192,7 +233,7 @@ export default function () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass) {
+        if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass, phonePass) {
             //dispatch
         }
         else {
@@ -206,6 +247,21 @@ export default function () {
             <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
             <h1>Soy el form de alta de vendedor</h1>
             <form onSubmit={handleSubmit} className={style.sellerForm}>
+                <div>
+                    <label htmlFor="street">Lastname: </label>
+                    <input className={style.inputDatos} type="text" id="lastname" name='lastname' onChange={handleCountry} />
+                    <br />
+                </div>
+                <div>
+                    <label htmlFor="street">DNI: </label>
+                    <input className={style.inputDatos} type="number" id="dni" name='dni' onChange={handleDNI} />
+                    <br />
+                </div>
+                <div>
+                    <label htmlFor="phone">Phone: </label>
+                    <input className={style.inputDatos} type="number" id="phone" name='phone' onChange={handlePhone} />
+                    <br />
+                </div>
                 <div>
                     <label htmlFor='date'>Date of Birth: </label>
                     <div className={style.date}>
@@ -231,7 +287,7 @@ export default function () {
                 </div>
                 <div>
                     <label htmlFor="street">Street Address: </label>
-                    <input value={''} className={style.inputDatos} type="text" id="street" name='street' onChange={handleCountry} />
+                    <input className={style.inputDatos} type="text" id="street" name='street' onChange={handleCountry} />
                     <br />
                 </div>
                 <div>
@@ -240,8 +296,8 @@ export default function () {
                     <br />
                 </div>
                 <div>
-                    <label htmlFor="postalCode">Postal Code:</label>
-                    <input className={style.inputDatos} type="number" id='postalCode' name='postalCode' onChange={handlePostal} />
+                    <label htmlFor="zipcode">Zip Code:</label>
+                    <input className={style.inputDatos} type="number" id='zipcode' name='zipcode' onChange={handlePostal} />
                     <br />
                 </div>
                 <div>
