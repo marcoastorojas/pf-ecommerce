@@ -24,8 +24,8 @@ module.exports = (sequelize) => {
         phone: {
             type: DataTypes.STRING
         },
-        direction: {
-            type: DataTypes.STRING
+        number: {
+            type: DataTypes.INTEGER
         },
         gender: {
             type: DataTypes.STRING
@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING
         },
         zipcode: {
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER
         },
         country: {
             type: DataTypes.STRING
@@ -42,6 +42,12 @@ module.exports = (sequelize) => {
         city: {
             type: DataTypes.STRING
         },
+        birthday: {
+            type: DataTypes.STRING
+        },
+        province: {
+            type: DataTypes.STRING
+        }
     },
     { timestamps: false });
 };
