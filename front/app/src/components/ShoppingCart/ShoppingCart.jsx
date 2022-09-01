@@ -24,7 +24,7 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     dispatch(getTotal());
-  }, [dispatch]);
+  }, [cart.length]);
 
   const addCart = (e) => {
     dispatch(addOneFromCart(e.target.value));
@@ -142,15 +142,33 @@ export default function ShoppingCart() {
           })}
         </div>
         <div className={style.buttonsShopCart}>
-          <button className="button-all" onClick={() => deleteAll()}>
+          <button className={style.buttonEnabled} onClick={() => deleteAll()}>
             <span>REMOVE ALL</span>
           </button>
-          <button className="checkout" onClick={() => goToCheckout()}>
+          <button className={style.buttonEnabled} onClick={() => goToCheckout()}>
             <span>CHECKOUT</span>
           </button>
         </div>
         {/* <Toaster /> */}
       </div>
     );
-  else return <div className="no-data">Shooping cart is empty</div>;
+  else return (
+    <div className={style.contShoppingCart}>
+      <div className={style.headShopCart}>
+          <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
+      </div>
+      <div className={style.productsShopCart}>
+        <p>Shooping cart is empty</p>;
+      </div>
+      <div className={style.buttonsShopCart}>
+          <button className={style.buttonDisabled} disabled>
+            <span>REMOVE ALL</span>
+          </button>
+          <button className={style.buttonDisabled} disabled>
+            <span>CHECKOUT</span>
+          </button>
+        </div>
+    </div>
+
+  )
 }
