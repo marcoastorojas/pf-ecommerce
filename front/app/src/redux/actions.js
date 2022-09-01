@@ -45,6 +45,7 @@ export const DEL_FAVOURITES = "DEL_FAVOURITES";
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
+export const GET_USER_INFO_EXTRA = 'GET_USER_INFO_EXTRA';
 
 //ORDERS
 export const GET_ORDERS = 'GET_ORDERS';
@@ -524,6 +525,23 @@ export const putUserImage = (url, id) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const getInfoUserExtra = (userId, data) => {
+  return (dispatch) => {
+    axios({
+      method: 'PUT',
+      url: `${BASE_URL}/auth/users/${userId}`,
+      data: data
+    })
+    .then(response => {
+      dispatch({
+        type: GET_USER_INFO_EXTRA,
+        payload: response.data
+      })
+    })
+    .catch(err => console.log(err))
+  }
+}
 
 export const getOrders = (idUser) => {
   return (dispatch) => {

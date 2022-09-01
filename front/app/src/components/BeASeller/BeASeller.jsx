@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInfoUserExtra } from '../../redux/actions';
 import style from './BeASeller.module.css';
 
 
@@ -32,8 +34,18 @@ export default function () {
     const [ statePass, setStatePass ] = useState(false)
     const [ cityPass, setCityPass ] = useState(false)
     
-    
+    //SET INFO IF THE USER IS A SELLER            START
+    const user = useSelector(state => state.user)
+    const userInfoExtra = useSelector(state => state.userInfoExtra)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getInfoUserExtra(user.uid))
+    }, [dispatch])
 
+
+
+
+    //SET INFO IF THE USER IS A SELLER              END
     const handleYear = (e) => {
         const days = ['01', '03', '05' , '07', '08', '10', '12']
         const maxDay = days.includes(date[1])?31:30
@@ -49,7 +61,7 @@ export default function () {
         }
         if(e.target.name === 'year') {
             setDate([date[0], date[1], e.target.value])
-            if(e.target.value < 1800) e.target.value = 1800
+            // if(e.target.value < 1800) e.target.value = 1800
         }
         setInfo({
             ...info,
@@ -180,13 +192,18 @@ export default function () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log('pepe')
-        //dispatch
+        if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass) {
+            //dispatch
+        }
+        else {
+            console.log('pepe')
+        }
     }
 
     return (
         <div className={style.contBeASeller}>
             <button onClick={PRUEBA}>PRUEBA</button>
+            <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
             <h1>Soy el form de alta de vendedor</h1>
             <form onSubmit={handleSubmit} className={style.sellerForm}>
                 <div>
@@ -197,6 +214,7 @@ export default function () {
                         <input className={style.inputFecha} type="number" id='dateMonth' name='month' onChange={handleYear} placeholder='Month' />
                         <span> / </span>
                         <input className={style.inputFecha} type="number" id='dateYear' name='year' onChange={handleYear} placeholder='Year' />
+                        {/* <input value={'OLA'}></input> */}
                     </div>
                     {/* <input id='date' type="date" name='date' onChange={handleDate}/> */}
                     <br></br>
@@ -213,7 +231,7 @@ export default function () {
                 </div>
                 <div>
                     <label htmlFor="street">Street Address: </label>
-                    <input className={style.inputDatos} type="text" id="street" name='street' onChange={handleCountry} />
+                    <input value={''} className={style.inputDatos} type="text" id="street" name='street' onChange={handleCountry} />
                     <br />
                 </div>
                 <div>
