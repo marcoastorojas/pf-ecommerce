@@ -1,123 +1,122 @@
 .contBeASeller {
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  flex: 1;
 }
 .sellerForm {
-    margin: 1%;
-    padding: 2%;
-    /* border: 1px solid black; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
+  margin: 1%;
+  padding: 2%;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
 }
 
 .sellerForm > div {
-    /* border: 1px solid red; */
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    margin: 1%;
-    padding: 0;
-    /* text-align: left; */
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 1%;
+  padding: 0;
+  /* text-align: left; */
 }
 .sellerForm > div > label {
-    text-align: left;
-    margin: 0;
-    align-self: flex-start;
-    /* border: 1px solid green; */
-    width: 50%;
+  text-align: left;
+  margin: 0;
+  align-self: flex-start;
+  /* border: 1px solid green; */
+  width: 50%;
 }
 .inputDatos {
-    width: 50%;
-    outline: none;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1% 3%;
-    transition: all 0.2s ease;
+  width: 50%;
+  outline: none;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1% 3%;
+  transition: all 0.2s ease;
 }
 .inputDatosFail {
-    width: 50%;
-    outline: none;
-    border: 1px solid red;
-    border-radius: 10px;
-    padding: 1% 3%;
-    
+  width: 50%;
+  outline: none;
+  border: 1px solid red;
+  border-radius: 10px;
+  padding: 1% 3%;
 }
 .inputDatos:focus {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 .sellerForm > div > select {
-    width: 55%;
-    outline: none;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1% 3%;
-    transition: all 0.2s ease;
+  width: 55%;
+  outline: none;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1% 3%;
+  transition: all 0.2s ease;
 }
 .sellerForm > div > select:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 .sellerForm > div > select:focus {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .date {
-    width: 55%;
-    display: flex;
-    justify-content: space-evenly;
-    /* border: 1px solid black; */
+  width: 55%;
+  display: flex;
+  justify-content: space-evenly;
+  /* border: 1px solid black; */
 }
 .inputFecha {
-    width: 20%;
-    /* width: 50%; */
-    outline: none;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1% 3%;
-    transition: all 0.2s ease;
+  width: 20%;
+  /* width: 50%; */
+  outline: none;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1% 3%;
+  transition: all 0.2s ease;
 }
 .inputFechaInc {
-    width: 20%;
-    /* width: 50%; */
-    outline: none;
-    border: 1px solid red;
-    border-radius: 10px;
-    padding: 1% 3%;
-    
+  width: 20%;
+  /* width: 50%; */
+  outline: none;
+  border: 1px solid red;
+  border-radius: 10px;
+  padding: 1% 3%;
 }
 .buttonBeASeller {
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    margin: 2%;
-    padding: 2%;
-    color: white;
-    background-color: var(--background-button-color);
-    width: 20%;
-    transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin: 2%;
+  padding: 2%;
+  color: white;
+  background-color: var(--background-button-color);
+  width: 20%;
+  transition: all 0.2s ease;
 }
 .buttonBeASeller:hover {
-    box-shadow: 0 0 10px 1px var(--border-color);
-    cursor: pointer;
-    width: 50%;
+  box-shadow: 0 0 10px 1px var(--border-color);
+  cursor: pointer;
+  width: 50%;
 }
 .buttonBeASeller:active {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 .buttonBeASellerFail {
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    margin: 2%;
-    padding: 2%;
-    color: white;
-    background-color: var(--border-color);
-    width: 20%;
-    transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin: 2%;
+  padding: 2%;
+  color: white;
+  background-color: var(--border-color);
+  width: 20%;
+  transition: all 0.2s ease;
 }

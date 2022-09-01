@@ -4,7 +4,7 @@ import { delFav } from "../../redux/actions";
 import starF from "../../media/images/bxs-star.svg";
 import { NavLink } from "react-router-dom";
 
-import style from "./Wishlist.css";
+import style from "./Wishlist.module.css";
 
 export default function Wishlist() {
   const dispatch = useDispatch();

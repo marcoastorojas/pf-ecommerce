@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   width: 90%;
   height: 100%;
   padding: 2%;
@@ -55,13 +55,13 @@
 
 .imageDiv {
   /* height: 100%; */
-  
+
   margin: 2%;
   /* padding: 6%; */
-  
+
   /* border: 1px solid black; */
   border-radius: 40px;
-  
+
   /* border: 1px solid red; */
   /* width: 30%; */
   /* height: 50px; */
@@ -79,7 +79,6 @@
   display: flex;
   justify-content: center;
   overflow: hidden;
-
 }
 
 .profilePic {
