@@ -8,27 +8,34 @@ import { Link } from 'react-router-dom';
 
 
 export default function MyShopping (props) {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const user = useSelector(state => state.user)
     const shoppingList = useSelector(state => state.shoppingList)
-    const CONSOLELOGPROPS= () => {
-        // dispatch(getOrders(user.uid))    
-        console.log(props.orders)
+    // const CONSOLELOGPROPS= () => {
+    //     // dispatch(getOrders(user.uid))    
+    //     console.log(props.orders)
+    // }
+    function calTotal () {
+        let total = 0
+        props.orders?.map( e => {
+            total += (e.price * e.quantity)
+        })
+        return total
     }
 
     return (
         <div className={style.contMyShopping}>
-            <button onClick={CONSOLELOGPROPS}>CONSOLELOGPROPS</button>
+            {/* <button onClick={CONSOLELOGPROPS}>CONSOLELOGPROPS</button> */}
             <div className={style.titulo}>
                 <h3>Date: </h3>
             </div>
             <div className={style.operInfo}>
                 <div className={style.infoUser}>
-                    <h3>User Info</h3>
-                    <h3>Name:</h3>
-                    <h3>Email:</h3>
-                    <h3>Cel:</h3>
+                    <p>User Info</p>
+                    <p>Name: {user.name}</p>
+                    <p>Email: {user.email}</p>
+                    {/* <h3>Cel:</h3> */}
                 </div>
                 <div className={style.inforOper}>
                     {
@@ -75,7 +82,7 @@ export default function MyShopping (props) {
                 </div>
             </div>
             <div className={style.status}>
-                <h3>Total: </h3>
+                <h3>Total: ${calTotal()}</h3>
                 <h3>Status: </h3>
                 <button>Cancel Operation</button>
             </div>
