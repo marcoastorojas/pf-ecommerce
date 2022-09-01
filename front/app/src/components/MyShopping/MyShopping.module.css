@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .operInfo {
@@ -16,6 +17,7 @@
 .operInfo > div {
     border: 1px solid var(--border-color);
     border-radius: 10px;
+    width: 20%;
 }
 
 
