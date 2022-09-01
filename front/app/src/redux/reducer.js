@@ -38,6 +38,7 @@ import {
   GET_USER_INFO,
   PUT_USER_IMAGE,
   GET_ORDERS,
+  GET_USER_INFO_EXTRA,
 } from "./actions";
 
 const initialState = {
@@ -63,6 +64,7 @@ const initialState = {
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoPage: "",
   dataOrders: {}, //Historial de órdenes de compra del usuario page: user/orders
+  userInfoExtra: {} //Info de usuario completa
 };
 
 export const reducer = (state = initialState, action) => {
@@ -326,8 +328,13 @@ export const reducer = (state = initialState, action) => {
     case GET_ORDERS:
       return {
         ...state,
-        dataOrders: action.payload,
-      };
+        dataOrders: action.payload
+      }
+    case GET_USER_INFO_EXTRA:
+      return {
+        ...state,
+        userInfoExtra: action.payload
+      }
     default:
       return state;
   }
