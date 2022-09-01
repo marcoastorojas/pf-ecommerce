@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delFav } from "../../redux/actions";
+import { delFav, getFav } from "../../redux/actions";
 import starF from "../../media/images/bxs-star.svg";
 import { NavLink } from "react-router-dom";
 
@@ -9,6 +9,10 @@ import style from "./Wishlist.css";
 export default function Wishlist() {
   const dispatch = useDispatch();
   const favourites = useSelector((state) => state.favourites);
+
+  useEffect(() => {
+    dispatch(getFav())
+  }, [])
 
   const handleDel = (id) => {
     dispatch(delFav(id));

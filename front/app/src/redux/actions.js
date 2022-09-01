@@ -39,14 +39,22 @@ export const SEND_PAYMENT = "SEND_PAYMENT";
 export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 
 //Wishlist
+export const GET_FAVOURITES = "GET_FAVOURITES";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
 export const DEL_FAVOURITES = "DEL_FAVOURITES";
+export const CLEAR_FAVOURITES = "CLEAR_FAVOURITES";
 
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
 
-//
+//REVIEWS
+export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
+export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
+export const ADD_REVIEW = "ADD_REVIEW";
+export const DEL_REVIEW = "DEL_REVIEW";
+export const UPDATE_REVIEW = "UPDATE_REVIEW";
+export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -456,19 +464,50 @@ export const upgradeToSeller = (idUser, role) => {
   };
 };
 
-export const addFav = (product) => {
-  return {
-    type: ADD_FAVOURITES,
-    payload: product,
+export const getFav = (productId, userId) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/products/favorite/${productId}`, userId);
+
+      return dispatch({
+        type: GET_FAVOURITES,
+        payload: response.data
+      })
+    } catch(error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addFav = (product, userId) => {
+  return async function(dispatch) {
+
+    const response = await axios.post(`${BASE_URL}/products/favorite/${product.id}`, userId)
+
+    return dispatch({
+      type: ADD_FAVOURITES,
+      payload: response.data,
+    })
   };
 };
 
-export const delFav = (id) => {
-  return {
-    type: DEL_FAVOURITES,
-    payload: id,
-  };
+export const delFav = (id, userId) => {
+  return async function(dispatch) {
+
+    const response = await axios.delete(`${BASE_URL}/products/favorite/${id}`, userId);
+
+    return dispatch({
+      type: DEL_FAVOURITES,
+      payload: response.data,
+    });
+  }
 };
+
+export const clearFav = () => {
+  return {
+    type: CLEAR_FAVOURITES,
+  }
+}
 
 export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
@@ -523,3 +562,85 @@ export const putUserImage = (url, id) => {
       .catch((err) => console.log(err));
   };
 };
+
+export const getUserReviews = (productId, userId) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/products/review`, userId)
+      return dispatch({
+        type: GET_USER_REVIEWS,
+        payload: response.data
+      })
+
+    } catch(error) {
+      console.log(error);
+    }
+  }
+}
+
+export const getProductReview = (productId) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/products/review`)
+
+      return dispatch({
+        type: GET_PRODUCT_REVIEWS,
+        payload: response.data,
+      })
+
+    } catch(error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addReview = (review, productId) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post(`${BASE_URL}/products/review/${productId}`, {userId: review.id, score: review.score, description: review.description})
+
+      return dispatch({
+        type:ADD_REVIEW,
+        payload: response.data,
+      })
+    } catch(error) {
+        console.log(error)
+    }
+  }
+}
+
+export const delReview = (userId, productId) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.delete(`${BASE_URL}/products/review/${productId}`, userId)
+
+      return dispatch({
+        type: DEL_REVIEW,
+        payload: response.data,
+      })
+    } catch(error) {
+      console.log(error);
+    }
+  }
+}
+
+export const updateReview = (review, productId) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.put(`${BASE_URL}/products/review/${productId}`, {score: review.score, description: review.description, idUser: review.id});
+
+      return dispatch({
+        type:UPDATE_REVIEW,
+        payload: response.data,
+      })
+    } catch(error) {
+      console.log(error)
+    }
+  }
+}
+
+export const clearReview = () => {
+  return {
+    type: CLEAR_REVIEWS,
+  }
+}

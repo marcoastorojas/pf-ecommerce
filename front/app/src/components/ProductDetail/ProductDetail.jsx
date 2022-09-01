@@ -6,15 +6,25 @@ import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeAllFromCart } from "../../redux/actions";
+import { addToCart, removeAllFromCart, addReview, delReview, getReview, updateReview} from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState(product.images.split(" "));
   const [quantity, setQuantity] = useState(1);
-  const cart = useSelector((state) => state.cart);
 
+  const user = useSelector((state) => state.user);
+
+  //Review
+  const [reviews, setReviews] = useState([]);
+  const [review, setReview] = useState({
+    id: user.uid ? user.uid : "",
+    score:0,
+    description: "",
+  })
+
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,6 +54,36 @@ export default function ProductDetail({ product }) {
       },
     });
   };
+
+  const addRw = (e) => {
+    e.preventDefault()
+    dispatch(addReview(review, product.id))
+    console.log(review);
+    setReviews([...reviews, review]);
+    setTimeout(() => {
+      setReview({
+        id: user.uid,
+        score: 0,
+        description: "",
+      })
+    }, 2000)
+  }
+
+  const delRw = () => {
+    console.log(user.id);
+    dispatch(delReview(review.id, product.id))
+  }
+
+  const updateRw = () => {
+    dispatch(updateReview(review, product.id));
+  }
+
+  const handleChange= (e) => {
+    setReview({
+      ...review,
+      [e.target.name]: e.target.value,
+    })
+  }
 
   return (
     <div className={style.contProDet}>
@@ -124,27 +164,36 @@ export default function ProductDetail({ product }) {
         </div>
       </div>
       <div className={style.comments}>
-        <h2>Comments</h2>
-        <div className={style.commentSec}>
-          <h3>user name</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consectetur hic asperiores, quisquam ipsa expedita, quae harum
-            sint corporis beatae recusandae facere ut inventore ex
-            reiciendis quibusdam eum porro! Inventore, itaque.
-          </p>
-        </div>
-        <div className={style.commentSec}>
-          <h3>user name 2</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consectetur hic asperiores, quisquam ipsa expedita, quae harum
-            sint corporis beatae recusandae facere ut inventore ex
-            reiciendis quibusdam eum porro! Inventore, itaque.
-          </p>
-        </div>
+        <h2>Comments:</h2>
+        {reviews.length > 0 && reviews.map((rw, index) => {
+          return <div className={style.commentSec} key={index}>
+            <h3>User Name</h3>
+              <div className={style.commentData}>
+                <h4>{rw.rating}</h4>
+                <p>{rw.description}</p>
+              </div>
+            <div>
+              <button onClick={() => delRw()}>Delete</button>
+              <button onClick={() => updateRw()}>Edit</button>
+            </div>
+            </div>
+        })}
+      <div>
+        {user.uid ? <form onSubmit={(e) => addRw(e)}>
+          <div>
+            <label>Score:</label>
+            <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)}/>
+            {review.score}
+          </div>
+          <div>
+            <label>Description:</label>
+            <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)}/>
+          </div>
+          <input type="submit" value="Add comment"/>
+        </form> : null}
       </div>
-      <Toaster />
     </div>
+      <Toaster />
+  </div>
   );
 }

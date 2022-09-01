@@ -1,4 +1,4 @@
-import { getProducts } from "../../redux/actions";
+import { getProducts, getFav } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
@@ -20,6 +20,7 @@ export default function LandingProducts() {
 
   useEffect(() => {
     dispatch(getProducts(currentPage));
+    dispatch(getFav())
   }, [currentPage]);
 
   return (
