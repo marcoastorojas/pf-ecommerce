@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearCart,
-  removeAllFromCart,
-  removeOneFromCart,
-  addOneFromCart,
-  getTotal,
-} from "../../redux/actions";
+import { clearCart, removeAllFromCart, removeOneFromCart, addOneFromCart, getTotal } from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 import style from "./ShoppingCart.module.css";
 import { Link } from "react-router-dom";
@@ -129,10 +123,7 @@ export default function ShoppingCart() {
                   <button value={pt.product.id} onClick={(e) => resCart(e)}>
                     -{quantityRes}
                   </button>
-                  <button
-                    value={pt.product.id}
-                    onClick={(e) => deleteFromCart(e)}
-                  >
+                  <button value={pt.product.id} onClick={(e) => deleteFromCart(e)}>
                     {/* -{pt.amount} */}
                     Remove all
                   </button>
@@ -152,15 +143,16 @@ export default function ShoppingCart() {
         {/* <Toaster /> */}
       </div>
     );
-  else return (
-    <div className={style.contShoppingCart}>
-      <div className={style.headShopCart}>
+  else
+    return (
+      <div className={style.contShoppingCart}>
+        <div className={style.headShopCart}>
           <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
-      </div>
-      <div className={style.productsShopCart}>
-        <p>Shooping cart is empty</p>;
-      </div>
-      <div className={style.buttonsShopCart}>
+        </div>
+        <div className={style.productsShopCart}>
+          <p>Shopping cart is empty</p>;
+        </div>
+        <div className={style.buttonsShopCart}>
           <button className={style.buttonDisabled} disabled>
             <span>REMOVE ALL</span>
           </button>
@@ -168,7 +160,6 @@ export default function ShoppingCart() {
             <span>CHECKOUT</span>
           </button>
         </div>
-    </div>
-
-  )
+      </div>
+    );
 }

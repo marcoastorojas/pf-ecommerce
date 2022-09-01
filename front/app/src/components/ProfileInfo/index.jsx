@@ -20,30 +20,46 @@ export default function ProfileInfo() {
   const [profPicDivVisibility, setProfPicDivVisibility] = useState(true);
   const [newImgUrl, setNewImgUrl] = useState(null);
 
-  useEffect(() => {
-    // console.log(uid);
-    dispatch(getUserInfo(user.uid));
-  }, [dispatch, user.uid]);
-
-  const ableOrDisableForm = () => {
-    setDisabledForm(!disabledForm);
-  };
+  // FORM INFO
+  const [formInfo, setFormInfo] = useState({
+    useranme: "",
+    email: "",
+    password: "",
+    newPassword: "",
+    name: "",
+    lastname: "",
+    dni: "",
+    phone: "",
+    direction: "",
+    gender: "",
+    street: "",
+    zipcode: "",
+    country: "",
+    state: "",
+    city: "",
+    birthdayDate: "",
+  });
 
   const showProfPicDiv = () => {
     setProfPicDivVisibility(!profPicDivVisibility);
   };
 
   const changeProfilePic = () => {
-    // console.log({ newImgUrl, test: urlRegExp.test(newImgUrl) });
     urlRegExp.test(newImgUrl) && dispatch(putUserImage(newImgUrl, user.uid));
   };
 
-  // const testUser = {
-  //   name: "andi",
-  //   username: "ousiarca",
-  //   email: "a@a.com",
-  //   image: sample,
-  // };
+  const ableOrDisableForm = () => {
+    setDisabledForm(!disabledForm);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(formInfo);
+  };
+
+  useEffect(() => {
+    dispatch(getUserInfo(user.uid));
+  }, [dispatch, user.uid]);
 
   return (
     <div className={style.mainDiv}>
@@ -71,57 +87,142 @@ export default function ProfileInfo() {
             </div>
           </div>
         </div>
-        {disabledForm ? (
-          <form className={style.infoForm}>
-            {Object.entries(user).map((kv) => {
+        <form className={style.infoForm}>
+          {disabledForm ? (
+            <div className={style.formContainerDiv}>
+              <div className={style.formSectionOne}>
+                <div>
+                  <label htmlFor="username">Username</label>
+                  <br />
+                  <input id="username" type="text" placeholder={user.username} className={style.formInput} disabled />
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <br />
+                  <input id="email" type="text" placeholder={user.email} className={style.formInput} disabled />
+                </div>
+                <div>
+                  <label htmlFor="password">Password</label>
+                  <br />
+                  <input id="password" type="text" placeholder="password" className={style.formInput} disabled />
+                </div>
+                <div>
+                  <label htmlFor="newPassword">New Password</label>
+                  <br />
+                  <input id="newPassword" type="text" placeholder="newPassword" className={style.formInput} disabled />
+                </div>
+              </div>
+              <div>
+                <div>
+                  <label htmlFor="name">Name</label>
+                  <br />
+                  <input id="name" type="text" placeholder={user.name} className={style.formInput} disabled />
+                  lastname: "", dni: "", phone: "", direction: "", gender: "", street: "", zipcode: "", country: "", state: "", city: "", birthdayDate: "",
+                </div>
+                <div>
+                  <label htmlFor="lastname">Last Name</label>
+                  <br />
+                  <input id="lastname" type="text" placeholder={user.name} className={style.formInput} disabled />
+                </div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          ) : (
+            <div className={style.formContainerDiv}>
+              <div className={style.formSectionOne}>
+                <div>
+                  <label htmlFor="username">Username</label>
+                  <br />
+                  <input id="username" type="text" placeholder={user.username} className={style.formInput} />
+                </div>
+                <div>
+                  <label htmlFor="email">Email</label>
+                  <br />
+                  <input id="email" type="text" placeholder={user.email} className={style.formInput} />
+                </div>
+                <div>
+                  <label htmlFor="password">Password</label>
+                  <br />
+                  <input id="password" type="text" placeholder="password" className={style.formInput} />
+                </div>
+                <div>
+                  <label htmlFor="newPassword">New Password</label>
+                  <br />
+                  <input id="newPassword" type="text" placeholder="newPassword" className={style.formInput} />
+                </div>
+              </div>
+              <div className={style.formSectionTwo}>
+                <div>
+                  <label htmlFor="name">Name</label>
+                  <br />
+                  <input id="name" type="text" placeholder={user.name} className={style.formInput} />
+                </div>
+                <button type="submit"></button>
+              </div>
+            </div>
+          )}
+          {/* {Object.entries(user).map((kv) => {
               let key = kv[0];
+              let keyMayusLetter = key[0].toUpperCase() + key.substring(1);
               let value = kv[1];
-              if (!value || key === "uid" || key === "roleId") return <></>;
+              if (!value || key === "uid" || key === "roleId" || key === "name" || key === "email") return <></>;
               return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} value={value} disabled />
+                <div key={keyMayusLetter}>
+                  <label htmlFor={key}>{keyMayusLetter}</label>
+                  <br />
+                  <input id={key} type="text" placeholder={value} value={value} className={style.formInput} disabled />
                 </div>
               );
             })}
             {Object.entries(userInfo).map((kv) => {
               let key = kv[0];
+              let keyMayusLetter = key[0].toUpperCase() + key.substring(1);
               let value = kv[1];
               if (!value || key === "google" || key === "status") return <></>;
               return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} value={value} disabled />
+                <div key={keyMayusLetter}>
+                  <label htmlFor={key}>{keyMayusLetter}</label>
+                  <br />
+                  <input id={key} type="text" placeholder={value} value={value} className={style.formInput} disabled />
                 </div>
               );
-            })}
-          </form>
-        ) : (
-          <form className={style.infoForm}>
-            {Object.entries(user).map((kv) => {
+            })} */}
+        </form>
+        {/* {Object.entries(user).map((kv) => {
               let key = kv[0];
+              let keyMayusLetter = key[0].toUpperCase() + key.substring(1);
               let value = kv[1];
-              if (!value || key === "uid" || key === "roleId") return <></>;
+              if (!value || key === "uid" || key === "roleId" || key === "name" || key === "email") return <></>;
               return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} />
+                <div key={keyMayusLetter}>
+                  <label htmlFor={key}>{keyMayusLetter}</label>
+                  <br />
+                  <input id={key} type="text" placeholder={value} className={style.formInput} />
                 </div>
               );
             })}
             {Object.entries(userInfo).map((kv) => {
               let key = kv[0];
+              let keyMayusLetter = key[0].toUpperCase() + key.substring(1);
               let value = kv[1];
               if (!value || key === "google" || key === "status") return <></>;
               return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} />
+                <div key={keyMayusLetter}>
+                  <label htmlFor={key}>{keyMayusLetter}</label>
+                  <br />
+                  <input id={key} type="text" placeholder={value} className={style.formInput} />
                 </div>
               );
-            })}
-          </form>
-        )}
+            })} */}
       </div>
     </div>
   );

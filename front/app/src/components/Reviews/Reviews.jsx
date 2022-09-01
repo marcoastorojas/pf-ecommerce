@@ -1,11 +1,12 @@
 import React from "react";
 
+import style from "./Reviews.module.css";
+
 const fakeData = {
   user: {
     id: "User id",
     name: "User name",
-    photo:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29uJTIwcG9ydHJhaXR8ZW58MHx8MHx8&w=1000&q=80",
+    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29uJTIwcG9ydHJhaXR8ZW58MHx8MHx8&w=1000&q=80",
     country: "User country 1",
     reviews: [
       {
@@ -28,7 +29,7 @@ const fakeData = {
 
 export default function Reviews() {
   return (
-    <div>
+    <div className={style.reviewContainer}>
       Reviews
       <div>
         {fakeData.user.reviews.map((ct) => {

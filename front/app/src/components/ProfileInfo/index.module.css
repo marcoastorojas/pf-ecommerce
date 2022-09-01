@@ -113,3 +113,26 @@
 
   flex: 1;
 }
+
+.formContainerDiv {
+  display: flex;
+}
+
+.formSectionOne {
+  display: flex;
+  flex-direction: column;
+}
+
+.formSectionTwo {
+  display: flex;
+  flex-direction: column;
+}
+
+.formInput {
+  /* background-color: transparent; */
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  padding: 5px 8px;
+  margin: 5px 7px;
+}
