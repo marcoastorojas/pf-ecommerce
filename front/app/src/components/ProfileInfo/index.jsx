@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserInfo, putUserImage } from "../../redux/actions";
+import { putUserImage } from "../../redux/actions";
 
 import emptyUser from "../../media/images/empty_user_profilepic.png";
+
+import BuyerUserInfoForm from "../BuyerUserInfoForm";
+import SellerUserInfoForm from "../SellerUserInfoForm";
 
 import style from "./index.module.css";
 
@@ -17,33 +20,25 @@ export default function ProfileInfo() {
   const userInfo = useSelector((state) => state.userInfo);
 
   const [disabledForm, setDisabledForm] = useState(true);
+
   const [profPicDivVisibility, setProfPicDivVisibility] = useState(true);
   const [newImgUrl, setNewImgUrl] = useState(null);
-
-  useEffect(() => {
-    // console.log(uid);
-    dispatch(getUserInfo(user.uid));
-  }, [dispatch, user.uid]);
-
-  const ableOrDisableForm = () => {
-    setDisabledForm(!disabledForm);
-  };
 
   const showProfPicDiv = () => {
     setProfPicDivVisibility(!profPicDivVisibility);
   };
 
   const changeProfilePic = () => {
-    // console.log({ newImgUrl, test: urlRegExp.test(newImgUrl) });
-    urlRegExp.test(newImgUrl) && dispatch(putUserImage(newImgUrl, user.uid));
+    urlRegExp.test(newImgUrl) && dispatch(putUserImage(user.uid, { image: newImgUrl }));
   };
 
-  // const testUser = {
-  //   name: "andi",
-  //   username: "ousiarca",
-  //   email: "a@a.com",
-  //   image: sample,
-  // };
+  const ableOrDisableForm = () => {
+    setDisabledForm(!disabledForm);
+  };
+
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
 
   return (
     <div className={style.mainDiv}>
@@ -71,57 +66,8 @@ export default function ProfileInfo() {
             </div>
           </div>
         </div>
-        {disabledForm ? (
-          <form className={style.infoForm}>
-            {Object.entries(user).map((kv) => {
-              let key = kv[0];
-              let value = kv[1];
-              if (!value || key === "uid" || key === "roleId") return <></>;
-              return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} value={value} disabled />
-                </div>
-              );
-            })}
-            {Object.entries(userInfo).map((kv) => {
-              let key = kv[0];
-              let value = kv[1];
-              if (!value || key === "google" || key === "status") return <></>;
-              return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} value={value} disabled />
-                </div>
-              );
-            })}
-          </form>
-        ) : (
-          <form className={style.infoForm}>
-            {Object.entries(user).map((kv) => {
-              let key = kv[0];
-              let value = kv[1];
-              if (!value || key === "uid" || key === "roleId") return <></>;
-              return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} />
-                </div>
-              );
-            })}
-            {Object.entries(userInfo).map((kv) => {
-              let key = kv[0];
-              let value = kv[1];
-              if (!value || key === "google" || key === "status") return <></>;
-              return (
-                <div key={key}>
-                  <label htmlFor={key}>{key}</label>
-                  <input id={key} type="text" placeholder={value} />
-                </div>
-              );
-            })}
-          </form>
-        )}
+        {userInfo.role && userInfo.role.name === "USER_ROLE" && <BuyerUserInfoForm disabledForm={disabledForm} />}
+        {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <SellerUserInfoForm disabledForm={disabledForm} />}
       </div>
     </div>
   );

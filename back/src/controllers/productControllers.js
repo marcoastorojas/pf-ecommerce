@@ -55,7 +55,12 @@ const getProducts = async (req = request, res = response) => {
 const getProductById = async (req = request, res = response) => {
     const { id } = req.params;
 
-    Product.findByPk(id)
+    Product.findByPk(id, {
+        include: [
+            { model: Favorite },
+            { model: Review }
+        ]
+    })
         .then((data) => {
             (!data) ?
                 res.status(404).json({ error: `no hay ningun producto para el id ${id}` }) :
@@ -179,7 +184,7 @@ const deleteFavorite = async (req = request, res = response) => {
             return res.status(400).json({ message: `El usuario con el id ${userUid} no existe` })
         }
         const favorite = await Favorite.findOne({ where: { [Op.and]: [{ userUid }, { productId }] } })
-        if (!favorite) return res.status(400).json({message:"el producto no esta en la lista de favoritos del usuario"})
+        if (!favorite) return res.status(400).json({ message: "el producto no esta en la lista de favoritos del usuario" })
 
         await favorite.destroy()
         res.status(200).json({ message: "eliminado correctamente", deletedConnection: favorite })
