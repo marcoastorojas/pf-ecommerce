@@ -32,8 +32,24 @@ export default function ProfileInfo() {
     urlRegExp.test(newImgUrl) && dispatch(putUserImage(user.uid, { image: newImgUrl }));
   };
 
+  // let initialForm = {
+  //   name: "",
+  //   useranme: "",
+  //   email: "",
+  //   password: "",
+  //   newPassword: "",
+  // };
+
   const ableOrDisableForm = () => {
     setDisabledForm(!disabledForm);
+    // if (disabledForm)
+    //   initialForm = {
+    //     name: "",
+    //     useranme: "",
+    //     email: "",
+    //     password: "",
+    //     newPassword: "",
+    //   };
   };
 
   useEffect(() => {
@@ -44,9 +60,11 @@ export default function ProfileInfo() {
     <div className={style.mainDiv}>
       <div className={style.headDiv}>
         <h3>Profile information.</h3>
-        <button className={style.changeInfoButton} onClick={ableOrDisableForm}>
-          Change profile information
-        </button>
+        {userInfo.role && (
+          <button className={style.changeInfoButton} onClick={ableOrDisableForm}>
+            {disabledForm ? "Change profile information" : "Dismiss changes"}
+          </button>
+        )}
       </div>
       <div className={style.infoDiv}>
         <div className={style.imageDiv}>
@@ -61,11 +79,16 @@ export default function ProfileInfo() {
                 Change
               </button>
               <button className={style.changeImgButton} onClick={showProfPicDiv}>
-                Close
+                Cancel
               </button>
             </div>
           </div>
         </div>
+        {!userInfo.role && (
+          <div className={style.loaderContainer}>
+            <div className={style.loader}></div>
+          </div>
+        )}
         {userInfo.role && userInfo.role.name === "USER_ROLE" && <BuyerUserInfoForm disabledForm={disabledForm} />}
         {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <SellerUserInfoForm disabledForm={disabledForm} />}
       </div>

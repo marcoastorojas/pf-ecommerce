@@ -136,3 +136,28 @@
   padding: 5px 8px;
   margin: 5px 7px;
 }
+
+.loaderContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  border: 3px solid;
+  border-color: rgb(31, 31, 31) transparent transparent;
+  border-radius: 50%;
+
+  width: 40px;
+  height: 40px;
+
+  animation: spin 0.7s linear infinite;
+
+  margin: 0 100px 100px 0;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+    /* filter: hue-rotate(360deg); */
+  }
+}

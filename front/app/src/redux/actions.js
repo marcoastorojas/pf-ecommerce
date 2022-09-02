@@ -45,6 +45,7 @@ export const DEL_FAVOURITES = "DEL_FAVOURITES";
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
+export const VERIFY_CURRENT_PASSWORD = "VERIFY_CURRENT_PASSWORD";
 
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
@@ -519,6 +520,24 @@ export const putUserImage = (id, changes) => {
         dispatch({
           type: PUT_USER_IMAGE,
           payload: response.data.user.image,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const verifyCurrentPassword = (id, currentPassword) => {
+  return (dispatch) => {
+    axios({
+      method: "GET",
+      url: `${BASE_URL}/auth/password/${id}`,
+      body: { oldPassword: currentPassword },
+    })
+      .then((response) => {
+        console.log(response);
+        dispatch({
+          type: VERIFY_CURRENT_PASSWORD,
+          payload: response.data,
         });
       })
       .catch((err) => console.log(err));

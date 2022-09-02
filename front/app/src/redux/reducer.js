@@ -37,6 +37,7 @@ import {
   //USER DATA
   GET_USER_INFO,
   PUT_USER_IMAGE,
+  VERIFY_CURRENT_PASSWORD,
   GET_ORDERS,
 } from "./actions";
 
@@ -52,7 +53,8 @@ const initialState = {
   searchCategory: "",
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
-  userInfo: {},
+  userInfo: {}, //información adicional del usuario
+  verifiedPassword: null,
   signupErrors: null,
   errorsLogIn: {},
   cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
@@ -322,6 +324,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: { ...state.user, image: action.payload },
+      };
+    case VERIFY_CURRENT_PASSWORD:
+      return {
+        ...state,
+        verifiedPassword: action.payload,
       };
     case GET_ORDERS:
       return {
