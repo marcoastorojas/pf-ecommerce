@@ -19,17 +19,17 @@ function padTo2Digits(num) {
    
 
     sequelize.define('order', {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            allowNull: false,
-            primaryKey: true,
+        id: {            
+        //type: DataTypes.BIGINT(20),
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
         },
         createdAt: {
             allowNull: true,
             type: DataTypes.STRING,
             defaultValue: currentDate
-          }    
+          }
     },    
     { timestamps: false });
 };
