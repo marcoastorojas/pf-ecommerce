@@ -27,7 +27,7 @@ export default function MyShoppingContainer () {
                 Object.keys(dataOrders).length !== 0 && dataOrders?.map( e => {
                     return (
                         <div key={e.id}>
-                            <MyShopping orders={e.orderdetails}/>
+                            <MyShopping date={e.createdAt} orders={e.orderdetails}/>
                         </div>
                     )
                 })
