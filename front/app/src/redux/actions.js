@@ -567,10 +567,14 @@ export const verifyCurrentPassword = (id, currentPassword) => {
 // }
 
 export const getOrders = (idUser) => {
+  console.log(idUser)
   return (dispatch) => {
     axios({
-      method: "GET",
-      url: `${BASE_URL}/order/${idUser}`,
+      method: "POST",
+      url: `${BASE_URL}/order/`,
+      data: {
+        userId: idUser
+      }
     })
       .then((response) => {
         console.log(response.data);
