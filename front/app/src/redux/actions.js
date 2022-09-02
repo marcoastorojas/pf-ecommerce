@@ -45,7 +45,8 @@ export const DEL_FAVOURITES = "DEL_FAVOURITES";
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
-export const GET_USER_INFO_EXTRA = 'GET_USER_INFO_EXTRA';
+export const VERIFY_CURRENT_PASSWORD = "VERIFY_CURRENT_PASSWORD";
+export const GET_USER_INFO_EXTRA = "GET_USER_INFO_EXTRA";
 
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
@@ -431,7 +432,7 @@ export const sendPayment = (dataPayment) => {
 };
 
 export const upgradeToSeller = (idUser, role) => {
-  console.log('Entró a upgradeToSeller');
+  console.log("Entró a upgradeToSeller");
   return () => {
     toast.loading("Upgrading account");
     try {
@@ -450,10 +451,10 @@ export const upgradeToSeller = (idUser, role) => {
           })
         );
         toast.success("You can publish your products now");
-        window.location.reload(false)
+        window.location.reload(false);
       });
     } catch (err) {
-      console.log('Failed en upgradeToSeller');
+      console.log("Failed en upgradeToSeller");
       toast.dismiss();
       console.log(err);
       toast.error("error");
@@ -512,15 +513,15 @@ export const getUserInfo = (id) => {
 };
 
 export const putUserImage = (id, changes) => {
-  console.log('Entró en putUserImage')
+  console.log("Entró en putUserImage");
   return (dispatch) => {
     axios({
       method: "PUT",
       url: `${BASE_URL}/auth/users/${id}`,
       data: changes,
     })
-    .then((response) => {
-        console.log('Success en putUserImage')
+      .then((response) => {
+        console.log("Success en putUserImage");
         // console.log(response.data.user.image);
         dispatch({
           type: PUT_USER_IMAGE,
@@ -529,8 +530,26 @@ export const putUserImage = (id, changes) => {
       })
       .catch((err) => {
         // console.log(err);
-        console.log('Failed en putUserImage')
+        console.log("Failed en putUserImage");
+      });
+  };
+};
+
+export const verifyCurrentPassword = (id, currentPassword) => {
+  return (dispatch) => {
+    axios({
+      method: "GET",
+      url: `${BASE_URL}/auth/password/${id}`,
+      body: { oldPassword: currentPassword },
+    })
+      .then((response) => {
+        console.log(response);
+        dispatch({
+          type: VERIFY_CURRENT_PASSWORD,
+          payload: response.data,
+        });
       })
+      .catch((err) => console.log(err));
   };
 };
 
