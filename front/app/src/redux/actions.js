@@ -38,12 +38,6 @@ export const GET_TOTAL = "GET_TOTAL";
 export const SEND_PAYMENT = "SEND_PAYMENT";
 export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 
-//Wishlist
-export const GET_FAVOURITES = "GET_FAVOURITES";
-export const ADD_FAVOURITES = "ADD_FAVOURITES";
-export const DEL_FAVOURITES = "DEL_FAVOURITES";
-export const CLEAR_FAVOURITES = "CLEAR_FAVOURITES";
-
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
@@ -467,50 +461,6 @@ export const upgradeToSeller = (idUser, role) => {
   };
 };
 
-export const getFav = (productId, userId) => {
-  return async function(dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/products/favorite/${productId}`, userId);
-
-      return dispatch({
-        type: GET_FAVOURITES,
-        payload: response.data
-      })
-    } catch(error) {
-      console.log(error)
-    }
-  }
-}
-
-export const addFav = (product, userId) => {
-  return async function(dispatch) {
-
-    const response = await axios.post(`${BASE_URL}/products/favorite/${product.id}`, userId)
-
-    return dispatch({
-      type: ADD_FAVOURITES,
-      payload: response.data,
-    })
-  };
-};
-
-export const delFav = (id, userId) => {
-  return async function(dispatch) {
-
-    const response = await axios.delete(`${BASE_URL}/products/favorite/${id}`, userId);
-
-    return dispatch({
-      type: DEL_FAVOURITES,
-      payload: response.data,
-    });
-  }
-};
-
-export const clearFav = () => {
-  return {
-    type: CLEAR_FAVOURITES,
-  }
-}
 
 // export const setSuccessPaymentData = () => {
   //{type: SET_SUCCESS_PAYMENT}
