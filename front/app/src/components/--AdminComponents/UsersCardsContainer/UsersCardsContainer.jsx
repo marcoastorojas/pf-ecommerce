@@ -1,6 +1,7 @@
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getAllUsers } from "../../../redux/actions"
+import UsersCards from "../UsersCards/UsersCards"
 
 
 
@@ -13,6 +14,7 @@ import { getAllUsers } from "../../../redux/actions"
 export default function UsersCardsContainer () {
 
     const dispatch = useDispatch()
+    const allUsers = useSelector(state => state.allUsers)
     
 
     useEffect(() => {
@@ -27,6 +29,13 @@ export default function UsersCardsContainer () {
     return (
         <div>
             SOY EL USERSCARDSCONTAINER
+            {
+                allUsers?.map( e => {
+                    return(
+                        <UsersCards/>
+                    )
+                })
+            }
         </div>
     )
 }

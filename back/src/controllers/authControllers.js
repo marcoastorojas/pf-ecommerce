@@ -118,7 +118,12 @@ const renewJWT = async (req = request, res = response) => {
 
 
 const getAllUsers = async (req = request, res = response) => {
-    const users = await User.findAll({include: [{model: Status, as: 'status'}]})
+    const users = await User.findAll({
+        include: [
+            {model: Status, as: 'status'},
+            {model: Role, as: 'role'}
+        ]
+    })
     res.status(201).json({ data: users })
 
 }
