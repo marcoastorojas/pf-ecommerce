@@ -40,6 +40,9 @@ CLEAR_REVIEWS,
   VERIFY_CURRENT_PASSWORD,
   GET_ORDERS,
   GET_USER_INFO_EXTRA,
+    
+ //WISHLIST
+ GET_USER_FAVOURITES
 } from "./actions";
 
 const initialState = {
@@ -351,6 +354,13 @@ export const reducer = (state = initialState, action) => {
         reviews: [],
       }
     }
+          
+      case GET_USER_FAVOURITES: {
+          return {
+              ...state,
+              favourites: action.payload,
+          }
+      }
     default:
       return state;
   }

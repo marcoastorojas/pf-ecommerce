@@ -1,7 +1,7 @@
 //import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./index.module.css";
-import { addFav, delFav } from "../../redux/actions";
+import { addFav, delFav, getUserFav } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 
 import star from "../../media/images/bx-star.svg";
@@ -16,19 +16,30 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
   const product = { id, title, image, price, model, brand };
   
   const addFavourites = () => {
-    if(user.uid) return dispatch(addFav(product.id, user.uid));
+    if(user.uid)  {
+    dispatch(addFav(product.id, user.uid));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 500)
+   
+    }
     else return console.log("LOG IN")
   };
 
   const delFavourites = () => {
-    if(user.uid) return dispatch(delFav(user.uid, product.id));
+    if(user.uid)  {
+    dispatch(delFav(user.uid, product.id));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 500)
+    }
     else return console.log("LOG IN")
   };
 
 
   return (
     <div className={style.product_card}>
-     {favourites.find((product) => product.id === id) ? (
+     {favourites.find((pt) => pt.product.id === id) ? (
         <div>
           <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
         </div>

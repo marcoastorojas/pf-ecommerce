@@ -26,6 +26,7 @@ useEffect(() => {
     dispatch(getProducts(currentPage));
     if(user.uid) dispatch(getUserFav(user.uid))
   }, [currentPage]);
+  
 
   return (
     <main>

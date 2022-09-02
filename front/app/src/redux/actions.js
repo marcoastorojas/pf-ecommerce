@@ -658,7 +658,7 @@ export const getUserFav = (id) => {
     return async function(dispatch) {
         const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
         return dispatch({
-            type: GET_USER_REVIEWS,
+            type: GET_USER_FAVOURITES,
             payload: response.data.favorites,
         })
     }
@@ -667,7 +667,7 @@ export const getUserFav = (id) => {
 export const addFav = (productId, id) => {
     return async function(dispatch) {
     try {
-      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, id)
+      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, {userId: id})
 
       return dispatch({
         type:ADD_FAVOURITES,
