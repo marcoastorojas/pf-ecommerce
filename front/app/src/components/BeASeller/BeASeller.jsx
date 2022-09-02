@@ -20,7 +20,7 @@ export default function ({disabledForm = false}) {
         lastname: userInfoExtra?.info?.lastname || '',
         dni: userInfoExtra?.info?.dni || '',
         phone: userInfoExtra?.info?.phone || '',
-        birthday: userInfoExtra?.info?.birthday || '',
+        birthday: userInfoExtra?.info?.birthday || '--',
         gender: userInfoExtra?.info?.gender || '',
         street: userInfoExtra?.info?.street || '',
         number: userInfoExtra?.info?.number || '',
@@ -51,16 +51,16 @@ export default function ({disabledForm = false}) {
 
     //SETEO LOS DATOS INICIALES
     const initialData = {
-        lastname: userInfoExtra.info.lastname,
-        dni: userInfoExtra.info.dni,
-        birthday: userInfoExtra.info.birthday,
-        gender: userInfoExtra.info.gender,
-        street: userInfoExtra.info.street,
-        number: userInfoExtra.info.number,
-        zipcode: userInfoExtra.info.zipcode,
-        country: userInfoExtra.info.country,
-        state: userInfoExtra.info.state,
-        city: userInfoExtra.info.city
+        lastname: userInfoExtra?.info?.lastname,
+        dni: userInfoExtra?.info?.dni,
+        birthday: userInfoExtra?.info?.birthday,
+        gender: userInfoExtra?.info?.gender,
+        street: userInfoExtra?.info?.street,
+        number: userInfoExtra?.info?.number,
+        zipcode: userInfoExtra?.info?.zipcode,
+        country: userInfoExtra?.info?.country,
+        state: userInfoExtra?.info?.state,
+        city: userInfoExtra?.info?.city
     }
     useEffect(() => {
         if (Object.keys(userInfoExtra).length > 0) {
@@ -96,7 +96,7 @@ export default function ({disabledForm = false}) {
         }
         setInfo({
             ...info,
-            birthday: date.join('-')
+            birthday: [e.target.name==='day'?e.target.value:date[0],e.target.name==='month'?e.target.value:date[1],e.target.name==='year'?e.target.value:date[2]].join('-')
         })
     }
     useEffect(() => {
@@ -205,11 +205,11 @@ export default function ({disabledForm = false}) {
             e.target.className = style.inputDatos
             document.querySelector('#labelErrores').innerText = ''
             setDNIPass(true)
-            setInfo({
-                ...info,
-                dni: e.target.value
-            })
         } 
+        setInfo({
+            ...info,
+            dni: e.target.value
+        })
     }
     const handlePhone = (e) => {
         if(e.target.value > 9999999999 || e.target.value < 1111111111) {
@@ -222,11 +222,11 @@ export default function ({disabledForm = false}) {
             e.target.className = style.inputDatos
             document.querySelector('#labelErrores').innerText = ''
             setPhonePass(true)
-            setInfo({
-                ...info,
-                phone: e.target.value
-            })    
         }
+        setInfo({
+            ...info,
+            phone: e.target.value
+        })    
     }
     // useEffect(() => {
     //     // console.log(Object.values(info))
