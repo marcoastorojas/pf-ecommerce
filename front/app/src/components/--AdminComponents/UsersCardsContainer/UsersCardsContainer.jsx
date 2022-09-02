@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
+import { getAllUsers } from "../../../redux/actions"
 
 
 
@@ -15,7 +16,7 @@ export default function UsersCardsContainer () {
     
 
     useEffect(() => {
-        dispatch()
+        dispatch(getAllUsers())
     }, [])
 
 

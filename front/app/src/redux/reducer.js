@@ -42,7 +42,8 @@ CLEAR_REVIEWS,
   GET_USER_INFO_EXTRA,
     
  //WISHLIST
- GET_USER_FAVOURITES
+ GET_USER_FAVOURITES,
+ GET_ALL_USERS
 } from "./actions";
 
 const initialState = {
@@ -71,7 +72,8 @@ const initialState = {
   productReview: [],
   dataOrders: {},
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
-   userInfoExtra: {} //Info de usuario completa
+   userInfoExtra: {}, //Info de usuario completa
+  allUsers: [] //AllUsersForAdmin
 };
 
 export const reducer = (state = initialState, action) => {
@@ -360,6 +362,13 @@ export const reducer = (state = initialState, action) => {
               ...state,
               favourites: action.payload,
           }
+      }
+      //ADMIN
+      case GET_ALL_USERS: {
+        return {
+          ...state,
+          allUsers: action.payload
+        }
       }
     default:
       return state;
