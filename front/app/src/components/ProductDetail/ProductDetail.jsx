@@ -80,6 +80,7 @@ export default function ProductDetail({ product }) {
     dispatch(delReview(user.uid, product.id))
 
     setTimeout(() => {
+    setShowEdit(false)
       setReview({
         id: user.uid,
         score:0,
@@ -193,10 +194,10 @@ export default function ProductDetail({ product }) {
           if(product.id === rw.productId) return <div className={style.commentSec} key={index}>
             <h3>{user.username}</h3>
               <div className={style.commentData}>
-                <h4>{rw.score}</h4>
+                <h4>Score: {rw.score}</h4>
                 <p>{rw.description}</p>
               </div>
-            <div>
+            <div className={style.commentButtons}>
               <button onClick={() => delRw()}>Delete</button>
               {!showEdit ? <button onClick={() => setShowEdit(true)}>Edit</button>: null}
             </div>
@@ -207,31 +208,31 @@ export default function ProductDetail({ product }) {
           <div>
       {reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
                 <form onSubmit={(e) => addRw(e)}>
-                    <div>
+                    <div className={style.score}>
                         <label>Score:</label>
                     <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
                     {review.score}
                     </div>
-                    <div>
+                    <div className={style.descriptionComment}>
                         <label>Description:</label>
                         <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
                     </div>
-                    <input type="submit" value="Add comment"/>
+                        <input type="submit" value="Add comment" className={style.submitComment}/>
                 </form>
             </div> : null}
       </div>
       <div>
         {showEdit ? <form onSubmit={(e) => updateRw(e)}>
-          <div>
+          <div className={style.score}>
             <label>Score:</label>
             <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
             {review.score}
           </div>
-          <div>
+          <div className={style.descriptionComment}>
             <label>Description:</label>
             <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
           </div>
-          <input type="submit" value="Add edit"/>
+          <input type="submit" value="Add edit" className={style.submitComment}/>
         </form>: null}
       </div>
           
