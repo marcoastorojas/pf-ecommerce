@@ -9,45 +9,66 @@ import style from './BeASeller.module.css';
 
 
 
-export default function () {
+export default function ({disabledForm = false}) {
     const actualDate = new Date().toLocaleDateString('en-ca')
     const actualYear = +actualDate.split('-')[0]
     const actualMonth = +actualDate.split('-')[1]
     const actualDay = +actualDate.split('-')[2]
+    const userInfoExtra = useSelector(state => state.userInfo)
     
     const [ info, setInfo ] = useState({
-        lastname: '',
-        dni: '',
-        // dateB:'',
-        gender: '',
-        street: '',
-        // number: '',
-        zipcode: '',
-        country: '',
-        // state: '',
-        city: ''
+        lastname: userInfoExtra?.info?.lastname || '',
+        dni: userInfoExtra?.info?.dni || '',
+        phone: userInfoExtra?.info?.phone || '',
+        birthday: userInfoExtra?.info?.birthday || '',
+        gender: userInfoExtra?.info?.gender || '',
+        street: userInfoExtra?.info?.street || '',
+        number: userInfoExtra?.info?.number || '',
+        zipcode: userInfoExtra?.info?.zipcode || '',
+        country: userInfoExtra?.info?.country || '',
+        state: userInfoExtra?.info?.state ||  '',
+        city: userInfoExtra?.info?.city ||  ''
     })
-    const [ date, setDate ] = useState([99, 99, 2099])
-    const [ datePass, setDatePass ] = useState(false)
-    const [ genderPass, setGenderPass ] = useState(false)
-    const [ streetPass, setStreetPass ] = useState(false)
-    const [ numberPass, setNumberPass ] = useState(false)
-    const [ postalPass, setPostalPass ] = useState(false)
-    const [ countryPass, setCountryPass ] = useState(false)
-    const [ statePass, setStatePass ] = useState(false)
-    const [ cityPass, setCityPass ] = useState(false)
-    const [ lastnamePass, setLastnamePass ] = useState(false)
-    const [ dniPass, setDNIPass ] = useState(false)
-    const [ phonePass, setPhonePass ] = useState(false)
+    const [ date, setDate ] = useState([info.birthday?info.birthday.split('-')[0]:99, info.birthday?info.birthday.split('-')[1]:99, info.birthday?info.birthday.split('-')[2]:2099])
+    const [ datePass, setDatePass ] = useState(info.birthday?true:false)
+    const [ genderPass, setGenderPass ] = useState(info.gender?true:false)
+    const [ streetPass, setStreetPass ] = useState(info.street?true:false)
+    const [ numberPass, setNumberPass ] = useState(info.number?true:false)
+    const [ postalPass, setPostalPass ] = useState(info.zipcode?true:false)
+    const [ countryPass, setCountryPass ] = useState(info.country?true:false)
+    const [ statePass, setStatePass ] = useState(info.state?true:false)
+    const [ cityPass, setCityPass ] = useState(info.city?true:false)
+    const [ lastnamePass, setLastnamePass ] = useState(info.lastname?true:false)
+    const [ dniPass, setDNIPass ] = useState(info.dni?true:false)
+    const [ phonePass, setPhonePass ] = useState(info.phone?true:false)
 
     //SET INFO IF THE USER IS A SELLER            START
     const user = useSelector(state => state.user)
-    const userInfoExtra = useSelector(state => state.userInfo)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getUserInfo(user.uid))
     }, [dispatch])
 
+    //SETEO LOS DATOS INICIALES
+    const initialData = {
+        lastname: userInfoExtra.info.lastname,
+        dni: userInfoExtra.info.dni,
+        birthday: userInfoExtra.info.birthday,
+        gender: userInfoExtra.info.gender,
+        street: userInfoExtra.info.street,
+        number: userInfoExtra.info.number,
+        zipcode: userInfoExtra.info.zipcode,
+        country: userInfoExtra.info.country,
+        state: userInfoExtra.info.state,
+        city: userInfoExtra.info.city
+    }
+    useEffect(() => {
+        if (Object.keys(userInfoExtra).length > 0) {
+            document.querySelector('#streetNumber').innerText = userInfoExtra.info.number
+            console.log('papa')
+
+        }
+    }, [Object.keys(userInfoExtra).length])
 
 
 
@@ -73,10 +94,10 @@ export default function () {
             setDate([date[0], date[1], e.target.value])
             // if(e.target.value < 1800) e.target.value = 1800
         }
-        // setInfo({
-        //     ...info,
-        //     dateB: date.join('-')
-        // })
+        setInfo({
+            ...info,
+            birthday: date.join('-')
+        })
     }
     useEffect(() => {
         if((+actualYear - +date[2]) > 18 && +date[0] !== 99 && +date[1] !== 99) setDatePass(true)
@@ -131,10 +152,10 @@ export default function () {
     const handleNumber = (e) => {
         if(e.target.value > 99999) e.target.value = 99999
         if(e.target.value < 1) e.target.value = 1
-        // setInfo({
-        //     ...info,
-        //     number: e.target.value
-        // })
+        setInfo({
+            ...info,
+            number: e.target.value
+        })
         setNumberPass(e.target.value!==''?true:false)
     }
     //LALALALAALALLALAAA
@@ -150,12 +171,6 @@ export default function () {
     const handleCountry = (e) => {
         const regNoNumbers = /^([^0-9]*)$/
         if(regNoNumbers.test(e.target.value) && e.target.value !== '') {
-            if(e.target.name !== 'state') {
-                setInfo({
-                    ...info,
-                    [e.target.name]: e.target.value
-                })
-            }
             e.target.className = style.inputDatos
             setStreetPass(e.target.name==='street'?true:streetPass)
             setCountryPass(e.target.name==='country'?true:countryPass)
@@ -174,6 +189,10 @@ export default function () {
             e.target.className = style.inputDatosFail
             document.querySelector('#labelErrores').innerText = 'Please enter a valid name'
         } 
+        setInfo({
+            ...info,
+            [e.target.name]: e.target.value
+        })
         // console.log(regNoNumbers.test(e.target.value)?'verdadero':'falso')
     }
     const handleDNI = (e) => {
@@ -228,7 +247,7 @@ export default function () {
             document.querySelector('#buttonBeASeller').disabled = false
         }
 
-    }, [datePass, genderPass, streetPass, numberPass, postalPass, countryPass, statePass, cityPass, lastnamePass, dniPass, phonePass])
+    }, [datePass, genderPass, streetPass, numberPass, postalPass, countryPass, statePass, cityPass, lastnamePass, dniPass, phonePass, user.roleId])
 
 
 
@@ -240,7 +259,7 @@ export default function () {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass, phonePass) {
+        if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass && phonePass) {
             //dispatch
             if(user.roleId === BUYER_ROLE) {
                 dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
@@ -251,9 +270,12 @@ export default function () {
             console.log('pepe')
         }
     }
-    const PRUEBAUPROl = () => {
-        dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
-    }
+    useEffect(() => {
+        if(disabledForm) setInfo(initialData)
+    }, [disabledForm])
+    // const PRUEBAUPROl = () => {
+    //     dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
+    // }
 
     return (
         <div className={style.contBeASeller}>
@@ -263,28 +285,28 @@ export default function () {
             {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
                 <div>
-                    <label htmlFor="street">Lastname: </label>
-                    <input className={style.inputDatos} type="text" id="lastname" name='lastname' onChange={handleCountry} />
+                    <label htmlFor="lastname">Lastname: </label>
+                    <input className={style.inputDatos} value={info.lastname} type="text" id="lastname" name='lastname' onChange={handleCountry} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
-                    <label htmlFor="street">DNI: </label>
-                    <input className={style.inputDatos} type="number" id="dni" name='dni' onChange={handleDNI} />
+                    <label htmlFor="dni">DNI: </label>
+                    <input className={style.inputDatos} value={info.dni} type="number" id="dni" name='dni' onChange={handleDNI} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
                     <label htmlFor="phone">Phone: </label>
-                    <input className={style.inputDatos} type="number" id="phone" name='phone' onChange={handlePhone} />
+                    <input className={style.inputDatos} value={info.phone} type="number" id="phone" name='phone' onChange={handlePhone} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
                     <label htmlFor='date'>Date of Birth: </label>
                     <div className={style.date}>
-                        <input className={style.inputFecha} type="number" id='dateDay' name='day' onChange={handleYear} placeholder='Day' />
+                        <input className={style.inputFecha} value={info.birthday.split('-')[0]} type="number" id='dateDay' name='day' onChange={handleYear} placeholder='Day' disabled={disabledForm} />
                         <span> /    </span>
-                        <input className={style.inputFecha} type="number" id='dateMonth' name='month' onChange={handleYear} placeholder='Month' />
+                        <input className={style.inputFecha} value={info.birthday.split('-')[1]} type="number" id='dateMonth' name='month' onChange={handleYear} placeholder='Month' disabled={disabledForm} />
                         <span> / </span>
-                        <input className={style.inputFecha} type="number" id='dateYear' name='year' onChange={handleYear} placeholder='Year' />
+                        <input className={style.inputFecha} value={info.birthday.split('-')[2]} type="number" id='dateYear' name='year' onChange={handleYear} placeholder='Year' disabled={disabledForm} />
                         {/* <input value={'OLA'}></input> */}
                     </div>
                     {/* <input id='date' type="date" name='date' onChange={handleDate}/> */}
@@ -292,7 +314,7 @@ export default function () {
                 </div>
                 <div>
                     <label htmlFor='gender'>Gender: </label>
-                    <select name="gender" id="gender"  onChange={handleGender} >
+                    <select value={info.gender} name="gender" id="gender"  onChange={handleGender} disabled={disabledForm} >
                         <option hidden>Select an option</option>
                         <option>Male</option>
                         <option>Female</option>
@@ -302,36 +324,36 @@ export default function () {
                 </div>
                 <div>
                     <label htmlFor="street">Street Address: </label>
-                    <input className={style.inputDatos} type="text" id="street" name='street' onChange={handleCountry} />
+                    <input className={style.inputDatos} value={info.street} type="text" id="street" name='street' onChange={handleCountry} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
                     <label htmlFor="streetNumber">Block/Number: </label>
-                    <input className={style.inputDatos} type="number" id="streetNumber"  name='streetNumber' onChange={handleNumber} />
+                    <input className={style.inputDatos} value={info.number} type="number" id="streetNumber"  name='streetNumber' onChange={handleNumber} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
                     <label htmlFor="zipcode">Zip Code:</label>
-                    <input className={style.inputDatos} type="number" id='zipcode' name='zipcode' onChange={handlePostal} />
+                    <input className={style.inputDatos} value={info.zipcode} type="number" id='zipcode' name='zipcode' onChange={handlePostal} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
                     <label htmlFor="country">Country: </label>              
-                    <input className={style.inputDatos} type="text" id='country' name='country' onChange={handleCountry} />
+                    <input className={style.inputDatos} value={info.country} type="text" id='country' name='country' onChange={handleCountry} disabled={disabledForm} />
                     <br />
                 </div>
                 <div>
                     <label htmlFor="state">State/Province: </label>
-                    <input className={style.inputDatos} type="text" id='state' name='state' onChange={handleCountry} />  
+                    <input className={style.inputDatos} value={info.state} type="text" id='state' name='state' onChange={handleCountry} disabled={disabledForm} />  
                     <br />
                 </div>
                 <div>
                     <label htmlFor="city">City: </label>
-                    <input className={style.inputDatos} type="text" id='city' name='city' onChange={handleCountry} />  
+                    <input className={style.inputDatos} value={info.city} type="text" id='city' name='city' onChange={handleCountry} disabled={disabledForm} />  
                     <br />
                 </div>
                 <label id='labelErrores' style={{color: 'rgb(255, 0, 0)'}}></label>
-                <input id='buttonBeASeller' className={style.buttonBeASellerFail} type='submit' value={user.roleId===BUYER_ROLE?'Send':'Save'} disabled/>
+                <input id='buttonBeASeller' className={style.buttonBeASellerFail} hidden={disabledForm} type='submit' value={user.roleId===BUYER_ROLE?'Send':'Save'} disabled/>
             </form>
         </div>
     )
