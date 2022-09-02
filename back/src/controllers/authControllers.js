@@ -213,14 +213,15 @@ const modifyUser = async (req = request, res = response) => {
 
 const deleteUser = async (req = request, res = response) => {
     const { id } = req.params
+    const { newStatus } = req.body
     const user = await User.findByPk(id)
     if (!user) return res.status(400).json(`no existe un usuario con el id.: ${id}`)
 
 
-    await Status.update({ active: false }, { where: { userId: id } })
+    await Status.update({ active: newStatus }, { where: { userId: id } })
 
 
-    res.send({ userDeleted: user })
+    res.send({ userChanged: user })
 }
 const verifyPassword = async (req = request, res = response) => {
     const { id: userId } = req.params
