@@ -38,15 +38,17 @@ export const GET_TOTAL = "GET_TOTAL";
 export const SEND_PAYMENT = "SEND_PAYMENT";
 export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 
-//USER DATA
-export const GET_USER_INFO = "GET_USER_INFO";
-export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
-
-//WISHLIST
+//Wishlist
 export const GET_USER_FAVOURITES = "GET_USER_FAVOURITES";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
 export const DEL_FAVOURITES = "DEL_FAVOURITES";
 export const CLEAR_FAVOURITES = "CLEAR_FAVOURITES";
+
+//USER DATA
+export const GET_USER_INFO = "GET_USER_INFO";
+export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
+export const VERIFY_CURRENT_PASSWORD = "VERIFY_CURRENT_PASSWORD";
+export const GET_USER_INFO_EXTRA = "GET_USER_INFO_EXTRA";
 
 //REVIEWS
 export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
@@ -56,7 +58,7 @@ export const UPDATE_REVIEW = "UPDATE_REVIEW";
 export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
 
 //ORDERS
-export const GET_ORDERS = 'GET_ORDERS';
+export const GET_ORDERS = "GET_ORDERS";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -404,7 +406,7 @@ export const logIn = (user) => {
       })
       .catch((err) => {
         toast.dismiss();
-        // console.log(err.response.data.errors)
+        // console.log(err.response.data)
         dispatch({
           type: ERROR_HANDLE,
           payload: err.response.data.errors,
@@ -439,7 +441,7 @@ export const sendPayment = (dataPayment) => {
 };
 
 export const upgradeToSeller = (idUser, role) => {
-  console.log(idUser, role);
+  console.log("Entró a upgradeToSeller");
   return () => {
     toast.loading("Upgrading account");
     try {
@@ -448,6 +450,7 @@ export const upgradeToSeller = (idUser, role) => {
         url: `${BASE_URL}/auth/changerol/${idUser}`,
         data: { role: role },
       }).then((response) => {
+        console.log(response.data);
         toast.dismiss();
         localStorage.setItem(
           "user",
@@ -457,8 +460,10 @@ export const upgradeToSeller = (idUser, role) => {
           })
         );
         toast.success("You can publish your products now");
+        window.location.reload(false);
       });
     } catch (err) {
+      console.log("Failed en upgradeToSeller");
       toast.dismiss();
       console.log(err);
       toast.error("error");
@@ -468,7 +473,7 @@ export const upgradeToSeller = (idUser, role) => {
 
 
 // export const setSuccessPaymentData = () => {
-  //{type: SET_SUCCESS_PAYMENT}
+//{type: SET_SUCCESS_PAYMENT}
 // };
 
 export const cancelOperation = (idOper) => {
@@ -503,42 +508,83 @@ export const getUserInfo = (id) => {
   };
 };
 
-export const putUserImage = (url, id) => {
+export const putUserImage = (id, changes) => {
+  console.log("Entró en putUserImage");
   return (dispatch) => {
     axios({
       method: "PUT",
       url: `${BASE_URL}/auth/users/${id}`,
-      data: { image: url },
+      data: changes,
     })
       .then((response) => {
-        console.log(response.data.user.image);
+        console.log("Success en putUserImage");
+        // console.log(response.data.user.image);
         dispatch({
           type: PUT_USER_IMAGE,
           payload: response.data.user.image,
+        });
+      })
+      .catch((err) => {
+        // console.log(err);
+        console.log("Failed en putUserImage");
+      });
+  };
+};
+
+export const verifyCurrentPassword = (id, currentPassword) => {
+  return (dispatch) => {
+    axios({
+      method: "GET",
+      url: `${BASE_URL}/auth/password/${id}`,
+      body: { oldPassword: currentPassword },
+    })
+      .then((response) => {
+        console.log(response);
+        dispatch({
+          type: VERIFY_CURRENT_PASSWORD,
+          payload: response.data,
         });
       })
       .catch((err) => console.log(err));
   };
 };
 
+// export const getInfoUserExtra = (userId, data) => {
+//   return (dispatch) => {
+//     axios({
+//       method: 'PUT',
+//       url: `${BASE_URL}/auth/users/${userId}`,
+//       data: data
+//     })
+//     .then(response => {
+//       dispatch({
+//         type: GET_USER_INFO_EXTRA,
+//         payload: response.data
+//       })
+//     })
+//     .catch(err => console.log(err))
+//   }
+// }
+
 export const getOrders = (idUser) => {
   return (dispatch) => {
     axios({
-      method: 'GET',
-      url: `${BASE_URL}/order/${idUser}`
+      method: "GET",
+      url: `${BASE_URL}/order/${idUser}`,
     })
-    .then( response => {
-      console.log(response.data)
-      dispatch({
-        type: GET_ORDERS,
-        payload: response.data
+      .then((response) => {
+        console.log(response.data);
+        dispatch({
+          type: GET_ORDERS,
+          payload: response.data,
+        });
       })
-    })
-    .catch( err => {
+      .catch( err => {
       console.log(err)
     })
   }
 }
+
 
 export const getUserReviews = (id) => {
   return async function(dispatch) {

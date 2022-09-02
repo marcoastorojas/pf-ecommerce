@@ -30,14 +30,16 @@ import {
   //eslint-disable-next-line
   SET_SUCCESS_PAYMENT,
 
-  //REVIEWS
-  GET_USER_REVIEWS,
-  CLEAR_REVIEWS,
+//REVIEWS
+GET_USER_REVIEWS,
+CLEAR_REVIEWS,
 
   //USER DATA
   GET_USER_INFO,
   PUT_USER_IMAGE,
+  VERIFY_CURRENT_PASSWORD,
   GET_ORDERS,
+  GET_USER_INFO_EXTRA,
 } from "./actions";
 
 const initialState = {
@@ -52,7 +54,8 @@ const initialState = {
   searchCategory: "",
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
-  userInfo: {},
+  userInfo: {}, //información adicional del usuario
+  verifiedPassword: null,
   signupErrors: null,
   errorsLogIn: {},
   cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
@@ -65,6 +68,7 @@ const initialState = {
   productReview: [],
   dataOrders: {},
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
+   userInfoExtra: {} //Info de usuario completa
 };
 
 export const reducer = (state = initialState, action) => {
@@ -232,7 +236,7 @@ export const reducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
-          cartTotal: 0
+          cartTotal: 0,
         };
       }
     }
@@ -296,43 +300,57 @@ export const reducer = (state = initialState, action) => {
     //   };
     // }
     case GET_USER_INFO:
-      const { email, google, info: information, status } = action.payload;
-      const { name, lastname, dni, phone, direction } = information;
+      // const { email, google, info: information, status } = action.payload;
+      // const { name, lastname, dni, phone, direction } = information;
+      // return {
+      //   ...state,
+      //   userInfo: {
+      //     email,
+      //     name,
+      //     lastname,
+      //     dni,
+      //     phone,
+      //     direction,
+      //     google,
+      //     status,
+      //   },
+      // };
       return {
         ...state,
-        userInfo: {
-          email,
-          name,
-          lastname,
-          dni,
-          phone,
-          direction,
-          google,
-          status,
-        },
-      };
+        userInfo: action.payload,
+        }
     case PUT_USER_IMAGE:
       return {
         ...state,
         user: { ...state.user, image: action.payload },
       };
-    case GET_ORDERS: 
+      case VERIFY_CURRENT_PASSWORD:
+        return {
+          ...state,
+          verifiedPassword: action.payload,
+        };
+    case GET_ORDERS:
       return {
         ...state,
         dataOrders: action.payload,
       };
-      case GET_USER_REVIEWS: {
-        return {
-          ...state,
-          reviews: action.payload,
-        }
+// case GET_USER_INFO_EXTRA:
+    //   return {
+    //     ...state,
+    //     userInfoExtra: action.payload
+    //   }
+    case GET_USER_REVIEWS: {
+      return {
+        ...state,
+        reviews: action.payload,
       }
-      case CLEAR_REVIEWS: {
-        return {
-          ...state,
-          reviews: [],
-        }
+    }
+    case CLEAR_REVIEWS: {
+      return {
+        ...state,
+        reviews: [],
       }
+    }
     default:
       return state;
   }
