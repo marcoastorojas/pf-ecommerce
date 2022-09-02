@@ -33,6 +33,7 @@ export default function BuyerUserInfoForm({ disabledForm }) {
   const passwordRE = /^(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*[/*@#$%^&+=]).*$/g;
   const validNewPassword = passwordRE.test(formInfo.newPassword);
 
+  //eslint-disable-next-line
   const emailRE = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const validEmail = emailRE.test(formInfo.email);
 
@@ -91,36 +92,56 @@ export default function BuyerUserInfoForm({ disabledForm }) {
 
   const changeUserInfoHandler = (e) => {
     e.preventDefault();
-    const newChanges =
-      // = {};
-      {
-        name: formInfo.name === user.name ? user.name : formInfo.name,
-        username: formInfo.username === user.username ? user.username : formInfo.username,
-        email: formInfo.email === user.email ? user.email : formInfo.email,
-      };
 
-    // if (formInfo.name !== user.name) newChanges = { name: formInfo.name };
-    // if (formInfo.username !== user.username) newChanges = { ...newChanges, username: formInfo.username };
-    // if (formInfo.email !== user.email) newChanges = { ...newChanges, email: formInfo.email };
+    if (validName && formInfo.name.length <= 40 && formInfo.name.length >= 2 && formInfo.username.length <= 40 && formInfo.username.length >= 7 && validEmail) {
+      var newChanges = {};
+      if (formInfo.name !== user.name) newChanges = { name: formInfo.name };
+      if (formInfo.username !== user.username) newChanges = { ...newChanges, username: formInfo.username };
+      if (formInfo.email !== user.email) newChanges = { ...newChanges, email: formInfo.email };
 
-    console.log({ check: newChanges });
-    if (
-      // Object.entries(newChanges)[0] &&
-      validName &&
-      newChanges.name.length <= 40 &&
-      newChanges.name.length >= 2 &&
-      newChanges.username.length <= 40 &&
-      newChanges.username.length >= 7 &&
-      validEmail
-    ) {
-      console.log({ succes: newChanges });
-      dispatch(putNewUserInfo(user.uid, newChanges));
-      // } else if (!Object.entries(newChanges)[0]) {
-      //   toast("There's no change on your information.");
+      console.log({ check: newChanges });
+      if (Object.entries(newChanges)[0]) {
+        console.log({ success: newChanges });
+        dispatch(putNewUserInfo(user.uid, newChanges));
+      }
+    } else if (!Object.entries(newChanges)[0]) {
+      toast("There's no change on your information.");
     } else {
       console.log("invalid user data");
       toast.error("There's some invalid input data, check again.");
     }
+
+    /////////////////////////////////////////////////////// OLD CODE
+
+    //const newChanges = {
+    //       name: formInfo.name === user.name ? user.name : formInfo.name,
+    //       username: formInfo.username === user.username ? user.username : formInfo.username,
+    //       email: formInfo.email === user.email ? user.email : formInfo.email,
+    //     };
+
+    //   // if (formInfo.name !== user.name) newChanges = { name: formInfo.name };
+    //   // if (formInfo.username !== user.username) newChanges = { ...newChanges, username: formInfo.username };
+    //   // if (formInfo.email !== user.email) newChanges = { ...newChanges, email: formInfo.email };
+
+    //   console.log({ check: newChanges });
+    //   if (
+    //     // Object.entries(newChanges)[0] &&
+    //     validName &&
+    //     newChanges.name.length <= 40 &&
+    //     newChanges.name.length >= 2 &&
+    //     newChanges.username.length <= 40 &&
+    //     newChanges.username.length >= 7 &&
+    //     validEmail
+    //   ) {
+    //     console.log({ succes: newChanges });
+    //     dispatch(putNewUserInfo(user.uid, newChanges));
+    //     // } else if (!Object.entries(newChanges)[0]) {
+    //     //   toast("There's no change on your information.");
+    //   } else {
+    //     console.log("invalid user data");
+    //     toast.error("There's some invalid input data, check again.");
+    //   }
+    // };
   };
 
   useEffect(() => {

@@ -37,6 +37,7 @@ import {
   //USER DATA
   GET_USER_INFO,
   PUT_USER_IMAGE,
+  PUT_NEW_USER_INFO,
   VERIFY_CURRENT_PASSWORD,
   VERIFYING_PASSWORD,
   GET_ORDERS,
@@ -328,6 +329,32 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: { ...state.user, image: action.payload },
+      };
+    case PUT_NEW_USER_INFO:
+      const newUserData = {
+        name: action.payload.name,
+        username: action.payload.username,
+        email: action.payload.email,
+        image: action.payload.image,
+      };
+      const newUserInfo = {
+        name: action.payload.info.name,
+        lastname: action.payload.info.lastname,
+        dni: action.payload.info.dni,
+        phone: action.payload.info.phone,
+        number: action.payload.info.number,
+        gender: action.payload.info.gender,
+        street: action.payload.info.street,
+        zipcode: action.payload.info.zipcode,
+        country: action.payload.info.country,
+        state: action.payload.info.state,
+        city: action.payload.info.city,
+        birthday: action.payload.info.birthday,
+      };
+      return {
+        ...state,
+        user: { ...state.user, ...newUserData },
+        userInfo: { ...state.userInfo, info: { ...state.userInfo.info, ...newUserInfo } },
       };
     case VERIFYING_PASSWORD:
       return {

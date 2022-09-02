@@ -550,10 +550,10 @@ export const putNewUserInfo = (id, changes) => {
         console.log({ from: "putNewUserInfo", response });
         dispatch({
           type: PUT_NEW_USER_INFO,
-          payload: response.data,
+          payload: response.data.user,
         });
         toast.dismiss();
-        toast.success("Changes applied succesfully!");
+        toast.success("Changes applied succesfully!", { duration: 10000 });
       })
       .catch((err) => console.log({ from: "putNewUserInfo", err }));
   };
