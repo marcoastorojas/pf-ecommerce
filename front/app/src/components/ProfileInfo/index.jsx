@@ -97,7 +97,7 @@ export default function ProfileInfo() {
           {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <BuyerUserInfoForm disabledForm={disabledForm} />}
         </div>
         <div>
-          {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <BeASeller />}
+          {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <BeASeller disabledForm={disabledForm} />}
           {/* {userInfo.role && userInfo.role.name === "SELLER_ROLE" && <SellerUserInfoForm disabledForm={disabledForm} />} */}
         </div>
         {/* <button onClick={() => console.log(userInfo.role.name)}>PRUEBA</button> */}
