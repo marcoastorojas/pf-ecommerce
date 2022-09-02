@@ -42,9 +42,14 @@ export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
 
+//WISHLIST
+export const GET_USER_FAVOURITES = "GET_USER_FAVOURITES";
+export const ADD_FAVOURITES = "ADD_FAVOURITES";
+export const DEL_FAVOURITES = "DEL_FAVOURITES";
+export const CLEAR_FAVOURITES = "CLEAR_FAVOURITES";
+
 //REVIEWS
 export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
-export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const DEL_REVIEW = "DEL_REVIEW";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
@@ -567,17 +572,19 @@ export const addReview = (review, id) => {
 
 export const delReview = (userId, id) => {
   return async function(dispatch) {
-    try {
-      const response = await axios.delete(`${BASE_URL}/products/review/${id}`, {userId: userId})
-
-      return dispatch({
-        type: DEL_REVIEW,
-        payload: response.data,
+    await axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/review/${id}`,
+      data: { userId: userId},
+    })
+      .then((response) => {
+        dispatch({
+          type: DEL_REVIEW,
+          payload: response.data,
+        });
       })
-    } catch(error) {
-      console.log(error);
-    }
-  }
+      .catch((err) => console.log(err));
+  };
 }
 
 export const updateReview = (review, id) => {
@@ -599,4 +606,47 @@ export const clearReview = () => {
   return {
     type: CLEAR_REVIEWS,
   }
+}
+
+export const getUserFav = (id) => {
+    return async function(dispatch) {
+        const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
+        
+        return dispatch({
+            type: GET_USER_REVIEWS,
+            payload: [response.data],
+        })
+    }
+}
+
+export const addFav = (productId, id) => {
+    return async function(dispatch) {
+    try {
+      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, id)
+
+      return dispatch({
+        type:ADD_FAVOURITES,
+        payload: response.data,
+      })
+    } catch(error) {
+        console.log(error)
+    }
+  }
+}
+
+export const delFav =(userId, id) => {
+     return async function(dispatch) {
+    await axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/favorite/${id}`,
+      data: { userId: userId},
+    })
+      .then((response) => {
+        dispatch({
+          type: DEL_FAVOURITES,
+          payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 }

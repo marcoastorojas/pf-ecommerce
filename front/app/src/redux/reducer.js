@@ -32,7 +32,6 @@ import {
 
   //REVIEWS
   GET_USER_REVIEWS,
-  GET_PRODUCT_REVIEW,
   CLEAR_REVIEWS,
 
   //USER DATA
@@ -64,7 +63,8 @@ const initialState = {
   userInfoPage: "",
   reviews: [],
   productReview: [],
-  dataOrders: {}, 
+  dataOrders: {},
+  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
 };
 
 export const reducer = (state = initialState, action) => {

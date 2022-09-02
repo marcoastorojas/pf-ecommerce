@@ -32,11 +32,11 @@ export default function ProductDetail({ product }) {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
     
-    dispatch(getUserReviews(user.uid));
+    if(user.uid) dispatch(getUserReviews(user.uid));
   }, [cart]);
 
   useEffect(() => {
-    dispatch(getUserReviews(user.uid));
+    if(user.uid) dispatch(getUserReviews(user.uid));
   }, [review])
 
   const changeImage = (e) => {
