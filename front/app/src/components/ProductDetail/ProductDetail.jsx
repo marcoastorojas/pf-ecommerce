@@ -77,14 +77,15 @@ export default function ProductDetail({ product }) {
   }
 
   const delRw = () => {
-    console.log([user.uid, review.id]);
     dispatch(delReview(user.uid, product.id))
 
-    setReview({
-      id: user.uid,
-      score: 0,
-      description: "",
-    })
+    setTimeout(() => {
+      setReview({
+        id: user.uid,
+        score:0,
+        description: "",
+      })
+    }, 1500)
   }
 
   const updateRw = (e) => {
@@ -204,7 +205,7 @@ export default function ProductDetail({ product }) {
           }
           
           <div>
-      {reviews.length > 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
+      {reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
                 <form onSubmit={(e) => addRw(e)}>
                     <div>
                         <label>Score:</label>

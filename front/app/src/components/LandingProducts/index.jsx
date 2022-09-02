@@ -1,4 +1,4 @@
-import { getProducts, getFav } from "../../redux/actions";
+import { getProducts, getUserFav } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
@@ -24,7 +24,7 @@ useEffect(() => {
 
   useEffect(() => {
     dispatch(getProducts(currentPage));
-    dispatch(getFav(user.uid))
+    if(user.uid) dispatch(getUserFav(user.uid))
   }, [currentPage]);
 
   return (

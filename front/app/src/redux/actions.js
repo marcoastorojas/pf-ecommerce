@@ -657,10 +657,9 @@ export const clearReview = () => {
 export const getUserFav = (id) => {
     return async function(dispatch) {
         const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
-        
         return dispatch({
             type: GET_USER_REVIEWS,
-            payload: [response.data],
+            payload: response.data.favorites,
         })
     }
 }
