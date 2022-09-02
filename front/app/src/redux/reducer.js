@@ -30,10 +30,6 @@ import {
   //eslint-disable-next-line
   SET_SUCCESS_PAYMENT,
 
-  //WISHLIST
-  GET_FAVOURITES,
-  CLEAR_FAVOURITES,
-
   //REVIEWS
   GET_USER_REVIEWS,
   GET_PRODUCT_REVIEW,
@@ -65,7 +61,6 @@ const initialState = {
   dataPayment: localStorage.mp ? JSON.parse(localStorage.getItem("mp")) : {},
   //  dataSuccessPayment: {},
   shoppingList: {}, //Guarda todas las compras del usuario activo
-  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoPage: "",
   reviews: [],
   productReview: [],
@@ -300,38 +295,6 @@ export const reducer = (state = initialState, action) => {
     //     dataSuccessPayment: action.payload,
     //   };
     // }
-//    case ADD_FAVOURITES: {
-//      const getFavourites = state.favourites.find((product) => product.id === action.payload.id);
-//
-//      if (getFavourites) {
-//        return {
-//          ...state,
-//        };
-//      } else
-//        return {
-//          ...state,
-//          favourites: [...state.favourites, action.payload],
-//        };
-//    }
-//    case DEL_FAVOURITES: {
-//      const newFavourites = state.favourites.filter((product) => product.id !== action.payload);
-//      return {
-//        ...state,
-//        favourites: newFavourites,
-//        };
-//    }
-    case GET_FAVOURITES: {
-      return {
-        ...state,
-        favourites: action.payload,
-      }
-    }
-    case CLEAR_FAVOURITES: {
-      return {
-        ...state,
-        favourites: [],
-      }
-    }
     case GET_USER_INFO:
       const { email, google, info: information, status } = action.payload;
       const { name, lastname, dni, phone, direction } = information;
