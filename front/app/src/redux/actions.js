@@ -39,8 +39,10 @@ export const SEND_PAYMENT = "SEND_PAYMENT";
 export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 
 //Wishlist
+export const GET_USER_FAVOURITES = "GET_USER_FAVOURITES";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
 export const DEL_FAVOURITES = "DEL_FAVOURITES";
+export const CLEAR_FAVOURITES = "CLEAR_FAVOURITES";
 
 //USER DATA
 export const GET_USER_INFO = "GET_USER_INFO";
@@ -50,6 +52,13 @@ export const PUT_NEW_PASSWORD = "PUT_NEW_PASSWORD";
 export const VERIFYING_PASSWORD = "VERIFYING_PASSWORD";
 export const GET_USER_INFO_EXTRA = "GET_USER_INFO_EXTRA";
 export const PUT_NEW_USER_INFO = "PUT_NEW_USER_INFO";
+
+//REVIEWS
+export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
+export const ADD_REVIEW = "ADD_REVIEW";
+export const DEL_REVIEW = "DEL_REVIEW";
+export const UPDATE_REVIEW = "UPDATE_REVIEW";
+export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
 
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
@@ -465,19 +474,6 @@ export const upgradeToSeller = (idUser, role) => {
   };
 };
 
-export const addFav = (product) => {
-  return {
-    type: ADD_FAVOURITES,
-    payload: product,
-  };
-};
-
-export const delFav = (id) => {
-  return {
-    type: DEL_FAVOURITES,
-    payload: id,
-  };
-};
 
 // export const setSuccessPaymentData = () => {
 //{type: SET_SUCCESS_PAYMENT}
@@ -623,10 +619,14 @@ export const putNewPassword = (id, password) => {
 // }
 
 export const getOrders = (idUser) => {
+  console.log(idUser)
   return (dispatch) => {
     axios({
-      method: "GET",
-      url: `${BASE_URL}/order/${idUser}`,
+      method: "POST",
+      url: `${BASE_URL}/order/`,
+      data: {
+        userId: idUser
+      }
     })
       .then((response) => {
         console.log(response.data);
@@ -635,8 +635,119 @@ export const getOrders = (idUser) => {
           payload: response.data,
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch( err => {
+      console.log(err)
+    })
+  }
+}
+
+
+export const getUserReviews = (id) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
+      return dispatch({
+        type: GET_USER_REVIEWS,
+        payload: response.data.Reviews
+      })
+
+    } catch(error) {
+      console.log(error);
+    }
+  }
+}
+
+export const addReview = (review, id) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post(`${BASE_URL}/products/review/${id}`, {userId: review.id, score: review.score, description: review.description})
+
+      return dispatch({
+        type:ADD_REVIEW,
+        payload: response.data,
+      })
+    } catch(error) {
+        console.log(error)
+    }
+  }
+}
+
+export const delReview = (userId, id) => {
+  return async function(dispatch) {
+    await axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/review/${id}`,
+      data: { userId: userId},
+    })
+      .then((response) => {
+        dispatch({
+          type: DEL_REVIEW,
+          payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
   };
-};
+}
+
+export const updateReview = (review, id) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.put(`${BASE_URL}/products/review/${id}`, {score: review.score, description: review.description, userId: review.id});
+
+      return dispatch({
+        type:UPDATE_REVIEW,
+        payload: response.data,
+      })
+    } catch(error) {
+      console.log(error)
+    }
+  }
+}
+
+export const clearReview = () => {
+  return {
+    type: CLEAR_REVIEWS,
+  }
+}
+
+export const getUserFav = (id) => {
+    return async function(dispatch) {
+        const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
+        return dispatch({
+            type: GET_USER_FAVOURITES,
+            payload: response.data.favorites,
+        })
+    }
+}
+
+export const addFav = (productId, id) => {
+    return async function(dispatch) {
+    try {
+      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, {userId: id})
+
+      return dispatch({
+        type:ADD_FAVOURITES,
+        payload: response.data,
+      })
+    } catch(error) {
+        console.log(error)
+    }
+  }
+}
+
+export const delFav =(userId, id) => {
+     return async function(dispatch) {
+    await axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/favorite/${id}`,
+      data: { userId: userId},
+    })
+      .then((response) => {
+        dispatch({
+          type: DEL_FAVOURITES,
+          payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+}

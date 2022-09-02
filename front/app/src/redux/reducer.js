@@ -30,9 +30,9 @@ import {
   //eslint-disable-next-line
   SET_SUCCESS_PAYMENT,
 
-  //WISHLIST
-  ADD_FAVOURITES,
-  DEL_FAVOURITES,
+  //REVIEWS
+  GET_USER_REVIEWS,
+  CLEAR_REVIEWS,
 
   //USER DATA
   GET_USER_INFO,
@@ -41,7 +41,11 @@ import {
   VERIFY_CURRENT_PASSWORD,
   VERIFYING_PASSWORD,
   GET_ORDERS,
+  //eslint-disable-next-line
   GET_USER_INFO_EXTRA,
+
+  //WISHLIST
+  GET_USER_FAVOURITES,
 } from "./actions";
 
 const initialState = {
@@ -66,9 +70,11 @@ const initialState = {
   dataPayment: localStorage.mp ? JSON.parse(localStorage.getItem("mp")) : {},
   //  dataSuccessPayment: {},
   shoppingList: {}, //Guarda todas las compras del usuario activo
-  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoPage: "",
-  dataOrders: {}, //Historial de órdenes de compra del usuario page: user/orders
+  reviews: [],
+  productReview: [],
+  dataOrders: {},
+  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoExtra: {}, //Info de usuario completa
 };
 
@@ -300,27 +306,22 @@ export const reducer = (state = initialState, action) => {
     //     dataSuccessPayment: action.payload,
     //   };
     // }
-    case ADD_FAVOURITES: {
-      const getFavourites = state.favourites.find((product) => product.id === action.payload.id);
-
-      if (getFavourites) {
-        return {
-          ...state,
-        };
-      } else
-        return {
-          ...state,
-          favourites: [...state.favourites, action.payload],
-        };
-    }
-    case DEL_FAVOURITES: {
-      const newFavourites = state.favourites.filter((product) => product.id !== action.payload);
-      return {
-        ...state,
-        favourites: newFavourites,
-      };
-    }
     case GET_USER_INFO:
+      // const { email, google, info: information, status } = action.payload;
+      // const { name, lastname, dni, phone, direction } = information;
+      // return {
+      //   ...state,
+      //   userInfo: {
+      //     email,
+      //     name,
+      //     lastname,
+      //     dni,
+      //     phone,
+      //     direction,
+      //     google,
+      //     status,
+      //   },
+      // };
       return {
         ...state,
         userInfo: action.payload,
@@ -372,11 +373,31 @@ export const reducer = (state = initialState, action) => {
         ...state,
         dataOrders: action.payload,
       };
+
     // case GET_USER_INFO_EXTRA:
     //   return {
     //     ...state,
     //     userInfoExtra: action.payload
     //   }
+    case GET_USER_REVIEWS: {
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    }
+    case CLEAR_REVIEWS: {
+      return {
+        ...state,
+        reviews: [],
+      };
+    }
+
+    case GET_USER_FAVOURITES: {
+      return {
+        ...state,
+        favourites: action.payload,
+      };
+    }
     default:
       return state;
   }
