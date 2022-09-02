@@ -24,6 +24,7 @@ import SuccessPayment from "./pages/SuccessOperation";
 
 import "./App.css";
 import GenericError from "./pages/GenericError";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 // import closeButton from "./media/svg/cross_on_circle.svg";
 // import toastLogo from "./media/svg/tick_on_circle.svg";
@@ -67,6 +68,7 @@ function App() {
         {/* </Route> */}
         {/* </Route> */}
         <Route path="/error" exact element={<GenericError />} />
+        <Route path='/soyadmin' exact element={<AdminPage/>} />
       </Routes>
       <Footer />
       <Toaster />
