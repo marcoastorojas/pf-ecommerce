@@ -14,7 +14,7 @@ export default function AdminPage () {
         <div>
             SOY EL ADMIN PAGE
 
-            <UsersCardsContainer/>
+            {/* <UsersCardsContainer/> */}
         </div>
         
     )
