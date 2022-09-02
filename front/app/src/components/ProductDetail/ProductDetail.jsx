@@ -6,20 +6,38 @@ import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeAllFromCart } from "../../redux/actions";
+import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState(product.images.split(" "));
   const [quantity, setQuantity] = useState(1);
-  const cart = useSelector((state) => state.cart);
 
+  const [showEdit, setShowEdit] = useState(false);
+
+  const user = useSelector((state) => state.user);
+  const reviews = useSelector((state) => state.reviews)
+
+  //Review
+  const [review, setReview] = useState({
+    id: user.uid ? user.uid : "",
+    score:0,
+    description: "",
+  })
+
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
+    
+    if(user.uid) dispatch(getUserReviews(user.uid));
   }, [cart]);
+
+  useEffect(() => {
+    if(user.uid) dispatch(getUserReviews(user.uid));
+  }, [review])
 
   const changeImage = (e) => {
     setIndex(+e.target.id);
@@ -44,6 +62,52 @@ export default function ProductDetail({ product }) {
       },
     });
   };
+
+  const addRw = (e) => {
+    e.preventDefault()
+    dispatch(addReview(review, product.id))
+  
+    setTimeout(() => {
+      setReview({
+        id: user.uid,
+        score: 0,
+        description: "",
+      })
+    }, 1500)
+  }
+
+  const delRw = () => {
+    dispatch(delReview(user.uid, product.id))
+
+    setTimeout(() => {
+      setReview({
+        id: user.uid,
+        score:0,
+        description: "",
+      })
+    }, 1500)
+  }
+
+  const updateRw = (e) => {
+    e.preventDefault()
+    dispatch(updateReview(review, product.id));
+
+    setTimeout(() => {
+      setShowEdit(false)
+      setReview({
+        id: user.uid,
+        score:0,
+        description: "",
+      })
+    }, 1500)
+  }
+
+  const handleChange= (e) => {
+    setReview({
+      ...review,
+      [e.target.name]: e.target.value,
+    })
+  }
 
   return (
     <div className={style.contProDet}>
@@ -124,27 +188,55 @@ export default function ProductDetail({ product }) {
         </div>
       </div>
       <div className={style.comments}>
-        <h2>Comments</h2>
-        <div className={style.commentSec}>
-          <h3>user name</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consectetur hic asperiores, quisquam ipsa expedita, quae harum
-            sint corporis beatae recusandae facere ut inventore ex
-            reiciendis quibusdam eum porro! Inventore, itaque.
-          </p>
-        </div>
-        <div className={style.commentSec}>
-          <h3>user name 2</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consectetur hic asperiores, quisquam ipsa expedita, quae harum
-            sint corporis beatae recusandae facere ut inventore ex
-            reiciendis quibusdam eum porro! Inventore, itaque.
-          </p>
-        </div>
+        <h2>Comments:</h2>
+        {reviews.length > 0 && reviews.map((rw, index) => {
+          if(product.id === rw.productId) return <div className={style.commentSec} key={index}>
+            <h3>{user.username}</h3>
+              <div className={style.commentData}>
+                <h4>{rw.score}</h4>
+                <p>{rw.description}</p>
+              </div>
+            <div>
+              <button onClick={() => delRw()}>Delete</button>
+              {!showEdit ? <button onClick={() => setShowEdit(true)}>Edit</button>: null}
+            </div>
+            </div>
+           })
+          }
+          
+          <div>
+      {reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
+                <form onSubmit={(e) => addRw(e)}>
+                    <div>
+                        <label>Score:</label>
+                    <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
+                    {review.score}
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
+                    </div>
+                    <input type="submit" value="Add comment"/>
+                </form>
+            </div> : null}
+      </div>
+      <div>
+        {showEdit ? <form onSubmit={(e) => updateRw(e)}>
+          <div>
+            <label>Score:</label>
+            <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
+            {review.score}
+          </div>
+          <div>
+            <label>Description:</label>
+            <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
+          </div>
+          <input type="submit" value="Add edit"/>
+        </form>: null}
+      </div>
+          
       </div>
       <Toaster />
-    </div>
+  </div>
   );
 }
