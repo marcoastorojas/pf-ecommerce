@@ -1,4 +1,5 @@
 const { Router } = require("express")
+
 //controllers
 const {
     postProduct,
@@ -8,10 +9,10 @@ const {
     getProductById,
     deleteProduct,
     addFavorite,
-    addReview, 
+    addReview,
     deleteFavorite,
     deleteReview,
-    updateReview} = require("../controllers/productControllers")
+    updateReview } = require("../controllers/productControllers")
 
 //middlewares
 const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
@@ -19,7 +20,8 @@ const { validIdParam } = require("../middlewares/validIdParam")
 
 const { Product, Category, Subcategory } = require("../db")
 const { Op, where } = require("sequelize")
-const { validBodyPostProducts } = require("../middlewares/validBodyPostProducts")
+const { validBodyPostProducts } = require("../middlewares/validBodyPostProducts");
+const sendmail = require("../helpers/sendEmail");
 
 
 const productRoutes = Router()
@@ -75,6 +77,20 @@ productRoutes.get("/productsWithCategories", async (req, res) => {
     });
 });
 
+
+productRoutes.post("/enviaremail", (req, res) => {
+    sendmail(
+        "majewka22@gmail.com",//email o emails Destino [] o ""
+        "Verificacion Email", // asunto del email
+        "Presiona para verificar email",
+        "<h2>enviar</h2><button>enviar</button>"
+    ).then((result) => {
+        res.status(200).json({ message: "enviado" })
+    }).catch((error) => {
+        console.log(error);
+    })
+})
+
 productRoutes.post("/", validBodyPostProducts, postProduct)
 
 productRoutes.get('/:id', validIdParam, getProductById)
@@ -95,7 +111,7 @@ productRoutes.get('/subcategory/:id', validIdParam, validQueryGetProducts, getPr
 productRoutes.delete('/:id', validIdParam, deleteProduct)
 
 productRoutes.post('/favorite/:id', validIdParam, addFavorite)
-productRoutes.delete('/favorite/:id', validIdParam, deleteFavorite  )
+productRoutes.delete('/favorite/:id', validIdParam, deleteFavorite)
 
 productRoutes.post('/review/:id', validIdParam, addReview)
 productRoutes.delete('/review/:id', validIdParam, deleteReview)
