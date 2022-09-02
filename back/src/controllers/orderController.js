@@ -6,16 +6,19 @@ const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 const { request, response } = require('express');
 
 const getOrderbyUser = async (req = request, res = response) => {
-  const userId = req.params.userId  
-  
+  const userId = req.body.userId  
+  let where = {}
+  if (!!userId) {
+    where = {userId: userId}
+  }
     const order = Order.findAll({
       include: [{ model: Orderdetail, include: [Product] }],
-      where: {userId: userId}
+      where: where
     })
  
   order.then((order)=>{
     res.json(order)
-    console.log(order)
+    // console.log(order)
   })
 };
  
