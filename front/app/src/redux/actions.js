@@ -46,7 +46,10 @@ export const DEL_FAVOURITES = "DEL_FAVOURITES";
 export const GET_USER_INFO = "GET_USER_INFO";
 export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
 export const VERIFY_CURRENT_PASSWORD = "VERIFY_CURRENT_PASSWORD";
+export const PUT_NEW_PASSWORD = "PUT_NEW_PASSWORD";
+export const VERIFYING_PASSWORD = "VERIFYING_PASSWORD";
 export const GET_USER_INFO_EXTRA = "GET_USER_INFO_EXTRA";
+export const PUT_NEW_USER_INFO = "PUT_NEW_USER_INFO";
 
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
@@ -535,21 +538,70 @@ export const putUserImage = (id, changes) => {
   };
 };
 
+export const putNewUserInfo = (id, changes) => {
+  return (dispatch) => {
+    toast.loading();
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/users/${id}`,
+      data: changes,
+    })
+      .then((response) => {
+        console.log({ from: "putNewUserInfo", response });
+        dispatch({
+          type: PUT_NEW_USER_INFO,
+          payload: response.data,
+        });
+        toast.dismiss();
+        toast.success("Changes applied succesfully!");
+      })
+      .catch((err) => console.log({ from: "putNewUserInfo", err }));
+  };
+};
+
 export const verifyCurrentPassword = (id, currentPassword) => {
   return (dispatch) => {
+    dispatch({
+      type: VERIFYING_PASSWORD,
+    });
     axios({
-      method: "GET",
+      method: "PUT",
       url: `${BASE_URL}/auth/password/${id}`,
-      body: { oldPassword: currentPassword },
+      data: {
+        oldPassword: currentPassword,
+      },
     })
       .then((response) => {
         console.log(response);
         dispatch({
           type: VERIFY_CURRENT_PASSWORD,
-          payload: response.data,
+          payload: response.data.equal,
         });
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const putNewPassword = (id, password) => {
+  return (dispatch) => {
+    toast.loading();
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/users/${id}`,
+      data: {
+        password,
+      },
+    })
+      .then((response) => {
+        console.log({ from: "putNewPassword", axios: response });
+        // dispatch({
+        //   type: PUT_NEW_PASSWORD,
+        //   payload: response.data,
+        // });
+        toast.dismiss();
+        toast.success("Password modified succesfully!");
+      })
+      .catch((err) => console.log({ from: "putNewPassword", err }));
   };
 };
 

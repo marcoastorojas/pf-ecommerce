@@ -38,6 +38,7 @@ import {
   GET_USER_INFO,
   PUT_USER_IMAGE,
   VERIFY_CURRENT_PASSWORD,
+  VERIFYING_PASSWORD,
   GET_ORDERS,
   GET_USER_INFO_EXTRA,
 } from "./actions";
@@ -55,6 +56,7 @@ const initialState = {
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario
+  verifyingPassword: "no",
   verifiedPassword: null,
   signupErrors: null,
   errorsLogIn: {},
@@ -66,7 +68,7 @@ const initialState = {
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoPage: "",
   dataOrders: {}, //Historial de órdenes de compra del usuario page: user/orders
-  userInfoExtra: {} //Info de usuario completa
+  userInfoExtra: {}, //Info de usuario completa
 };
 
 export const reducer = (state = initialState, action) => {
@@ -327,16 +329,22 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, image: action.payload },
       };
+    case VERIFYING_PASSWORD:
+      return {
+        ...state,
+        verifyingPassword: "yes",
+      };
     case VERIFY_CURRENT_PASSWORD:
       return {
         ...state,
         verifiedPassword: action.payload,
+        verifyingPassword: "no",
       };
     case GET_ORDERS:
       return {
         ...state,
-        dataOrders: action.payload
-      }
+        dataOrders: action.payload,
+      };
     // case GET_USER_INFO_EXTRA:
     //   return {
     //     ...state,

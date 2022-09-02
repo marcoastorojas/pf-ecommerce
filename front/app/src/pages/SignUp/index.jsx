@@ -15,8 +15,8 @@ export default function SignUp() {
 
   //Cambiar título
   useEffect(() => {
-    document.title='Sign up'
-  }, [])
+    document.title = "Sign up";
+  }, []);
 
   //estados del form
   const [name, setName] = useState("");
@@ -124,18 +124,9 @@ export default function SignUp() {
     signupResponse.username === username && toast.success("Signup succesfull!", { duration: 6000 });
 
     signupErrors &&
-      toast.error(
-        // (t) => {
-        //  <span>
-        //   <p>{toastMessage()}</p>
-        //   <button>X</button>
-        //  </span>;
-        // },
-        toastMessage(),
-        {
-          duration: 9000,
-        }
-      );
+      toast.error(toastMessage(), {
+        duration: 9000,
+      });
     return function cleanse() {
       dispatch(cleanSignupErrors());
     };
@@ -178,7 +169,7 @@ export default function SignUp() {
             <label htmlFor="password">Password:</label>
             {passwordBlur && (password.length <= 8 || password.length > 40 || !validPassword) ? (
               <p style={{ display: "inline", color: "red", fontSize: 14 }}>
-                "*Password should contain between 8 and 40 digits, one upper and one lower case letter (a-z), a number, and a special character (/*@#$%^&+=)."
+                *Password should contain between 8 and 40 digits, one upper and one lower case letter (a-z), a number, and a special character (/*@#$%^&+=).
               </p>
             ) : null}
             <br />
