@@ -32,7 +32,15 @@ export default function UsersCardsContainer () {
             {
                 allUsers?.map( e => {
                     return(
-                        <UsersCards/>
+                        <UsersCards
+                        key={e.uid}
+                        image={e.image}
+                        email={e.email}
+                        status={e.status?.active}
+                        username={e.username}
+                        rol={e.role.name}
+                        uid={e.uid}
+                        />
                     )
                 })
             }

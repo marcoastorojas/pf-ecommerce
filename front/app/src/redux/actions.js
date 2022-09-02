@@ -723,3 +723,20 @@ export const getAllUsers = () => {
     .catch( err => console.log(err))
   }
 }
+
+export const changeOtherUserRol = (userId, newRol) => {
+  return () => {
+    axios({
+      method: 'PUT',
+      url: `${BASE_URL}/auth/changerol/${userId}`,
+      data: {
+        role: newRol
+      }
+    })
+    .then(response => {
+      console.log(response.data)
+      window.location.reload(false)
+    })
+    .catch(err => console.log(err))
+  }
+}
