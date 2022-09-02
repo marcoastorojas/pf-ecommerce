@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
         phone: {
             type: DataTypes.STRING
         },
-        direction: {
+        number: { //direction
             type: DataTypes.STRING
         },
         gender: {
@@ -42,6 +42,12 @@ module.exports = (sequelize) => {
         city: {
             type: DataTypes.STRING
         },
+        birthday: {
+            type: DataTypes.STRING
+        },
+        state: {
+            type: DataTypes.STRING
+        }
     },
     { timestamps: false });
 };
