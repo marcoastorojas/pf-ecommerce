@@ -6,7 +6,7 @@ const { getOrderbyUser } = require("../controllers/orderController")
 //middleware
 const { validIdParam } = require("../middlewares/validIdParam")
 
-orderRoutes.get("/", validIdParam, getOrderbyUser)
+orderRoutes.post("/", validIdParam, getOrderbyUser)
 
 module.exports = {
   orderRoutes,

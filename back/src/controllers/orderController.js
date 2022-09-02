@@ -7,6 +7,7 @@ const { request, response } = require('express');
 
 const getOrderbyUser = async (req = request, res = response) => {
   const userId = req.body.userId  
+  console.log(userId)
   let where = {}
   if (!!userId) {
     where = {userId: userId}
