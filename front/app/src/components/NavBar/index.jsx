@@ -12,15 +12,15 @@ import {
   setUserGoogle,
   upgradeToSeller,
 } from "../../redux/actions";
+import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
 
 import SearchBar from "../SearchBar";
+import NavBarUserMenu from "../NavBarUserMenu";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 import cartI from "../../media/images/cart.svg";
 
 import style from "./index.module.css";
-import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
-import NavBarUserMenu from "../NavBarUserMenu";
-import ShoppingCart from "../ShoppingCart/ShoppingCart";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -74,10 +74,10 @@ export default function NavBar() {
   };
 
   const HideShoppCart = () => {
-    const cartDisp = document.querySelector('#shoppCartNavBar');
-    if(cartDisp.className === style.shoppCartMenuHidden) cartDisp.className = style.shoppCartMenu
-    else cartDisp.className = style.shoppCartMenuHidden
-  }
+    const cartDisp = document.querySelector("#shoppCartNavBar");
+    if (cartDisp.className === style.shoppCartMenuHidden) cartDisp.className = style.shoppCartMenu;
+    else cartDisp.className = style.shoppCartMenuHidden;
+  };
   return (
     <header className={style.header}>
       {/* <Toaster /> */}
@@ -139,19 +139,19 @@ export default function NavBar() {
                 Sign up
               </Link>
             </div>
-          ) : <></>}
+          ) : (
+            <></>
+          )}
         </div>
         {/* <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div> */}
         <div className={style.cartDiv}>
           {/* <Link to={"/shopping-cart"} className={style.cartLink}> */}
-          <div className={style.cartDivInfo}  onClick={HideShoppCart}>
+          <div className={style.cartDivInfo} onClick={HideShoppCart}>
             <img src={cartI} alt="Cart" />
-            <span>
-              {cart.length}
-            </span>
+            <span>{cart.length}</span>
           </div>
           <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
-            <ShoppingCart/>
+            <ShoppingCart />
           </div>
           {/* </Link> */}
         </div>
