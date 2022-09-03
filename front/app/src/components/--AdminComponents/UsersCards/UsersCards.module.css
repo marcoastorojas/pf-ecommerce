@@ -2,4 +2,43 @@
     border: 1px solid black;
     margin: 2%;
     display: flex;
+    padding: 2%;
+    justify-content: space-evenly;
+}
+.divImagen {
+    width: 10%;
+}
+.divImagen > img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    aspect-ratio: 1/1;
+}
+
+.divBasicInfo {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.divRol {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.divStatus {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contUserCard > div {
+    border: 1px solid red;
+}
+.divExtraInfo {
+    display: flex;
 }
