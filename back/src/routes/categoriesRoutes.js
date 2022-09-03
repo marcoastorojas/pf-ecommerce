@@ -50,4 +50,25 @@ categoriesroutes.get("/", async (req, res) => {
     res.status(200).json({data: categories})
 })
 
+categoriesroutes.delete('/', async (req, res) =>{
+    try {
+        const {categoryId, newStatus} = req.body
+    
+        console.log(categoryId, newStatus)
+    
+        const categoria = await Category.findByPk(categoryId)
+    
+        console.log('cateogira', categoria)
+    
+        if(!categoria) return res.status(400).json({error: 'No existe una categoría con ese id'})
+        
+        if(newStatus === 'true' || newStatus === 'false') {
+            await Category.update({active: newStatus.toString()}, {where: {id: categoryId}})
+        }
+        res.send({categoryDeleted: categoria})
+    } catch (err) {
+        res.status(400).json({error: err})
+    }
+})
+
 module.exports = { categoriesroutes }
