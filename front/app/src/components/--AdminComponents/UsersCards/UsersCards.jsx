@@ -34,28 +34,38 @@ export default function UsersCards ({image, email, status, username, rol, uid}) 
 
     return(
         <div className={style.contUserCard}>
-            SOY EL USERSCARDS
-            <button onClick={() => console.log(estado)}>PRUEBA</button>
-            <button onClick={() => console.log(newStatus)}>PRUEBASTATUS</button>
-            <p>{image}</p>
-            <p>{email}</p>
-            <p>{estado==='true'?'Activo':'Inactivo'}</p>
-            <p>{username}</p>
-            <p>{rol}</p>
+            {/* <button onClick={() => console.log(estado)}>PRUEBA</button> */}
+            {/* <button onClick={() => console.log(newStatus)}>PRUEBASTATUS</button> */}
+            <div className={style.divImagen}>
+                <p>{image}</p>
+            </div>
+            <div className={style.divBasicInfo}>
+                <p>{username}</p>
+                <p>{email}</p>
+            </div>
+            <div className={style.divRol}>
+                <p>{rol}</p>
+                <select name="rol" id="rol" onChange={changeSelectedRol}>
+                    <option value='predef' hidden>{rol}</option>
+                    <option value="SELLER_ROLE">Seller</option>
+                    <option value="USER_ROLE">User</option>
+                    <option value="ADMIN_ROLE">Admin</option>
+                </select>
+                <button onClick={changeRol}>Change rol</button>
+            </div>
+            <div className={style.divStatus}>
+                <p>{estado==='true'?'Activo':'Inactivo'}</p>
+                <select name="status" id="status" onChange={changeSelectedStatus}>
+                    <option value="predef" hidden>{estado==='true'?'Activo':'Inactivo'}</option>
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                </select>
+                <button onClick={changeStatus}>{estado==='true'?'Delete':'Activate'}</button>
+            </div>
+            <div className={style.divExtraInfo}>
+
+            </div>
             {/* <p>{uid}</p> */}
-            <select name="rol" id="rol" onChange={changeSelectedRol}>
-                <option value='predef' hidden>{rol}</option>
-                <option value="SELLER_ROLE">Seller</option>
-                <option value="USER_ROLE">User</option>
-                <option value="ADMIN_ROLE">Admin</option>
-            </select>
-            <button onClick={changeRol}>Change rol</button>
-            <select name="status" id="status" onChange={changeSelectedStatus}>
-                <option value="predef" hidden>{estado==='true'?'Activo':'Inactivo'}</option>
-                <option value="true">Activo</option>
-                <option value="false">Inactivo</option>
-            </select>
-            <button onClick={changeStatus}>{estado==='true'?'Delete':'Activate'}</button>
         </div>
     )
 }
