@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { sendPayment } from "../../redux/actions";
+import { useState } from "react";
 
 export default function Checkout() {
   const dispatch = useDispatch();
@@ -14,8 +15,29 @@ export default function Checkout() {
   const dataPayment = useSelector((state) => state.dataPayment);
   const navigate = useNavigate();
 
+  const [ email, setEmail ] = useState( user.email || '')
+  const [ direction, setDirection ] = useState('')
+
+
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const handleDirection = (e) => {
+    setDirection(e.target.value)
+  }
+
+
   const handlePay = () => {
-    dispatch(sendPayment({ totalPriceProducts: cartTotal, products: cart, user_id: user.uid }));
+    console.log(direction, email)
+    dispatch(sendPayment({ 
+      totalPriceProducts: cartTotal,
+      products: cart,
+      user_id: user.uid ,
+      direction: direction,
+      email: email
+    }));
   };
 
   if (cart.length < 1) {
@@ -55,6 +77,8 @@ export default function Checkout() {
   } else
     return (
       <div>
+        <input type="text" name="email" id="email" placeholder="email" value={email} onChange={handleEmail} />
+        <input type="text" name="direction" id="direction" placeholder="direction" onChange={handleDirection} />
         <button onClick={() => handlePay()}>PAY</button>
         <Toaster />
       </div>
