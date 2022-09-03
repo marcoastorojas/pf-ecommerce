@@ -100,7 +100,8 @@ const getAllUsers = async (req = request, res = response) => {
     const users = await User.findAll({
         include: [
             { model: Status, as: 'status' },
-            { model: Role, as: 'role' }
+            { model: Role, as: 'role' },
+            { model: Person, as: 'info'}
         ]
     })
     res.status(201).json({ data: users })
