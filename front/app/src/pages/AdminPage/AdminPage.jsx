@@ -1,4 +1,4 @@
-import UsersCardsContainer from "../../components/--AdminComponents/UsersCardsContainer/UsersCardsContainer";
+// import UsersCardsContainer from "../../components/--AdminComponents/UsersCardsContainer/UsersCardsContainer";
 import AdminSideBar from "../../components/--AdminComponents/AdminSideBar";
 import AdminComponentContainer from "../../components/--AdminComponents/AdminComponentContainer";
 
@@ -9,6 +9,7 @@ export default function AdminPage() {
     <main className={style.mainDiv}>
       <AdminSideBar />
       <AdminComponentContainer />
+      {/* <UsersCardsContainer/> */}
     </main>
   );
 }

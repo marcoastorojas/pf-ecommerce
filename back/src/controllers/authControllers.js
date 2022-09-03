@@ -101,10 +101,12 @@ const getAllUsers = async (req = request, res = response) => {
     include: [
       { model: Status, as: "status" },
       { model: Role, as: "role" },
+      { model: Person, as: "info" },
     ],
   });
   res.status(201).json({ data: users });
 };
+
 const infoUser = async (req = request, res = response) => {
   const { id: uid } = req.params;
   const user = await User.findOne({
@@ -195,11 +197,15 @@ const deleteUser = async (req = request, res = response) => {
   const user = await User.findByPk(id);
   if (!user) return res.status(400).json(`no existe un usuario con el id.: ${id}`);
 
+  if (newStatus === true || newStatus === false) {
+    await Status.update({ active: newStatus }, { where: { userId: id } });
+    return res.send({ userChanged: user });
+  }
   await Status.update({ active: false }, { where: { userId: id } });
 
-  await Status.update({ active: newStatus }, { where: { userId: id } });
+  res.send({ userDeleted: user });
 
-  res.send({ userChanged: user });
+  await Status.update({ active: newStatus }, { where: { userId: id } });
 };
 
 const verifyPassword = async (req = request, res = response) => {

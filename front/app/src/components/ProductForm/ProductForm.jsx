@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubCategories, postProduct } from "../../redux/actions";
+import { getSubCategories, postProduct, getCategories } from "../../redux/actions";
 import { validate } from "../../validations/validator";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
@@ -15,7 +15,7 @@ export default function ProductForm() {
     images: "",
     description: "",
     price: 0,
-    subcategoryId: "",
+    categoryId: "",
   });
   const [errors, setErrors] = useState({});
   const [next, setNext] = useState(false);
@@ -23,10 +23,10 @@ export default function ProductForm() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const subCategories = useSelector((state) => state.subCategories);
+  const subCategories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(getSubCategories());
+    dispatch(getCategories());
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -56,7 +56,7 @@ export default function ProductForm() {
         images: "",
         description: "",
         price: 0,
-        subcategoryId: "",
+        categoryId: "",
       });
       navigate("/");
     }, 2000);
@@ -65,6 +65,7 @@ export default function ProductForm() {
   if (!next)
     return (
       <div className="contFormPro">
+        <button onClick={() => console.log(subCategories)}>CATEGORIAS</button>
         <h1>Add product to sell</h1>
         <form onSubmit={(e) => handleNext(e)} className={style.form}>
           <div>
@@ -101,7 +102,7 @@ export default function ProductForm() {
             <label>Categories:</label>
 
             <div className={style.contentSelect}>
-              <select name="subcategoryId" className={style.contentSelect} onChange={(e) => handleChange(e)}>
+              <select name="categoryId" className={style.contentSelect} onChange={(e) => handleChange(e)}>
                 <option hidden>Select a category</option>
                 {subCategories &&
                   subCategories.map((sc) => {

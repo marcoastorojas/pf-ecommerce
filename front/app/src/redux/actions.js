@@ -504,7 +504,7 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
@@ -770,7 +770,7 @@ export const getAllUsers = () => {
         type: GET_ALL_USERS,
         payload: response.data.data
       })
-      console.log(response.data.data)
+      // console.log(response.data.data)
     })
     .catch( err => console.log(err))
   }
@@ -786,7 +786,25 @@ export const changeOtherUserRol = (userId, newRol) => {
       }
     })
     .then(response => {
-      console.log(response.data)
+      // console.log(response.data)
+      window.location.reload(false)
+    })
+    .catch(err => console.log(err))
+  }
+}
+
+export const changeUserStatus = (userId, newStatus) => {
+  // console.log('ACTION', newStatus)
+  return () => {
+    axios({
+      method: 'DELETE',
+      url: `${BASE_URL}/auth/users/${userId}`,
+      data: {
+        newStatus: newStatus
+      }
+    })
+    .then(response => {
+      // console.log(response.data)
       window.location.reload(false)
     })
     .catch(err => console.log(err))
