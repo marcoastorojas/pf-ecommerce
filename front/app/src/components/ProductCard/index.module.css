@@ -19,6 +19,7 @@
   margin: 1%;
   padding: 1%;
   transition: all 0.2s ease;
+  animation: born 0.5s linear;
 }
 
 .product_card:hover {
@@ -66,4 +67,14 @@
 
 .star {
   cursor: pointer;
+}
+
+
+@keyframes born {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
