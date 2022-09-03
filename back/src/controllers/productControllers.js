@@ -1,6 +1,6 @@
 const { Op } = require("sequelize")
 
-const { Product, Subcategory, Favorite, Review, User } = require("../db")
+const { Product, Subcategory, Favorite, Review, User, Category } = require("../db")
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
@@ -14,13 +14,15 @@ const postProduct = async (req = request, res = response) => {
         const { subcategoryId } = req.body
 
         let data = { ...req.body }
-        if (subcategoryId) {
-            if (!isValidUUid(subcategoryId)) return res.status(400).json({ errors: { subcategoryId: "debe ser un uuid valido" } })
-            const subCategory = await Subcategory.findByPk(subcategoryId)
-            if (!subCategory) return res.status(400).json({ errors: { subcategoryId: "no existe una subcategoria con el id ingresado" } })
-            data.subcategoryId = subCategory.id
-            data.categoryId = subCategory.categoryId
-        }
+        const categoria = await Category.findByPk(data.categoryId)
+        console.log(categoria)
+        // if (subcategoryId) {
+        //     if (!isValidUUid(subcategoryId)) return res.status(400).json({ errors: { subcategoryId: "debe ser un uuid valido" } })
+        //     const subCategory = await Subcategory.findByPk(subcategoryId)
+        //     if (!subCategory) return res.status(400).json({ errors: { subcategoryId: "no existe una subcategoria con el id ingresado" } })
+        //     data.subcategoryId = subCategory.id
+        //     data.categoryId = subCategory.categoryId
+        // }
 
         const newProduct = await Product.create(data)
         res.status(201).json(newProduct)
