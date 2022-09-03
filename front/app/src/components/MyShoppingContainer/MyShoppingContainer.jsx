@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../../redux/actions';
+import { ADMIN_ROLE } from '../../validations/usersTypes';
 import MyShopping from "../MyShopping/MyShopping";
 import style from './MyShoppingContainer.module.css';
 
@@ -16,7 +17,12 @@ export default function MyShoppingContainer () {
     //     }
     useEffect(() => {
         // console.log('pepe')
-        dispatch(getOrders(user.uid))
+        if(user.roleId === ADMIN_ROLE) {
+            dispatch(getOrders())
+        }
+        else {
+            dispatch(getOrders(user.uid))
+        }
     }, [dispatch])
 
     return (
