@@ -32,43 +32,53 @@ export default function MyShopping (props) {
             </div>
             <div className={style.operInfo}>
                 <div className={style.infoUser}>
-                    <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" />
-                    <p>Username: {props.buyer.username}</p>
-                    <p>Email: {props.buyer.email}</p>
+                    <div className={style.divImg}>
+                        <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" />
+                    </div>
+                    <div className={style.infoBuyer}>
+                        <p>Username: {props.buyer.username}</p>
+                        <p>Email: {props.buyer.email}</p>
+                    </div>
                     {/* <h3>Cel:</h3> */}
                 </div>
                 <div className={style.inforOper}>
+                    <div className={style.SuccProd}>
+                        <h4 className={style.titleProd}>Product</h4><h4>Quantity</h4> <h4>Price</h4> <h4>SubTotal</h4>
+                    </div>
                     {
                         props.orders?.map( e => {
                             return (
-                                <div key={e.id} className={style.contMiniOrder}>
-                                    <div className={style.orderProductTitle}>
-                                        <p className={style.titleProduct}>{e.product.title}</p>
-                                    </div>
-                                    <div className={style.modelNbrand}>
-                                        <p>M: {e.product.model}</p>
-                                        <p>B: {e.product.brand}</p>
-                                    </div>
-                                    <div className={style.priceXquanXtotal}>
-                                        <div>
-                                            <p>Price</p>
-                                            <p>${e.price}</p>
-                                        </div>
-                                        <div>
-                                            <p>Quantity</p>
-                                            <p>x{e.quantity}</p>
-                                        </div>
-                                        <div>
-                                            <p>Total</p>
-                                            <p>${e.quantity * e.price}</p>
-                                        </div>
-                                    </div>
-                                    <div className={style.prodButton}>
-                                        <Link to={`/product/${e.product.id}`} className={style.link}>
-                                            <button className={style.buttonLinkMS}>Go to product...</button>
-                                        </Link>
-                                    </div>
-                                </div>
+                                <Link to= {`/product/${e.id}`} key={e.id} className={style.SuccProd}>
+                                        <span className={style.titleProd}>{e.product.title}</span><span>{e.quantity}</span><span>${Number(e.price).toLocaleString()}</span><span>${Number(e.price * e.quantity).toLocaleString()}</span>
+                                </Link>
+                                // <div key={e.id} className={style.contMiniOrder}>
+                                //     <div className={style.orderProductTitle}>
+                                //         <p className={style.titleProduct}>{e.product.title}</p>
+                                //     </div>
+                                //     <div className={style.modelNbrand}>
+                                //         <p>M: {e.product.model}</p>
+                                //         <p>B: {e.product.brand}</p>
+                                //     </div>
+                                //     <div className={style.priceXquanXtotal}>
+                                //         <div>
+                                //             <p>Price</p>
+                                //             <p>${e.price}</p>
+                                //         </div>
+                                //         <div>
+                                //             <p>Quantity</p>
+                                //             <p>x{e.quantity}</p>
+                                //         </div>
+                                //         <div>
+                                //             <p>Total</p>
+                                //             <p>${e.quantity * e.price}</p>
+                                //         </div>
+                                //     </div>
+                                //     <div className={style.prodButton}>
+                                //         <Link to={`/product/${e.product.id}`} className={style.link}>
+                                //             <button className={style.buttonLinkMS}>Go to product...</button>
+                                //         </Link>
+                                //     </div>
+                                // </div>
                             )
                         })
                     }
@@ -82,9 +92,9 @@ export default function MyShopping (props) {
                 </div>
             </div>
             <div className={style.status}>
-                <h3>Total: ${calTotal()}</h3>
                 <h3>Status: </h3>
-                <button>Cancel Operation</button>
+                <h3>Total: ${calTotal()}</h3>
+                {/* <button>Cancel Operation</button> */}
             </div>
         </div>
     )

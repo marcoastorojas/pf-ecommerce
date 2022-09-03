@@ -35,7 +35,7 @@ export default function NavBar() {
   // const errorRedux = useSelector((state) => state.errorsLogIn);
 
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getCategories(true));
   }, [dispatch]);
 
   const [showCategories, setShowCategories] = useState(false);
