@@ -6,7 +6,7 @@ import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
+import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview, getProductId} from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
@@ -37,6 +37,7 @@ export default function ProductDetail({ product }) {
 
   useEffect(() => {
     if(user.uid) dispatch(getUserReviews(user.uid));
+    dispatch(getProductId(product.id));
   }, [review])
 
   const changeImage = (e) => {
@@ -190,9 +191,10 @@ export default function ProductDetail({ product }) {
       </div>
       <div className={style.comments}>
         <h2>Comments:</h2>
-        {reviews.length > 0 && reviews.map((rw, index) => {
-          if(product.id === rw.productId) return <div className={style.commentSec} key={index}>
-            <h3>{user.username}</h3>
+        {product.Reviews.length > 0 && product.Reviews.map((rw, index) => {
+          if(rw.user.uid === user.uid) {
+          return <div className={style.commentSec} key={index}>
+            <h3>{rw.user.username}</h3>
               <div className={style.commentData}>
                 <h4>Score: {rw.score}</h4>
                 <p>{rw.description}</p>
@@ -202,11 +204,18 @@ export default function ProductDetail({ product }) {
               {!showEdit ? <button onClick={() => setShowEdit(true)}>Edit</button>: null}
             </div>
             </div>
+            } else return <div className={style.commentSec} key={index}>
+             <h3>{rw.user.username}</h3>
+              <div className={style.commentData}>
+                <h4>Score: {rw.score}</h4>
+                <p>{rw.description}</p>
+              </div>
+            </div>
            })
           }
           
           <div>
-      {reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
+      {user.uid && reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
                 <form onSubmit={(e) => addRw(e)}>
                     <div className={style.score}>
                         <label>Score:</label>

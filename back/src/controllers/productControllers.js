@@ -58,7 +58,7 @@ const getProductById = async (req = request, res = response) => {
     Product.findByPk(id, {
         include: [
             { model: Favorite },
-            { model: Review }
+            { model: Review , attributes: ["id", "score", "description"], include: User }
         ]
     })
         .then((data) => {
