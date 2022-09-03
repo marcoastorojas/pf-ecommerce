@@ -30,16 +30,23 @@ import {
   //eslint-disable-next-line
   SET_SUCCESS_PAYMENT,
 
-  //WISHLIST
-  ADD_FAVOURITES,
-  DEL_FAVOURITES,
+  //REVIEWS
+  GET_USER_REVIEWS,
+  CLEAR_REVIEWS,
 
   //USER DATA
   GET_USER_INFO,
   PUT_USER_IMAGE,
+  PUT_NEW_USER_INFO,
   VERIFY_CURRENT_PASSWORD,
+  VERIFYING_PASSWORD,
   GET_ORDERS,
+  //eslint-disable-next-line
   GET_USER_INFO_EXTRA,
+    
+ //WISHLIST
+ GET_USER_FAVOURITES,
+ GET_ALL_USERS
 } from "./actions";
 
 const initialState = {
@@ -55,6 +62,7 @@ const initialState = {
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario
+  verifyingPassword: "no",
   verifiedPassword: null,
   signupErrors: null,
   errorsLogIn: {},
@@ -63,10 +71,13 @@ const initialState = {
   dataPayment: localStorage.mp ? JSON.parse(localStorage.getItem("mp")) : {},
   //  dataSuccessPayment: {},
   shoppingList: {}, //Guarda todas las compras del usuario activo
-  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoPage: "",
-  dataOrders: {}, //Historial de órdenes de compra del usuario page: user/orders
-  userInfoExtra: {} //Info de usuario completa
+  reviews: [],
+  productReview: [],
+  dataOrders: {},
+  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
+   userInfoExtra: {}, //Info de usuario completa
+  allUsers: [] //AllUsersForAdmin
 };
 
 export const reducer = (state = initialState, action) => {
@@ -297,27 +308,22 @@ export const reducer = (state = initialState, action) => {
     //     dataSuccessPayment: action.payload,
     //   };
     // }
-    case ADD_FAVOURITES: {
-      const getFavourites = state.favourites.find((product) => product.id === action.payload.id);
-
-      if (getFavourites) {
-        return {
-          ...state,
-        };
-      } else
-        return {
-          ...state,
-          favourites: [...state.favourites, action.payload],
-        };
-    }
-    case DEL_FAVOURITES: {
-      const newFavourites = state.favourites.filter((product) => product.id !== action.payload);
-      return {
-        ...state,
-        favourites: newFavourites,
-      };
-    }
     case GET_USER_INFO:
+      // const { email, google, info: information, status } = action.payload;
+      // const { name, lastname, dni, phone, direction } = information;
+      // return {
+      //   ...state,
+      //   userInfo: {
+      //     email,
+      //     name,
+      //     lastname,
+      //     dni,
+      //     phone,
+      //     direction,
+      //     google,
+      //     status,
+      //   },
+      // };
       return {
         ...state,
         userInfo: action.payload,
@@ -327,21 +333,80 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: { ...state.user, image: action.payload },
       };
+    case PUT_NEW_USER_INFO:
+      const newUserData = {
+        name: action.payload.name,
+        username: action.payload.username,
+        email: action.payload.email,
+        image: action.payload.image,
+      };
+      const newUserInfo = {
+        name: action.payload.info.name,
+        lastname: action.payload.info.lastname,
+        dni: action.payload.info.dni,
+        phone: action.payload.info.phone,
+        number: action.payload.info.number,
+        gender: action.payload.info.gender,
+        street: action.payload.info.street,
+        zipcode: action.payload.info.zipcode,
+        country: action.payload.info.country,
+        state: action.payload.info.state,
+        city: action.payload.info.city,
+        birthday: action.payload.info.birthday,
+      };
+      return {
+        ...state,
+        user: { ...state.user, ...newUserData },
+        userInfo: { ...state.userInfo, info: { ...state.userInfo.info, ...newUserInfo } },
+      };
+    case VERIFYING_PASSWORD:
+      return {
+        ...state,
+        verifyingPassword: "yes",
+      };
     case VERIFY_CURRENT_PASSWORD:
       return {
         ...state,
         verifiedPassword: action.payload,
+        verifyingPassword: "no",
       };
     case GET_ORDERS:
       return {
         ...state,
-        dataOrders: action.payload
-      }
+        dataOrders: action.payload,
+      };
+
     // case GET_USER_INFO_EXTRA:
     //   return {
     //     ...state,
     //     userInfoExtra: action.payload
     //   }
+    case GET_USER_REVIEWS: {
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    }
+    case CLEAR_REVIEWS: {
+      return {
+        ...state,
+        reviews: [],
+      };
+    }
+
+    case GET_USER_FAVOURITES: {
+      return {
+        ...state,
+        favourites: action.payload,
+      };
+    }
+      //ADMIN
+      case GET_ALL_USERS: {
+        return {
+          ...state,
+          allUsers: action.payload
+        }
+      }
     default:
       return state;
   }

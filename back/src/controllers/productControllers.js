@@ -2,7 +2,11 @@ const { request, response } = require('express');
 
 const { Op } = require("sequelize")
 
+<<<<<<< HEAD
 const { Product, Subcategory, Favorite, Review, User, Price, Role } = require("../db")
+=======
+const { Product, Subcategory, Favorite, Review, User, Category } = require("../db")
+>>>>>>> ea4c7891a2f5a0ce664991d73b850e7e867feffb
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
@@ -11,6 +15,7 @@ const { isValidUUid } = require("../middlewares/isValidUuid");
 
 const postProduct = async (req = request, res = response) => {
     try {
+<<<<<<< HEAD
         const { subcategoryId, userId } = req.body
         const user = await User.findByPk(userId)
         const role = await Role.findByPk(user.roleId)
@@ -24,6 +29,20 @@ const postProduct = async (req = request, res = response) => {
             if (!subCategory) return res.status(400).json({ errors: { subcategoryId: "no existe una subcategoria con el id ingresado" } })
             data.subcategoryId = subCategory.id
             data.categoryId = subCategory.categoryId
+=======
+
+        const { categoryId } = req.body
+
+        let data = { ...req.body }
+        // const categoria = await Category.findByPk(data.categoryId)
+        // console.log(categoria)
+        if (categoryId) {
+            if (!isValidUUid(categoryId)) return res.status(400).json({ errors: { categoryId: "debe ser un uuid valido" } })
+            const category = await Category.findByPk(categoryId)
+            if (!category) return res.status(400).json({ errors: { categoryId: "no existe una subcategoria con el id ingresado" } })
+            // data.subcategoryId = subCategory.id
+            // data.categoryId = subCategory.categoryId
+>>>>>>> ea4c7891a2f5a0ce664991d73b850e7e867feffb
         }
         const newProduct = await Product.create(
             {
@@ -72,7 +91,7 @@ const getProductById = async (req = request, res = response) => {
     Product.findByPk(id, {
         include: [
             { model: Favorite },
-            { model: Review }
+            { model: Review , attributes: ["id", "score", "description"], include: User }
         ]
     })
         .then((data) => {

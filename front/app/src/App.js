@@ -13,44 +13,29 @@ import LogIn from "./pages/LogIn";
 import CheckoutPay from "./pages/CheckoutPay/CheckoutPay";
 import Cart from "./pages/Cart/Cart.jsx";
 import InfoUserB from "./pages/infoUserB";
+import SuccessPayment from "./pages/SuccessOperation";
+import GenericError from "./pages/GenericError";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
-// import SellerRoutes from "./validations/SellerRoutes";
-// import BuyerRoutes from "./validations/BuyerRoutes";
 import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
 import Footer from "./components/Footer";
+import AdminNavBar from "./components/--AdminComponents/AdminNavBar";
 
-import SuccessPayment from "./pages/SuccessOperation";
-
-import "./App.css";
-import GenericError from "./pages/GenericError";
+// import SellerRoutes from "./validations/SellerRoutes";
+// import BuyerRoutes from "./validations/BuyerRoutes";
 
 // import closeButton from "./media/svg/cross_on_circle.svg";
 // import toastLogo from "./media/svg/tick_on_circle.svg";
 
+import "./App.css";
+
 function App() {
   const { pathname } = useLocation();
 
-  // useEffect(() => {
-  //   toast.custom(
-  //     (t) => (
-  //       <div className="toast-border">
-  //         <img className="toast-logo" src={toastLogo} alt="toast logo" />
-  //         <div className="toast-text">
-  //           <span>This toast has been succesfully arranged!</span>
-  //         </div>
-  //         <button className="toast-button" onClick={() => toast.dismiss(t.id)}>
-  //           <img className="button-image" src={closeButton} alt="close button" />
-  //         </button>
-  //       </div>
-  //     ),
-  //     { duration: 10000 }
-  //   );
-  // });
-
   return (
     <div className="App">
-      {pathname === "/signup" || pathname === "/login" ? <SimpleNavBar /> : <NavBar />}
+      {pathname === "/signup" || pathname === "/login" ? <SimpleNavBar /> : pathname === "/soyadmin" ? <AdminNavBar /> : <NavBar />}
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/signup" exact element={<SignUp />} />
@@ -60,13 +45,14 @@ function App() {
         <Route path="/shopping-cart" exact element={<Cart />} />
         {/* <Route element={<BuyerRoutes />}> */}
         <Route path="/checkout/" exact element={<CheckoutPay />} />
-        <Route path='/successpay' element={<SuccessPayment/>} />
+        <Route path="/successpay" element={<SuccessPayment />} />
         <Route path="/user/:component" exact element={<InfoUserB />} />
         {/* <Route element={<SellerRoutes />}> */}
         <Route path="/product/create" exact element={<Form />} />
         {/* </Route> */}
         {/* </Route> */}
         <Route path="/error" exact element={<GenericError />} />
+        <Route path="/soyadmin" exact element={<AdminPage />} />
       </Routes>
       <Footer />
       <Toaster />

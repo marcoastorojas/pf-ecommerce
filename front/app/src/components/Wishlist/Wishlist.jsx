@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delFav } from "../../redux/actions";
+import { delFav, getUserFav } from "../../redux/actions";
 import starF from "../../media/images/bxs-star.svg";
 import { NavLink } from "react-router-dom";
 
@@ -9,37 +9,44 @@ import style from "./Wishlist.module.css";
 export default function Wishlist() {
   const dispatch = useDispatch();
   const favourites = useSelector((state) => state.favourites);
+  const user = useSelector((state) => state.user);
+  
+   useEffect(() => {
+    if(user.uid) dispatch(getUserFav(user.uid))
+  }, [])
+  
+  const handleDel =(id) => {
+     if(user.uid)  {
+     dispatch(delFav(user.uid, id));
+        setTimeout(() => {
+          dispatch(getUserFav(user.uid))
+      }, 500)
+     }
+     else return console.log("LOG IN")
+  }
 
-  const handleDel = (id) => {
-    dispatch(delFav(id));
-  };
-
-  if (favourites.length > 1)
+ if (favourites.length > 0)
     return (
-      <div className={style.column}>
-        {favourites.map((product) => {
+      <div className={style.containerFather}>
+        {favourites.map((pt) => {
+         const images = pt.product.images.split(" ");
           return (
-            <div key={product.id} className={style.card}>
-              <div className={style.starData}>
-                <img src={starF} alt="fill-star" onClick={() => handleDel(product.id)} />
+            <div key={pt.product.id} className={style.product_card}>
+              <div>
+                <img src={starF} alt="fill-star" onClick={() => handleDel(pt.product.id)} className={style.star} />
               </div>
-              <div className={style.info}>
-                <NavLink to={`/product/${product.id}`}>
-                  <img src={product.image} alt={product.title} />
-                  <h2 className={style.title}>{product.title}</h2>
-                  <span className={style.data}>
-                    <h3>{product.brand}</h3>
-                    <h3>{product.model}</h3>
-                  </span>
-                  <span className={style.price}>
-                    <h2>{product.price}</h2>
-                  </span>
+
+                <NavLink to={`/product/${pt.product.id}`} className={style.product_data}>
+                  <img src={images[0]} alt={pt.product.title} />
+                  <h3 className={style.product_title}>{pt.product.title}</h3>
+                  <h3 className={style.product_price}>
+                    ${Number(pt.product.price).toLocaleString()}
+                  </h3>
                 </NavLink>
-              </div>
             </div>
           );
         })}
       </div>
     );
-  else return <div>WISHLIST IS EMPTY</div>;
+  else return <div className={style.empty}>WISHLIST IS EMPTY</div>;
 }

@@ -1,4 +1,4 @@
-import { getProducts } from "../../redux/actions";
+import { getProducts, getUserFav } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
@@ -9,18 +9,24 @@ export default function LandingProducts() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.allProducts);
   const favourites = useSelector((state) => state.favourites);
+  const user = useSelector((state) => state.user);
+
   const sliceArrayProduct = products.data?.slice(0, 20);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [dataPerPage, setdataPerPage] = useState(20);
 
-  useEffect(() => {
+
+useEffect(() => {
     localStorage.setItem("fav", JSON.stringify(favourites));
   }, [favourites]);
 
+
   useEffect(() => {
     dispatch(getProducts(currentPage));
+    if(user.uid) dispatch(getUserFav(user.uid))
   }, [currentPage]);
+  
 
   return (
     <main>

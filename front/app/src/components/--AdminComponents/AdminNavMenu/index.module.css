@@ -1,0 +1,21 @@
+.mainDiv {
+  border: 1px solid red;
+  /* border-radius: 10px; */
+  margin: 0 0 0 16px;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.profilePicDiv {
+  width: 90px;
+}
+
+.profilePic {
+  border-radius: 8px;
+
+  width: 90px;
+}
