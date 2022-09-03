@@ -155,6 +155,7 @@ export default function NavBar() {
           </div>
           {/* </Link> */}
         </div>
+        {false && <button onClick={() => navigate("/soyadmin")}>Go to Admin screen.</button>}
       </div>
     </header>
   );
