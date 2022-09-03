@@ -1,8 +1,8 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getAllUsers } from "../../../redux/actions"
-import UsersCards from "../UsersCards/UsersCards"
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsers } from "../../../redux/actions";
+import UsersCards from "../UsersCards/UsersCards";
+import style from './UsersCardsContainer.module.css';
 
 
 
@@ -27,8 +27,9 @@ export default function UsersCardsContainer () {
 
 
     return (
-        <div>
+        <div className={style.contUsersCardsContainer}>
             SOY EL USERSCARDSCONTAINER
+            <button onClick={() => console.log(allUsers)}>PRUEBADATOS</button>
             {
                 allUsers?.map( e => {
                     return(
@@ -40,6 +41,7 @@ export default function UsersCardsContainer () {
                         username={e.username}
                         rol={e.role.name}
                         uid={e.uid}
+                        info={e.info}
                         />
                     )
                 })
