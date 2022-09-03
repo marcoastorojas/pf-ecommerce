@@ -185,10 +185,13 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   };
 };
 
-export const getCategories = () => {
+export const getCategories = (onlyActive) => {
+  let url = new URL(`${BASE_URL}/categories`)
+  if (onlyActive) url.searchParams.append('onlyActive', 'true')
+  // else url.searchParams.append('onlyActive', 'false')
   return (dispatch) => {
     axios
-      .get(`${BASE_URL}/categories`)
+      .get(url.href)
       .then((response) => {
         // console.log({ from: "action creator getCategories" });
         dispatch({

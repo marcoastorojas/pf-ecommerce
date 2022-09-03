@@ -1,5 +1,6 @@
 .mainContainer {
   display: flex;
   flex: 1;
+  width: 80%;
   /* background-color: red; */
 }

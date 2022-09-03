@@ -12,6 +12,8 @@
   position: relative;
   height: 35vh;
   width: 84vw;
+  animation: born 1s linear;
+  /* z-index: -1; */
 }
 
 .section-one {
@@ -139,4 +141,20 @@
   cursor: pointer;
 
   padding: 0px;
+}
+
+@keyframes born {
+  0% {
+    transform: translateY(-200%);
+    /* transform: translateZ(100%); */
+    z-index: -1
+  }
+  99% {
+    z-index: -1;
+  }
+  100% {
+    transform: translateY(0%);
+    /* transform: translateZ(0%); */
+    z-index: 0;
+  }
 }
