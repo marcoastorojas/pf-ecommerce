@@ -6,7 +6,7 @@ import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
+import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview, getProductId} from "../../redux/actions";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
@@ -37,6 +37,7 @@ export default function ProductDetail({ product }) {
 
   useEffect(() => {
     if(user.uid) dispatch(getUserReviews(user.uid));
+    dispatch(getProductId(product.id));
   }, [review])
 
   const changeImage = (e) => {
@@ -80,6 +81,7 @@ export default function ProductDetail({ product }) {
     dispatch(delReview(user.uid, product.id))
 
     setTimeout(() => {
+    setShowEdit(false)
       setReview({
         id: user.uid,
         score:0,
@@ -189,49 +191,57 @@ export default function ProductDetail({ product }) {
       </div>
       <div className={style.comments}>
         <h2>Comments:</h2>
-        {reviews.length > 0 && reviews.map((rw, index) => {
-          if(product.id === rw.productId) return <div className={style.commentSec} key={index}>
-            <h3>{user.username}</h3>
+        {product.Reviews.length > 0 && product.Reviews.map((rw, index) => {
+          if(rw.user.uid === user.uid) {
+          return <div className={style.commentSec} key={index}>
+            <h3>{rw.user.username}</h3>
               <div className={style.commentData}>
-                <h4>{rw.score}</h4>
+                <h4>Score: {rw.score}</h4>
                 <p>{rw.description}</p>
               </div>
-            <div>
+            <div className={style.commentButtons}>
               <button onClick={() => delRw()}>Delete</button>
               {!showEdit ? <button onClick={() => setShowEdit(true)}>Edit</button>: null}
             </div>
+            </div>
+            } else return <div className={style.commentSec} key={index}>
+             <h3>{rw.user.username}</h3>
+              <div className={style.commentData}>
+                <h4>Score: {rw.score}</h4>
+                <p>{rw.description}</p>
+              </div>
             </div>
            })
           }
           
           <div>
-      {reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
+      {user.uid && reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
                 <form onSubmit={(e) => addRw(e)}>
-                    <div>
+                    <div className={style.score}>
                         <label>Score:</label>
                     <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
                     {review.score}
                     </div>
-                    <div>
+                    <div className={style.descriptionComment}>
                         <label>Description:</label>
                         <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
                     </div>
-                    <input type="submit" value="Add comment"/>
+                        <input type="submit" value="Add comment" className={style.submitComment}/>
                 </form>
             </div> : null}
       </div>
       <div>
         {showEdit ? <form onSubmit={(e) => updateRw(e)}>
-          <div>
+          <div className={style.score}>
             <label>Score:</label>
             <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
             {review.score}
           </div>
-          <div>
+          <div className={style.descriptionComment}>
             <label>Description:</label>
             <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
           </div>
-          <input type="submit" value="Add edit"/>
+          <input type="submit" value="Add edit" className={style.submitComment}/>
         </form>: null}
       </div>
           

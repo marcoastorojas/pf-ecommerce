@@ -27,30 +27,26 @@ export default function Wishlist() {
 
  if (favourites.length > 0)
     return (
-      <div className={style.column}>
+      <div className={style.containerFather}>
         {favourites.map((pt) => {
+         const images = pt.product.images.split(" ");
           return (
-            <div key={pt.product.id} className={style.card}>
-              <div className={style.starData}>
-                <img src={starF} alt="fill-star" onClick={() => handleDel(pt.product.id)} />
+            <div key={pt.product.id} className={style.product_card}>
+              <div>
+                <img src={starF} alt="fill-star" onClick={() => handleDel(pt.product.id)} className={style.star} />
               </div>
-              <div className={style.info}>
-                <NavLink to={`/product/${pt.product.id}`}>
-                  <img src={pt.product.image} alt={pt.product.title} />
-                  <h2 className={style.title}>{pt.product.title}</h2>
-                  <span className={style.data}>
-                    <h3>{pt.product.brand}</h3>
-                    <h3>{pt.product.model}</h3>
-                  </span>
-                  <span className={style.price}>
-                    <h2>{pt.product.price}</h2>
-                  </span>
+
+                <NavLink to={`/product/${pt.product.id}`} className={style.product_data}>
+                  <img src={images[0]} alt={pt.product.title} />
+                  <h3 className={style.product_title}>{pt.product.title}</h3>
+                  <h3 className={style.product_price}>
+                    ${Number(pt.product.price).toLocaleString()}
+                  </h3>
                 </NavLink>
-              </div>
             </div>
           );
         })}
       </div>
     );
-  else return <div>WISHLIST IS EMPTY</div>;
+  else return <div className={style.empty}>WISHLIST IS EMPTY</div>;
 }
