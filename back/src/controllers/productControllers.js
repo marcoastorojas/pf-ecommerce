@@ -1,19 +1,23 @@
+const { request, response } = require('express');
+
 const { Op } = require("sequelize")
 
-const { Product, Subcategory, Favorite, Review, User } = require("../db")
+const { Product, Subcategory, Favorite, Review, User, Price, Role } = require("../db")
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
 
-const { request, response } = require('express');
 const { isValidUUid } = require("../middlewares/isValidUuid");
 
 const postProduct = async (req = request, res = response) => {
     try {
-
-        const { subcategoryId } = req.body
-
-        let data = { ...req.body }
+        const { subcategoryId, userId } = req.body
+        const user = await User.findByPk(userId)
+        const role = await Role.findByPk(user.roleId)
+        if (!user || (role.name !== "SELLER_ROLE" && role.name !== "ADMIN_ROLE") ) {
+            return res.status(401).json({ message: "el usuario no es vendedor",user,role })
+        }
+        let { price, ...data } = req.body
         if (subcategoryId) {
             if (!isValidUUid(subcategoryId)) return res.status(400).json({ errors: { subcategoryId: "debe ser un uuid valido" } })
             const subCategory = await Subcategory.findByPk(subcategoryId)
@@ -21,12 +25,22 @@ const postProduct = async (req = request, res = response) => {
             data.subcategoryId = subCategory.id
             data.categoryId = subCategory.categoryId
         }
-
-        const newProduct = await Product.create(data)
+        const newProduct = await Product.create(
+            {
+                ...data,
+                price: {
+                    originalprice: price
+                }
+            },
+            {
+                include: [
+                    { model: Price },
+                ]
+            }
+        )
         res.status(201).json(newProduct)
-
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(400).json({ error: error.message })
     }
 }
 

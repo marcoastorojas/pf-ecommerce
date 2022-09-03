@@ -3,7 +3,7 @@ const { Op } = require("sequelize")
 const bcrypt = require("bcrypt")
 
 
-const { User, Role, Person, Status, Review, Favorite, Product } = require("../db")
+const { User, Role, Person, Status, Review, Favorite, Product, Order } = require("../db")
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
 const { isValidEmail } = require("../helpers/isValidEmail");
@@ -130,7 +130,9 @@ const infoUser = async (req = request, res = response) => {
             { model: Person, as: "info" },
             { model: Status, as: "status" },
             { model: Role, as: "role" },
+            { model: Order },
             { model: Review },
+            { model: Product },
             { model: Favorite, attributes: ["id"], include: Product }
         ]
     })

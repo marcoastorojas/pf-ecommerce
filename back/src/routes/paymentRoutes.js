@@ -7,7 +7,8 @@ const PaymentInstance = new PaymentController(new PaymentService())
 
 const { Order, Orderdetail, Product, User } = require("../db")
 //controllers
-const { postOrder } = require("../controllers/paymentModelController")
+const { postOrder } = require("../controllers/paymentModelController");
+const Price = require("../models/Price");
 
 paymentRoutes.post("/", function (req, res, next) {
   let arr = [];
