@@ -2,11 +2,9 @@ const { request, response } = require('express');
 
 const { Op } = require("sequelize")
 
-<<<<<<< HEAD
-const { Product, Subcategory, Favorite, Review, User, Price, Role } = require("../db")
-=======
-const { Product, Subcategory, Favorite, Review, User, Category } = require("../db")
->>>>>>> ea4c7891a2f5a0ce664991d73b850e7e867feffb
+
+const { Product, Subcategory, Favorite, Review, User, Price, Role,Category } = require("../db")
+
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
@@ -15,49 +13,19 @@ const { isValidUUid } = require("../middlewares/isValidUuid");
 
 const postProduct = async (req = request, res = response) => {
     try {
-<<<<<<< HEAD
-        const { subcategoryId, userId } = req.body
-        const user = await User.findByPk(userId)
-        const role = await Role.findByPk(user.roleId)
-        if (!user || (role.name !== "SELLER_ROLE" && role.name !== "ADMIN_ROLE") ) {
-            return res.status(401).json({ message: "el usuario no es vendedor",user,role })
-        }
-        let { price, ...data } = req.body
-        if (subcategoryId) {
-            if (!isValidUUid(subcategoryId)) return res.status(400).json({ errors: { subcategoryId: "debe ser un uuid valido" } })
-            const subCategory = await Subcategory.findByPk(subcategoryId)
-            if (!subCategory) return res.status(400).json({ errors: { subcategoryId: "no existe una subcategoria con el id ingresado" } })
-            data.subcategoryId = subCategory.id
-            data.categoryId = subCategory.categoryId
-=======
 
         const { categoryId } = req.body
 
         let data = { ...req.body }
-        // const categoria = await Category.findByPk(data.categoryId)
-        // console.log(categoria)
         if (categoryId) {
             if (!isValidUUid(categoryId)) return res.status(400).json({ errors: { categoryId: "debe ser un uuid valido" } })
             const category = await Category.findByPk(categoryId)
             if (!category) return res.status(400).json({ errors: { categoryId: "no existe una subcategoria con el id ingresado" } })
-            // data.subcategoryId = subCategory.id
-            // data.categoryId = subCategory.categoryId
->>>>>>> ea4c7891a2f5a0ce664991d73b850e7e867feffb
         }
-        const newProduct = await Product.create(
-            {
-                ...data,
-                price: {
-                    originalprice: price
-                }
-            },
-            {
-                include: [
-                    { model: Price },
-                ]
-            }
-        )
+
+        const newProduct = await Product.create(data)
         res.status(201).json(newProduct)
+
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -101,6 +69,7 @@ const getProductById = async (req = request, res = response) => {
         })
         .catch((err) => res.send(err))
 }
+
 
 const getProductsByCategoryId = async (req = request, res = response) => {
     const { limit = 30, page = 1 } = req.query
