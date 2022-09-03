@@ -29,6 +29,12 @@ function padTo2Digits(num) {
             allowNull: true,
             type: DataTypes.STRING,
             defaultValue: currentDate
+          },
+          direction: {
+            type: DataTypes.STRING
+          },
+          email: {
+            type: DataTypes.STRING
           }
     },    
     { timestamps: false });
