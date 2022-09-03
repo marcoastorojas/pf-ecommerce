@@ -63,6 +63,9 @@ export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
 
+//ADMIN
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
@@ -750,4 +753,42 @@ export const delFav =(userId, id) => {
       })
       .catch((err) => console.log(err));
   };
+}
+
+
+
+//Rutas Admin
+
+export const getAllUsers = () => {
+  return (dispatch) => {
+    axios({
+      method: 'GET',
+      url: `${BASE_URL}/auth/users`
+    })
+    .then(response => {
+      dispatch({
+        type: GET_ALL_USERS,
+        payload: response.data.data
+      })
+      console.log(response.data.data)
+    })
+    .catch( err => console.log(err))
+  }
+}
+
+export const changeOtherUserRol = (userId, newRol) => {
+  return () => {
+    axios({
+      method: 'PUT',
+      url: `${BASE_URL}/auth/changerol/${userId}`,
+      data: {
+        role: newRol
+      }
+    })
+    .then(response => {
+      console.log(response.data)
+      window.location.reload(false)
+    })
+    .catch(err => console.log(err))
+  }
 }
