@@ -30,15 +30,18 @@ import {
   //eslint-disable-next-line
   SET_SUCCESS_PAYMENT,
 
-//REVIEWS
-GET_USER_REVIEWS,
-CLEAR_REVIEWS,
+  //REVIEWS
+  GET_USER_REVIEWS,
+  CLEAR_REVIEWS,
 
   //USER DATA
   GET_USER_INFO,
   PUT_USER_IMAGE,
+  PUT_NEW_USER_INFO,
   VERIFY_CURRENT_PASSWORD,
+  VERIFYING_PASSWORD,
   GET_ORDERS,
+  //eslint-disable-next-line
   GET_USER_INFO_EXTRA,
     
  //WISHLIST
@@ -59,6 +62,7 @@ const initialState = {
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario
+  verifyingPassword: "no",
   verifiedPassword: null,
   signupErrors: null,
   errorsLogIn: {},
@@ -323,23 +327,56 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload,
-        }
+      };
     case PUT_USER_IMAGE:
       return {
         ...state,
         user: { ...state.user, image: action.payload },
       };
-      case VERIFY_CURRENT_PASSWORD:
-        return {
-          ...state,
-          verifiedPassword: action.payload,
-        };
+    case PUT_NEW_USER_INFO:
+      const newUserData = {
+        name: action.payload.name,
+        username: action.payload.username,
+        email: action.payload.email,
+        image: action.payload.image,
+      };
+      const newUserInfo = {
+        name: action.payload.info.name,
+        lastname: action.payload.info.lastname,
+        dni: action.payload.info.dni,
+        phone: action.payload.info.phone,
+        number: action.payload.info.number,
+        gender: action.payload.info.gender,
+        street: action.payload.info.street,
+        zipcode: action.payload.info.zipcode,
+        country: action.payload.info.country,
+        state: action.payload.info.state,
+        city: action.payload.info.city,
+        birthday: action.payload.info.birthday,
+      };
+      return {
+        ...state,
+        user: { ...state.user, ...newUserData },
+        userInfo: { ...state.userInfo, info: { ...state.userInfo.info, ...newUserInfo } },
+      };
+    case VERIFYING_PASSWORD:
+      return {
+        ...state,
+        verifyingPassword: "yes",
+      };
+    case VERIFY_CURRENT_PASSWORD:
+      return {
+        ...state,
+        verifiedPassword: action.payload,
+        verifyingPassword: "no",
+      };
     case GET_ORDERS:
       return {
         ...state,
         dataOrders: action.payload,
       };
-// case GET_USER_INFO_EXTRA:
+
+    // case GET_USER_INFO_EXTRA:
     //   return {
     //     ...state,
     //     userInfoExtra: action.payload
@@ -348,21 +385,21 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
-      }
+      };
     }
     case CLEAR_REVIEWS: {
       return {
         ...state,
         reviews: [],
-      }
+      };
     }
-          
-      case GET_USER_FAVOURITES: {
-          return {
-              ...state,
-              favourites: action.payload,
-          }
-      }
+
+    case GET_USER_FAVOURITES: {
+      return {
+        ...state,
+        favourites: action.payload,
+      };
+    }
       //ADMIN
       case GET_ALL_USERS: {
         return {
