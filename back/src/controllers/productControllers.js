@@ -11,18 +11,18 @@ const { isValidUUid } = require("../middlewares/isValidUuid");
 const postProduct = async (req = request, res = response) => {
     try {
 
-        const { subcategoryId } = req.body
+        const { categoryId } = req.body
 
         let data = { ...req.body }
-        const categoria = await Category.findByPk(data.categoryId)
-        console.log(categoria)
-        // if (subcategoryId) {
-        //     if (!isValidUUid(subcategoryId)) return res.status(400).json({ errors: { subcategoryId: "debe ser un uuid valido" } })
-        //     const subCategory = await Subcategory.findByPk(subcategoryId)
-        //     if (!subCategory) return res.status(400).json({ errors: { subcategoryId: "no existe una subcategoria con el id ingresado" } })
-        //     data.subcategoryId = subCategory.id
-        //     data.categoryId = subCategory.categoryId
-        // }
+        // const categoria = await Category.findByPk(data.categoryId)
+        // console.log(categoria)
+        if (categoryId) {
+            if (!isValidUUid(categoryId)) return res.status(400).json({ errors: { categoryId: "debe ser un uuid valido" } })
+            const category = await Category.findByPk(categoryId)
+            if (!category) return res.status(400).json({ errors: { categoryId: "no existe una subcategoria con el id ingresado" } })
+            // data.subcategoryId = subCategory.id
+            // data.categoryId = subCategory.categoryId
+        }
 
         const newProduct = await Product.create(data)
         res.status(201).json(newProduct)
