@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../../redux/actions';
 import style from './MyShopping.module.css';
 import { Link } from 'react-router-dom';
-
+import noProfilePic from '../../media/images/empty_user_profilepic.png';
 
 
 
@@ -32,9 +32,9 @@ export default function MyShopping (props) {
             </div>
             <div className={style.operInfo}>
                 <div className={style.infoUser}>
-                    <p>User Info</p>
-                    <p>Name: {user.name}</p>
-                    <p>Email: {user.email}</p>
+                    <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" />
+                    <p>Username: {props.buyer.username}</p>
+                    <p>Email: {props.buyer.email}</p>
                     {/* <h3>Cel:</h3> */}
                 </div>
                 <div className={style.inforOper}>
