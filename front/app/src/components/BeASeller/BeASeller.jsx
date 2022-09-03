@@ -261,9 +261,9 @@ export default function ({disabledForm = false}) {
         e.preventDefault()
         if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass && phonePass) {
             //dispatch
-            if(user.roleId === BUYER_ROLE) {
-                dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
-            }
+            // if(user.roleId === BUYER_ROLE) {
+            //     dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
+            // }
             dispatch(putUserImage(user.uid, info))
         }
         else {
@@ -281,7 +281,7 @@ export default function ({disabledForm = false}) {
         <div className={style.contBeASeller}>
             {/* <button onClick={PRUEBAUPROl} >PRUEBACHANGEROL</button> */}
             {/* <button onClick={PRUEBA}>PRUEBA</button> */}
-            {/* <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button> */}
+            <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
             {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
                 <div>
@@ -353,6 +353,11 @@ export default function ({disabledForm = false}) {
                     <br />
                 </div>
                 <label id='labelErrores' style={{color: 'rgb(255, 0, 0)'}}></label>
+                {
+                    (user.roleId === BUYER_ROLE && userInfoExtra.info?.name !== '')?
+                    <label>Esperando aprobación</label>
+                    : <></>
+                }
                 <input id='buttonBeASeller' className={style.buttonBeASellerFail} hidden={disabledForm} type='submit' value={user.roleId===BUYER_ROLE?'Send':'Save'} disabled/>
             </form>
         </div>

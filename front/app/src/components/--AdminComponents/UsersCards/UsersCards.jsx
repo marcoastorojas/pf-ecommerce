@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { changeOtherUserRol, changeUserStatus } from '../../../redux/actions';
 import style from './UsersCards.module.css';
+import noProfilePic from "../../../media/images/empty_user_profilepic.png";
 
 
 
@@ -10,7 +11,7 @@ import style from './UsersCards.module.css';
 
 
 
-export default function UsersCards ({image, email, status, username, rol, uid}) {
+export default function UsersCards ({image, email, status, username, rol, uid, info}) {
 
     const dispatch = useDispatch()
     const estado = status?.toString()==='true'?'true':'false'
@@ -36,14 +37,18 @@ export default function UsersCards ({image, email, status, username, rol, uid}) 
         <div className={style.contUserCard}>
             {/* <button onClick={() => console.log(estado)}>PRUEBA</button> */}
             {/* <button onClick={() => console.log(newStatus)}>PRUEBASTATUS</button> */}
+            {/* <button onClick={() => console.log(info)}>INFO</button> */}
             <div className={style.divImagen}>
-                <p>{image}</p>
+                {/* <p>{image}</p> */}
+                <img src={image?image:noProfilePic} alt='profilePic' referrerPolicy="no-referrer" ></img>
             </div>
             <div className={style.divBasicInfo}>
+                <h3>Basic Info</h3>
                 <p>{username}</p>
                 <p>{email}</p>
             </div>
             <div className={style.divRol}>
+                <h3>User type</h3>
                 <p>{rol}</p>
                 <select name="rol" id="rol" onChange={changeSelectedRol}>
                     <option value='predef' hidden>{rol}</option>
@@ -52,8 +57,14 @@ export default function UsersCards ({image, email, status, username, rol, uid}) 
                     <option value="ADMIN_ROLE">Admin</option>
                 </select>
                 <button onClick={changeRol}>Change rol</button>
+                {
+                    rol === 'USER_ROLE' && (info && Object.keys(info).length > 0)?
+                    <p>REVISION</p> :
+                    <></>
+                }
             </div>
             <div className={style.divStatus}>
+                <h3>Status</h3>
                 <p>{estado==='true'?'Activo':'Inactivo'}</p>
                 <select name="status" id="status" onChange={changeSelectedStatus}>
                     <option value="predef" hidden>{estado==='true'?'Activo':'Inactivo'}</option>
@@ -62,9 +73,27 @@ export default function UsersCards ({image, email, status, username, rol, uid}) 
                 </select>
                 <button onClick={changeStatus}>{estado==='true'?'Delete':'Activate'}</button>
             </div>
-            <div className={style.divExtraInfo}>
-
-            </div>
+            {
+                info && Object.keys(info).length > 0 && 
+                <div className={style.divExtraInfo}>
+                    <div>
+                        <p>Name: {info.name}</p>
+                        <p>Lastname: {info.lastname}</p>
+                        <p>Date of Birth: {info.birthday}</p>
+                        <p>DNI: {info.dni}</p>
+                        <p>Phone: {info.phone}</p>
+                        <p>Gender: {info.gender}</p>
+                    </div>
+                    <div>
+                        <p>Country: {info.country}</p>
+                        <p>City: {info.city}</p>
+                        <p>State: {info.state}</p>
+                        <p>Street: {info.street}</p>
+                        <p>Block/Number: {info.number}</p>
+                        <p>Zip Code: {info.zipcode}</p>
+                    </div>
+                </div>
+            }
             {/* <p>{uid}</p> */}
         </div>
     )
