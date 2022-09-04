@@ -20,16 +20,20 @@ module.exports = (sequelize) => {
         },
         description: {
             type: DataTypes.TEXT,
-            allowNull:false
+            allowNull: false
         },
         brand: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        images:{
+        stock: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        images: {
             type: DataTypes.TEXT,
             allowNull: false,
-        }
+        },
     },
-    { timestamps: false });
+        { timestamps: false });
 };

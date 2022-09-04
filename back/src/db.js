@@ -38,8 +38,8 @@ Orderdetail.belongsTo(Order);
 
 const { Category, Subcategory, Product, Price, Role, User, Person, Status, Favorite, Review } = sequelize.models;
 
-User.hasMany(Product,{foreignKey: "userId"})
-Product.belongsTo(User,{foreignKey: "userId"})
+User.hasMany(Product, { foreignKey: "userId" })
+Product.belongsTo(User, { foreignKey: "userId" })
 
 
 // Product - Category - Subcategory
@@ -50,14 +50,8 @@ Orderdetail.belongsTo(Product);
 Product.hasOne(Price)
 Price.belongsTo(Product)
 
-Category.hasMany(Subcategory, { as: "subcategories" });
-Subcategory.belongsTo(Category, { as: "category" });
-
-Subcategory.hasMany(Product, { as: "products" });
-Product.belongsTo(Subcategory, { as: "subcategory" });
-
-Category.hasMany(Product, { as: "products" });
-Product.belongsTo(Category, { as: "category" });
+Product.belongsToMany(Category, { through: "category-product" })
+Category.belongsToMany(Product, { through: "category-product" })
 
 // User - Person - Rol - Status
 Role.hasMany(User, { as: "users" });

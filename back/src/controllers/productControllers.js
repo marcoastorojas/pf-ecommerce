@@ -3,27 +3,27 @@ const { request, response } = require('express');
 const { Op } = require("sequelize")
 
 
-const { Product, Subcategory, Favorite, Review, User, Price, Role,Category } = require("../db")
+const { Product, Subcategory, Favorite, Review, User, Price, Role, Category } = require("../db")
 
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
 
-const { isValidUUid } = require("../middlewares/isValidUuid");
-
 const postProduct = async (req = request, res = response) => {
     try {
-
-        const { categoryId } = req.body
-
+        const { categoriesId, stock, price } = req.body
         let data = { ...req.body }
-        if (categoryId) {
-            if (!isValidUUid(categoryId)) return res.status(400).json({ errors: { categoryId: "debe ser un uuid valido" } })
-            const category = await Category.findByPk(categoryId)
-            if (!category) return res.status(400).json({ errors: { categoryId: "no existe una subcategoria con el id ingresado" } })
+        if (stock && !/^[0-9]+$/.test(stock)) {
+            return res.status(400).json({ errors: { stock: "no existe una subcategoria con el id ingresado" } })
         }
-
-        const newProduct = await Product.create(data)
+        const newProduct = await Product.create({
+            ...data,
+            stock,
+            price: {
+                originalprice: price
+            }
+        }, { include: [Category, Price] })
+        await newProduct.addCategories(categoriesId)
         res.status(201).json(newProduct)
 
     } catch (error) {
@@ -44,7 +44,8 @@ const getProducts = async (req = request, res = response) => {
         where,
         order,
         limit,
-        offset
+        offset,
+        include: Price
     })
     const totalPages = Math.ceil(count / limit)
 
@@ -59,7 +60,9 @@ const getProductById = async (req = request, res = response) => {
     Product.findByPk(id, {
         include: [
             { model: Favorite },
-            { model: Review , attributes: ["id", "score", "description"], include: User }
+            { model: Review, attributes: ["id", "score", "description"], include: User },
+            { model: Category, attributes: ["id", "name"] },
+            { model: Price}
         ]
     })
         .then((data) => {

@@ -1,3 +1,3 @@
-export const SELLER_ROLE = '51a8d943-1ed9-4391-8b3d-3f43b17d8f9c';
-export const BUYER_ROLE = '83cf0b0f-c57a-4682-a2f2-2993842d0733'; //Also USER_ROLE
-export const ADMIN_ROLE = '68197b9d-5b19-4d2b-aa47-7c17c1a32ebe';
+export const SELLER_ROLE = 'a34ca4fb-2301-46c9-ba00-5097acc718df';
+export const BUYER_ROLE = 'a8a50dab-7be3-4526-bb84-d6d8dbedb262'; //Also USER_ROLE
+export const ADMIN_ROLE = '5b96ace7-6455-4ce2-b4f9-32828bf98aed';

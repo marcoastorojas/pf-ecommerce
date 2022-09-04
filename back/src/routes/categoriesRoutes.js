@@ -2,16 +2,17 @@ const { Router } = require("express")
 const { Category, Subcategory, Product } = require("../db")
 const categoriesroutes = Router()
 const { Op } = require("sequelize")
+const { validIdParam } = require("../middlewares/validIdParam")
 
 categoriesroutes.post("/", async (req, res) => {
     const { name, active } = req.body
     let categorie = {
         name
     }
-    if(!name) {
+    if (!name) {
         return res.status(400).json({ error: "falta nombre" })
     }
-    if(!!active) {
+    if (!!active) {
         categorie = {
             ...categorie,
             active
@@ -25,50 +26,53 @@ categoriesroutes.post("/", async (req, res) => {
 
 categoriesroutes.get("/", async (req, res) => {
     const { name, onlyActive } = req.query
-    // if (name) {
-    //     const categoria = await Category.findOne({ where: { name: { [Op.iLike]: name } } })
-    //     return res.status(200).json(categoria)
-    // }
-    // const lista = await Category.findAll({
-    //     include: [
-    //         { model: Subcategory, as: "subcategories" }, 
-    //         // { model: Product, as: "products",attributes: ['id','title', 'images','model','brand','subcategoryId'] }
-    //     ],
-    // })
     let whereCond = {}
-    // console.log(onlyActive, !!onlyActive)
     if (!!onlyActive) {
         whereCond = {
             active: onlyActive.toString()
         }
     }
+    if (name) {
+        whereCond["name"] = { [Op.iLike]: `%${name}%` }
+    }
     const categories = await Category.findAll({
-        where: whereCond
+        where: whereCond,
+        include: Product
     })
     // console.log(whereCond)
     // res.status(200).json({ data: lista })
-    res.status(200).json({data: categories})
+    res.status(200).json({ data: categories })
 })
 
-categoriesroutes.delete('/', async (req, res) =>{
+categoriesroutes.delete('/', async (req, res) => {
     try {
-        const {categoryId, newStatus} = req.body
-    
+        const { categoryId, newStatus } = req.body
+
         console.log(categoryId, newStatus)
-    
+
         const categoria = await Category.findByPk(categoryId)
-    
+
         console.log('cateogira', categoria)
-    
-        if(!categoria) return res.status(400).json({error: 'No existe una categoría con ese id'})
-        
-        if(newStatus === 'true' || newStatus === 'false') {
-            await Category.update({active: newStatus.toString()}, {where: {id: categoryId}})
+
+        if (!categoria) return res.status(400).json({ error: 'No existe una categoría con ese id' })
+
+        if (newStatus === 'true' || newStatus === 'false') {
+            await Category.update({ active: newStatus.toString() }, { where: { id: categoryId } })
         }
-        res.send({categoryDeleted: categoria})
+        res.send({ categoryDeleted: categoria })
     } catch (err) {
-        res.status(400).json({error: err})
+        res.status(400).json({ error: err })
     }
 })
-
+categoriesroutes.get('/:id', validIdParam, async (req, res) => {
+    const { id } = req.params
+    try {
+        const category = await Category.findByPk(id, {
+            include: Product
+        })
+        res.status(200).json(category)
+    } catch (err) {
+        res.status(400).json({ error: err.message })
+    }
+})
 module.exports = { categoriesroutes }
