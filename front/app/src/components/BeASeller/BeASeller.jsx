@@ -281,9 +281,18 @@ export default function ({disabledForm = false}) {
         <div className={style.contBeASeller}>
             {/* <button onClick={PRUEBAUPROl} >PRUEBACHANGEROL</button> */}
             {/* <button onClick={PRUEBA}>PRUEBA</button> */}
-            <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button>
+            {/* <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button> */}
             {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
+                <div>
+                    <h3 className={style.title}>You want to sell your products?</h3>
+                </div>
+                <div>
+                    <label>Complete this formularie so we can check if you are able to sell.This process can take a few hours.</label>
+                </div>
+                {/* <div>
+                    <label>This process can take a few hours</label>
+                </div> */}
                 <div>
                     <label htmlFor="lastname">Lastname: </label>
                     <input className={style.inputDatos} value={info.lastname} type="text" id="lastname" name='lastname' onChange={handleCountry} disabled={disabledForm} />
@@ -354,7 +363,7 @@ export default function ({disabledForm = false}) {
                 </div>
                 <label id='labelErrores' style={{color: 'rgb(255, 0, 0)'}}></label>
                 {
-                    (user.roleId === BUYER_ROLE && userInfoExtra.info?.name !== '')?
+                    (user.roleId === BUYER_ROLE && userInfoExtra.info?.dni !== null)?
                     <label>Esperando aprobación</label>
                     : <></>
                 }
