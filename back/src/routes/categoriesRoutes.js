@@ -37,7 +37,7 @@ categoriesroutes.get("/", async (req, res) => {
     }
     const categories = await Category.findAll({
         where: whereCond,
-        include: Product
+        // include: Product
     })
     // console.log(whereCond)
     // res.status(200).json({ data: lista })
