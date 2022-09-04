@@ -542,8 +542,11 @@ export const getUserInfo = (id) => {
   };
 };
 
-export const putUserImage = (id, changes) => {
-  console.log("Entró en putUserImage");
+export const putUserImage = (id, changes, text = 'Updating Information') => {
+  // console.log("Entró en putUserImage");
+  toast.loading(text, {
+    id: 'UpdateInformation'
+  })
   return (dispatch) => {
     axios({
       method: "PUT",
@@ -551,16 +554,20 @@ export const putUserImage = (id, changes) => {
       data: changes,
     })
       .then((response) => {
-        console.log("Success en putUserImage");
+        // console.log("Success en putUserImage");
+        toast.dismiss('UpdateInformation')
         // console.log(response.data.user.image);
         dispatch({
           type: PUT_USER_IMAGE,
           payload: response.data.user.image,
         });
+        toast.success('Information sent')
       })
       .catch((err) => {
         // console.log(err);
-        console.log("Failed en putUserImage");
+        toast.dismiss('UpdateInformation')
+        // console.log("Failed en putUserImage");
+        toast.error('There was an error. Please try again in a few minutes')
       });
   };
 };
@@ -809,6 +816,9 @@ export const getAllUsers = () => {
 }
 
 export const changeOtherUserRol = (userId, newRol) => {
+  toast.loading('Updating user rol', {
+    id: 'ChangeRol'
+  })
   return () => {
     axios({
       method: 'PUT',
@@ -818,10 +828,14 @@ export const changeOtherUserRol = (userId, newRol) => {
       }
     })
     .then(response => {
+      toast.dismiss('ChangeRol')
       // console.log(response.data)
       window.location.reload(false)
     })
-    .catch(err => console.log(err))
+    .catch(err =>{
+      toast.dismiss('ChangeRol')
+      console.log(err)
+    })
   }
 }
 
