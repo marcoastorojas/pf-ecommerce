@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import { ADMIN_ROLE } from "../../validations/usersTypes";
-
-import {
-  getCategories,
-  getCategoryProductsById,
-  // getSearchCategory,
-  // getSearchName,
-  setUserGoogle,
-  upgradeToSeller,
-} from "../../redux/actions";
-import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
+import { getCategories, getCategoryProductsById, setUserGoogle, upgradeToSeller } from "../../redux/actions";
+import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "../../validations/usersTypes";
 
 import SearchBar from "../SearchBar";
 import NavBarUserMenu from "../NavBarUserMenu";
@@ -157,7 +147,7 @@ export default function NavBar() {
           </div>
           {/* </Link> */}
         </div>
-        {ADMIN_ROLE === user.roleId && <button onClick={() => navigate("/soyadmin")}>Back to Admin screen.</button>}
+        {ADMIN_ROLE === user.roleId && <button onClick={() => navigate("/soyadmin/categories")}>Back to Admin screen.</button>}
       </div>
     </header>
   );
