@@ -31,6 +31,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.contUserCard > div > h3 {
+    border-bottom: 1px solid black;
+}
 .divRol {
     width: 20%;
     display: flex;
@@ -55,6 +58,7 @@
     justify-content: center;
     align-items: center;
     width: 30%;
+    border-left: 1px solid black;
 }
 .divExtraInfo > div {
     display: flex;
@@ -92,4 +96,29 @@
 .button:active {
     background-color: white;
     color: black;
+}
+
+.wantToBeASeller {
+    border-radius: 20px 20px 0 0;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    padding: 5% 2%;
+    background-color: var(--background-button-color);
+    color: white;   
+    animation: wantToBeASeller 2s infinite;
+}
+
+@keyframes wantToBeASeller {
+    0% {
+        transform: translateY(0%);
+    }
+    25% {
+        transform: translateY(-50%);
+    }
+    50% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }

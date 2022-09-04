@@ -237,7 +237,7 @@ export const reducer = (state = initialState, action) => {
     /*eslint-enable */
     case GET_TOTAL: {
       if (state.cart.length > 0) {
-        const total = state.cart.reduce((acc, pt) => (acc = pt.product.price * pt.amount + acc), 0);
+        const total = state.cart.reduce((acc, pt) => (acc = pt.product.price.originalprice * pt.amount + acc), 0);
         return {
           ...state,
           cartTotal: total,

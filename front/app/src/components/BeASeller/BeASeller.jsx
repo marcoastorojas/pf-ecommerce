@@ -364,7 +364,7 @@ export default function ({disabledForm = false}) {
                 <label id='labelErrores' style={{color: 'rgb(255, 0, 0)'}}></label>
                 {
                     (user.roleId === BUYER_ROLE && userInfoExtra.info?.dni !== null)?
-                    <label>Esperando aprobación</label>
+                    <h2>Waiting for approval</h2>
                     : <></>
                 }
                 <input id='buttonBeASeller' className={style.buttonBeASellerFail} hidden={disabledForm} type='submit' value={user.roleId===BUYER_ROLE?'Send':'Save'} disabled/>

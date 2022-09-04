@@ -30,7 +30,13 @@ export default function Checkout() {
 
 
   const handlePay = () => {
-    console.log(direction, email)
+    console.log({ 
+      totalPriceProducts: cartTotal,
+      products: cart,
+      user_id: user.uid ,
+      direction: direction,
+      email: email
+    })
     dispatch(sendPayment({ 
       totalPriceProducts: cartTotal,
       products: cart,

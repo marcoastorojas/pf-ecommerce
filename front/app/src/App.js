@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -55,7 +55,7 @@ function App() {
         <Route path="/soyadmin/:component" exact element={<AdminPage />} />
       </Routes>
       <Footer />
-      <Toaster />
+      <Toaster toastOptions={{className: 'tostadora'}} />
     </div>
   );
 }

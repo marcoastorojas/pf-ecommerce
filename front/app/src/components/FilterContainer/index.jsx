@@ -2,16 +2,16 @@ import style from "./index.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
-import { getCategoryProductsById, getProductsFilter } from "../../redux/actions";
+// import { getCategoryProductsById, getProductsFilter } from "../../redux/actions";
 
 
 
 export default function FilterContainer() {
- const results = useSelector((state) => state.searchedProducts);
+//  const results = useSelector((state) => state.searchedProducts);
  const categories = useSelector((state) => state.categories);
  const search = useSelector(state => state.search)
  const searchCategory = useSelector(state => state.searchCategory)
- const dispatch = useDispatch();
+//  const dispatch = useDispatch();
 
  const [min, setMin] = useState(0);
  const [max, setMax] = useState(9999999);
@@ -48,9 +48,10 @@ export default function FilterContainer() {
  }, [asc, desc, category]);
 
  const filtrar = () => {
+    console.log(min, max, search, asc, desc)
     // console.log(category, search)
-  if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
-  else dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
+    // if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
+    // else dispatch(getCategoryProductsById(category, search, max, min, asc, desc))
  };
 const categoryHandle = (e) => {
     setCategory(e.target.value);
