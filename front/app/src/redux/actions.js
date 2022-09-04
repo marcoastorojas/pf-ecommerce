@@ -171,7 +171,7 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   return (dispatch) => {
     toast.dismiss();
     dispatch({ type: RESULTS_FOUND, payload: true });
-
+    dispatch({ type: GET_PRODUCTS_FILTER, payload: [] })
     axios
       .get(url.href)
       .then((response) => {
