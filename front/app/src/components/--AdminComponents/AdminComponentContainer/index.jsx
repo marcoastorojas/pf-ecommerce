@@ -1,8 +1,16 @@
+// import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+import AdminCategoriesComponent from "../AdminCategoriesComponent";
+
 import style from "./index.module.css";
 
 export default function AdminComponentContainer() {
-  const params = useParams();
+  const { component } = useParams();
 
-  return <div className={style.containerDiv}>--CONTAINER--</div>;
+  // useEffect(() => {
+  //   console.log(component);
+  // });
+
+  return <div className={style.containerDiv}>{component === "categories" && <AdminCategoriesComponent />}</div>;
 }
