@@ -1,34 +1,33 @@
+const { request, response } = require('express');
+
 const { Op } = require("sequelize")
 
-const { Product, Subcategory, Favorite, Review, User, Category } = require("../db")
+
+const { Product, Subcategory, Favorite, Review, User, Price, Role, Category } = require("../db")
+
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
 
-const { request, response } = require('express');
-const { isValidUUid } = require("../middlewares/isValidUuid");
-
 const postProduct = async (req = request, res = response) => {
     try {
-
-        const { categoryId } = req.body
-
+        const { categoriesId, stock, price } = req.body
         let data = { ...req.body }
-        // const categoria = await Category.findByPk(data.categoryId)
-        // console.log(categoria)
-        if (categoryId) {
-            if (!isValidUUid(categoryId)) return res.status(400).json({ errors: { categoryId: "debe ser un uuid valido" } })
-            const category = await Category.findByPk(categoryId)
-            if (!category) return res.status(400).json({ errors: { categoryId: "no existe una subcategoria con el id ingresado" } })
-            // data.subcategoryId = subCategory.id
-            // data.categoryId = subCategory.categoryId
+        if (stock && !/^[0-9]+$/.test(stock)) {
+            return res.status(400).json({ errors: { stock: "no existe una subcategoria con el id ingresado" } })
         }
-
-        const newProduct = await Product.create(data)
+        const newProduct = await Product.create({
+            ...data,
+            stock,
+            price: {
+                originalprice: price
+            }
+        }, { include: [Category, Price] })
+        await newProduct.addCategories(categoriesId)
         res.status(201).json(newProduct)
 
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(400).json({ error: error.message })
     }
 }
 
@@ -45,7 +44,8 @@ const getProducts = async (req = request, res = response) => {
         where,
         order,
         limit,
-        offset
+        offset,
+        include: Price
     })
     const totalPages = Math.ceil(count / limit)
 
@@ -60,7 +60,9 @@ const getProductById = async (req = request, res = response) => {
     Product.findByPk(id, {
         include: [
             { model: Favorite },
-            { model: Review , attributes: ["id", "score", "description"], include: User }
+            { model: Review, attributes: ["id", "score", "description"], include: User },
+            { model: Category, attributes: ["id", "name"] },
+            { model: Price}
         ]
     })
         .then((data) => {
@@ -70,6 +72,7 @@ const getProductById = async (req = request, res = response) => {
         })
         .catch((err) => res.send(err))
 }
+
 
 const getProductsByCategoryId = async (req = request, res = response) => {
     const { limit = 30, page = 1 } = req.query

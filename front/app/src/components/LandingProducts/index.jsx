@@ -39,7 +39,7 @@ useEffect(() => {
                   id={product.id}
                   title={product.title}
                   image={product.images}
-                  price={product.price}
+                  price={product.price.originalprice}
                   brand={product.brand}
                   model={product.model}
                 />
