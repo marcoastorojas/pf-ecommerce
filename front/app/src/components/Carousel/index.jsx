@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
-import { getProducts } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+// import { getProducts } from "../../redux/actions";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./index.modules.css";
 
 export default function Carousel() {
- const dispatch = useDispatch();
+//  const dispatch = useDispatch();
  const products = useSelector((state) => state.allProducts);
 
  const [current, setCurrent] = useState(0);
  const sliceArrayProducts = products.data?.slice(0, 10);
  const length = sliceArrayProducts?.length;
  //  console.log(sliceArrayProducts);
- useEffect(() => {
-  dispatch(getProducts());
- }, [dispatch]);
+//  useEffect(() => {
+//   dispatch(getProducts());
+//  }, [dispatch]);
 
  const nextSlide = () => {
   setCurrent(current === length - 1 ? 0 : current + 1);
@@ -48,7 +48,7 @@ export default function Carousel() {
             />
             <div className="title-price-container">
             <span className="slide-name">{slide.title}</span>
-            <span className="slide-price">${Number(slide.price).toLocaleString()}</span>
+            <span className="slide-price">${Number(slide.price.originalprice).toLocaleString()}</span>
             </div>
             </Link>
        )}

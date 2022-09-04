@@ -69,17 +69,27 @@ export const GET_ALL_USERS = 'GET_ALL_USERS';
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
+  // console.log('ACTION')
+  // toast.loading('Loading products...')
   const url = new URL(`${BASE_URL}/products`);
   if (page > 0) url.searchParams.append("page", page);
   return async function (dispatch) {
     try {
-      let json = await axios.get(url.href);
-      return dispatch({
-        type: GET_PRODUCTS,
-        payload: json.data,
-      });
+      axios({
+        method: 'GET',
+        url: url.href,
+      })
+      .then(response => {
+        toast.dismiss('Landing')
+        dispatch({
+          type: GET_PRODUCTS,
+          payload: response.data,
+        });
+      })
     } catch (error) {
+      toast.dismiss('Landing')
       console.log(error);
+      toast.error('Error loading products')
     }
   };
 };

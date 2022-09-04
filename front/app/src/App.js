@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -32,6 +32,11 @@ import "./App.css";
 
 function App() {
   const { pathname } = useLocation();
+  useEffect(() => {
+    toast.loading('Loading products', {
+      id: 'Landing'
+    })
+  }, [])
 
   return (
     <div className="App">
@@ -55,7 +60,7 @@ function App() {
         <Route path="/soyadmin/:component" exact element={<AdminPage />} />
       </Routes>
       <Footer />
-      <Toaster />
+      <Toaster toastOptions={{className: 'tostadora'}} />
     </div>
   );
 }
