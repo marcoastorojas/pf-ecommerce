@@ -2,7 +2,9 @@ const { request, response } = require("express");
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 
-const { User, Role, Person, Status, Review, Favorite, Product } = require("../db");
+
+const { User, Role, Person, Status, Review, Favorite, Product, Order } = require("../db")
+
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
 const { isValidEmail } = require("../helpers/isValidEmail");
@@ -108,19 +110,21 @@ const getAllUsers = async (req = request, res = response) => {
 };
 
 const infoUser = async (req = request, res = response) => {
-  const { id: uid } = req.params;
-  const user = await User.findOne({
-    where: { uid },
-    include: [
-      { model: Person, as: "info" },
-      { model: Status, as: "status" },
-      { model: Role, as: "role" },
-      { model: Review },
-      { model: Favorite, attributes: ["id"], include: Product },
-    ],
-  });
-  if (!user) return res.status(200).json(user);
-  const { password, ...rest } = user.dataValues;
+    const { id: uid } = req.params
+    const user = await User.findOne({
+        where: { uid },
+        include: [
+            { model: Person, as: "info" },
+            { model: Status, as: "status" },
+            { model: Role, as: "role" },
+            { model: Order },
+            { model: Review },
+            { model: Product },
+            { model: Favorite, attributes: ["id"], include: Product }
+        ]
+    })
+    if (!user) return res.status(200).json(user)
+    const { password, ...rest } = user.dataValues
 
   res.status(200).json(rest);
 };

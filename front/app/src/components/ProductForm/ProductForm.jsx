@@ -26,7 +26,7 @@ export default function ProductForm() {
   const subCategories = useSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getCategories(true));
   }, [dispatch]);
 
   const handleChange = (e) => {

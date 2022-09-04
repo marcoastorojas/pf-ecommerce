@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tests-ecommerce`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/test-2`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -36,24 +36,22 @@ const { Order, Orderdetail, OrderType, OrderStatus } = sequelize.models;
 Order.hasMany(Orderdetail);
 Orderdetail.belongsTo(Order);
 
-OrderStatus.hasMany(Order);
-Order.belongsTo(OrderStatus);
+const { Category, Subcategory, Product, Price, Role, User, Person, Status, Favorite, Review } = sequelize.models;
 
-const { Category, Subcategory, Product, Role, User, Person, Status, Favorite, Review } = sequelize.models;
+User.hasMany(Product, { foreignKey: "userId" })
+Product.belongsTo(User, { foreignKey: "userId" })
+
 
 // Product - Category - Subcategory
 
 Product.hasMany(Orderdetail);
 Orderdetail.belongsTo(Product);
 
-Category.hasMany(Subcategory, { as: "subcategories" });
-Subcategory.belongsTo(Category, { as: "category" });
+Product.hasOne(Price)
+Price.belongsTo(Product)
 
-Subcategory.hasMany(Product, { as: "products" });
-Product.belongsTo(Subcategory, { as: "subcategory" });
-
-Category.hasMany(Product, { as: "products" });
-Product.belongsTo(Category, { as: "category" });
+Product.belongsToMany(Category, { through: "category-product" })
+Category.belongsToMany(Product, { through: "category-product" })
 
 // User - Person - Rol - Status
 Role.hasMany(User, { as: "users" });

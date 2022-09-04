@@ -5,6 +5,11 @@
     flex-direction: column;
     align-items: center;
     width: 90%;
+    /* padding: 2%; */
+    animation: born 1s linear;
+}
+.title {
+  margin: 0;
 }
 .sellerForm {
   margin: 1%;
@@ -118,4 +123,23 @@
   background-color: var(--border-color);
   width: 20%;
   transition: all 0.2s ease;
+}
+
+
+@keyframes born {
+  0% {
+    transform: translateX(-100%);
+    z-index: -5;
+  }
+  25% {
+    transform: translateX(-198%);
+    z-index: -5;
+  }
+  99% {
+    z-index: -5;
+  }
+  100% {
+    transform: translateX(0%);
+    z-index: 1;
+  }
 }

@@ -2,8 +2,8 @@ const { Product } = require('../db')
 const { Op } = require("sequelize")
 
 const validBodyPostProducts = async (req, res, next) => {
-    const { price,title } = req.body
-    let errors = { title: "", model: "", brand: "", images: "", price: "" }
+    const { price, title } = req.body
+    let errors = { title: "", model: "", brand: "", images: "", price: "", userId: "" }
 
     Object.keys(errors).forEach(param => {
         if (!req.body[param]) {
