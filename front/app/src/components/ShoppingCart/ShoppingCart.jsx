@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, removeAllFromCart, removeOneFromCart, addOneFromCart, getTotal } from "../../redux/actions";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import style from "./ShoppingCart.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -110,9 +110,9 @@ export default function ShoppingCart() {
                       </div>
                     </div>
                     <div className={style.price}>
-                      <p>${pt.product.price}</p>
+                      <p>${pt.product.price.originalprice}</p>
                       <p>x{pt.amount}</p>
-                      <p>${Intl.NumberFormat().format(pt.amount * pt.product.price)}</p>
+                      <p>${Intl.NumberFormat().format(pt.amount * pt.product.price.originalprice)}</p>
                     </div>
                   </div>
                 </div>

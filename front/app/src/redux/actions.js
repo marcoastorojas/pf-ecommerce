@@ -70,7 +70,9 @@ const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
   // console.log('ACTION')
-  // toast.loading('Loading products...')
+  toast.loading('Loading products...', {
+    id: 'Landing'
+  })
   const url = new URL(`${BASE_URL}/products`);
   if (page > 0) url.searchParams.append("page", page);
   return async function (dispatch) {
@@ -129,7 +131,9 @@ export const clearDetail = () => {
 };
 
 export const getProductsByName = (textInput) => {
-  toast.loading("Searching...");
+  toast.loading("Searching...", {
+    id: 'getProductsByName'
+  });
   return (dispatch) => {
     dispatch({
       type: RESULTS_FOUND,
@@ -147,6 +151,7 @@ export const getProductsByName = (textInput) => {
         //  response: response,
         // });
         //  console.log('BY NAME; ', response.data.data)
+        toast.dismiss('getProductsByName');
         response.data.data.length > 0
           ? dispatch({
               type: GET_PRODUCTS_BY_NAME,
@@ -156,9 +161,9 @@ export const getProductsByName = (textInput) => {
               type: RESULTS_FOUND,
               payload: false,
             });
-        toast.dismiss();
       })
       .catch((err) => {
+        toast.dismiss('getProductsByName');
         toast.err("No results");
         // console.log({ from: "action creator getProductsByName", err });
         dispatch({
@@ -170,7 +175,9 @@ export const getProductsByName = (textInput) => {
 };
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
-  toast.loading("Searching...");
+  toast.loading("Searching...", {
+    id: 'SearchFilter'
+  });
   let url = new URL(`${BASE_URL}/products`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
@@ -179,7 +186,7 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   if (!!desc) url.searchParams.append("desc", desc);
   //  console.log(url.href);
   return (dispatch) => {
-    toast.dismiss();
+    toast.dismiss('SearchFilter');
     dispatch({ type: RESULTS_FOUND, payload: true });
     dispatch({ type: GET_PRODUCTS_FILTER, payload: [] })
     axios
@@ -214,7 +221,9 @@ export const getCategories = (onlyActive) => {
 };
 
 export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
-  toast.loading("Searching...");
+  toast.loading("Searching...", {
+    id: 'SearchFilter'
+  });
   let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
@@ -237,7 +246,7 @@ export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) =
         //  from: "action creator getCategoryProductsById",
         //  response,
         // });
-        toast.dismiss();
+        toast.dismiss('SearchFilter');
         response.data.data.length
           ? dispatch({
               type: GET_CATEGORY_PRODUCTS_BY_ID,
@@ -340,7 +349,9 @@ export const setUserGoogle = (payload, logOut = false) => {
     };
   } else {
     return (dispatch) => {
-      toast.loading("Loading...");
+      toast.loading("Loading...", {
+        id: 'LogInGoogle'
+      });
       axios({
         method: "POST",
         url: `${BASE_URL}/auth/google`,
@@ -349,7 +360,7 @@ export const setUserGoogle = (payload, logOut = false) => {
         },
       })
         .then((response) => {
-          toast.dismiss();
+          toast.dismiss('LogInGoogle');
           console.log(response.data.user);
           dispatch({
             type: SET_USER_GOOGLE,
@@ -359,7 +370,7 @@ export const setUserGoogle = (payload, logOut = false) => {
           toast.success("Welcome " + response.data.user.name);
         })
         .catch((err) => {
-          toast.dismiss();
+          toast.dismiss('LogInGoogle');
           console.log("ErrorCATCHGOOGLE", err.response);
           dispatch({
             type: ERROR_HANDLE,
@@ -402,7 +413,9 @@ export const cleanSignupErrors = () => {
 
 export const logIn = (user) => {
   //  console.log('ACTIONS: ', user)
-  toast.loading("Loading...");
+  toast.loading("Loading...", {
+    id: 'LogIn'
+  });
   return (dispatch) => {
     axios({
       method: "POST",
@@ -410,7 +423,7 @@ export const logIn = (user) => {
       data: user,
     })
       .then((response) => {
-        toast.dismiss();
+        toast.dismiss('LogIn');
         // console.log('RESPONSE: ', response)
         dispatch({
           type: LOG_IN,
@@ -424,7 +437,7 @@ export const logIn = (user) => {
         toast.success(`Welcome ${response.data.user.username}`);
       })
       .catch((err) => {
-        toast.dismiss();
+        toast.dismiss('LogIn');
         // console.log(err.response.data)
         dispatch({
           type: ERROR_HANDLE,
@@ -462,7 +475,9 @@ export const sendPayment = (dataPayment) => {
 export const upgradeToSeller = (idUser, role) => {
   console.log("Entró a upgradeToSeller");
   return () => {
-    toast.loading("Upgrading account");
+    toast.loading("Sending request", {
+      id: 'UpgradeToSeller'
+    });
     try {
       axios({
         method: "PUT",
@@ -470,7 +485,7 @@ export const upgradeToSeller = (idUser, role) => {
         data: { role: role },
       }).then((response) => {
         console.log(response.data);
-        toast.dismiss();
+        toast.dismiss('UpgradeToSeller');
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -483,7 +498,7 @@ export const upgradeToSeller = (idUser, role) => {
       });
     } catch (err) {
       console.log("Failed en upgradeToSeller");
-      toast.dismiss();
+      toast.dismiss('UpgradeToSeller');
       console.log(err);
       toast.error("error");
     }
@@ -552,7 +567,9 @@ export const putUserImage = (id, changes) => {
 
 export const putNewUserInfo = (id, changes) => {
   return (dispatch) => {
-    toast.loading();
+    toast.loading('Updating information', {
+      id: 'NewUserInfo'
+    });
     axios({
       method: "PUT",
       url: `${BASE_URL}/auth/users/${id}`,
@@ -564,7 +581,7 @@ export const putNewUserInfo = (id, changes) => {
           type: PUT_NEW_USER_INFO,
           payload: response.data.user,
         });
-        toast.dismiss();
+        toast.dismiss('NewUserInfo');
         toast.success("Changes applied succesfully!", { duration: 10000 });
       })
       .catch((err) => console.log({ from: "putNewUserInfo", err }));
@@ -596,7 +613,9 @@ export const verifyCurrentPassword = (id, currentPassword) => {
 
 export const putNewPassword = (id, password) => {
   return (dispatch) => {
-    toast.loading();
+    toast.loading('Updating password', {
+      id: 'NewPassword'
+    });
     axios({
       method: "PUT",
       url: `${BASE_URL}/auth/users/${id}`,
@@ -610,7 +629,7 @@ export const putNewPassword = (id, password) => {
         //   type: PUT_NEW_PASSWORD,
         //   payload: response.data,
         // });
-        toast.dismiss();
+        toast.dismiss('NewPassword');
         toast.success("Password modified succesfully!");
       })
       .catch((err) => console.log({ from: "putNewPassword", err }));

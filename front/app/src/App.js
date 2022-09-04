@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 // import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 
 import toast, { Toaster } from "react-hot-toast";
 
@@ -31,12 +31,15 @@ import AdminNavBar from "./components/--AdminComponents/AdminNavBar";
 import "./App.css";
 
 function App() {
+  // const { pathname } = useLocation();
+  // const location = useLocation();
   const { pathname } = useLocation();
+  // const params = useParams();
+  const { component } = useParams();
+
   useEffect(() => {
-    toast.loading('Loading products', {
-      id: 'Landing'
-    })
-  }, [])
+    console.log(component);
+  });
 
   return (
     <div className="App">
