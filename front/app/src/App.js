@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -54,7 +55,7 @@ function App() {
         <Route path="*" exact element={<GenericError />} />
       </Routes>
       <Footer />
-      <Toaster />
+      <Toaster toastOptions={{ className: "tostadora" }} />
     </div>
   );
 }

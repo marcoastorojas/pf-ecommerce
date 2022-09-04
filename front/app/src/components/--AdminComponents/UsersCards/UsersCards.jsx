@@ -45,7 +45,7 @@ export default function UsersCards ({image, email, status, username, rol, uid, i
             <div className={style.divBasicInfo}>
                 {
                     (rol === 'USER_ROLE' && info && info.dni !== null)?
-                    <p>Want to be a seller!</p> :
+                    <p className={style.wantToBeASeller}>Wants to be a seller!</p> :
                     <></>
                 }
                 <h3>Basic Info</h3>
@@ -54,7 +54,7 @@ export default function UsersCards ({image, email, status, username, rol, uid, i
             </div>
             <div className={style.divRol}>
                 <h3>User type</h3>
-                <p>{rol}</p>
+                {/* <p>{rol}</p> */}
                 <select className={style.select} name="rol" id="rol" onChange={changeSelectedRol}>
                     <option value='predef' hidden>{rol}</option>
                     <option value="SELLER_ROLE">Seller</option>
@@ -66,7 +66,7 @@ export default function UsersCards ({image, email, status, username, rol, uid, i
             </div>
             <div className={style.divStatus}>
                 <h3>Status</h3>
-                <p>{estado==='true'?'Activo':'Inactivo'}</p>
+                {/* <p>{estado==='true'?'Activo':'Inactivo'}</p> */}
                 <select className={style.select} name="status" id="status" onChange={changeSelectedStatus}>
                     <option value="predef" hidden>{estado==='true'?'Activo':'Inactivo'}</option>
                     <option value="true">Activo</option>
@@ -75,7 +75,7 @@ export default function UsersCards ({image, email, status, username, rol, uid, i
                 <button className={style.button} onClick={changeStatus}>Change Status</button>
             </div>
             {
-                info && Object.keys(info).length > 0 && 
+                info && Object.keys(info).length > 0 && info.dni !== null &&
                 <div className={style.divExtraInfo}>
                     <h3>Seller Info</h3>
                     <div>

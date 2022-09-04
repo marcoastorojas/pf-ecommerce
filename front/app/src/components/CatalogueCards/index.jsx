@@ -14,7 +14,7 @@ export default function CatalogueCards({id, name, price, image, brand, model}) {
             <p>{name}</p>
             <p>Brand: {brand}</p>
             <p>Model: {model}</p>
-            <p id={style.priceCatCard}>$ {Number(price).toLocaleString()}</p>
+            <p id={style.priceCatCard}>$ {Number(price.originalprice).toLocaleString()}</p>
             <p id={style.detCatCard}>Details...</p>
           </div>
         </Link>

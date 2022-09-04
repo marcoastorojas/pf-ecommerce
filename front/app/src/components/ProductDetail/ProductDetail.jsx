@@ -7,18 +7,20 @@ import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview, getProductId} from "../../redux/actions";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState(product.images.split(" "));
   const [quantity, setQuantity] = useState(1);
+  const [ stock, setStock ] = useState(product.stock)
+  const [ stockEnCarrito, setStockEnCarrito ] = useState(0)
 
   const [showEdit, setShowEdit] = useState(false);
 
   const user = useSelector((state) => state.user);
   const reviews = useSelector((state) => state.reviews)
-
+  const stockInCart = useSelector(state => state.cart.filter((pt) => pt.product.id === product.id)[0]?.amount)
   //Review
   const [review, setReview] = useState({
     id: user.uid ? user.uid : "",
@@ -46,9 +48,11 @@ export default function ProductDetail({ product }) {
 
   const addCart = () => {
     dispatch(addToCart(product, +quantity));
+    // console.log('stock', stock, 'quantity', quantity)
+    setQuantity(1)
     toast.success(`Successfully added ${quantity} items to the cart!`);
   };
-
+  
   const deleteFromCart = () => {
     dispatch(removeAllFromCart(product.id));
     toast.success(`Successfully deleted product from the cart!`, {
@@ -113,6 +117,7 @@ export default function ProductDetail({ product }) {
 
   return (
     <div className={style.contProDet}>
+      {/* <button onClick={() => console.log(stock-stockInCart)}>PRUEBAPRODUCTO</button> */}
       <div className={style.publish}>
         <div className={style.left}>
             <div className={style.prodImgs}>
@@ -153,14 +158,18 @@ export default function ProductDetail({ product }) {
           <div className={style.shopping}>
             <div className={style.pricing}>
               {/* <div className={style.quant}> */}
+              <h4>Stock: {product.stock}</h4>
+              <h4>In shopping cart: {stockInCart?stockInCart: 0}</h4>
+              {/* <h4>Available: {stockInCart?(stock - stockInCart).toString(): stock}</h4> */}
               <h4>Quantity: {quantity}</h4>
               <input
                 type="range"
                 min="1"
-                max="10"
+                max={stockInCart?(stock-stockInCart).toString(): stock}
                 step="1"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
+                disabled={stockInCart?!(stock - stockInCart):false}
               />
                 {/* <div className="quantity">{quantity}</div> */}
               {/* </div> */}
@@ -173,18 +182,18 @@ export default function ProductDetail({ product }) {
               </div> */}
             </div>
             <div className={style.buttons}>
-              <button className={style.buttonProdDet} onClick={() => addCart()}>
+              <button className={style.buttonProdDet} onClick={() => addCart()} disabled={stockInCart?!(stock - stockInCart):false} >
                 <span className={style.text}>Add to cart</span>
                 <span className={style.icon}>
                   <img src={Add} alt="add-cart" />
                 </span>
               </button>
-              <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
+              {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
                 <span className={style.text}>Delete All</span>
                 <span className={style.icon}>
                   <img src={Del} alt="delete-cart" />
                 </span>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -246,7 +255,7 @@ export default function ProductDetail({ product }) {
       </div>
           
       </div>
-      <Toaster />
+      {/* <Toaster /> */}
   </div>
   );
 }

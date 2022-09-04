@@ -1,9 +1,9 @@
-import { getProducts, getUserFav } from "../../redux/actions";
-import { useEffect, useState } from "react";
+import { getUserFav } from "../../redux/actions";
+import { useEffect, } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
 import "./index.modules.css";
-import Paginate from "../Paginate/Paginate";
+// import Paginate from "../Paginate/Paginate";
 
 export default function LandingProducts() {
   const dispatch = useDispatch();
@@ -13,8 +13,7 @@ export default function LandingProducts() {
 
   const sliceArrayProduct = products.data?.slice(0, 20);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [dataPerPage, setdataPerPage] = useState(20);
+  // const [dataPerPage, setdataPerPage] = useState(20);
 
 
 useEffect(() => {
@@ -23,9 +22,8 @@ useEffect(() => {
 
 
   useEffect(() => {
-    dispatch(getProducts(currentPage));
     if(user.uid) dispatch(getUserFav(user.uid))
-  }, [currentPage]);
+  }, []);
   
 
   return (
@@ -47,12 +45,7 @@ useEffect(() => {
             })
           : null}
       </div>
-      <Paginate
-        totalData={60}
-        dataPerPage={dataPerPage}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
+      
     </main>
   );
 }
