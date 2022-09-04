@@ -52,7 +52,7 @@ function App() {
         {/* </Route> */}
         {/* </Route> */}
         <Route path="/error" exact element={<GenericError />} />
-        <Route path="/soyadmin" exact element={<AdminPage />} />
+        <Route path="/soyadmin/:component" exact element={<AdminPage />} />
       </Routes>
       <Footer />
       <Toaster />

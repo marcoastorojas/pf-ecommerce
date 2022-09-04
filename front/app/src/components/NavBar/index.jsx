@@ -121,7 +121,7 @@ export default function NavBar() {
           <Link
             to="/product/create"
             className={style.navBarLinks}
-            hidden={user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE ? false : true}
+            hidden={user && localStorage.user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE ? false : true}
           >
             Upload your product
           </Link>
