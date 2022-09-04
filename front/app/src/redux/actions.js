@@ -532,11 +532,21 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        //console.log(response);
+        console.log('GETUSERINFOR', response.data);
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
         });
+        let userInfoAct = {
+          email: response.data.email,
+          google: response.data.google,
+          image: response.data.image,
+          roleId: response.data.roleId,
+          uid: response.data.uid,
+          username: response.data.username,
+          name: response.data.info?.name
+        }
+        localStorage.setItem('user', JSON.stringify(userInfoAct))
       })
       .catch((err) => console.log(err));
   };
@@ -562,6 +572,19 @@ export const putUserImage = (id, changes, text = 'Updating Information') => {
           payload: response.data.user.image,
         });
         toast.success('Information sent')
+        //Actualizar la información en localStorage
+        let userInfoAct = {
+          email: response.data.user?.email,
+          google: response.data.user?.google,
+          image: response.data.user?.image,
+          roleId: response.data.user?.roleId,
+          uid: response.data.user?.uid,
+          username: response.data.user.username,
+          name: response.data.user?.info?.name
+        }
+        localStorage.setItem('user', JSON.stringify(userInfoAct))
+        window.location.reload(false)
+        
       })
       .catch((err) => {
         // console.log(err);
@@ -588,8 +611,21 @@ export const putNewUserInfo = (id, changes) => {
           type: PUT_NEW_USER_INFO,
           payload: response.data.user,
         });
+        // console.log(response.data)
+        // dispatch(getUserInfo(id))
         toast.dismiss('NewUserInfo');
         toast.success("Changes applied succesfully!", { duration: 10000 });
+        let userInfoAct = {
+          email: response.data.user?.email,
+          google: response.data.user?.google,
+          image: response.data.user?.image,
+          roleId: response.data.user?.roleId,
+          uid: response.data.user?.uid,
+          username: response.data.user.username,
+          name: response.data.user?.info?.name
+        }
+        localStorage.setItem('user', JSON.stringify(userInfoAct))
+        window.location.reload(false)
       })
       .catch((err) => console.log({ from: "putNewUserInfo", err }));
   };
