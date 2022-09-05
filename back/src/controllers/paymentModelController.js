@@ -7,9 +7,10 @@ const postOrder = async (req = request, res = response) => {
   
 let order = {
     userId: req.body.user_id,
-    orderStatusId: '0b52bfb5-349e-4b51-95ca-9fb9fbd2dea7',
+    orderStatusId: '364b4a01-f721-4b01-9189-d0d54f0011c8',
     email: req.body.email,
-    direction: req.body.direction        
+    direction: req.body.direction,
+    sucursalId: req.body.sucursalId,
 };
 
   //try {
