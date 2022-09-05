@@ -1,16 +1,17 @@
-// import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import AdminCategoriesComponent from "../AdminCategoriesComponent";
+import AllReviews from "../AllReviews/AllReviews";
 
 import style from "./index.module.css";
 
 export default function AdminComponentContainer() {
-  const { component } = useParams();
+  const { panel } = useParams();
 
-  // useEffect(() => {
-  //   console.log(component);
-  // });
-
-  return <div className={style.containerDiv}>{component === "categories" && <AdminCategoriesComponent />}</div>;
+  return (
+    <div className={style.containerDiv}>
+      {panel && panel === "categories" && <AdminCategoriesComponent />}
+      {panel && panel === "reviews" && <AllReviews />}
+    </div>
+  );
 }

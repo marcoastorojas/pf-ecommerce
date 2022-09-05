@@ -1,32 +1,6 @@
-.generalDiv {
-  flex: 1;
-
-  /* border: 1px solid green; */
-  display: flex;
-  flex-direction: column;
-}
-
-.abledDisabledDiv {
-  display: flex;
-}
-
-.abledDsiabledP {
-  margin: 25px 0 25px 40px;
-
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.separationDiv {
-  border: 1px solid var(--border-color);
-  border-width: 0 1px 0 0;
-  margin: 0 5px 0 5px;
-}
-
-/*///////////////////////////////////////////////////*/
-
 .cardDiv {
   display: flex;
+  align-items: center;
 
   border: 1px solid var(--border-color);
 
@@ -35,7 +9,40 @@
   margin: 0px 5px 10px 5px;
 
   height: 120px;
+  width: 600px;
 }
+
+.stateButtonActive {
+  background-color: greenyellow;
+
+  padding: 4px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 0 0 0 15px;
+
+  height: 30px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.stateButtonDisabled {
+  background-color: rebeccapurple;
+
+  padding: 4px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 0 0 0 15px;
+
+  height: 30px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+/*//////////////////////////////////////////////////////////////////*/
 
 .stateDiv {
   display: flex;

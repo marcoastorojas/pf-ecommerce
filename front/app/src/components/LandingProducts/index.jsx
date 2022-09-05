@@ -1,5 +1,5 @@
-import { getUserFav } from "../../redux/actions";
-import { useEffect, } from "react";
+import { getUserFav, getUserInfo } from "../../redux/actions";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
 import "./index.modules.css";
@@ -15,16 +15,16 @@ export default function LandingProducts() {
 
   // const [dataPerPage, setdataPerPage] = useState(20);
 
-
-useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("fav", JSON.stringify(favourites));
   }, [favourites]);
 
-
   useEffect(() => {
-    if(user.uid) dispatch(getUserFav(user.uid))
+    if (user.uid) {
+      dispatch(getUserFav(user.uid));
+      dispatch(getUserInfo(user.uid));
+    }
   }, []);
-  
 
   return (
     <main>
@@ -45,7 +45,6 @@ useEffect(() => {
             })
           : null}
       </div>
-      
     </main>
   );
 }
