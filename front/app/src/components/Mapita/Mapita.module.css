@@ -1,0 +1,13 @@
+
+.leaflet_container {
+  width: 700px;
+  height: 500px;
+}
+.contMapita {
+    border: 1px solid black;
+    height:  500px;
+    width: 700px;
+}
+.popup {
+    border: 1px solid red;
+}
