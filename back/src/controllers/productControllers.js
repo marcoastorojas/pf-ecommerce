@@ -247,15 +247,13 @@ const updateReview = async (req = request, res = response) => {
 const getProductsFilter = async (req, res) => {
     const { name, priceOrder, min, max, categoryId } = req.query
     try {
-        console.log(name, priceOrder, min, max)
-
+        // console.log(name, priceOrder, min, max)
         //Armando el obj price
         let objPrice = {
             model: Price,
             as: 'price',
             where: {}
         }
-
         //Agrego, si existe, un mínimo
         if(!!min) {
             objPrice = {
@@ -287,7 +285,6 @@ const getProductsFilter = async (req, res) => {
             include: []
         }
         greatCondition.include.push(objPrice)
-
         //Armo y agrego, si existe, un filtrado por categoría
         if(!!categoryId) {
             let objCategory = {
@@ -302,7 +299,6 @@ const getProductsFilter = async (req, res) => {
             }
             greatCondition.include.push(objCategory)
         }
-
         //Agrego, si existe, un orden
         if(!!priceOrder) {
             greatCondition = {
@@ -310,9 +306,7 @@ const getProductsFilter = async (req, res) => {
                 order: [['price', 'originalprice', priceOrder]]
             }
         }
-
         //Agrego, si existe, un filtrado por orden
-
         if(!!name) {
             greatCondition = {
                 ...greatCondition,
@@ -322,15 +316,7 @@ const getProductsFilter = async (req, res) => {
                     }
                 }
             }
-        }
-        
-        // if(!!priceOrder) {
-        //     greatCondition = {
-        //         ...greatCondition,
-        //         order: [['price', 'originalprice', priceOrder]]
-        //     }
-        // }
-
+        }    
             //MODELO
         // let greatCondition = {
         //     attributes: ['title'],
@@ -360,10 +346,6 @@ const getProductsFilter = async (req, res) => {
         //     ],
         //     order: [['price', 'originalprice', 'desc']]
         // }
-
-
-        // let allConditions = {order: orden} //allConditions guarda todas las condiciones de filtrado y ordenamiento, si existen
-
         const resul = await Product.findAll(greatCondition)
         res.status(200).json(resul)
     } catch (err) {
