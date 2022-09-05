@@ -33,6 +33,7 @@ import {
   //REVIEWS
   GET_USER_REVIEWS,
   CLEAR_REVIEWS,
+  ALL_REVIEWS,  
 
   //USER DATA
   GET_USER_INFO,
@@ -73,7 +74,7 @@ const initialState = {
   shoppingList: {}, //Guarda todas las compras del usuario activo
   userInfoPage: "",
   reviews: [],
-  productReview: [],
+  productsReviews: [],
   dataOrders: {},
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
    userInfoExtra: {}, //Info de usuario completa
@@ -406,6 +407,12 @@ export const reducer = (state = initialState, action) => {
           ...state,
           allUsers: action.payload
         }
+      }
+      case ALL_REVIEWS: {
+          return {
+              ...state,
+              productsReviews: action.payload,
+          }
       }
     default:
       return state;
