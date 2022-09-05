@@ -17,7 +17,8 @@ export default function Results() {
     }, [])
  return (
   <div>
-   {search && <h1 className={style.titulo}>Results for: {search} </h1>}
+   {search!==''?<h1 className={style.titulo}>Results for: {search} </h1>: <></>}
+   {/* <button onClick={() => console.log(search)}>PRUEBA</button> */}
    <div className={style.contenido}>
     <FilterContainer/>
     <ResultsContainer />

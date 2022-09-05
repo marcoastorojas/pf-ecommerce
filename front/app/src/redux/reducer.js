@@ -58,7 +58,7 @@ const initialState = {
   categories: [],
   search: "",
   subCategories: [],
-  searchCategory: "",
+  searchCategory: ['',''],
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario

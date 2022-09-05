@@ -243,6 +243,115 @@ const updateReview = async (req = request, res = response) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+const getProductsFilter = async (req, res) => {
+    const { name, priceOrder, min, max, categoryId } = req.query
+    try {
+        // console.log(name, priceOrder, min, max)
+        //Armando el obj price
+        let objPrice = {
+            model: Price,
+            as: 'price',
+            where: {}
+        }
+        //Agrego, si existe, un mínimo
+        if(!!min) {
+            objPrice = {
+                ...objPrice,
+                where: {
+                    ...objPrice.where,
+                    originalprice: {
+                        ...objPrice.where.originalprice,
+                        [Op.gt]: min
+                    }
+                }
+            }
+        }
+        //Agrego, si existe, un máximo
+        if(!!max) {
+            objPrice = {
+                ...objPrice,
+                where: {
+                    ...objPrice.where,
+                    originalprice: {
+                        ...objPrice.where.originalprice,
+                        [Op.lt]: max
+                    }
+                }
+            }
+        }
+        let greatCondition = {
+            // attributes: ['title'],
+            include: []
+        }
+        greatCondition.include.push(objPrice)
+        //Armo y agrego, si existe, un filtrado por categoría
+        if(!!categoryId) {
+            let objCategory = {
+                model: Category,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                },
+                where: {
+                    id: categoryId
+                },
+            }
+            greatCondition.include.push(objCategory)
+        }
+        //Agrego, si existe, un orden
+        if(!!priceOrder) {
+            greatCondition = {
+                ...greatCondition,
+                order: [['price', 'originalprice', priceOrder]]
+            }
+        }
+        //Agrego, si existe, un filtrado por orden
+        if(!!name) {
+            greatCondition = {
+                ...greatCondition,
+                where: {
+                    title: {
+                        [Op.iLike]: `%${name}%`
+                    }
+                }
+            }
+        }    
+            //MODELO
+        // let greatCondition = {
+        //     attributes: ['title'],
+        //     include: [
+        //         {
+        //             model: Category,
+        //             attributes: ['name'],
+        //             through: {
+        //                 attributes: []
+        //             },
+        //             where: {
+        //                 id: categoryId
+        //             },
+        //         },
+        //         {
+        //             model: Price,
+        //             attributes: ['originalprice'],
+        //             order: ['originalprice', 'asc'],
+        //             where: {
+        //                 originalprice: {
+        //                     [Op.lt]: 7000,
+        //                     [Op.gt]: 6000,
+        //                 },
+        //             },
+        //             as: 'price'
+        //         },
+        //     ],
+        //     order: [['price', 'originalprice', 'desc']]
+        // }
+        const resul = await Product.findAll(greatCondition)
+        res.status(200).json(resul)
+    } catch (err) {
+        res.status(500).json({ error: err.message})
+    }
+}
 module.exports = {
     postProduct,
     getProducts,
@@ -255,5 +364,6 @@ module.exports = {
     addReview,
     deleteFavorite,
     deleteReview,
-    updateReview
+    updateReview,
+    getProductsFilter
 }
