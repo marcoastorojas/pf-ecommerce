@@ -9,6 +9,7 @@ import { ADMIN_ROLE } from "../../validations/usersTypes";
 import {
   getCategories,
   getCategoryProductsById,
+  getSearchCategory,
   newSearchProducts,
   // getSearchCategory,
   // getSearchName,
@@ -44,6 +45,7 @@ export default function NavBar() {
   const onCategorySelection = (e) => {
     // dispatch(getCategoryProductsById(e.target.id));
     dispatch(newSearchProducts(null,null,null,null,e.target.id))
+    dispatch(getSearchCategory([e.target.id, e.target.name]))
   };
 
   function showCategoriesHandler() {
@@ -105,7 +107,7 @@ export default function NavBar() {
                     const { id, name } = e;
                     return (
                       <div key={index}>
-                        <Link className={style.enlace} key={id} id={id} to={`/results`} onClick={onCategorySelection}>
+                        <Link className={style.enlace} key={id} name={name} id={id} to={`/results`} onClick={onCategorySelection}>
                           {name}
                         </Link>
                       </div>

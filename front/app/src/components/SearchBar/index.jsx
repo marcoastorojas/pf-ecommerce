@@ -34,7 +34,7 @@ export default function SearchBar() {
       // dispatch(getProductsByName(textInput));
       dispatch(newSearchProducts(textInput));
       dispatch(getSearchName(textInput));
-      // dispatch(getSearchCategory(""));
+      dispatch(getSearchCategory(""));
       setEmptySearch(false);
       navigate("/results");
     }

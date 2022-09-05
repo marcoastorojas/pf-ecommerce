@@ -293,6 +293,7 @@ export const getSubCategories = () => {
 };
 
 export const getSearchCategory = (payload) => {
+  // console.log(payload)
   return {
     type: GET_SEARCH_CATEGORY,
     payload,
@@ -902,6 +903,7 @@ export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
   if(!!min) url.searchParams.append('min', min)
   if(!!max) url.searchParams.append('max', max)
   if(!!categoryId) url.searchParams.append('categoryId', categoryId)
+  console.log('name: ', name, 'priceOrder: ', priceOrder, 'min: ', min, 'max: ', max, 'categoryId:', categoryId)
   
   return (dispatch) => {
     dispatch({
@@ -912,12 +914,16 @@ export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
       type: GET_PRODUCTS_BY_NAME,
       payload: [],
     });
+    dispatch({
+      type: GET_SEARCH_NAME,
+      payload: name || ''
+    })
     axios({
       method: 'GET',
       url: url.href,
     })
     .then(response => {
-      console.log(response.data.length)
+      // console.log(response.data.length)
       response.data.length > 0
           ? dispatch({
               type: GET_PRODUCTS_BY_NAME,
