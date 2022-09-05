@@ -5,6 +5,8 @@ import { Toaster, toast } from "react-hot-toast";
 import { sendPayment } from "../../redux/actions";
 import { useState } from "react";
 import Mapita from "../Mapita/Mapita.jsx"
+import style from "./Checkout.css"
+
 
 export default function Checkout() {
   const dispatch = useDispatch();
@@ -75,8 +77,6 @@ export default function Checkout() {
         }
         navigator.geolocation.getCurrentPosition(onSuccess,onError);
     }, []);
-  
-  console.log(location)
 
   if (cart.length < 1) {
     toast.error("Shopping cart is empty");
@@ -114,11 +114,11 @@ export default function Checkout() {
     );
   } else
     return (
-      <div>
+      <div className={style.check}>
         <input type="text" name="email" id="email" placeholder="email" value={email} onChange={handleEmail} />
         <input type="text" name="direction" id="direction" placeholder="direction" onChange={handleDirection} />
         <button onClick={() => handlePay()}>PAY</button>
-        <div>{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : location.error}</div>
+        <div className={style.mapa}>{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : location.error}</div>
         <Toaster />
       </div>
     );
