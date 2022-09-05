@@ -66,6 +66,7 @@ export const GET_ORDERS = "GET_ORDERS";
 
 //ADMIN
 export const GET_ALL_USERS = "GET_ALL_USERS";
+export const PUT_CATEGORY_STATE = "PUT_CATEGORY_STATE";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -192,9 +193,7 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
     axios
       .get(url.href)
       .then((response) => {
-        response.data.data.length > 0
-          ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data })
-          : dispatch({ type: RESULTS_FOUND, payload: false });
+        response.data.data.length > 0 ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data }) : dispatch({ type: RESULTS_FOUND, payload: false });
       })
       .catch((err) => {
         toast.err("No results");
@@ -218,20 +217,11 @@ export const getCategories = (onlyActive) => {
           payload: response.data.data,
         });
       })
-      .catch((err) =>
-        console.log({ m: "Error on action creator getCategories", err })
-      );
+      .catch((err) => console.log({ m: "Error on action creator getCategories", err }));
   };
 };
 
-export const getCategoryProductsById = (
-  categoryId,
-  name,
-  max,
-  min,
-  asc,
-  desc
-) => {
+export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
   toast.loading("Searching...", {
     id: "SearchFilter",
   });
@@ -289,19 +279,19 @@ export const getSearchName = (payload) => {
   };
 };
 
-export const getSubCategories = () => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/subCategories`);
-      return dispatch({
-        type: GET_SUB_CATEGORIES,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(`can not find subcategories`, error);
-    }
-  };
-};
+// export const getSubCategories = () => {
+//   return async function (dispatch) {
+//     try {
+//       const response = await axios.get(`${BASE_URL}/subCategories`);
+//       return dispatch({
+//         type: GET_SUB_CATEGORIES,
+//         payload: response.data,
+//       });
+//     } catch (error) {
+//       console.log(`can not find subcategories`, error);
+//     }
+//   };
+// };
 
 export const getSearchCategory = (payload) => {
   // console.log(payload)
@@ -455,11 +445,7 @@ export const logIn = (user) => {
           type: ERROR_HANDLE,
           payload: err.response.data.errors,
         });
-        toast.error(
-          `${Object.keys(err.response.data.errors)[0]}: ${
-            Object.values(err.response.data.errors)[0]
-          }`
-        );
+        toast.error(`${Object.keys(err.response.data.errors)[0]}: ${Object.values(err.response.data.errors)[0]}`);
       });
   };
 };
@@ -821,10 +807,7 @@ export const getUserFav = (id) => {
 export const addFav = (productId, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        `${BASE_URL}/products/favorite/${productId}`,
-        { userId: id }
-      );
+      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, { userId: id });
 
       return dispatch({
         type: ADD_FAVOURITES,
@@ -922,18 +905,7 @@ export const newSearchProducts = (name, priceOrder, min, max, categoryId) => {
   if (!!min) url.searchParams.append("min", min);
   if (!!max) url.searchParams.append("max", max);
   if (!!categoryId) url.searchParams.append("categoryId", categoryId);
-  console.log(
-    "name: ",
-    name,
-    "priceOrder: ",
-    priceOrder,
-    "min: ",
-    min,
-    "max: ",
-    max,
-    "categoryId:",
-    categoryId
-  );
+  console.log("name: ", name, "priceOrder: ", priceOrder, "min: ", min, "max: ", max, "categoryId:", categoryId);
 
   return (dispatch) => {
     dispatch({
@@ -970,15 +942,45 @@ export const newSearchProducts = (name, priceOrder, min, max, categoryId) => {
   };
 };
 
+export const putCategoryState = (categoryId, newStatus) => {
+  return (dispatch) => {
+    axios({
+      method: "DELETE",
+      url: `${BASE_URL}/categories`,
+      data: { categoryId, newStatus },
+    })
+      .then((response) => {
+        console.log({ from: "putCategoryState DELETE", response });
+        dispatch({
+          type: PUT_CATEGORY_STATE,
+          payload: response.data,
+        });
+      })
+      .then((response) => {
+        axios
+          .get(`${BASE_URL}/categories`)
+          .then((response) => {
+            console.log({ from: "putCategoryState GET", response });
+            dispatch({
+              type: GET_CATEGORIES,
+              payload: response.data.data,
+            });
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
 export const getAllReviews = () => {
   return async function (dispatch) {
     try {
-    const response = await axios.get(`${BASE_URL}/products/reviews`)
-    console.log(response.data)
-    return dispatch({
-      type: ALL_REVIEWS,
-      payload: response.data
-    })
+      const response = await axios.get(`${BASE_URL}/products/reviews`);
+      console.log(response.data);
+      return dispatch({
+        type: ALL_REVIEWS,
+        payload: response.data,
+      });
     } catch (error) {
       console.log("error all reviews");
     }

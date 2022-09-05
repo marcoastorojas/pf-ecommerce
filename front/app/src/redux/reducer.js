@@ -33,7 +33,7 @@ import {
   //REVIEWS
   GET_USER_REVIEWS,
   CLEAR_REVIEWS,
-  ALL_REVIEWS,  
+  ALL_REVIEWS,
 
   //USER DATA
   GET_USER_INFO,
@@ -44,10 +44,13 @@ import {
   GET_ORDERS,
   //eslint-disable-next-line
   GET_USER_INFO_EXTRA,
-    
- //WISHLIST
- GET_USER_FAVOURITES,
- GET_ALL_USERS
+
+  //WISHLIST
+  GET_USER_FAVOURITES,
+  GET_ALL_USERS,
+
+  //ADMIN
+  PUT_CATEGORY_STATE,
 } from "./actions";
 
 const initialState = {
@@ -59,7 +62,7 @@ const initialState = {
   categories: [],
   search: "",
   subCategories: [],
-  searchCategory: ['',''],
+  searchCategory: ["", ""],
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario
@@ -77,8 +80,8 @@ const initialState = {
   productsReviews: [],
   dataOrders: {},
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
-   userInfoExtra: {}, //Info de usuario completa
-  allUsers: [] //AllUsersForAdmin
+  userInfoExtra: {}, //Info de usuario completa
+  allUsers: [], //AllUsersForAdmin
 };
 
 export const reducer = (state = initialState, action) => {
@@ -401,19 +404,19 @@ export const reducer = (state = initialState, action) => {
         favourites: action.payload,
       };
     }
-      //ADMIN
-      case GET_ALL_USERS: {
-        return {
-          ...state,
-          allUsers: action.payload
-        }
-      }
-      case ALL_REVIEWS: {
-          return {
-              ...state,
-              productsReviews: action.payload,
-          }
-      }
+    //ADMIN
+    case GET_ALL_USERS: {
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+    }
+    case ALL_REVIEWS: {
+      return {
+        ...state,
+        productsReviews: action.payload,
+      };
+    }
     default:
       return state;
   }
