@@ -67,6 +67,8 @@ export const GET_ORDERS = "GET_ORDERS";
 //ADMIN
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const PUT_CATEGORY_STATE = "PUT_CATEGORY_STATE";
+export const POSTING_CATEGORY = "POSTING_CATEGORY";
+export const POST_CATEGORY = "POST_CATEGORY";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -969,6 +971,46 @@ export const putCategoryState = (categoryId, newStatus) => {
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const postCategory = (name) => {
+  return (dispatch) => {
+    dispatch({
+      type: POSTING_CATEGORY,
+      payload: { name, state: "posting" },
+    });
+    axios({
+      method: "POST",
+      url: `${BASE_URL}/categories`,
+      data: {
+        name,
+      },
+    })
+      .then((response) => {
+        console.log({ from: "postCategory", response });
+        dispatch({
+          type: POST_CATEGORY,
+          payload: response.data,
+        });
+        axios
+          .get(`${BASE_URL}/categories`)
+          .then((response) => {
+            console.log({ from: "postCategory second request", response });
+            dispatch({
+              type: GET_CATEGORIES,
+              payload: response.data.data,
+            });
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: POST_CATEGORY,
+          payload: { name, state: "error" },
+        });
+      });
   };
 };
 
