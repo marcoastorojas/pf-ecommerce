@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-// import { useEffect } from "react";
+import React from "react";
+
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -19,14 +19,13 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 
 import NavBar from "./components/NavBar";
 import SimpleNavBar from "./components/SimpleNavBar";
-import Footer from "./components/Footer";
 import AdminNavBar from "./components/--AdminComponents/AdminNavBar";
+import Footer from "./components/Footer";
 
 // import SellerRoutes from "./validations/SellerRoutes";
 // import BuyerRoutes from "./validations/BuyerRoutes";
 
-// import closeButton from "./media/svg/cross_on_circle.svg";
-// import toastLogo from "./media/svg/tick_on_circle.svg";
+// import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "./validations/usersTypes";
 
 import "./App.css";
 
@@ -35,7 +34,8 @@ function App() {
 
   return (
     <div className="App">
-      {pathname === "/signup" || pathname === "/login" ? <SimpleNavBar /> : pathname === "/soyadmin" ? <AdminNavBar /> : <NavBar />}
+      {pathname === "/signup" || (pathname === "/login" && <SimpleNavBar />)}
+      {pathname === "/soyadmin/categories" || pathname === "/soyadmin/users" ? <AdminNavBar /> : <NavBar />}
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/signup" exact element={<SignUp />} />
@@ -51,11 +51,11 @@ function App() {
         <Route path="/product/create" exact element={<Form />} />
         {/* </Route> */}
         {/* </Route> */}
-        <Route path="/error" exact element={<GenericError />} />
-        <Route path="/soyadmin/:component" exact element={<AdminPage />} />
+        <Route path="/soyadmin/:panel" exact element={<AdminPage />} />
+        <Route path="*" exact element={<GenericError />} />
       </Routes>
       <Footer />
-      <Toaster toastOptions={{className: 'tostadora'}} />
+      <Toaster toastOptions={{ className: "tostadora" }} />
     </div>
   );
 }
