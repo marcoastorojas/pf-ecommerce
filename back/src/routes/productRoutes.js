@@ -28,6 +28,9 @@ const sendmail = require("../helpers/sendEmail");
 
 const productRoutes = Router()
 
+//PruebaSebas
+productRoutes.get('/productsfilter', getProductsFilter)
+
 productRoutes.get("/productsWithCategories", async (req, res) => {
     const title = req.query.title;
     const results = [];
@@ -121,8 +124,6 @@ productRoutes.put('/review/:id', validIdParam, updateReview)
 
 
 
-//PruebaSebas
-productRoutes.get('/productsFilter', getProductsFilter)
 module.exports = {
     productRoutes
 }

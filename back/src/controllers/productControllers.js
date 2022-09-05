@@ -245,23 +245,55 @@ const updateReview = async (req = request, res = response) => {
 }
 
 const getProductsFilter = async (req, res) => {
-    const { name, priceOrder, min, max, categories } = req.params
+    const { name, priceOrder, min, max, categoryId } = req.query
     try {
-
+        console.log(name, priceOrder, min, max)
         //Defino, si existe, el orden según el precio
         let orden = []
         if (!!priceOrder) orden.push(['originalprice', priceOrder])
 
         //Defino, si existe, la condición de búsqueda por nombre
         let whereCondition = {}
-            if (!!name) whereCondition = {
-                name : {[Op.iLike]: `%${name}%`}
+        if (!!name) whereCondition = {
+            name : {[Op.iLike]: `%${name}%`}
+        }
+        let greatCondition = {}
+        if(!!categoryId) {
+            greatCondition = {
+                attributes: ['title'],
+                include: [
+                    {
+                        model: Category,
+                        attributes: ['name'],
+                        through: {
+                            attributes: []
+                        },
+                        where: {
+                            id: categoryId
+                        },
+                    },
+                    {
+                        model: Price,
+                        attributes: ['originalprice'],
+                        order: ['originalprice', 'asc'],
+                        where: {
+                            originalprice: {
+                                [Op.lt]: 7000,
+                                [Op.gt]: 6000,
+                            },
+                        },
+                        as: 'price'
+                    },
+                ],
+                order: [['price', 'originalprice', 'desc']]
             }
+        }
 
-        
+
         let allConditions = {order: orden} //allConditions guarda todas las condiciones de filtrado y ordenamiento, si existen
 
-
+        const resul = await Product.findAll(greatCondition)
+        res.status(200).json(resul)
     } catch (err) {
         res.status(500).json({ error: err.message})
     }
