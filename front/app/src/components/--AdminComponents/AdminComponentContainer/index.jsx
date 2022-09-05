@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import AdminCategoriesComponent from "../AdminCategoriesComponent";
+import AllReviews from "../AllReviews/AllReviews";
 
 import style from "./index.module.css";
 
@@ -10,7 +11,7 @@ export default function AdminComponentContainer() {
   return (
     <div className={style.containerDiv}>
       {panel && panel === "categories" && <AdminCategoriesComponent />}
-      {panel && panel === "reviews" && <AdminCategoriesComponent />}
+      {panel && panel === "reviews" && <AllReviews />}
     </div>
   );
 }

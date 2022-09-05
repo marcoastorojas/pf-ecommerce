@@ -14,6 +14,7 @@ const {
     deleteReview,
     updateReview,
     getProductsFilter,
+    getReviews,
  } = require("../controllers/productControllers")
 
 //middlewares
@@ -30,6 +31,8 @@ const productRoutes = Router()
 
 //PruebaSebas
 productRoutes.get('/productsfilter', getProductsFilter)
+
+productRoutes.get('/reviews', getReviews)
 
 productRoutes.get("/productsWithCategories", async (req, res) => {
     const title = req.query.title;

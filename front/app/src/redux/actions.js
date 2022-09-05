@@ -59,6 +59,7 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const DEL_REVIEW = "DEL_REVIEW";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
 export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
+export const ALL_REVIEWS = "ALL_REVIEWS";
 
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
@@ -735,7 +736,11 @@ export const getUserReviews = (id) => {
 export const addReview = (review, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`${BASE_URL}/products/review/${id}`, { userId: review.id, score: review.score, description: review.description });
+      const response = await axios.post(`${BASE_URL}/products/review/${id}`, {
+        userId: review.id,
+        score: review.score,
+        description: review.description,
+      });
 
       return dispatch({
         type: ADD_REVIEW,
@@ -767,7 +772,11 @@ export const delReview = (userId, id) => {
 export const updateReview = (review, id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.put(`${BASE_URL}/products/review/${id}`, { score: review.score, description: review.description, userId: review.id });
+      const response = await axios.put(`${BASE_URL}/products/review/${id}`, {
+        score: review.score,
+        description: review.description,
+        userId: review.id,
+      });
 
       return dispatch({
         type: UPDATE_REVIEW,
@@ -960,5 +969,20 @@ export const putCategoryState = (categoryId, newStatus) => {
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const getAllReviews = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/products/reviews`);
+      console.log(response.data);
+      return dispatch({
+        type: ALL_REVIEWS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("error all reviews");
+    }
   };
 };
