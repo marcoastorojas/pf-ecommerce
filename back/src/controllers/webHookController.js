@@ -15,7 +15,7 @@ const recibeConfirmation = async (req = request, res = response) => {
 .then((order)=> {
   console.log(order.id)
   updatedRows = Order.update(
-    {orderStatusId: "0b52bfb5-349e-4b52-95ca-9fb9fbd2dea7"},
+    {orderStatusId: "364b4a01-f721-4b01-9189-d0d54f0011c8"},
     {where: { id: order.id }}
     ) 
     updatedRows.then(()=>console.log(updatedRows))
