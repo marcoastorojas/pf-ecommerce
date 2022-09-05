@@ -248,49 +248,121 @@ const getProductsFilter = async (req, res) => {
     const { name, priceOrder, min, max, categoryId } = req.query
     try {
         console.log(name, priceOrder, min, max)
-        //Defino, si existe, el orden según el precio
-        let orden = []
-        if (!!priceOrder) orden.push(['originalprice', priceOrder])
 
-        //Defino, si existe, la condición de búsqueda por nombre
-        let whereCondition = {}
-        if (!!name) whereCondition = {
-            name : {[Op.iLike]: `%${name}%`}
+        //Armando el obj price
+        let objPrice = {
+            model: Price,
+            as: 'price',
+            where: {}
         }
-        let greatCondition = {}
+
+        //Agrego, si existe, un mínimo
+        if(!!min) {
+            objPrice = {
+                ...objPrice,
+                where: {
+                    ...objPrice.where,
+                    originalprice: {
+                        ...objPrice.where.originalprice,
+                        [Op.gt]: min
+                    }
+                }
+            }
+        }
+        //Agrego, si existe, un máximo
+        if(!!max) {
+            objPrice = {
+                ...objPrice,
+                where: {
+                    ...objPrice.where,
+                    originalprice: {
+                        ...objPrice.where.originalprice,
+                        [Op.lt]: max
+                    }
+                }
+            }
+        }
+        let greatCondition = {
+            attributes: ['title'],
+            include: []
+        }
+        greatCondition.include.push(objPrice)
+
+        //Armo y agrego, si existe, un filtrado por categoría
         if(!!categoryId) {
+            let objCategory = {
+                model: Category,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                },
+                where: {
+                    id: categoryId
+                },
+            }
+            greatCondition.include.push(objCategory)
+        }
+
+        //Agrego, si existe, un orden
+        if(!!priceOrder) {
             greatCondition = {
-                attributes: ['title'],
-                include: [
-                    {
-                        model: Category,
-                        attributes: ['name'],
-                        through: {
-                            attributes: []
-                        },
-                        where: {
-                            id: categoryId
-                        },
-                    },
-                    {
-                        model: Price,
-                        attributes: ['originalprice'],
-                        order: ['originalprice', 'asc'],
-                        where: {
-                            originalprice: {
-                                [Op.lt]: 7000,
-                                [Op.gt]: 6000,
-                            },
-                        },
-                        as: 'price'
-                    },
-                ],
-                order: [['price', 'originalprice', 'desc']]
+                ...greatCondition,
+                order: [['price', 'originalprice', priceOrder]]
             }
         }
 
+        //Agrego, si existe, un filtrado por orden
 
-        let allConditions = {order: orden} //allConditions guarda todas las condiciones de filtrado y ordenamiento, si existen
+        if(!!name) {
+            greatCondition = {
+                ...greatCondition,
+                where: {
+                    title: {
+                        [Op.iLike]: `%${name}%`
+                    }
+                }
+            }
+        }
+        
+        // if(!!priceOrder) {
+        //     greatCondition = {
+        //         ...greatCondition,
+        //         order: [['price', 'originalprice', priceOrder]]
+        //     }
+        // }
+
+            //MODELO
+        // let greatCondition = {
+        //     attributes: ['title'],
+        //     include: [
+        //         {
+        //             model: Category,
+        //             attributes: ['name'],
+        //             through: {
+        //                 attributes: []
+        //             },
+        //             where: {
+        //                 id: categoryId
+        //             },
+        //         },
+        //         {
+        //             model: Price,
+        //             attributes: ['originalprice'],
+        //             order: ['originalprice', 'asc'],
+        //             where: {
+        //                 originalprice: {
+        //                     [Op.lt]: 7000,
+        //                     [Op.gt]: 6000,
+        //                 },
+        //             },
+        //             as: 'price'
+        //         },
+        //     ],
+        //     order: [['price', 'originalprice', 'desc']]
+        // }
+
+
+        // let allConditions = {order: orden} //allConditions guarda todas las condiciones de filtrado y ordenamiento, si existen
 
         const resul = await Product.findAll(greatCondition)
         res.status(200).json(resul)
