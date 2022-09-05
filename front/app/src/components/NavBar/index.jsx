@@ -3,8 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { getCategories, getCategoryProductsById, setUserGoogle, upgradeToSeller } from "../../redux/actions";
-import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "../../validations/usersTypes";
+import { ADMIN_ROLE } from "../../validations/usersTypes";
+
+import {
+  getCategories,
+  getCategoryProductsById,
+  getSearchCategory,
+  newSearchProducts,
+  // getSearchCategory,
+  // getSearchName,
+  setUserGoogle,
+  upgradeToSeller,
+} from "../../redux/actions";
+import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
 
 import SearchBar from "../SearchBar";
 import NavBarUserMenu from "../NavBarUserMenu";
@@ -31,20 +42,22 @@ export default function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
 
   const onCategorySelection = (e) => {
-    dispatch(getCategoryProductsById(e.target.id));
+    // dispatch(getCategoryProductsById(e.target.id));
+    dispatch(newSearchProducts(null,null,null,null,e.target.id))
+    dispatch(getSearchCategory([e.target.id, e.target.name]))
   };
 
   function showCategoriesHandler() {
     showCategories ? setShowCategories(false) : setShowCategories(true);
   }
 
-  const handleSignOut = () => {
-    // setUser({})
-    dispatch(setUserGoogle({}, true));
-    localStorage.removeItem("user");
-    navigate("/");
-    // document.getElementById('sigInDiv').hidden = false
-  };
+  // const handleSignOut = () => {
+  //   // setUser({})
+  //   dispatch(setUserGoogle({}, true));
+  //   localStorage.removeItem("user");
+  //   navigate("/");
+  //   // document.getElementById('sigInDiv').hidden = false
+  // };
 
   //Toast Inicio de Sesión
   // useEffect(() => {
@@ -60,10 +73,10 @@ export default function NavBar() {
   // }, [errorRedux])
 
   //Mejorar de comprador a vendedor
-  const btnUpSel = () => {
-    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, "SELLER_ROLE"));
-    // console.log('pepe')
-  };
+  // const btnUpSel = () => {
+  //   dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, "SELLER_ROLE"));
+  //   // console.log('pepe')
+  // };
 
   const HideShoppCart = () => {
     const cartDisp = document.querySelector("#shoppCartNavBar");
@@ -93,7 +106,7 @@ export default function NavBar() {
                     const { id, name } = e;
                     return (
                       <div key={index}>
-                        <Link className={style.enlace} key={id} id={id} to={`/results`} onClick={onCategorySelection}>
+                        <Link className={style.enlace} key={id} name={name} id={id} to={`/results`} onClick={onCategorySelection}>
                           {name}
                         </Link>
                       </div>

@@ -293,6 +293,7 @@ export const getSubCategories = () => {
 };
 
 export const getSearchCategory = (payload) => {
+  // console.log(payload)
   return {
     type: GET_SEARCH_CATEGORY,
     payload,
@@ -532,11 +533,21 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        //console.log(response);
+        console.log('GETUSERINFOR', response.data);
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
         });
+        let userInfoAct = {
+          email: response.data.email,
+          google: response.data.google,
+          image: response.data.image,
+          roleId: response.data.roleId,
+          uid: response.data.uid,
+          username: response.data.username,
+          name: response.data.info?.name
+        }
+        localStorage.setItem('user', JSON.stringify(userInfoAct))
       })
       .catch((err) => console.log(err));
   };
@@ -562,6 +573,19 @@ export const putUserImage = (id, changes, text = 'Updating Information') => {
           payload: response.data.user.image,
         });
         toast.success('Information sent')
+        //Actualizar la información en localStorage
+        let userInfoAct = {
+          email: response.data.user?.email,
+          google: response.data.user?.google,
+          image: response.data.user?.image,
+          roleId: response.data.user?.roleId,
+          uid: response.data.user?.uid,
+          username: response.data.user.username,
+          name: response.data.user?.info?.name
+        }
+        localStorage.setItem('user', JSON.stringify(userInfoAct))
+        window.location.reload(false)
+        
       })
       .catch((err) => {
         // console.log(err);
@@ -588,8 +612,21 @@ export const putNewUserInfo = (id, changes) => {
           type: PUT_NEW_USER_INFO,
           payload: response.data.user,
         });
+        // console.log(response.data)
+        // dispatch(getUserInfo(id))
         toast.dismiss('NewUserInfo');
         toast.success("Changes applied succesfully!", { duration: 10000 });
+        let userInfoAct = {
+          email: response.data.user?.email,
+          google: response.data.user?.google,
+          image: response.data.user?.image,
+          roleId: response.data.user?.roleId,
+          uid: response.data.user?.uid,
+          username: response.data.user.username,
+          name: response.data.user?.info?.name
+        }
+        localStorage.setItem('user', JSON.stringify(userInfoAct))
+        window.location.reload(false)
       })
       .catch((err) => console.log({ from: "putNewUserInfo", err }));
   };
@@ -855,4 +892,51 @@ export const changeUserStatus = (userId, newStatus) => {
     })
     .catch(err => console.log(err))
   }
+}
+
+export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
+ 
+  const url = new URL(`${BASE_URL}/products/productsfilter`)
+
+  if(!!name) url.searchParams.append('name', name)
+  if(!!priceOrder) url.searchParams.append('priceOrder', priceOrder)
+  if(!!min) url.searchParams.append('min', min)
+  if(!!max) url.searchParams.append('max', max)
+  if(!!categoryId) url.searchParams.append('categoryId', categoryId)
+  console.log('name: ', name, 'priceOrder: ', priceOrder, 'min: ', min, 'max: ', max, 'categoryId:', categoryId)
+  
+  return (dispatch) => {
+    dispatch({
+      type: RESULTS_FOUND,
+      payload: true,
+    });
+    dispatch({
+      type: GET_PRODUCTS_BY_NAME,
+      payload: [],
+    });
+    dispatch({
+      type: GET_SEARCH_NAME,
+      payload: name || ''
+    })
+    axios({
+      method: 'GET',
+      url: url.href,
+    })
+    .then(response => {
+      // console.log(response.data.length)
+      response.data.length > 0
+          ? dispatch({
+              type: GET_PRODUCTS_BY_NAME,
+              payload: response.data,
+            })
+          : dispatch({
+              type: RESULTS_FOUND,
+              payload: false,
+            });
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
 }

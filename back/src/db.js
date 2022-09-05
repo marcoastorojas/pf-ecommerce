@@ -36,6 +36,9 @@ const { Order, Orderdetail, OrderType, OrderStatus } = sequelize.models;
 Order.hasMany(Orderdetail);
 Orderdetail.belongsTo(Order);
 
+OrderStatus.hasMany(Order);
+Order.belongsTo(OrderStatus);
+
 const { Category, Subcategory, Product, Price, Role, User, Person, Status, Favorite, Review } = sequelize.models;
 
 User.hasMany(Product, { foreignKey: "userId" })
