@@ -15,6 +15,7 @@ const {
     updateReview,
     getProductsFilter,
     getReviews,
+    putProductById,
  } = require("../controllers/productControllers")
 
 //middlewares
@@ -31,6 +32,9 @@ const productRoutes = Router()
 
 //PruebaSebas
 productRoutes.get('/productsfilter', getProductsFilter)
+
+//endpoint para modificar productos
+productRoutes.put('/productsmodify/:productId', putProductById)
 
 productRoutes.get('/reviews', getReviews)
 

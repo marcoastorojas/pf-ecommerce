@@ -352,6 +352,58 @@ const getProductsFilter = async (req, res) => {
         res.status(500).json({ error: err.message})
     }
 }
+const putProductById = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const {title, model, description, brand, stock, images} = req.body;
+        const {categoriesId} = req.body;
+        const {price, discount} = req.body;
+        await Product.update({
+            title,
+            model,
+            description,
+            brand, stock,
+            images
+        }, {
+            where: {
+                id: productId,
+            }
+        })
+
+        let product = await Product.findOne({
+            where: {
+                id: productId
+            },
+            include: {
+                model: Category,
+            }
+        })
+        await product.setCategories(categoriesId)
+        await Price.update({
+            originalprice: price,
+            discount: discount
+        }, {
+            where: {
+                productId: productId,
+            }
+        })
+        
+        product = await Product.findOne({
+            where: {
+                id: productId
+            },
+            include: [{
+                model: Category,
+            },
+            {
+                model: Price,
+            }],
+        })
+        res.status(200).json(product)
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
+}
 
 const getReviews = async (req, res) => {
     try {
@@ -382,4 +434,5 @@ module.exports = {
     updateReview,
     getProductsFilter,
     getReviews,
+    putProductById,
 }
