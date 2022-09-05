@@ -5,7 +5,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { sendPayment } from "../../redux/actions";
 import { useState } from "react";
 import Mapita from "../Mapita/Mapita.jsx"
-import style from "./Checkout.css"
+import "./Checkout.css"
 
 
 export default function Checkout() {
@@ -114,11 +114,11 @@ export default function Checkout() {
     );
   } else
     return (
-      <div className={style.check}>
+      <div className="check">
         <input type="text" name="email" id="email" placeholder="email" value={email} onChange={handleEmail} />
         <input type="text" name="direction" id="direction" placeholder="direction" onChange={handleDirection} />
         <button onClick={() => handlePay()}>PAY</button>
-        <div className={style.mapa}>{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : location.error}</div>
+        <div className="map">{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : location.error}</div>
         <Toaster />
       </div>
     );
