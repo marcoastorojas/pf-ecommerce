@@ -352,6 +352,21 @@ const getProductsFilter = async (req, res) => {
         res.status(500).json({ error: err.message})
     }
 }
+
+const getReviews = async (req, res) => {
+    try {
+        const reviews = await Review.findAll({
+            include: [
+            { model: User, attributes: ["uid", "username", "image"], include: [
+                { model: Role, as: "role" },
+            ]},
+            { model: Product, attributes: ["id", "title", "images"] },
+        ]});
+         res.status(200).json(reviews)
+    } catch(error) {
+         res.status(500).json({ error: error.message})
+    }
+}
 module.exports = {
     postProduct,
     getProducts,
@@ -365,5 +380,6 @@ module.exports = {
     deleteFavorite,
     deleteReview,
     updateReview,
-    getProductsFilter
+    getProductsFilter,
+    getReviews,
 }

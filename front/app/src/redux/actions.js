@@ -59,39 +59,39 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const DEL_REVIEW = "DEL_REVIEW";
 export const UPDATE_REVIEW = "UPDATE_REVIEW";
 export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
+export const ALL_REVIEWS = "ALL_REVIEWS";
 
 //ORDERS
 export const GET_ORDERS = "GET_ORDERS";
 
 //ADMIN
-export const GET_ALL_USERS = 'GET_ALL_USERS';
+export const GET_ALL_USERS = "GET_ALL_USERS";
 
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
   // console.log('ACTION')
-  toast.loading('Loading products...', {
-    id: 'Landing'
-  })
+  toast.loading("Loading products...", {
+    id: "Landing",
+  });
   const url = new URL(`${BASE_URL}/products`);
   if (page > 0) url.searchParams.append("page", page);
   return async function (dispatch) {
     try {
       axios({
-        method: 'GET',
+        method: "GET",
         url: url.href,
-      })
-      .then(response => {
-        toast.dismiss('Landing')
+      }).then((response) => {
+        toast.dismiss("Landing");
         dispatch({
           type: GET_PRODUCTS,
           payload: response.data,
         });
-      })
+      });
     } catch (error) {
-      toast.dismiss('Landing')
+      toast.dismiss("Landing");
       console.log(error);
-      toast.error('Error loading products')
+      toast.error("Error loading products");
     }
   };
 };
@@ -132,7 +132,7 @@ export const clearDetail = () => {
 
 export const getProductsByName = (textInput) => {
   toast.loading("Searching...", {
-    id: 'getProductsByName'
+    id: "getProductsByName",
   });
   return (dispatch) => {
     dispatch({
@@ -151,7 +151,7 @@ export const getProductsByName = (textInput) => {
         //  response: response,
         // });
         //  console.log('BY NAME; ', response.data.data)
-        toast.dismiss('getProductsByName');
+        toast.dismiss("getProductsByName");
         response.data.data.length > 0
           ? dispatch({
               type: GET_PRODUCTS_BY_NAME,
@@ -163,7 +163,7 @@ export const getProductsByName = (textInput) => {
             });
       })
       .catch((err) => {
-        toast.dismiss('getProductsByName');
+        toast.dismiss("getProductsByName");
         toast.err("No results");
         // console.log({ from: "action creator getProductsByName", err });
         dispatch({
@@ -176,7 +176,7 @@ export const getProductsByName = (textInput) => {
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
   toast.loading("Searching...", {
-    id: 'SearchFilter'
+    id: "SearchFilter",
   });
   let url = new URL(`${BASE_URL}/products`);
   if (!!name) url.searchParams.append("name", name);
@@ -186,13 +186,15 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   if (!!desc) url.searchParams.append("desc", desc);
   //  console.log(url.href);
   return (dispatch) => {
-    toast.dismiss('SearchFilter');
+    toast.dismiss("SearchFilter");
     dispatch({ type: RESULTS_FOUND, payload: true });
-    dispatch({ type: GET_PRODUCTS_FILTER, payload: [] })
+    dispatch({ type: GET_PRODUCTS_FILTER, payload: [] });
     axios
       .get(url.href)
       .then((response) => {
-        response.data.data.length > 0 ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data }) : dispatch({ type: RESULTS_FOUND, payload: false });
+        response.data.data.length > 0
+          ? dispatch({ type: GET_PRODUCTS_FILTER, payload: response.data.data })
+          : dispatch({ type: RESULTS_FOUND, payload: false });
       })
       .catch((err) => {
         toast.err("No results");
@@ -203,8 +205,8 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
 };
 
 export const getCategories = (onlyActive) => {
-  let url = new URL(`${BASE_URL}/categories`)
-  if (onlyActive) url.searchParams.append('onlyActive', 'true')
+  let url = new URL(`${BASE_URL}/categories`);
+  if (onlyActive) url.searchParams.append("onlyActive", "true");
   // else url.searchParams.append('onlyActive', 'false')
   return (dispatch) => {
     axios
@@ -216,13 +218,22 @@ export const getCategories = (onlyActive) => {
           payload: response.data.data,
         });
       })
-      .catch((err) => console.log({ m: "Error on action creator getCategories", err }));
+      .catch((err) =>
+        console.log({ m: "Error on action creator getCategories", err })
+      );
   };
 };
 
-export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
+export const getCategoryProductsById = (
+  categoryId,
+  name,
+  max,
+  min,
+  asc,
+  desc
+) => {
   toast.loading("Searching...", {
-    id: 'SearchFilter'
+    id: "SearchFilter",
   });
   let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
@@ -246,7 +257,7 @@ export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) =
         //  from: "action creator getCategoryProductsById",
         //  response,
         // });
-        toast.dismiss('SearchFilter');
+        toast.dismiss("SearchFilter");
         response.data.data.length
           ? dispatch({
               type: GET_CATEGORY_PRODUCTS_BY_ID,
@@ -351,7 +362,7 @@ export const setUserGoogle = (payload, logOut = false) => {
   } else {
     return (dispatch) => {
       toast.loading("Loading...", {
-        id: 'LogInGoogle'
+        id: "LogInGoogle",
       });
       axios({
         method: "POST",
@@ -361,7 +372,7 @@ export const setUserGoogle = (payload, logOut = false) => {
         },
       })
         .then((response) => {
-          toast.dismiss('LogInGoogle');
+          toast.dismiss("LogInGoogle");
           console.log(response.data.user);
           dispatch({
             type: SET_USER_GOOGLE,
@@ -371,7 +382,7 @@ export const setUserGoogle = (payload, logOut = false) => {
           toast.success("Welcome " + response.data.user.name);
         })
         .catch((err) => {
-          toast.dismiss('LogInGoogle');
+          toast.dismiss("LogInGoogle");
           console.log("ErrorCATCHGOOGLE", err.response);
           dispatch({
             type: ERROR_HANDLE,
@@ -415,7 +426,7 @@ export const cleanSignupErrors = () => {
 export const logIn = (user) => {
   //  console.log('ACTIONS: ', user)
   toast.loading("Loading...", {
-    id: 'LogIn'
+    id: "LogIn",
   });
   return (dispatch) => {
     axios({
@@ -424,7 +435,7 @@ export const logIn = (user) => {
       data: user,
     })
       .then((response) => {
-        toast.dismiss('LogIn');
+        toast.dismiss("LogIn");
         // console.log('RESPONSE: ', response)
         dispatch({
           type: LOG_IN,
@@ -438,13 +449,17 @@ export const logIn = (user) => {
         toast.success(`Welcome ${response.data.user.username}`);
       })
       .catch((err) => {
-        toast.dismiss('LogIn');
+        toast.dismiss("LogIn");
         // console.log(err.response.data)
         dispatch({
           type: ERROR_HANDLE,
           payload: err.response.data.errors,
         });
-        toast.error(`${Object.keys(err.response.data.errors)[0]}: ${Object.values(err.response.data.errors)[0]}`);
+        toast.error(
+          `${Object.keys(err.response.data.errors)[0]}: ${
+            Object.values(err.response.data.errors)[0]
+          }`
+        );
       });
   };
 };
@@ -477,7 +492,7 @@ export const upgradeToSeller = (idUser, role) => {
   console.log("Entró a upgradeToSeller");
   return () => {
     toast.loading("Sending request", {
-      id: 'UpgradeToSeller'
+      id: "UpgradeToSeller",
     });
     try {
       axios({
@@ -486,7 +501,7 @@ export const upgradeToSeller = (idUser, role) => {
         data: { role: role },
       }).then((response) => {
         console.log(response.data);
-        toast.dismiss('UpgradeToSeller');
+        toast.dismiss("UpgradeToSeller");
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -499,13 +514,12 @@ export const upgradeToSeller = (idUser, role) => {
       });
     } catch (err) {
       console.log("Failed en upgradeToSeller");
-      toast.dismiss('UpgradeToSeller');
+      toast.dismiss("UpgradeToSeller");
       console.log(err);
       toast.error("error");
     }
   };
 };
-
 
 // export const setSuccessPaymentData = () => {
 //{type: SET_SUCCESS_PAYMENT}
@@ -533,7 +547,7 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        console.log('GETUSERINFOR', response.data);
+        console.log("GETUSERINFOR", response.data);
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
@@ -545,19 +559,19 @@ export const getUserInfo = (id) => {
           roleId: response.data.roleId,
           uid: response.data.uid,
           username: response.data.username,
-          name: response.data.info?.name
-        }
-        localStorage.setItem('user', JSON.stringify(userInfoAct))
+          name: response.data.info?.name,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfoAct));
       })
       .catch((err) => console.log(err));
   };
 };
 
-export const putUserImage = (id, changes, text = 'Updating Information') => {
+export const putUserImage = (id, changes, text = "Updating Information") => {
   // console.log("Entró en putUserImage");
   toast.loading(text, {
-    id: 'UpdateInformation'
-  })
+    id: "UpdateInformation",
+  });
   return (dispatch) => {
     axios({
       method: "PUT",
@@ -566,13 +580,13 @@ export const putUserImage = (id, changes, text = 'Updating Information') => {
     })
       .then((response) => {
         // console.log("Success en putUserImage");
-        toast.dismiss('UpdateInformation')
+        toast.dismiss("UpdateInformation");
         // console.log(response.data.user.image);
         dispatch({
           type: PUT_USER_IMAGE,
           payload: response.data.user.image,
         });
-        toast.success('Information sent')
+        toast.success("Information sent");
         //Actualizar la información en localStorage
         let userInfoAct = {
           email: response.data.user?.email,
@@ -581,25 +595,24 @@ export const putUserImage = (id, changes, text = 'Updating Information') => {
           roleId: response.data.user?.roleId,
           uid: response.data.user?.uid,
           username: response.data.user.username,
-          name: response.data.user?.info?.name
-        }
-        localStorage.setItem('user', JSON.stringify(userInfoAct))
-        window.location.reload(false)
-        
+          name: response.data.user?.info?.name,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfoAct));
+        window.location.reload(false);
       })
       .catch((err) => {
         // console.log(err);
-        toast.dismiss('UpdateInformation')
+        toast.dismiss("UpdateInformation");
         // console.log("Failed en putUserImage");
-        toast.error('There was an error. Please try again in a few minutes')
+        toast.error("There was an error. Please try again in a few minutes");
       });
   };
 };
 
 export const putNewUserInfo = (id, changes) => {
   return (dispatch) => {
-    toast.loading('Updating information', {
-      id: 'NewUserInfo'
+    toast.loading("Updating information", {
+      id: "NewUserInfo",
     });
     axios({
       method: "PUT",
@@ -614,7 +627,7 @@ export const putNewUserInfo = (id, changes) => {
         });
         // console.log(response.data)
         // dispatch(getUserInfo(id))
-        toast.dismiss('NewUserInfo');
+        toast.dismiss("NewUserInfo");
         toast.success("Changes applied succesfully!", { duration: 10000 });
         let userInfoAct = {
           email: response.data.user?.email,
@@ -623,10 +636,10 @@ export const putNewUserInfo = (id, changes) => {
           roleId: response.data.user?.roleId,
           uid: response.data.user?.uid,
           username: response.data.user.username,
-          name: response.data.user?.info?.name
-        }
-        localStorage.setItem('user', JSON.stringify(userInfoAct))
-        window.location.reload(false)
+          name: response.data.user?.info?.name,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfoAct));
+        window.location.reload(false);
       })
       .catch((err) => console.log({ from: "putNewUserInfo", err }));
   };
@@ -657,8 +670,8 @@ export const verifyCurrentPassword = (id, currentPassword) => {
 
 export const putNewPassword = (id, password) => {
   return (dispatch) => {
-    toast.loading('Updating password', {
-      id: 'NewPassword'
+    toast.loading("Updating password", {
+      id: "NewPassword",
     });
     axios({
       method: "PUT",
@@ -673,7 +686,7 @@ export const putNewPassword = (id, password) => {
         //   type: PUT_NEW_PASSWORD,
         //   payload: response.data,
         // });
-        toast.dismiss('NewPassword');
+        toast.dismiss("NewPassword");
         toast.success("Password modified succesfully!");
       })
       .catch((err) => console.log({ from: "putNewPassword", err }));
@@ -698,14 +711,14 @@ export const putNewPassword = (id, password) => {
 // }
 
 export const getOrders = (idUser) => {
-  console.log(idUser)
+  console.log(idUser);
   return (dispatch) => {
     axios({
       method: "POST",
       url: `${BASE_URL}/order/`,
       data: {
-        userId: idUser
-      }
+        userId: idUser,
+      },
     })
       .then((response) => {
         console.log(response.data);
@@ -714,49 +727,51 @@ export const getOrders = (idUser) => {
           payload: response.data,
         });
       })
-      .catch( err => {
-      console.log(err)
-    })
-  }
-}
-
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
 export const getUserReviews = (id) => {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
+      const response = await axios.get(`${BASE_URL}/auth/users/${id}`);
       return dispatch({
         type: GET_USER_REVIEWS,
-        payload: response.data.Reviews
-      })
-
-    } catch(error) {
+        payload: response.data.Reviews,
+      });
+    } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const addReview = (review, id) => {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.post(`${BASE_URL}/products/review/${id}`, {userId: review.id, score: review.score, description: review.description})
+      const response = await axios.post(`${BASE_URL}/products/review/${id}`, {
+        userId: review.id,
+        score: review.score,
+        description: review.description,
+      });
 
       return dispatch({
-        type:ADD_REVIEW,
+        type: ADD_REVIEW,
         payload: response.data,
-      })
-    } catch(error) {
-        console.log(error)
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
-}
+  };
+};
 
 export const delReview = (userId, id) => {
-  return async function(dispatch) {
+  return async function (dispatch) {
     await axios({
       method: "DELETE",
       url: `${BASE_URL}/products/review/${id}`,
-      data: { userId: userId},
+      data: { userId: userId },
     })
       .then((response) => {
         dispatch({
@@ -766,60 +781,67 @@ export const delReview = (userId, id) => {
       })
       .catch((err) => console.log(err));
   };
-}
+};
 
 export const updateReview = (review, id) => {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.put(`${BASE_URL}/products/review/${id}`, {score: review.score, description: review.description, userId: review.id});
+      const response = await axios.put(`${BASE_URL}/products/review/${id}`, {
+        score: review.score,
+        description: review.description,
+        userId: review.id,
+      });
 
       return dispatch({
-        type:UPDATE_REVIEW,
+        type: UPDATE_REVIEW,
         payload: response.data,
-      })
-    } catch(error) {
-      console.log(error)
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
-}
+  };
+};
 
 export const clearReview = () => {
   return {
     type: CLEAR_REVIEWS,
-  }
-}
+  };
+};
 
 export const getUserFav = (id) => {
-    return async function(dispatch) {
-        const response = await axios.get(`${BASE_URL}/auth/users/${id}`)
-        return dispatch({
-            type: GET_USER_FAVOURITES,
-            payload: response.data.favorites,
-        })
-    }
-}
+  return async function (dispatch) {
+    const response = await axios.get(`${BASE_URL}/auth/users/${id}`);
+    return dispatch({
+      type: GET_USER_FAVOURITES,
+      payload: response.data.favorites,
+    });
+  };
+};
 
 export const addFav = (productId, id) => {
-    return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, {userId: id})
+      const response = await axios.post(
+        `${BASE_URL}/products/favorite/${productId}`,
+        { userId: id }
+      );
 
       return dispatch({
-        type:ADD_FAVOURITES,
+        type: ADD_FAVOURITES,
         payload: response.data,
-      })
-    } catch(error) {
-        console.log(error)
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
-}
+  };
+};
 
-export const delFav =(userId, id) => {
-     return async function(dispatch) {
+export const delFav = (userId, id) => {
+  return async function (dispatch) {
     await axios({
       method: "DELETE",
       url: `${BASE_URL}/products/favorite/${id}`,
-      data: { userId: userId},
+      data: { userId: userId },
     })
       .then((response) => {
         dispatch({
@@ -829,82 +851,90 @@ export const delFav =(userId, id) => {
       })
       .catch((err) => console.log(err));
   };
-}
-
-
+};
 
 //Rutas Admin
 
 export const getAllUsers = () => {
   return (dispatch) => {
     axios({
-      method: 'GET',
-      url: `${BASE_URL}/auth/users`
+      method: "GET",
+      url: `${BASE_URL}/auth/users`,
     })
-    .then(response => {
-      dispatch({
-        type: GET_ALL_USERS,
-        payload: response.data.data
+      .then((response) => {
+        dispatch({
+          type: GET_ALL_USERS,
+          payload: response.data.data,
+        });
+        // console.log(response.data.data)
       })
-      // console.log(response.data.data)
-    })
-    .catch( err => console.log(err))
-  }
-}
+      .catch((err) => console.log(err));
+  };
+};
 
 export const changeOtherUserRol = (userId, newRol) => {
-  toast.loading('Updating user rol', {
-    id: 'ChangeRol'
-  })
+  toast.loading("Updating user rol", {
+    id: "ChangeRol",
+  });
   return () => {
     axios({
-      method: 'PUT',
+      method: "PUT",
       url: `${BASE_URL}/auth/changerol/${userId}`,
       data: {
-        role: newRol
-      }
+        role: newRol,
+      },
     })
-    .then(response => {
-      toast.dismiss('ChangeRol')
-      // console.log(response.data)
-      window.location.reload(false)
-    })
-    .catch(err =>{
-      toast.dismiss('ChangeRol')
-      console.log(err)
-    })
-  }
-}
+      .then((response) => {
+        toast.dismiss("ChangeRol");
+        // console.log(response.data)
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        toast.dismiss("ChangeRol");
+        console.log(err);
+      });
+  };
+};
 
 export const changeUserStatus = (userId, newStatus) => {
   // console.log('ACTION', newStatus)
   return () => {
     axios({
-      method: 'DELETE',
+      method: "DELETE",
       url: `${BASE_URL}/auth/users/${userId}`,
       data: {
-        newStatus: newStatus
-      }
+        newStatus: newStatus,
+      },
     })
-    .then(response => {
-      // console.log(response.data)
-      window.location.reload(false)
-    })
-    .catch(err => console.log(err))
-  }
-}
+      .then((response) => {
+        // console.log(response.data)
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
+  };
+};
 
-export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
- 
-  const url = new URL(`${BASE_URL}/products/productsfilter`)
+export const newSearchProducts = (name, priceOrder, min, max, categoryId) => {
+  const url = new URL(`${BASE_URL}/products/productsfilter`);
 
-  if(!!name) url.searchParams.append('name', name)
-  if(!!priceOrder) url.searchParams.append('priceOrder', priceOrder)
-  if(!!min) url.searchParams.append('min', min)
-  if(!!max) url.searchParams.append('max', max)
-  if(!!categoryId) url.searchParams.append('categoryId', categoryId)
-  console.log('name: ', name, 'priceOrder: ', priceOrder, 'min: ', min, 'max: ', max, 'categoryId:', categoryId)
-  
+  if (!!name) url.searchParams.append("name", name);
+  if (!!priceOrder) url.searchParams.append("priceOrder", priceOrder);
+  if (!!min) url.searchParams.append("min", min);
+  if (!!max) url.searchParams.append("max", max);
+  if (!!categoryId) url.searchParams.append("categoryId", categoryId);
+  console.log(
+    "name: ",
+    name,
+    "priceOrder: ",
+    priceOrder,
+    "min: ",
+    min,
+    "max: ",
+    max,
+    "categoryId:",
+    categoryId
+  );
+
   return (dispatch) => {
     dispatch({
       type: RESULTS_FOUND,
@@ -916,15 +946,15 @@ export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
     });
     dispatch({
       type: GET_SEARCH_NAME,
-      payload: name || ''
-    })
+      payload: name || "",
+    });
     axios({
-      method: 'GET',
+      method: "GET",
       url: url.href,
     })
-    .then(response => {
-      // console.log(response.data.length)
-      response.data.length > 0
+      .then((response) => {
+        // console.log(response.data.length)
+        response.data.length > 0
           ? dispatch({
               type: GET_PRODUCTS_BY_NAME,
               payload: response.data,
@@ -933,10 +963,24 @@ export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
               type: RESULTS_FOUND,
               payload: false,
             });
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
-}
+export const getAllReviews = () => {
+  return async function (dispatch) {
+    try {
+    const response = await axios.get(`${BASE_URL}/products/reviews`)
+    console.log(response.data)
+    return dispatch({
+      type: ALL_REVIEWS,
+      payload: response.data
+    })
+    } catch (error) {
+      console.log("error all reviews");
+    }
+  };
+};
