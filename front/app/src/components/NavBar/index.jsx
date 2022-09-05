@@ -9,6 +9,7 @@ import { ADMIN_ROLE } from "../../validations/usersTypes";
 import {
   getCategories,
   getCategoryProductsById,
+  newSearchProducts,
   // getSearchCategory,
   // getSearchName,
   setUserGoogle,
@@ -41,20 +42,21 @@ export default function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
 
   const onCategorySelection = (e) => {
-    dispatch(getCategoryProductsById(e.target.id));
+    // dispatch(getCategoryProductsById(e.target.id));
+    dispatch(newSearchProducts(null,null,null,null,e.target.id))
   };
 
   function showCategoriesHandler() {
     showCategories ? setShowCategories(false) : setShowCategories(true);
   }
 
-  const handleSignOut = () => {
-    // setUser({})
-    dispatch(setUserGoogle({}, true));
-    localStorage.removeItem("user");
-    navigate("/");
-    // document.getElementById('sigInDiv').hidden = false
-  };
+  // const handleSignOut = () => {
+  //   // setUser({})
+  //   dispatch(setUserGoogle({}, true));
+  //   localStorage.removeItem("user");
+  //   navigate("/");
+  //   // document.getElementById('sigInDiv').hidden = false
+  // };
 
   //Toast Inicio de Sesión
   // useEffect(() => {
@@ -70,10 +72,10 @@ export default function NavBar() {
   // }, [errorRedux])
 
   //Mejorar de comprador a vendedor
-  const btnUpSel = () => {
-    dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, "SELLER_ROLE"));
-    // console.log('pepe')
-  };
+  // const btnUpSel = () => {
+  //   dispatch(upgradeToSeller(JSON.parse(localStorage.user).uid, "SELLER_ROLE"));
+  //   // console.log('pepe')
+  // };
 
   const HideShoppCart = () => {
     const cartDisp = document.querySelector("#shoppCartNavBar");
