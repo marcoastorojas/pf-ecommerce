@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getProductsByName, getSearchCategory, getSearchName } from "../../redux/actions";
+import { getProductsByName, getSearchCategory, getSearchName, newSearchProducts } from "../../redux/actions";
 
 import style from "./index.module.css";
 
@@ -31,9 +31,10 @@ export default function SearchBar() {
       console.log({ m: "empty search!" });
       setEmptySearch(true);
     } else {
-      dispatch(getProductsByName(textInput));
+      // dispatch(getProductsByName(textInput));
+      dispatch(newSearchProducts(textInput));
       dispatch(getSearchName(textInput));
-      dispatch(getSearchCategory(""));
+      // dispatch(getSearchCategory(""));
       setEmptySearch(false);
       navigate("/results");
     }

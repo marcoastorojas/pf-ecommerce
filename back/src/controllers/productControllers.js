@@ -283,7 +283,7 @@ const getProductsFilter = async (req, res) => {
             }
         }
         let greatCondition = {
-            attributes: ['title'],
+            // attributes: ['title'],
             include: []
         }
         greatCondition.include.push(objPrice)

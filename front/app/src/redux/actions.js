@@ -892,3 +892,45 @@ export const changeUserStatus = (userId, newStatus) => {
     .catch(err => console.log(err))
   }
 }
+
+export const newSearchProducts = ( name, priceOrder, min, max, categoryId ) => {
+ 
+  const url = new URL(`${BASE_URL}/products/productsfilter`)
+
+  if(!!name) url.searchParams.append('name', name)
+  if(!!priceOrder) url.searchParams.append('priceOrder', priceOrder)
+  if(!!min) url.searchParams.append('min', min)
+  if(!!max) url.searchParams.append('max', max)
+  if(!!categoryId) url.searchParams.append('categoryId', categoryId)
+  
+  return (dispatch) => {
+    dispatch({
+      type: RESULTS_FOUND,
+      payload: true,
+    });
+    dispatch({
+      type: GET_PRODUCTS_BY_NAME,
+      payload: [],
+    });
+    axios({
+      method: 'GET',
+      url: url.href,
+    })
+    .then(response => {
+      console.log(response.data.length)
+      response.data.length > 0
+          ? dispatch({
+              type: GET_PRODUCTS_BY_NAME,
+              payload: response.data,
+            })
+          : dispatch({
+              type: RESULTS_FOUND,
+              payload: false,
+            });
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+}
