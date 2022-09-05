@@ -257,7 +257,7 @@ export default function ProductDetail({ product }) {
         <div>
           {user.uid &&
           reviews.length >= 0 &&
-          //!userInfo.role.name === "ADMIN_ROLE" &&
+          userInfo.role.name !== "ADMIN_ROLE" &&
           !reviews.filter((rw) => rw.productId === product.id).length ? (
             <div>
               <form onSubmit={(e) => addRw(e)}>
