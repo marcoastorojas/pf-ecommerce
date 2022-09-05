@@ -1,31 +1,36 @@
 import { useDispatch } from "react-redux";
+import { putCategoryState } from "../../../redux/actions";
 import style from "./index.module.css";
 
 export default function AdminCategoryCard({ id, name, active }) {
   const dispatch = useDispatch();
 
   const stateClickHandler = (e) => {
-    console.log(id);
+    let newState = active === "true" ? "false" : "true";
+    // console.log(newState);
+    dispatch(putCategoryState(e.target.id, newState));
   };
 
   return (
-    <div id={id} className={style.cardDiv}>
+    <div className={style.cardDiv}>
       <p>Category: {name}</p>
-      <div className={style.stateDiv}>
-        <p>State: {active ? "Active" : "Disabled"}</p>
-        {/* <label className={style.switch} htmlFor="check">
-          <input
-            id="check"
-            type="checkbox"
-            className={style.checkInput}
-            value={id}
-            onClick={stateClickHandler}
-            // checked={active ? true : false}
-          />
-          <span className={style.slider}></span>
-        </label> */}
-        <button onClick={stateClickHandler}>click</button>
-      </div>
+      <button className={active === "true" ? style.stateButtonActive : style.stateButtonDisabled} id={id} onClick={stateClickHandler}>
+        {active === "true" ? "Active" : "Disabled"}
+      </button>
     </div>
   );
 }
+
+/* <div className={style.stateDiv}> */
+/* <label className={style.switch} htmlFor="check">
+<input
+id="check"
+type="checkbox"
+className={style.checkInput}
+value={id}
+onClick={stateClickHandler}
+// checked={active ? true : false}
+/>
+<span className={style.slider}></span>
+</label> */
+/* </div> */

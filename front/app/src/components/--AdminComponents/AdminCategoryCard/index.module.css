@@ -1,5 +1,6 @@
 .cardDiv {
   display: flex;
+  align-items: center;
 
   border: 1px solid var(--border-color);
 
@@ -8,7 +9,40 @@
   margin: 0px 5px 10px 5px;
 
   height: 120px;
+  width: 600px;
 }
+
+.stateButtonActive {
+  background-color: greenyellow;
+
+  padding: 4px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 0 0 0 15px;
+
+  height: 30px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.stateButtonDisabled {
+  background-color: rebeccapurple;
+
+  padding: 4px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 0 0 0 15px;
+
+  height: 30px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+/*//////////////////////////////////////////////////////////////////*/
 
 .stateDiv {
   display: flex;

@@ -43,10 +43,13 @@ import {
   GET_ORDERS,
   //eslint-disable-next-line
   GET_USER_INFO_EXTRA,
-    
- //WISHLIST
- GET_USER_FAVOURITES,
- GET_ALL_USERS
+
+  //WISHLIST
+  GET_USER_FAVOURITES,
+  GET_ALL_USERS,
+
+  //ADMIN
+  PUT_CATEGORY_STATE,
 } from "./actions";
 
 const initialState = {
@@ -58,7 +61,7 @@ const initialState = {
   categories: [],
   search: "",
   subCategories: [],
-  searchCategory: ['',''],
+  searchCategory: ["", ""],
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario
@@ -76,8 +79,8 @@ const initialState = {
   productReview: [],
   dataOrders: {},
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
-   userInfoExtra: {}, //Info de usuario completa
-  allUsers: [] //AllUsersForAdmin
+  userInfoExtra: {}, //Info de usuario completa
+  allUsers: [], //AllUsersForAdmin
 };
 
 export const reducer = (state = initialState, action) => {
@@ -400,13 +403,15 @@ export const reducer = (state = initialState, action) => {
         favourites: action.payload,
       };
     }
-      //ADMIN
-      case GET_ALL_USERS: {
-        return {
-          ...state,
-          allUsers: action.payload
-        }
-      }
+    //ADMIN
+    case GET_ALL_USERS: {
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+    }
+    // case PUT_CATEGORY_STATE:
+    //   return
     default:
       return state;
   }

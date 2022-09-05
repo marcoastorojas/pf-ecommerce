@@ -8,6 +8,8 @@ export default function AdminSideBar() {
     switch (e.target.id) {
       case "categories":
         return navigate("/soyadmin/categories");
+      case "reviews":
+        return navigate("/soyadmin/reviews");
       default:
         return;
     }
@@ -23,7 +25,9 @@ export default function AdminSideBar() {
           </p>
         </div>
         <div className={style.optionDiv} onClick={componentSelectionHandler}>
-          <p className={style.optionP}>Option 2</p>
+          <p id="reviews" className={style.optionP}>
+            All Reviews
+          </p>
         </div>
         <div className={style.optionDiv} onClick={componentSelectionHandler}>
           <p className={style.optionP}>Option 3</p>

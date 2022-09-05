@@ -1,0 +1,54 @@
+.borderDiv {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 5px;
+
+  width: 660px;
+  height: 100px;
+
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.form {
+  border: 1px solid red;
+  margin: 5px;
+}
+
+.cardTitle {
+  margin: 5px 5px 5px 5px;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.warning {
+  /* background-color: aqua; */
+
+  margin: 0;
+
+  width: 335px;
+
+  color: red;
+
+  font-size: 14px;
+}
+
+.warningDisabled {
+  /* background-color: aqua; */
+
+  margin: 0;
+
+  width: 335px;
+
+  color: transparent;
+
+  font-size: 14px;
+}
+
+.input {
+}
+
+.button {
+}
