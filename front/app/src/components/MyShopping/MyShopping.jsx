@@ -3,6 +3,7 @@ import { getOrders } from '../../redux/actions';
 import style from './MyShopping.module.css';
 import { Link } from 'react-router-dom';
 import noProfilePic from '../../media/images/empty_user_profilepic.png';
+import Mapita from '../Mapita/Mapita';
 
 
 
@@ -23,21 +24,37 @@ export default function MyShopping (props) {
         })
         return total
     }
+    const verMapita = () => {
+        document.querySelector('#mapita').className = document.querySelector('#mapita').className===style.mapa?style.mapaHidden:style.mapa
+        document.querySelector('#mapitaButton').className = document.querySelector('#mapitaButton').className===style.buttonMap?style.buttonMapSelected:style.buttonMap
+    }
 
     return (
         <div className={style.contMyShopping}>
             {/* <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button> */}
-            <div className={style.titulo}>
-                <h3>Date: {props.date}</h3>
+            <div className={style.header}>
+                <div className={style.titulo}>
+                    {/* <h3>Date: {props.date}</h3> */}
+                    <h3>Date: 17/52/87453</h3>
+                </div>
+                <div className={style.contMapa}>
+                    <h3>Branch withdrawal: </h3>
+                    <div>
+                        <h3 id='mapitaButton' className={style.buttonMap} onClick={verMapita}>Map</h3>
+                        <div id='mapita' className={style.mapa}>
+                            <Mapita X={-34.63936} Y={-58.40286}/>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className={style.operInfo}>
                 <div className={style.infoUser}>
                     <div className={style.divImg}>
-                        <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" />
+                        {/* <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" /> */}
                     </div>
                     <div className={style.infoBuyer}>
-                        <p>Username: {props.buyer.username}</p>
-                        <p>Email: {props.buyer.email}</p>
+                        {/* <p>Username: {props.buyer.username}</p> */}
+                        {/* <p>Email: {props.buyer.email}</p> */}
                     </div>
                     {/* <h3>Cel:</h3> */}
                 </div>
