@@ -12,7 +12,9 @@ const {
     addReview,
     deleteFavorite,
     deleteReview,
-    updateReview } = require("../controllers/productControllers")
+    updateReview,
+    getProductsFilter,
+ } = require("../controllers/productControllers")
 
 //middlewares
 const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
@@ -117,6 +119,10 @@ productRoutes.post('/review/:id', validIdParam, addReview)
 productRoutes.delete('/review/:id', validIdParam, deleteReview)
 productRoutes.put('/review/:id', validIdParam, updateReview)
 
+
+
+//PruebaSebas
+productRoutes.get('/productsFilter', getProductsFilter)
 module.exports = {
     productRoutes
 }

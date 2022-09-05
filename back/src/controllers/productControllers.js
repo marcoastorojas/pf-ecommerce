@@ -243,6 +243,29 @@ const updateReview = async (req = request, res = response) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+const getProductsFilter = async (req, res) => {
+    const { name, priceOrder, min, max, categories } = req.params
+    try {
+
+        //Defino, si existe, el orden según el precio
+        let orden = []
+        if (!!priceOrder) orden.push(['originalprice', priceOrder])
+
+        //Defino, si existe, la condición de búsqueda por nombre
+        let whereCondition = {}
+            if (!!name) whereCondition = {
+                name : {[Op.iLike]: `%${name}%`}
+            }
+
+        
+        let allConditions = {order: orden} //allConditions guarda todas las condiciones de filtrado y ordenamiento, si existen
+
+
+    } catch (err) {
+        res.status(500).json({ error: err.message})
+    }
+}
 module.exports = {
     postProduct,
     getProducts,
@@ -255,5 +278,6 @@ module.exports = {
     addReview,
     deleteFavorite,
     deleteReview,
-    updateReview
+    updateReview,
+    getProductsFilter
 }
