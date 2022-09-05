@@ -51,6 +51,8 @@ import {
 
   //ADMIN
   PUT_CATEGORY_STATE,
+  POST_CATEGORY,
+  POSTING_CATEGORY,
 } from "./actions";
 
 const initialState = {
@@ -82,6 +84,10 @@ const initialState = {
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoExtra: {}, //Info de usuario completa
   allUsers: [], //AllUsersForAdmin
+  postingCategory: {
+    name: null,
+    posting: null,
+  },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -417,6 +423,22 @@ export const reducer = (state = initialState, action) => {
         productsReviews: action.payload,
       };
     }
+    case POSTING_CATEGORY:
+      return {
+        ...state,
+        postingCategory: {
+          name: action.payload.name,
+          posting: action.payload.state,
+        },
+      };
+    case POST_CATEGORY:
+      return {
+        ...state,
+        postingCategory: {
+          name: action.payload.name,
+          posting: "posted",
+        },
+      };
     default:
       return state;
   }
