@@ -1,9 +1,10 @@
-// import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { sendPayment } from "../../redux/actions";
 import { useState } from "react";
+import Mapita from "../Mapita/Mapita.jsx"
 
 export default function Checkout() {
   const dispatch = useDispatch();
@@ -17,7 +18,10 @@ export default function Checkout() {
 
   const [ email, setEmail ] = useState( user.email || '')
   const [ direction, setDirection ] = useState('')
-
+   const [location, setLocation] = useState({
+        loaded:false,
+        coordinates: {lat:"",lng:""},
+    });
 
 
   const handleEmail = (e) => {
@@ -45,6 +49,34 @@ export default function Checkout() {
       email: email
     }));
   };
+  
+  const onSuccess=(location)=>{
+        setLocation({
+            loaded:true,
+            coordinates:{
+                lat:location.coords.latitude,
+                lng:location.coords.longitude,
+            },
+        });
+    };
+
+    const onError=error=> {
+        setLocation({
+            loaded:true,
+            error,
+        });
+    };
+     useEffect(()=>{
+        if(!("geolocation" in navigator)) {
+            onError({
+                code:0,
+                message:"Geolocation not supported",
+            })
+        }
+        navigator.geolocation.getCurrentPosition(onSuccess,onError);
+    }, []);
+  
+  console.log(location)
 
   if (cart.length < 1) {
     toast.error("Shopping cart is empty");
@@ -86,6 +118,7 @@ export default function Checkout() {
         <input type="text" name="email" id="email" placeholder="email" value={email} onChange={handleEmail} />
         <input type="text" name="direction" id="direction" placeholder="direction" onChange={handleDirection} />
         <button onClick={() => handlePay()}>PAY</button>
+        <div>{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : location.error}</div>
         <Toaster />
       </div>
     );
