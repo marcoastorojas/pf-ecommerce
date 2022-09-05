@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
-import { getAllReviews } from "../../../redux/actions";
+import { getAllReviews, delReview, } from "../../../redux/actions";
 import {useDispatch, useSelector} from "react-redux"
+import { NavLink } from "react-router-dom";
 
 export default function AllReviews() {
 
@@ -10,6 +11,10 @@ export default function AllReviews() {
   useEffect(() => {
     dispatch(getAllReviews())
   }, [])
+  
+  const delRw = (userId, productId) => {
+    dispatch(delReview(userId, productId));
+  };
 
   return <div>
   All Comments
@@ -25,12 +30,17 @@ export default function AllReviews() {
         </div>
         <div>
             Product:
-            {*<img src={rw.product.images.split(" ")[0]}/>*}
-            <h2>{rw.product.title}</h2>
+            <NavLink to={`/product/${rw.product.id}`}>
+                {*<img src={rw.product.images.split(" ")[0]}/>*}
+                <h2>{rw.product.title}</h2>
+            </NavLink>
         </div>
         <div>
-        <h2>{rw.score}</h2>
-        <p>{rw.description}</p>
+            <h2>{rw.score}</h2>
+            <p>{rw.description}</p>
+            <div>
+                <button onClick(() => delRw(rw.user.uid, rw.product.id))>Delete</button>
+            </div>
         </div>
     </div>
   })}
