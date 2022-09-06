@@ -8,16 +8,15 @@ const postOrder =  async  (req = request, res = response) => {
   getOrder = function() {
 
   const userId = req.body.user_id;  
-  const sucursalId = req.body.direction
- console.log('sucursalId--->'+sucursalId)
+  var sucursalid = req.body.direction
+ console.log('sucursalId--->'+sucursalid)
   var promise = new Promise(function(resolve, reject) {  
 
       // busco la última orden abierta.
       order = Order.findOne({
         where: {
           userId: userId,
-          orderStatusId: "0b52bfb5-349e-4b51-95ca-9fb9fbd2dea7",
-          sucursalId: sucursalId
+          orderStatusId: "0b52bfb5-349e-4b51-95ca-9fb9fbd2dea7"          
         },
       })
       resolve(order);
@@ -46,7 +45,7 @@ const postOrder =  async  (req = request, res = response) => {
         let order = {
           userId: req.body.user_id,
           orderStatusId: "0b52bfb5-349e-4b51-95ca-9fb9fbd2dea7",
-          sucursalId:req.body.sucursalId
+          sucursalId: req.body.direction
         }
 
         const neworder = await Order.create(order);      

@@ -40,8 +40,7 @@ paymentRoutes.post("/", async function (req, res, next) {
     id: user.uid,
     userName: user.username,
     email: user.email,
-    },
-    sucursal,
+    },    
     orderDetail: orderFounded.orderdetails.map((product) => {
       return {
         idProduct: product.productId,
