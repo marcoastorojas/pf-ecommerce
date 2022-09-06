@@ -53,6 +53,7 @@ import {
   POST_CATEGORY,
   POSTING_CATEGORY,
   CLEAN_PRODUCT_SEARCH_RESULTS,
+  CLEANSE_PRODUCT_DETAILS,
   GET_SUCURSAL,
 } from "./actions";
 
@@ -450,6 +451,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         sucursal: action.payload,
+      };
+    case CLEANSE_PRODUCT_DETAILS:
+      return {
+        ...state,
+        product: {},
       };
     default:
       return state;
