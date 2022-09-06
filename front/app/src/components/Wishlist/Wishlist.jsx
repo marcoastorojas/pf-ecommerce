@@ -13,6 +13,7 @@ export default function Wishlist() {
   
    useEffect(() => {
     if(user.uid) dispatch(getUserFav(user.uid))
+    console.log(favourites)
   }, [])
   
   const handleDel =(id) => {
@@ -40,7 +41,7 @@ export default function Wishlist() {
                   <img src={images[0]} alt={pt.product.title} />
                   <h3 className={style.product_title}>{pt.product.title}</h3>
                   <h3 className={style.product_price}>
-                    ${Number(pt.product.price).toLocaleString()}
+                    ${Number(pt.product.price?.originalprice).toLocaleString()}
                   </h3>
                 </NavLink>
             </div>

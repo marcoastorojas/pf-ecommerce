@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 
-const { User, Role, Person, Status, Review, Favorite, Product, Order } = require("../db")
+const { User, Role, Person, Status, Review, Favorite, Product, Order, Price } = require("../db")
 
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
@@ -120,7 +120,7 @@ const infoUser = async (req = request, res = response) => {
             { model: Order },
             { model: Review },
             { model: Product },
-            { model: Favorite, attributes: ["id"], include: Product }
+            { model: Favorite, attributes: ["id"], include: [{model:Product, include:[{model:Price}]}] }
         ]
     })
     if (!user) return res.status(200).json(user)
