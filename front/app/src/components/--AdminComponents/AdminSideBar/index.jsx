@@ -10,6 +10,8 @@ export default function AdminSideBar() {
         return navigate("/soyadmin/categories");
       case "reviews":
         return navigate("/soyadmin/reviews");
+      case "users":
+        return navigate("/soyadmin/users");
       default:
         return;
     }
@@ -19,9 +21,9 @@ export default function AdminSideBar() {
     <aside className={style.aside}>
       <div className={style.controlPanel}>Control Panel</div>
       <nav className={style.optionNav}>
-        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
-          <p id="categories" className={style.optionP}>
-            Category management
+        <div className={style.optionDiv} onClick={componentSelectionHandler}>
+          <p id="users" className={style.optionP}>
+            User monitoring
           </p>
         </div>
         <div className={style.optionDiv} onClick={componentSelectionHandler}>
@@ -29,8 +31,10 @@ export default function AdminSideBar() {
             All Reviews
           </p>
         </div>
-        <div className={style.optionDiv} onClick={componentSelectionHandler}>
-          <p className={style.optionP}>Option 3</p>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
+          <p id="categories" className={style.optionP}>
+            Category management
+          </p>
         </div>
         <div className={style.lasOptionDiv} onClick={componentSelectionHandler}>
           <p className={style.optionP}>Option 4</p>

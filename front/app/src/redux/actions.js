@@ -69,6 +69,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const PUT_CATEGORY_STATE = "PUT_CATEGORY_STATE";
 export const POSTING_CATEGORY = "POSTING_CATEGORY";
 export const POST_CATEGORY = "POST_CATEGORY";
+export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -1026,5 +1027,13 @@ export const getAllReviews = () => {
     } catch (error) {
       console.log("error all reviews");
     }
+  };
+};
+
+export const cleanProductSearchResults = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAN_PRODUCT_SEARCH_RESULTS,
+    });
   };
 };
