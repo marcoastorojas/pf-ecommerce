@@ -223,6 +223,13 @@
   margin-left: 1rem;
   justify-content: center;
   align-items:center;
+  font-weight:bold;
+}
+
+.commentData h4 {
+     display: flex;
+  justify-content: center;
+  align-items:center;
 }
 
 .commentData p {
