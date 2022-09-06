@@ -9,7 +9,7 @@ const PaymentController = require("../controllers/paymentController")
 const PaymentService = require("../Services/PaymentService") 
 const PaymentInstance = new PaymentController(new PaymentService())
 
-const { Order, Orderdetail, OrderStatus, Product, User } = require("../db")
+const { Order, Orderdetail, OrderStatus, Product, User, Sucursal } = require("../db")
 
 //controllers
 const { postOrder } = require("../controllers/paymentModelController");
@@ -27,6 +27,11 @@ paymentRoutes.post("/", async function (req, res, next) {
     const user = await User.findOne({ where: { uid: orderFounded.userId } });
     
     const filteredOrder = {
+  //if (orderFounded) {
+  //const user = await User.findOne({ where: { uid: orderFounded.userId } });
+  //const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
+  
+  //const filteredOrder = {
     orderId: orderFounded.id,
     orderDate: orderFounded.createdAt,
     orderStatusId: orderFounded.orderStatusId,
@@ -34,9 +39,9 @@ paymentRoutes.post("/", async function (req, res, next) {
     user: {
     id: user.uid,
     userName: user.username,
-    email: user.email    
+    email: user.email,
     },
-
+    sucursal,
     orderDetail: orderFounded.orderdetails.map((product) => {
       return {
         idProduct: product.productId,
