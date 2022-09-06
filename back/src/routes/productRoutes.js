@@ -12,7 +12,11 @@ const {
     addReview,
     deleteFavorite,
     deleteReview,
-    updateReview } = require("../controllers/productControllers")
+    updateReview,
+    getProductsFilter,
+    getReviews,
+    putProductById,
+ } = require("../controllers/productControllers")
 
 //middlewares
 const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
@@ -25,6 +29,14 @@ const sendmail = require("../helpers/sendEmail");
 
 
 const productRoutes = Router()
+
+//PruebaSebas
+productRoutes.get('/productsfilter', getProductsFilter)
+
+//endpoint para modificar productos
+productRoutes.put('/productsmodify/:productId', putProductById)
+
+productRoutes.get('/reviews', getReviews)
 
 productRoutes.get("/productsWithCategories", async (req, res) => {
     const title = req.query.title;
@@ -116,6 +128,8 @@ productRoutes.delete('/favorite/:id', validIdParam, deleteFavorite)
 productRoutes.post('/review/:id', validIdParam, addReview)
 productRoutes.delete('/review/:id', validIdParam, deleteReview)
 productRoutes.put('/review/:id', validIdParam, updateReview)
+
+
 
 module.exports = {
     productRoutes

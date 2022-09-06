@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+/* "Raleway", sans-serif */
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap");
+/* 'Comfortaa', cursive */
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+/* 'Lato', sans-serif */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+/* 'Montserrat', sans-serif */
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 132px;
+  /* height: 15vh; */
+
+  /* background-color: #f72585; */
+
+  border-bottom: 2px solid rgb(41, 41, 41);
+  /* border-radius: 5px; */
+
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+}
+
+.sectionOne {
+  padding: 0 50px 10px 50px;
+  /* border: 2px solid blue; */
+  margin: 0 10px 10px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 300px;
+  height: 110px;
+}
+
+.logoDiv {
+  /* border: 2px solid red; */
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  flex-direction: column;
+
+  margin: 10px;
+  border: 2px solid black;
+
+  width: 100px;
+  height: 40px;
+
+  font-size: 30px;
+  text-decoration: none;
+  /* text-align: center; */
+  color: black;
+}
+
+/* .logo { */
+/* display: inline; */
+/* display: flex; */
+/* flex-direction: column; */
+/* } */
+
+.plus {
+  /* border: 1px solid green; */
+  margin: 3px 0 0 0;
+}
+.hardware {
+  /* border: 1px solid orange; */
+  margin: 1px 0 0 21px;
+}
+.adminscreen {
+  margin: 0 0 0 5px;
+}
+
+/*//////////////////////////////////////////////////////////*/
+
+.sectionTwo {
+  border: 2px solid var(--border-color);
+  border-width: 0 0 0 1px;
+  margin: 0 200px 0 0;
+
+  width: 650px;
+  height: 100px;
+}

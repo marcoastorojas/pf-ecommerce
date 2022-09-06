@@ -1,0 +1,117 @@
+.borderDiv {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 5px;
+
+  /* width: 660px; */
+  width: 890px;
+  height: 140px;
+
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+.form {
+  /* border: 1px solid red; */
+  margin: 10px 15px;
+
+  width: 420px;
+}
+
+.cardTitle {
+  margin: 5px 5px 5px 5px;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.warning {
+  /* background-color: aqua; */
+
+  margin: 0;
+
+  width: 345px;
+
+  color: red;
+
+  font-size: 13px;
+}
+
+.warningDisabled {
+  /* background-color: aqua; */
+
+  margin: 0;
+
+  width: 345px;
+
+  color: transparent;
+
+  font-size: 13px;
+}
+
+.input {
+  padding: 0 0 0 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+
+  width: 400px;
+  height: 30px;
+
+  font-size: 16px;
+  font-family: "Raleway", sans-serif;
+}
+
+.button {
+  background-color: white;
+
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 5px 0 0 0;
+
+  width: 220px;
+  height: 30px;
+
+  font-size: 13px;
+  font-family: "Raleway", sans-serif;
+  color: black;
+
+  transition: all 0.5s ease-out;
+
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: black;
+
+  color: lightblue;
+
+  width: 409px;
+}
+
+.disabledButton {
+  background-color: white;
+
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 5px 0 0 0;
+
+  width: 220px;
+  height: 30px;
+
+  font-size: 13px;
+  font-family: "Raleway", sans-serif;
+
+  transition: all 0.5s ease-out;
+}
+
+.postingDiv {
+  border: 1px solid var(--border-color);
+  border-width: 0 0 0 1px;
+  margin: 5px 0 0 0;
+
+  height: 130px;
+  width: 190px;
+
+  transition: all 0.6 ease-out;
+}

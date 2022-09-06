@@ -261,9 +261,9 @@ export default function ({disabledForm = false}) {
         e.preventDefault()
         if (datePass && genderPass && streetPass && numberPass && postalPass && countryPass && statePass && cityPass && lastnamePass && dniPass && phonePass) {
             //dispatch
-            if(user.roleId === BUYER_ROLE) {
-                dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
-            }
+            // if(user.roleId === BUYER_ROLE) {
+            //     dispatch(upgradeToSeller(user.uid, 'SELLER_ROLE'))
+            // }
             dispatch(putUserImage(user.uid, info))
         }
         else {
@@ -284,6 +284,15 @@ export default function ({disabledForm = false}) {
             {/* <button onClick={() => console.log(userInfoExtra)}>PRUEBADATOS</button> */}
             {/* <h1>Soy el form de alta de vendedor</h1> */}
             <form onSubmit={handleSubmit} className={style.sellerForm}>
+                <div>
+                    <h3 className={style.title}>You want to sell your products?</h3>
+                </div>
+                <div>
+                    <label>Complete this formularie so we can check if you are able to sell.This process can take a few hours.</label>
+                </div>
+                {/* <div>
+                    <label>This process can take a few hours</label>
+                </div> */}
                 <div>
                     <label htmlFor="lastname">Lastname: </label>
                     <input className={style.inputDatos} value={info.lastname} type="text" id="lastname" name='lastname' onChange={handleCountry} disabled={disabledForm} />
@@ -353,6 +362,11 @@ export default function ({disabledForm = false}) {
                     <br />
                 </div>
                 <label id='labelErrores' style={{color: 'rgb(255, 0, 0)'}}></label>
+                {
+                    (user.roleId === BUYER_ROLE && userInfoExtra.info?.dni !== null)?
+                    <h2>Waiting for approval</h2>
+                    : <></>
+                }
                 <input id='buttonBeASeller' className={style.buttonBeASellerFail} hidden={disabledForm} type='submit' value={user.roleId===BUYER_ROLE?'Send':'Save'} disabled/>
             </form>
         </div>

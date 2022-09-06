@@ -1,43 +1,58 @@
 import React, { useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
-import style from  "./ProductDetail.module.css";
+import style from "./ProductDetail.module.css";
 
 import Add from "../../media/images/add-cart.svg";
 import Del from "../../media/images/delete.svg";
 import SellerDetails from "../SellerDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeAllFromCart, addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
-import { Toaster, toast } from "react-hot-toast";
+import {
+  addToCart,
+  removeAllFromCart,
+  addReview,
+  delReview,
+  getUserReviews,
+  updateReview,
+  getProductId,
+} from "../../redux/actions";
+import { toast } from "react-hot-toast";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState(product.images.split(" "));
   const [quantity, setQuantity] = useState(1);
+  const [stock, setStock] = useState(product.stock);
+  const [stockEnCarrito, setStockEnCarrito] = useState(0);
 
   const [showEdit, setShowEdit] = useState(false);
 
+  const userInfo = useSelector((state) => state.userInfo);
   const user = useSelector((state) => state.user);
-  const reviews = useSelector((state) => state.reviews)
-
+  const reviews = useSelector((state) => state.reviews);
+  const stockInCart = useSelector(
+    (state) =>
+      state.cart.filter((pt) => pt.product.id === product.id)[0]?.amount
+  );
   //Review
   const [review, setReview] = useState({
     id: user.uid ? user.uid : "",
-    score:0,
+    score: 0,
     description: "",
-  })
+  });
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-    
-    if(user.uid) dispatch(getUserReviews(user.uid));
+
+    if (user.uid) dispatch(getUserReviews(user.uid));
   }, [cart]);
 
   useEffect(() => {
-    if(user.uid) dispatch(getUserReviews(user.uid));
-  }, [review])
+    if (user.uid) dispatch(getUserReviews(user.uid));
+    dispatch(getProductId(product.id));
+  }, [review]);
 
   const changeImage = (e) => {
     setIndex(+e.target.id);
@@ -45,6 +60,8 @@ export default function ProductDetail({ product }) {
 
   const addCart = () => {
     dispatch(addToCart(product, +quantity));
+    // console.log('stock', stock, 'quantity', quantity)
+    setQuantity(1);
     toast.success(`Successfully added ${quantity} items to the cart!`);
   };
 
@@ -64,85 +81,87 @@ export default function ProductDetail({ product }) {
   };
 
   const addRw = (e) => {
-    e.preventDefault()
-    dispatch(addReview(review, product.id))
-  
+    e.preventDefault();
+    dispatch(addReview(review, product.id));
+
     setTimeout(() => {
       setReview({
         id: user.uid,
         score: 0,
         description: "",
-      })
-    }, 1500)
-  }
+      });
+    }, 1500);
+  };
 
   const delRw = () => {
-    dispatch(delReview(user.uid, product.id))
+    dispatch(delReview(user.uid, product.id));
 
     setTimeout(() => {
+      setShowEdit(false);
       setReview({
         id: user.uid,
-        score:0,
+        score: 0,
         description: "",
-      })
-    }, 1500)
-  }
+      });
+    }, 1500);
+  };
 
   const updateRw = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(updateReview(review, product.id));
 
     setTimeout(() => {
-      setShowEdit(false)
+      setShowEdit(false);
       setReview({
         id: user.uid,
-        score:0,
+        score: 0,
         description: "",
-      })
-    }, 1500)
-  }
+      });
+    }, 1500);
+  };
 
-  const handleChange= (e) => {
+  const handleChange = (e) => {
     setReview({
       ...review,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   return (
     <div className={style.contProDet}>
+      {/* <button onClick={() => console.log(stock-stockInCart)}>PRUEBAPRODUCTO</button> */}
       <div className={style.publish}>
         <div className={style.left}>
-            <div className={style.prodImgs}>
-              <div className={style.otherImgs}>
-                {images.map((image, index) => {
-                  if (index > 0)
-                    return (
-                      <img
-                        src={image}
-                        alt={product.brand}
-                        key={index}
-                        id={index}
-                        className="thumb"
-                        onClick={(e) => changeImage(e)}
-                      />
-                    );
-                })}
-              </div>
-              <div className={style.mainImg}>
-                <img
-                  src={images[index]}
-                  alt={product.brand}
-                  className="main-image"
-                />
-              </div>
+          <div className={style.prodImgs}>
+            <div className={style.otherImgs}>
+              {images.map((image, index) => {
+                if (index > 0)
+                  return (
+                    <img
+                      src={image}
+                      alt={product.brand}
+                      key={index}
+                      id={index}
+                      className="thumb"
+                      onClick={(e) => changeImage(e)}
+                    />
+                  );
+              })}
             </div>
-            <div className={style.prodDetails}>
-              <h2>{product.title}</h2>
-              <h3>Model: {product.model}</h3>
-              <h3>Brand: {product.brand}</h3>
-              <p>{product.description}</p>
+            <div className={style.mainImg}>
+              <img
+                src={images[index]}
+                alt={product.brand}
+                className="main-image"
+              />
             </div>
+          </div>
+          <div className={style.prodDetails}>
+            <h2>{product.title}</h2>
+            <h3>Model: {product.model}</h3>
+            <h3>Brand: {product.brand}</h3>
+            <p>{product.description}</p>
+          </div>
         </div>
         <div className={style.right}>
           <div className={style.sellerInfo}>
@@ -151,18 +170,27 @@ export default function ProductDetail({ product }) {
           <div className={style.shopping}>
             <div className={style.pricing}>
               {/* <div className={style.quant}> */}
+              <h4>Stock: {product.stock}</h4>
+              <h4>In shopping cart: {stockInCart ? stockInCart : 0}</h4>
+              {/* <h4>Available: {stockInCart?(stock - stockInCart).toString(): stock}</h4> */}
               <h4>Quantity: {quantity}</h4>
               <input
                 type="range"
                 min="1"
-                max="10"
+                max={stockInCart ? (stock - stockInCart).toString() : stock}
                 step="1"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
+                disabled={stockInCart ? !(stock - stockInCart) : false}
               />
-                {/* <div className="quantity">{quantity}</div> */}
+              {/* <div className="quantity">{quantity}</div> */}
               {/* </div> */}
-              <h2>Total: ${Intl.NumberFormat().format(product.price * quantity)}</h2>
+              <h2>
+                Total: $
+                {Intl.NumberFormat().format(
+                  product.price.originalprice * quantity
+                )}
+              </h2>
               {/* <div className={style.total}>
                 Total:{" "}
                 <span>
@@ -171,72 +199,134 @@ export default function ProductDetail({ product }) {
               </div> */}
             </div>
             <div className={style.buttons}>
-              <button className={style.buttonProdDet} onClick={() => addCart()}>
+              <button
+                className={style.buttonProdDet}
+                onClick={() => addCart()}
+                disabled={stockInCart ? !(stock - stockInCart) : false}
+              >
                 <span className={style.text}>Add to cart</span>
                 <span className={style.icon}>
                   <img src={Add} alt="add-cart" />
                 </span>
               </button>
-              <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
+              {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
                 <span className={style.text}>Delete All</span>
                 <span className={style.icon}>
                   <img src={Del} alt="delete-cart" />
                 </span>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
       </div>
       <div className={style.comments}>
         <h2>Comments:</h2>
-        {reviews.length > 0 && reviews.map((rw, index) => {
-          if(product.id === rw.productId) return <div className={style.commentSec} key={index}>
-            <h3>{user.username}</h3>
-              <div className={style.commentData}>
-                <h4>{rw.score}</h4>
-                <p>{rw.description}</p>
-              </div>
+        {product.Reviews.length > 0 &&
+          product.Reviews.map((rw, index) => {
+            if (
+              rw.user.uid === user.uid ||
+              userInfo.role.name === "ADMIN_ROLE"
+            ) {
+              return (
+                <div className={style.commentSec} key={index}>
+                  <h3>{rw.user.username}</h3>
+                  <div className={style.commentData}>
+                    <h4>Score: {rw.score}</h4>
+                    <p>{rw.description}</p>
+                  </div>
+                  <div className={style.commentButtons}>
+                    <button onClick={() => delRw()}>Delete</button>
+                    {!showEdit ? (
+                      <button onClick={() => setShowEdit(true)}>Edit</button>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            } else
+              return (
+                <div className={style.commentSec} key={index}>
+                  <h3>{rw.user.username}</h3>
+                  <div className={style.commentData}>
+                    <h4>Score: {rw.score}</h4>
+                    <p>{rw.description}</p>
+                  </div>
+                </div>
+              );
+          })}
+
+        <div>
+          {user.uid &&
+          reviews.length >= 0 &&
+          userInfo.role.name !== "ADMIN_ROLE" &&
+          !reviews.filter((rw) => rw.productId === product.id).length ? (
             <div>
-              <button onClick={() => delRw()}>Delete</button>
-              {!showEdit ? <button onClick={() => setShowEdit(true)}>Edit</button>: null}
+              <form onSubmit={(e) => addRw(e)}>
+                <div className={style.score}>
+                  <label>Score:</label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="5"
+                    step="1"
+                    name="score"
+                    value={review.score}
+                    onChange={(e) => handleChange(e)}
+                  />
+                  {review.score}
+                </div>
+                <div className={style.descriptionComment}>
+                  <label>Description:</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={review.description}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <input
+                  type="submit"
+                  value="Add comment"
+                  className={style.submitComment}
+                />
+              </form>
             </div>
-            </div>
-           })
-          }
-          
-          <div>
-      {reviews.length >= 0 && !reviews.filter((rw) => rw.productId === product.id).length ?<div>
-                <form onSubmit={(e) => addRw(e)}>
-                    <div>
-                        <label>Score:</label>
-                    <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
-                    {review.score}
-                    </div>
-                    <div>
-                        <label>Description:</label>
-                        <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
-                    </div>
-                    <input type="submit" value="Add comment"/>
-                </form>
-            </div> : null}
+          ) : null}
+        </div>
+        <div>
+          {showEdit ? (
+            <form onSubmit={(e) => updateRw(e)}>
+              <div className={style.score}>
+                <label>Score:</label>
+                <input
+                  type="range"
+                  min="0"
+                  max="5"
+                  step="1"
+                  name="score"
+                  value={review.score}
+                  onChange={(e) => handleChange(e)}
+                />
+                {review.score}
+              </div>
+              <div className={style.descriptionComment}>
+                <label>Description:</label>
+                <input
+                  type="text"
+                  name="description"
+                  value={review.description}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <input
+                type="submit"
+                value="Add edit"
+                className={style.submitComment}
+              />
+            </form>
+          ) : null}
+        </div>
       </div>
-      <div>
-        {showEdit ? <form onSubmit={(e) => updateRw(e)}>
-          <div>
-            <label>Score:</label>
-            <input type="range" min="0" max="5" step="1" name="score" value={review.score} onChange={(e) => handleChange(e)} />
-            {review.score}
-          </div>
-          <div>
-            <label>Description:</label>
-            <input type="text" name="description" value={review.description} onChange={(e) => handleChange(e)} />
-          </div>
-          <input type="submit" value="Add edit"/>
-        </form>: null}
-      </div>
-          
-      </div>
-      <Toaster />
-  </div>
+      {/* <Toaster /> */}
+    </div>
   );
 }

@@ -1,32 +1,33 @@
+const { request, response } = require('express');
+
 const { Op } = require("sequelize")
 
-const { Product, Subcategory, Favorite, Review, User } = require("../db")
+
+const { Product, Subcategory, Favorite, Review, User, Price, Role, Category } = require("../db")
+
 const { createWhereAndOrder } = require("../helpers/createWhereOrder")
 
 
 
-const { request, response } = require('express');
-const { isValidUUid } = require("../middlewares/isValidUuid");
-
 const postProduct = async (req = request, res = response) => {
     try {
-
-        const { subcategoryId } = req.body
-
+        const { categoriesId, stock, price } = req.body
         let data = { ...req.body }
-        if (subcategoryId) {
-            if (!isValidUUid(subcategoryId)) return res.status(400).json({ errors: { subcategoryId: "debe ser un uuid valido" } })
-            const subCategory = await Subcategory.findByPk(subcategoryId)
-            if (!subCategory) return res.status(400).json({ errors: { subcategoryId: "no existe una subcategoria con el id ingresado" } })
-            data.subcategoryId = subCategory.id
-            data.categoryId = subCategory.categoryId
+        if (stock && !/^[0-9]+$/.test(stock)) {
+            return res.status(400).json({ errors: { stock: "no existe una subcategoria con el id ingresado" } })
         }
-
-        const newProduct = await Product.create(data)
+        const newProduct = await Product.create({
+            ...data,
+            stock,
+            price: {
+                originalprice: price
+            }
+        }, { include: [Category, Price] })
+        await newProduct.addCategories(categoriesId)
         res.status(201).json(newProduct)
 
     } catch (error) {
-        res.status(500).json({ error: error })
+        res.status(400).json({ error: error.message })
     }
 }
 
@@ -43,7 +44,8 @@ const getProducts = async (req = request, res = response) => {
         where,
         order,
         limit,
-        offset
+        offset,
+        include: Price
     })
     const totalPages = Math.ceil(count / limit)
 
@@ -58,7 +60,9 @@ const getProductById = async (req = request, res = response) => {
     Product.findByPk(id, {
         include: [
             { model: Favorite },
-            { model: Review }
+            { model: Review, attributes: ["id", "score", "description"], include: User },
+            { model: Category, attributes: ["id", "name"] },
+            { model: Price}
         ]
     })
         .then((data) => {
@@ -68,6 +72,7 @@ const getProductById = async (req = request, res = response) => {
         })
         .catch((err) => res.send(err))
 }
+
 
 const getProductsByCategoryId = async (req = request, res = response) => {
     const { limit = 30, page = 1 } = req.query
@@ -238,6 +243,182 @@ const updateReview = async (req = request, res = response) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+const getProductsFilter = async (req, res) => {
+    const { name, priceOrder, min, max, categoryId } = req.query
+    try {
+        // console.log(name, priceOrder, min, max)
+        //Armando el obj price
+        let objPrice = {
+            model: Price,
+            as: 'price',
+            where: {}
+        }
+        //Agrego, si existe, un mínimo
+        if(!!min) {
+            objPrice = {
+                ...objPrice,
+                where: {
+                    ...objPrice.where,
+                    originalprice: {
+                        ...objPrice.where.originalprice,
+                        [Op.gt]: min
+                    }
+                }
+            }
+        }
+        //Agrego, si existe, un máximo
+        if(!!max) {
+            objPrice = {
+                ...objPrice,
+                where: {
+                    ...objPrice.where,
+                    originalprice: {
+                        ...objPrice.where.originalprice,
+                        [Op.lt]: max
+                    }
+                }
+            }
+        }
+        let greatCondition = {
+            // attributes: ['title'],
+            include: []
+        }
+        greatCondition.include.push(objPrice)
+        //Armo y agrego, si existe, un filtrado por categoría
+        if(!!categoryId) {
+            let objCategory = {
+                model: Category,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                },
+                where: {
+                    id: categoryId
+                },
+            }
+            greatCondition.include.push(objCategory)
+        }
+        //Agrego, si existe, un orden
+        if(!!priceOrder) {
+            greatCondition = {
+                ...greatCondition,
+                order: [['price', 'originalprice', priceOrder]]
+            }
+        }
+        //Agrego, si existe, un filtrado por orden
+        if(!!name) {
+            greatCondition = {
+                ...greatCondition,
+                where: {
+                    title: {
+                        [Op.iLike]: `%${name}%`
+                    }
+                }
+            }
+        }    
+            //MODELO
+        // let greatCondition = {
+        //     attributes: ['title'],
+        //     include: [
+        //         {
+        //             model: Category,
+        //             attributes: ['name'],
+        //             through: {
+        //                 attributes: []
+        //             },
+        //             where: {
+        //                 id: categoryId
+        //             },
+        //         },
+        //         {
+        //             model: Price,
+        //             attributes: ['originalprice'],
+        //             order: ['originalprice', 'asc'],
+        //             where: {
+        //                 originalprice: {
+        //                     [Op.lt]: 7000,
+        //                     [Op.gt]: 6000,
+        //                 },
+        //             },
+        //             as: 'price'
+        //         },
+        //     ],
+        //     order: [['price', 'originalprice', 'desc']]
+        // }
+        const resul = await Product.findAll(greatCondition)
+        res.status(200).json(resul)
+    } catch (err) {
+        res.status(500).json({ error: err.message})
+    }
+}
+const putProductById = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const {title, model, description, brand, stock, images} = req.body;
+        const {categoriesId} = req.body;
+        const {price, discount} = req.body;
+        await Product.update({
+            title,
+            model,
+            description,
+            brand, stock,
+            images
+        }, {
+            where: {
+                id: productId,
+            }
+        })
+
+        let product = await Product.findOne({
+            where: {
+                id: productId
+            },
+            include: {
+                model: Category,
+            }
+        })
+        await product.setCategories(categoriesId)
+        await Price.update({
+            originalprice: price,
+            discount: discount
+        }, {
+            where: {
+                productId: productId,
+            }
+        })
+        
+        product = await Product.findOne({
+            where: {
+                id: productId
+            },
+            include: [{
+                model: Category,
+            },
+            {
+                model: Price,
+            }],
+        })
+        res.status(200).json(product)
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
+}
+
+const getReviews = async (req, res) => {
+    try {
+        const reviews = await Review.findAll({
+            include: [
+            { model: User, attributes: ["uid", "username", "image"], include: [
+                { model: Role, as: "role" },
+            ]},
+            { model: Product, attributes: ["id", "title", "images"] },
+        ]});
+         res.status(200).json(reviews)
+    } catch(error) {
+         res.status(500).json({ error: error.message})
+    }
+}
 module.exports = {
     postProduct,
     getProducts,
@@ -250,5 +431,8 @@ module.exports = {
     addReview,
     deleteFavorite,
     deleteReview,
-    updateReview
+    updateReview,
+    getProductsFilter,
+    getReviews,
+    putProductById,
 }

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import Loading from "../../components/Loading/Loading";
-import NavBar from "../../components/NavBar";
+// import NavBar from "../../components/NavBar";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
-import SellerDetails from "../../components/SellerDetails";
-import Footer from "../../components/Footer";
+// import SellerDetails from "../../components/SellerDetails";
+// import Footer from "../../components/Footer";
 
 import { getProductId, clearDetail } from "../../redux/actions";
 
@@ -23,9 +23,13 @@ export default function Details() {
   }, [Object.keys(product).length])
 
   useEffect(() => {
-    dispatch(clearDetail());
     dispatch(getProductId(id));
-  }, [dispatch, id]);
+  }, [id])
+  useEffect(() => {
+    return function clear () {
+      dispatch(clearDetail());
+    }
+  }, []);
 
   if (!product.id) return <Loading />;
   else

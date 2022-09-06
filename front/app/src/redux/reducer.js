@@ -33,6 +33,7 @@ import {
   //REVIEWS
   GET_USER_REVIEWS,
   CLEAR_REVIEWS,
+  ALL_REVIEWS,
 
   //USER DATA
   GET_USER_INFO,
@@ -46,6 +47,13 @@ import {
 
   //WISHLIST
   GET_USER_FAVOURITES,
+  GET_ALL_USERS,
+
+  //ADMIN
+  POST_CATEGORY,
+  POSTING_CATEGORY,
+  CLEAN_PRODUCT_SEARCH_RESULTS,
+  GET_SUCURSAL,
 } from "./actions";
 
 const initialState = {
@@ -57,7 +65,7 @@ const initialState = {
   categories: [],
   search: "",
   subCategories: [],
-  searchCategory: "",
+  searchCategory: ["", ""],
   signupResponse: {},
   user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
   userInfo: {}, //información adicional del usuario
@@ -72,10 +80,16 @@ const initialState = {
   shoppingList: {}, //Guarda todas las compras del usuario activo
   userInfoPage: "",
   reviews: [],
-  productReview: [],
+  productsReviews: [],
   dataOrders: {},
   favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
   userInfoExtra: {}, //Info de usuario completa
+  allUsers: [], //AllUsersForAdmin
+  postingCategory: {
+    name: null,
+    posting: null,
+  },
+  sucursal: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -235,7 +249,7 @@ export const reducer = (state = initialState, action) => {
     /*eslint-enable */
     case GET_TOTAL: {
       if (state.cart.length > 0) {
-        const total = state.cart.reduce((acc, pt) => (acc = pt.product.price * pt.amount + acc), 0);
+        const total = state.cart.reduce((acc, pt) => (acc = pt.product.price.originalprice * pt.amount + acc), 0);
         return {
           ...state,
           cartTotal: total,
@@ -398,6 +412,45 @@ export const reducer = (state = initialState, action) => {
         favourites: action.payload,
       };
     }
+    //ADMIN
+    case GET_ALL_USERS: {
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+    }
+    case ALL_REVIEWS: {
+      return {
+        ...state,
+        productsReviews: action.payload,
+      };
+    }
+    case POSTING_CATEGORY:
+      return {
+        ...state,
+        postingCategory: {
+          name: action.payload.name,
+          posting: action.payload.state,
+        },
+      };
+    case POST_CATEGORY:
+      return {
+        ...state,
+        postingCategory: {
+          name: action.payload.name,
+          posting: "posted",
+        },
+      };
+    case CLEAN_PRODUCT_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchedProducts: [],
+      };
+    case GET_SUCURSAL:
+      return {
+        ...state,
+        sucursal: action.payload,
+      };
     default:
       return state;
   }

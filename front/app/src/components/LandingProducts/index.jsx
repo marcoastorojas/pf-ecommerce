@@ -1,9 +1,9 @@
-import { getProducts, getUserFav } from "../../redux/actions";
-import { useEffect, useState } from "react";
+import { getUserFav, getUserInfo } from "../../redux/actions";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
 import "./index.modules.css";
-import Paginate from "../Paginate/Paginate";
+// import Paginate from "../Paginate/Paginate";
 
 export default function LandingProducts() {
   const dispatch = useDispatch();
@@ -13,20 +13,18 @@ export default function LandingProducts() {
 
   const sliceArrayProduct = products.data?.slice(0, 20);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [dataPerPage, setdataPerPage] = useState(20);
+  // const [dataPerPage, setdataPerPage] = useState(20);
 
-
-useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("fav", JSON.stringify(favourites));
   }, [favourites]);
 
-
   useEffect(() => {
-    dispatch(getProducts(currentPage));
-    if(user.uid) dispatch(getUserFav(user.uid))
-  }, [currentPage]);
-  
+    if (user.uid) {
+      dispatch(getUserFav(user.uid));
+      dispatch(getUserInfo(user.uid));
+    }
+  }, []);
 
   return (
     <main>
@@ -39,7 +37,7 @@ useEffect(() => {
                   id={product.id}
                   title={product.title}
                   image={product.images}
-                  price={product.price}
+                  price={product.price.originalprice}
                   brand={product.brand}
                   model={product.model}
                 />
@@ -47,12 +45,6 @@ useEffect(() => {
             })
           : null}
       </div>
-      <Paginate
-        totalData={60}
-        dataPerPage={dataPerPage}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
     </main>
   );
 }

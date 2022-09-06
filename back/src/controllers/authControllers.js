@@ -2,7 +2,9 @@ const { request, response } = require("express");
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 
-const { User, Role, Person, Status, Review, Favorite, Product } = require("../db");
+
+const { User, Role, Person, Status, Review, Favorite, Product, Order } = require("../db")
+
 const { generateJWT } = require("../helpers/generateJWT");
 const { googleVerify } = require("../helpers/googleVerify");
 const { isValidEmail } = require("../helpers/isValidEmail");
@@ -97,23 +99,32 @@ const renewJWT = async (req = request, res = response) => {
 };
 
 const getAllUsers = async (req = request, res = response) => {
-  const users = await User.findAll();
-  res.status(201).json({ data: users });
-};
-const infoUser = async (req = request, res = response) => {
-  const { id: uid } = req.params;
-  const user = await User.findOne({
-    where: { uid },
+  const users = await User.findAll({
     include: [
-      { model: Person, as: "info" },
       { model: Status, as: "status" },
       { model: Role, as: "role" },
-      { model: Review },
-      { model: Favorite, attributes: ["id"], include: Product },
+      { model: Person, as: "info" },
     ],
   });
-  if (!user) return res.status(200).json(user);
-  const { password, ...rest } = user.dataValues;
+  res.status(201).json({ data: users });
+};
+
+const infoUser = async (req = request, res = response) => {
+    const { id: uid } = req.params
+    const user = await User.findOne({
+        where: { uid },
+        include: [
+            { model: Person, as: "info" },
+            { model: Status, as: "status" },
+            { model: Role, as: "role" },
+            { model: Order },
+            { model: Review },
+            { model: Product },
+            { model: Favorite, attributes: ["id"], include: Product }
+        ]
+    })
+    if (!user) return res.status(200).json(user)
+    const { password, ...rest } = user.dataValues
 
   res.status(200).json(rest);
 };
@@ -185,28 +196,21 @@ const modifyUser = async (req = request, res = response) => {
 };
 
 const deleteUser = async (req = request, res = response) => {
-
   const { id } = req.params;
+  const { newStatus } = req.body;
   const user = await User.findByPk(id);
   if (!user) return res.status(400).json(`no existe un usuario con el id.: ${id}`);
 
-    const { id } = req.params
-    const { newStatus } = req.body
-    const user = await User.findByPk(id)
-    if (!user) return res.status(400).json(`no existe un usuario con el id.: ${id}`)
-
-
+  if (newStatus === true || newStatus === false) {
+    await Status.update({ active: newStatus }, { where: { userId: id } });
+    return res.send({ userChanged: user });
+  }
   await Status.update({ active: false }, { where: { userId: id } });
 
-
   res.send({ userDeleted: user });
+
+  await Status.update({ active: newStatus }, { where: { userId: id } });
 };
-
-    await Status.update({ active: newStatus }, { where: { userId: id } })
-
-
-    res.send({ userChanged: user })
-}
 
 const verifyPassword = async (req = request, res = response) => {
   const { id: userId } = req.params;

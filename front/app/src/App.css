@@ -8,6 +8,7 @@
 
 .App {
   font-family: "Raleway", sans-serif;
+  /* background-color: red; */
 }
 
 .toast-border {
@@ -53,4 +54,17 @@
 .button-image {
   border: none;
   width: 1vw;
+}
+.tostadora {
+  margin: 2%;
+  padding: 2%;
+  /* background-color: var(--background-button-color); */
+  /* width: 50%; */
+  color: black;
+  /* font-size: 20px; */
+  /* font-weight: 500; */
+  /* margin-top: 20%; */
+  border: 1px solid black;
+  /* box-shadow: 0 0 20px 1px var(--border-color); */
+  /* background: linear-gradient(to right, var(--background-button-color), white); */
 }
