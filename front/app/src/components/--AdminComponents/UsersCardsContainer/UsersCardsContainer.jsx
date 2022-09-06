@@ -28,8 +28,8 @@ export default function UsersCardsContainer () {
 
     return (
         <div className={style.contUsersCardsContainer}>
-            SOY EL USERSCARDSCONTAINER
-            <button onClick={() => console.log(allUsers)}>PRUEBADATOS</button>
+            {/* SOY EL USERSCARDSCONTAINER */}
+            {/* <button onClick={() => console.log(allUsers)}>PRUEBADATOS</button> */}
             {
                 allUsers?.map( e => {
                     return(

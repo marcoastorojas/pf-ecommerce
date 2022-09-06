@@ -31,7 +31,7 @@ export default function MyShopping (props) {
 
     return (
         <div className={style.contMyShopping}>
-            {/* <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button> */}
+            <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button>
             <div className={style.header}>
                 <div className={style.titulo}>
                     {/* <h3>Date: {props.date}</h3> */}
@@ -41,7 +41,7 @@ export default function MyShopping (props) {
                     <h3>Branch withdrawal: </h3>
                     <div>
                         <h3 id='mapitaButton' className={style.buttonMap} onClick={verMapita}>Map</h3>
-                        <div id='mapita' className={style.mapa}>
+                        <div id='mapita' className={style.mapaHidden}>
                             <Mapita X={-34.63936} Y={-58.40286}/>
                         </div>
                     </div>

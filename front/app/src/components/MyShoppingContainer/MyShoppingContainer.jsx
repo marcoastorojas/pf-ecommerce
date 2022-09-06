@@ -28,7 +28,7 @@ export default function MyShoppingContainer () {
     return (
         <div className={style.contMSC}>
             {/* <button onClick={PRUEBADISPATCH}>PRUEBADISPATCH</button> */}
-            {/* <button onClick={() => console.log(dataOrders)}>PRUEBACONSOLE:LOG</button> */}
+            <button onClick={() => console.log(dataOrders)}>PRUEBACONSOLE:LOG</button>
             {
                 Object.keys(dataOrders).length !== 0 && dataOrders?.map( e => {
                     return (
@@ -37,6 +37,9 @@ export default function MyShoppingContainer () {
                         </div>
                     )
                 })
+            }
+            {
+                Object.keys(dataOrders).length === 0 && <div> <h1>No results</h1> </div>
             }
         </div>
     )
