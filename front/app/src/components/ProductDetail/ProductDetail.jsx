@@ -17,6 +17,9 @@ import {
 } from "../../redux/actions";
 import { toast } from "react-hot-toast";
 
+import yellowStar from "../../media/svg/yellow-star.svg";
+import yellowBorderStar from "../../media/svg/yellow-border-star.svg";
+
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
   const [images, setImages] = useState(product.images.split(" "));
@@ -220,6 +223,13 @@ export default function ProductDetail({ product }) {
         </div>
       </div>
       <div className={style.comments}>
+        <h3>Product score: {product.Reviews.length > 0 &&
+          product.Reviews.reduce((acc, rw) => {
+            const ttl =(acc += rw.score) / product.Reviews.length
+            if(ttl < 2.5) return Math.floor(ttl)
+            if(ttl > 2.5) return Math.ceil(ttl)
+            else return ttl;
+          }, 0)}</h3>
         <h2>Comments:</h2>
         {product.Reviews.length > 0 &&
           product.Reviews.map((rw, index) => {
@@ -231,7 +241,11 @@ export default function ProductDetail({ product }) {
                 <div className={style.commentSec} key={index}>
                   <h3>{rw.user.username}</h3>
                   <div className={style.commentData}>
-                    <h4>Score: {rw.score}</h4>
+                    {rw.score}
+                    <h4> {Array.apply(0, Array(5)).map((str, index) => {
+                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
+                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                    }) }</h4>
                     <p>{rw.description}</p>
                   </div>
                   <div className={style.commentButtons}>

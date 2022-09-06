@@ -13,7 +13,8 @@ class PaymentService {
           //"category_id": "car_electronics",
           "quantity": product.amount,
           "currency_id": "ARS",
-          "unit_price":  product.product.price
+          //"unit_price":  product.product.price
+          "unit_price":  1
         }       
 
       }) 
