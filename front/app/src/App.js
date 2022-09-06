@@ -2,7 +2,7 @@ import React from "react";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
@@ -35,7 +35,11 @@ function App() {
   return (
     <div className="App">
       {pathname === "/signup" || (pathname === "/login" && <SimpleNavBar />)}
-      {pathname === "/soyadmin/categories" || pathname === "/soyadmin/users" || pathname === "/soyadmin/reviews" ? <AdminNavBar /> : <NavBar />}
+      {pathname === "/soyadmin/categories" || pathname === "/soyadmin/users" || pathname === "/soyadmin/reviews" || pathname === "/soyadmin/products" ? (
+        <AdminNavBar />
+      ) : (
+        <NavBar />
+      )}
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/signup" exact element={<SignUp />} />

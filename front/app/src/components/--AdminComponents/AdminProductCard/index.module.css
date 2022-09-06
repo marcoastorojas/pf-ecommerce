@@ -1,0 +1,31 @@
+.cardDiv {
+  display: flex;
+
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  margin: 5px;
+
+  width: 600px;
+
+  cursor: pointer;
+}
+
+.imgDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 10px;
+
+  width: 200px;
+  height: 200px;
+}
+
+.cardImage {
+  max-width: 200px;
+  max-height: 200px;
+
+  border-radius: 5px;
+}
