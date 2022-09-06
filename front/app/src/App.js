@@ -28,6 +28,7 @@ import Footer from "./components/Footer";
 // import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "./validations/usersTypes";
 
 import "./App.css";
+import RegisterSucursal from "./components/--AdminComponents/RegisterSucursal/RegisterSucursal.jsx";
 
 function App() {
   const { pathname } = useLocation();
@@ -37,6 +38,7 @@ function App() {
       {pathname === "/signup" || (pathname === "/login" && <SimpleNavBar />)}
       {pathname === "/soyadmin/categories" || pathname === "/soyadmin/users" || pathname === "/soyadmin/reviews" ? <AdminNavBar /> : <NavBar />}
       <Routes>
+        <Route path="/registersucursal" exact element={<RegisterSucursal />} />
         <Route path="/" exact element={<Landing />} />
         <Route path="/signup" exact element={<SignUp />} />
         <Route path="/login" exact element={<LogIn />} />
