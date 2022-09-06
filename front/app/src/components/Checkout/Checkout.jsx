@@ -29,18 +29,19 @@ export default function Checkout() {
 
 
   const handlePay = () => {
+  const tienda = sucursal.find((sl) => sl.name === direction)
     console.log({ 
       totalPriceProducts: cartTotal,
       products: cart,
       user_id: user.uid ,
-      direction: direction,
+      direction: tienda.id,
       email: email
     })
     dispatch(sendPayment({ 
       totalPriceProducts: cartTotal,
       products: cart,
       user_id: user.uid ,
-      direction: direction,
+      direction: tienda.id,
       email: email
     }));
   };
