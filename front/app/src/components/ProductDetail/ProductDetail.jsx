@@ -19,6 +19,7 @@ import { toast } from "react-hot-toast";
 
 import yellowStar from "../../media/svg/yellow-star.svg";
 import yellowBorderStar from "../../media/svg/yellow-border-star.svg";
+import { ADMIN_ROLE } from "../../validations/usersTypes";
 
 export default function ProductDetail({ product }) {
   const [index, setIndex] = useState(0);
@@ -236,7 +237,7 @@ export default function ProductDetail({ product }) {
           product.Reviews.map((rw, index) => {
             if (
               rw.user.uid === user.uid ||
-              userInfo.role.name === "ADMIN_ROLE"
+              user.roleId === ADMIN_ROLE
             ) {
               return (
                 <div className={style.commentSec} key={index}>
@@ -272,7 +273,7 @@ export default function ProductDetail({ product }) {
         <div>
           {user.uid &&
           reviews.length >= 0 &&
-          userInfo.role.name !== "ADMIN_ROLE" &&
+          user.roleId !== ADMIN_ROLE &&
           !reviews.filter((rw) => rw.productId === product.id).length ? (
             <div>
               <form onSubmit={(e) => addRw(e)}>
