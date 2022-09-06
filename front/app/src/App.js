@@ -42,7 +42,6 @@ function App() {
         <NavBar />
       )}
       <Routes>
-        <Route path="/registersucursal" exact element={<RegisterSucursal />} />
         <Route path="/" exact element={<Landing />} />
         <Route path="/signup" exact element={<SignUp />} />
         <Route path="/login" exact element={<LogIn />} />
