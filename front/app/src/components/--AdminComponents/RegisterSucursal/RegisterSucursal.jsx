@@ -1,45 +1,70 @@
 import style from './RegisterSucursal.module.css';
-import { useEffect } from 'react';
-import { useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import "leaflet-geosearch/dist/geosearch.css";
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 
-//GeoSearch - Input de búsqueda en el mapita
-import { geosearch } from 'esri-leaflet-geocoder';
-import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
-
-
-
-
-
-
-export default function RegisterSucursal () {
-
-    const position = [0, 0]
-    const mapRef = useRef()
-
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+function Buscador () {
+    
+    const map = useMap()
+    
     useEffect(() => {
-        // const { current = {} } = mapRef
-        // const { _map } = current
-        console.log(Object.keys(mapRef).length)
-        // if(!mapRef.current?._map) return;
+        const provider = new OpenStreetMapProvider()
+        const searchControl = new GeoSearchControl({
+            provider,
+        })
+        map.addControl(searchControl)
+        return () => map.removeControl(searchControl)
 
-        const control = geosearch()
-        // mapRef?.current?._map?control.addTo(mapRef.current._map)
-        // control.addTo(_map)
-        // control.addTo(mapRef?.current?._map)
     }, [])
+    
+    function searchEventHandler(result) {
+        console.log(result.location); //Coordenadas al reves
+        // if(marker) {
+        //     map.removeControl(marker)
+        // }
+        // let marker = L.marker((result.location.y, result.location.x)).addTo(map)
+      }
 
+      function clickHandler(resul) {
+          console.log(resul.latlng)
+      }
 
-    return(
-        <div className={style.contRegisterSucursal}>
-            <button onClick={() => console.log(mapRef)}>PRUEBA</button>
-            <div className={style.contMapita}>
+          map.on('geosearch/showlocation', searchEventHandler);
+          map.on('click', clickHandler)
+
+    return null
+}
+export default function RegisterSucursal () {
+    const [ position, setPosition ] = useState([-34.63703156938776, -58.39213609387755])
+    // const position = [0, 0]
+
+    
+
+    return (
+        <div>
                 <MapContainer  center={position} zoom={13} scrollWheelZoom={false} className={style.leaflet_container}>
-                    <TileLayer ref={mapRef} attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    <TileLayer  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    <Marker position={position}>
+                        <Popup>
+                            A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                    </Marker>
+                    
+                    <Buscador/>
                 </MapContainer>
-            </div>
         </div>
     )
 }
