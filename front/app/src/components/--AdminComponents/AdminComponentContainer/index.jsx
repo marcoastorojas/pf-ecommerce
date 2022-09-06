@@ -11,9 +11,9 @@ export default function AdminComponentContainer() {
 
   return (
     <div className={style.containerDiv}>
-      {panel && panel === "users" && <AdminProductsComponent />}
       {panel && panel === "reviews" && <AllReviews />}
       {panel && panel === "categories" && <AdminCategoriesComponent />}
+      {panel && panel === "products" && <AdminProductsComponent />}
     </div>
   );
 }

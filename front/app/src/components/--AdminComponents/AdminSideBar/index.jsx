@@ -12,6 +12,8 @@ export default function AdminSideBar() {
         return navigate("/soyadmin/reviews");
       case "users":
         return navigate("/soyadmin/users");
+      case "products":
+        return navigate("/soyadmin/products");
       default:
         return;
     }
@@ -33,11 +35,13 @@ export default function AdminSideBar() {
         </div>
         <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="categories" className={style.optionP}>
-            Category management
+            Categories management
           </p>
         </div>
         <div className={style.lasOptionDiv} onClick={componentSelectionHandler}>
-          <p className={style.optionP}>Option 4</p>
+          <p id="products" className={style.optionP}>
+            Products management
+          </p>
         </div>
       </nav>
     </aside>
