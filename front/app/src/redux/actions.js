@@ -73,6 +73,8 @@ export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
 
 export const GET_SUCURSAL = "GET_SUCURSAL";
 
+export const SET_SUCURSAL = 'SET_SUCURSAL';
+
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
@@ -1053,3 +1055,27 @@ export const getSucursal = () => {
     }
   };
 };
+
+export const postSucursal = (data) => {
+  console.log('LlEGÓ',data)
+  return () => {
+    try {
+      axios({
+        method: 'POST',
+        url: `${BASE_URL}/sucursal`,
+        data: data,
+      })
+      .then(response => {
+        console.log('LLEGó', response.data)
+      })
+    } catch(err) {
+      console.log(err.message)
+    }
+  }
+}
+
+export const setSucursal = (data) => {
+  return (dispatch) => {
+    dispatch({type: SET_SUCURSAL, payload: data})
+  }
+}
