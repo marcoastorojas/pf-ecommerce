@@ -80,6 +80,7 @@ export default function Checkout() {
         navigator.geolocation.getCurrentPosition(onSuccess,onError);
     }, []);
 
+    console.log(location)
   if (cart.length < 0) {
     toast.error("Shopping cart is empty");
     toast.custom(
@@ -120,7 +121,7 @@ export default function Checkout() {
         <input type="text" name="email" id="email" placeholder="email" value={email} onChange={handleEmail} />
         <input type="text" name="direction" id="direction" placeholder="direction" onChange={handleDirection} />
         <button onClick={() => handlePay()}>PAY</button>
-        <div className="map">{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : location.error}</div>
+        <div className="map">{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : <div>ACTIVE THE LOCATION</div>}</div>
         <Toaster />
       </div>
     );
