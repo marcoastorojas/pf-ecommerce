@@ -64,7 +64,7 @@ const getProductById = async (req = request, res = response) => {
             { model: Review, attributes: ["id", "score", "description"], include: User },
             { model: Category, attributes: ["id", "name"] },
             { model: Price },
-            { model: User }
+            { model: User}
         ]
     })
         .then((data) => {

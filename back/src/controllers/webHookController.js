@@ -56,16 +56,20 @@ const recibeConfirmation = async (req = request, res = response) => {
         user.then((user)=>{
           email = user.email  
   
-          sendmail(        
-            email,
-            "Order resume",
-            "Order resume",
-            html.toString()
-          );
-        })
+    if (confirmation.action === 'payment.created')
+    {
+      sendmail(        
+        email,
+        "Order resume",
+        "Order resume",
+        html.toString()
+      );
+    }
+   })
       });      
     }   
   });  
+
   res.sendStatus(200);
 }; 
 
