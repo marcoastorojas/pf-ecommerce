@@ -23,10 +23,15 @@ paymentRoutes.post("/", async function (req, res, next) {
     include: [{ model: OrderStatus }, { model: Orderdetail, include: [Product] }],
   })
   
-  const user = await User.findOne({ where: { uid: orderFounded.userId } });
-  const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
+  if (orderFounded){
+    const user = await User.findOne({ where: { uid: orderFounded.userId } });
+    
+    const filteredOrder = {
+  //if (orderFounded) {
+  //const user = await User.findOne({ where: { uid: orderFounded.userId } });
+  //const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
   
-  const filteredOrder = {
+  //const filteredOrder = {
     orderId: orderFounded.id,
     orderDate: orderFounded.createdAt,
     orderStatusId: orderFounded.orderStatusId,
@@ -50,11 +55,12 @@ paymentRoutes.post("/", async function (req, res, next) {
 )} 
 console.log('--->'+ JSON.stringify(filteredOrder));
   link = PaymentInstance.getPaymentLink(req, res)
-  .then((link) =>{          
-    //console.log([{ order: JSON.stringify(filteredOrder) }])
-    //console.log([{ link: link }])
+  .then((link) =>{   
    res.status(200).send([{ link: link, order: filteredOrder }]) 
   })
+  }
+  
+  
 })
   
 module.exports = {
