@@ -14,6 +14,7 @@ export default function Checkout() {
   const cart = useSelector((state) => state.cart);
   const cartTotal = useSelector((state) => state.cartTotal);
   const user = useSelector((state) => state.user);
+  const sucursal = useSelector((state) => state.sucursal);
   
   //RECIBE LO QUE EL POST DEL BACK RETORNA
   const dataPayment = useSelector((state) => state.dataPayment);
@@ -27,28 +28,20 @@ export default function Checkout() {
     });
 
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value)
-  }
-
-  const handleDirection = (e) => {
-    setDirection(e.target.value)
-  }
-
-
   const handlePay = () => {
+  const tienda = sucursal.find((sl) => sl.name === direction)
     console.log({ 
       totalPriceProducts: cartTotal,
       products: cart,
       user_id: user.uid ,
-      direction: direction,
+      direction: tienda.id,
       email: email
     })
     dispatch(sendPayment({ 
       totalPriceProducts: cartTotal,
       products: cart,
       user_id: user.uid ,
-      direction: direction,
+      direction: tienda.id,
       email: email
     }));
   };
@@ -79,8 +72,11 @@ export default function Checkout() {
         }
         navigator.geolocation.getCurrentPosition(onSuccess,onError);
     }, []);
+    
+    const changeDirection = (e) => {
+       setDirection(e.target.value)
+    }
 
-    console.log(location)
   if (cart.length < 0) {
     toast.error("Shopping cart is empty");
     toast.custom(
@@ -118,10 +114,18 @@ export default function Checkout() {
   } else
     return (
       <div className="check">
-        <input type="text" name="email" id="email" placeholder="email" value={email} onChange={handleEmail} />
-        <input type="text" name="direction" id="direction" placeholder="direction" onChange={handleDirection} />
+        <input type="text" name="email" id="email" placeholder="email" value={email} disabled={true}/>
+        <input type="text" name="direction" id="direction" placeholder="direction" value={direction} disabled={true} />
         <button onClick={() => handlePay()}>PAY</button>
-        <div className="map">{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng}/> : <div>ACTIVE THE LOCATION</div>}</div>
+        <div>
+            <select onChange={(e) => changeDirection(e)}>
+                <option value="">SUCURSALES</option>
+                   {sucursal.length > 0 && sucursal.map((sl) => {
+                return <option key={sl.id} value={sl.name}>{sl.name}</option>
+            })}
+            </select>
+        </div>
+        <div className="map">{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng} search={direction}/> : <Mapita search={direction}/>}</div>
         <Toaster />
       </div>
     );

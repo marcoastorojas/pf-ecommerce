@@ -1,12 +1,12 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSucursal } from "../../redux/actions";
 
 import map from "../../media/svg/map.svg";
 import store from "../../media/svg/store.svg";
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import style from './Mapita.module.css';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -28,17 +28,32 @@ const storeIcon = new window.L.Icon({
     popupAnchor: [0, -46]
 });
 
-export default function Mapita ({X = 51.505,Y = -0.09}) {
+function GoTo({name = "Your position", lat=-34.61315, lng=-58.37723}) {
+      const map = useMap();
+      
+      if(name && lat && lng) {
+       map.flyTo([lat, lng], 13)
+    }
+    
+    return <Marker position={[lat, lng]} icon={storeIcon}>
+        <Popup>{name}</Popup>
+    </Marker>
+}
+
+export default function Mapita ({X = -34.61315,Y = -58.37723, search = ""}) {
 
    const dispatch = useDispatch();
   const sucursal = useSelector((state) => state.sucursal);
+
   
   useEffect(() => {
     dispatch(getSucursal())
   }, [])
     
     const position = [X, Y]
-
+    
+    const tienda = sucursal.find((sl) => sl.name === search);
+    
     return (
         <div id='map' className={style.contMapita}>
             <MapContainer center={position} zoom={13} scrollWheelZoom={false} className={style.leaflet_container}>
@@ -55,6 +70,7 @@ export default function Mapita ({X = 51.505,Y = -0.09}) {
                     </Popup>
                 </Marker>
                 })}
+                {tienda ? <GoTo name={tienda.name} lng={tienda.lng} lat={tienda.lat}/> : null }
             </MapContainer>
         </div>
     )

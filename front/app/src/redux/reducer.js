@@ -55,6 +55,7 @@ import {
   CLEAN_PRODUCT_SEARCH_RESULTS,
   CLEANSE_PRODUCT_DETAILS,
   GET_SUCURSAL,
+  SET_SUCURSAL,
 } from "./actions";
 
 const initialState = {
@@ -91,6 +92,7 @@ const initialState = {
     posting: null,
   },
   sucursal: [],
+  nuevaSucursal: { name: "", lat: "", lng: "" },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -456,6 +458,12 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         product: {},
+      };
+
+    case SET_SUCURSAL:
+      return {
+        ...state,
+        nuevaSucursal: action.payload,
       };
     default:
       return state;

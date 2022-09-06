@@ -28,6 +28,7 @@ import Footer from "./components/Footer";
 // import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "./validations/usersTypes";
 
 import "./App.css";
+import RegisterSucursal from "./components/--AdminComponents/RegisterSucursal/RegisterSucursal.jsx";
 
 function App() {
   const { pathname } = useLocation();
