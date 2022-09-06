@@ -22,8 +22,8 @@ paymentRoutes.post("/", async function (req, res, next) {
   {  
     include: [{ model: OrderStatus }, { model: Orderdetail, include: [Product] }],
   })
+  
   if (orderFounded){
-
     const user = await User.findOne({ where: { uid: orderFounded.userId } });
     
     const filteredOrder = {
