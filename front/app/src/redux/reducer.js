@@ -53,6 +53,9 @@ import {
   PUT_CATEGORY_STATE,
   POST_CATEGORY,
   POSTING_CATEGORY,
+    
+    
+  GET_SUCURSAL,
 } from "./actions";
 
 const initialState = {
@@ -88,6 +91,7 @@ const initialState = {
     name: null,
     posting: null,
   },
+    sucursal: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -439,6 +443,11 @@ export const reducer = (state = initialState, action) => {
           posting: "posted",
         },
       };
+      case GET_SUCURSAL:
+          return {
+              ...state,
+              sucursal: action.payload
+          }
     default:
       return state;
   }
