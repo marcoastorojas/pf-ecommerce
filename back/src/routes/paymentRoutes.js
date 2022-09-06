@@ -40,16 +40,18 @@ paymentRoutes.post("/", async function (req, res, next) {
         idProduct: product.productId,
         title: product.product.title,
         quantity: product.quantity,
-        price: product.product.price,
+       // price: product.product.price,
+       price: 1
       };
 
   }
 )} 
-
+console.log('--->'+ JSON.stringify(filteredOrder));
   link = PaymentInstance.getPaymentLink(req, res)
   .then((link) =>{          
-    console.log([{ link: link, order: JSON.stringify(filteredOrder) }])
-    res.status(200).send([{ link: link, order: filteredOrder }]) 
+    //console.log([{ order: JSON.stringify(filteredOrder) }])
+    //console.log([{ link: link }])
+   res.status(200).send([{ link: link, order: filteredOrder }]) 
   })
 })
   
