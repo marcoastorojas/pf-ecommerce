@@ -42,8 +42,7 @@ class PaymentService {
                 ],
                 "receiver_address": {}
               },
-              "back_urls": {
-                //"success": "http://localhost:3000/successpay",			         
+              "back_urls": {                
                 "success": "https://pf-ecommerce-ebon.vercel.app",			         
               },              
           		auto_return: "approved",
