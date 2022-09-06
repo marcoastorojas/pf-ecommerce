@@ -5,7 +5,8 @@ const { Op } = require("sequelize")
 
 const { Product, Subcategory, Favorite, Review, User, Price, Role, Category } = require("../db")
 
-const { createWhereAndOrder } = require("../helpers/createWhereOrder")
+const { createWhereAndOrder } = require("../helpers/createWhereOrder");
+const sendmail = require('../helpers/sendEmail');
 
 
 
@@ -62,7 +63,7 @@ const getProductById = async (req = request, res = response) => {
             { model: Favorite },
             { model: Review, attributes: ["id", "score", "description"], include: User },
             { model: Category, attributes: ["id", "name"] },
-            { model: Price}
+            { model: Price }
         ]
     })
         .then((data) => {
@@ -255,7 +256,7 @@ const getProductsFilter = async (req, res) => {
             where: {}
         }
         //Agrego, si existe, un mínimo
-        if(!!min) {
+        if (!!min) {
             objPrice = {
                 ...objPrice,
                 where: {
@@ -268,7 +269,7 @@ const getProductsFilter = async (req, res) => {
             }
         }
         //Agrego, si existe, un máximo
-        if(!!max) {
+        if (!!max) {
             objPrice = {
                 ...objPrice,
                 where: {
@@ -286,7 +287,7 @@ const getProductsFilter = async (req, res) => {
         }
         greatCondition.include.push(objPrice)
         //Armo y agrego, si existe, un filtrado por categoría
-        if(!!categoryId) {
+        if (!!categoryId) {
             let objCategory = {
                 model: Category,
                 attributes: ['name'],
@@ -300,14 +301,14 @@ const getProductsFilter = async (req, res) => {
             greatCondition.include.push(objCategory)
         }
         //Agrego, si existe, un orden
-        if(!!priceOrder) {
+        if (!!priceOrder) {
             greatCondition = {
                 ...greatCondition,
                 order: [['price', 'originalprice', priceOrder]]
             }
         }
         //Agrego, si existe, un filtrado por orden
-        if(!!name) {
+        if (!!name) {
             greatCondition = {
                 ...greatCondition,
                 where: {
@@ -316,8 +317,8 @@ const getProductsFilter = async (req, res) => {
                     }
                 }
             }
-        }    
-            //MODELO
+        }
+        //MODELO
         // let greatCondition = {
         //     attributes: ['title'],
         //     include: [
@@ -349,15 +350,15 @@ const getProductsFilter = async (req, res) => {
         const resul = await Product.findAll(greatCondition)
         res.status(200).json(resul)
     } catch (err) {
-        res.status(500).json({ error: err.message})
+        res.status(500).json({ error: err.message })
     }
 }
 const putProductById = async (req, res) => {
     try {
         const { productId } = req.params;
-        const {title, model, description, brand, stock, images} = req.body;
-        const {categoriesId} = req.body;
-        const {price, discount} = req.body;
+        const { title, model, description, brand, stock, images } = req.body;
+        const { categoriesId } = req.body;
+        const { price, discount } = req.body;
         await Product.update({
             title,
             model,
@@ -387,7 +388,7 @@ const putProductById = async (req, res) => {
                 productId: productId,
             }
         })
-        
+
         product = await Product.findOne({
             where: {
                 id: productId
@@ -401,7 +402,7 @@ const putProductById = async (req, res) => {
         })
         res.status(200).json(product)
     } catch (err) {
-        res.status(400).json({error: err.message})
+        res.status(400).json({ error: err.message })
     }
 }
 
@@ -409,16 +410,61 @@ const getReviews = async (req, res) => {
     try {
         const reviews = await Review.findAll({
             include: [
-            { model: User, attributes: ["uid", "username", "image"], include: [
-                { model: Role, as: "role" },
-            ]},
-            { model: Product, attributes: ["id", "title", "images"] },
-        ]});
-         res.status(200).json(reviews)
-    } catch(error) {
-         res.status(500).json({ error: error.message})
+                {
+                    model: User, attributes: ["uid", "username", "image"], include: [
+                        { model: Role, as: "role" },
+                    ]
+                },
+                { model: Product, attributes: ["id", "title", "images"] },
+            ]
+        });
+        res.status(200).json(reviews)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
     }
 }
+
+const promo = async (req, res) => {
+    const { id: productId } = req.params
+    const { discount, expiresin } = req.body
+    if (!discount || !expiresin) return res.status(400).json({ message: "discount y expiresin son requeridos" })
+    try {
+        const price = await Price.findOne({ where: { productId } })
+        price.discount = discount
+        price.expiresin = expiresin
+        await price.save()
+
+        const favorites = await Favorite.findAll({ where: { productId }, include: [Product, User] })
+        if (!favorites.length) {
+            return res.json({ message: "promo publicada exitosamente",price })
+        }
+        const productName = favorites[0].product.title
+        const productImage = favorites[0].product.images.split(" ")[0]
+        const emails = favorites.map((cur) => cur.user.email)
+
+        await sendmail(
+            emails,
+            "Promo Discount",
+            "promo",
+            `<h1>
+                promo ${productName}
+            </h1>
+            <img src="${productImage}">
+            <h4>
+                from ${price.originalprice} to
+                ${price.originalprice * (1 - price.discount)}
+                expires in ${price.expiresin}
+            </h4>`
+        )
+
+        res.json({ productName, emails, price })
+
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+
+}
+
 module.exports = {
     postProduct,
     getProducts,
@@ -435,4 +481,5 @@ module.exports = {
     getProductsFilter,
     getReviews,
     putProductById,
+    promo
 }
