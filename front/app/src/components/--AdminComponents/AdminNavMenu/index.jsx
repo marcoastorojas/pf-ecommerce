@@ -1,4 +1,3 @@
-// import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +17,10 @@ export default function AdminNavMenu() {
 
   const [logOutTry, setLogOutTry] = useState(false);
 
+  const onProfileClick = () => {
+    navigate("/user/info");
+  };
+
   const logOutTryHandler = () => {
     setLogOutTry(true);
   };
@@ -32,10 +35,6 @@ export default function AdminNavMenu() {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   console.log(admin);
-  // }, [admin]);
-
   return (
     <div className={style.mainDiv}>
       <div className={style.profilePicDiv}>
@@ -45,7 +44,9 @@ export default function AdminNavMenu() {
         <p className={style.administratorP}>Adminstrator:</p>
         <h3 className={style.administratorH3}>{admin.username}</h3>
       </div>
-      <div className={style.profileDiv}>Profile</div>
+      <div className={style.profileDiv} onClick={onProfileClick}>
+        Profile
+      </div>
       <div className={style.logoutDiv} onClick={logOutTryHandler}>
         Log out
       </div>

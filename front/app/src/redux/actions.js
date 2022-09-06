@@ -69,6 +69,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const PUT_CATEGORY_STATE = "PUT_CATEGORY_STATE";
 export const POSTING_CATEGORY = "POSTING_CATEGORY";
 export const POST_CATEGORY = "POST_CATEGORY";
+export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
 
 export const GET_SUCURSAL = "GET_SUCURSAL";
 
@@ -1031,17 +1032,24 @@ export const getAllReviews = () => {
   };
 };
 
+export const cleanProductSearchResults = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAN_PRODUCT_SEARCH_RESULTS,
+    });
+  };
+};
 
 export const getSucursal = () => {
-    return async function(dispatch) {
-        try {
-            const response = await axios.get(`${BASE_URL}/sucursal`)
-            return dispatch({
-                type: GET_SUCURSAL,
-                payload: response.data
-            })
-        } catch(error) {
-            console.log("error sucursal")
-        }
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/sucursal`);
+      return dispatch({
+        type: GET_SUCURSAL,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("error sucursal");
     }
-}
+  };
+};
