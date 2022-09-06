@@ -133,6 +133,7 @@ export default function ProductDetail({ product }) {
   return (
     <div className={style.contProDet}>
       {/* <button onClick={() => console.log(stock-stockInCart)}>PRUEBAPRODUCTO</button> */}
+      {/* <button onClick={() => console.log(product)}>PRUEBA</button> */}
       <div className={style.publish}>
         <div className={style.left}>
           <div className={style.prodImgs}>
@@ -168,7 +169,7 @@ export default function ProductDetail({ product }) {
         </div>
         <div className={style.right}>
           <div className={style.sellerInfo}>
-            <SellerDetails />
+            <SellerDetails seller={product.user}/>
           </div>
           <div className={style.shopping}>
             <div className={style.pricing}>
