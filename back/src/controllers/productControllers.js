@@ -436,7 +436,7 @@ const promo = async (req, res) => {
 
         const favorites = await Favorite.findAll({ where: { productId }, include: [Product, User] })
         if (!favorites.length) {
-            return res.json({ message: "promo publicada exitosamente" })
+            return res.json({ message: "promo publicada exitosamente",price })
         }
         const productName = favorites[0].product.title
         const productImage = favorites[0].product.images.split(" ")[0]
