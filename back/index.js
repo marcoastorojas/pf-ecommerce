@@ -24,7 +24,7 @@ const { conn, Order } = require('./src/db.js');
 
 conn.sync({ force: false }).then(() => {
 
-  Order.sync({ force: true })
+  Order.sync({ force: false })
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
