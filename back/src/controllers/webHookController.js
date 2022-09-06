@@ -62,6 +62,7 @@ const recibeConfirmation = async (req = request, res = response) => {
       })
     });
   });
+  res.status(200);
 }; 
 
 module.exports = {   
