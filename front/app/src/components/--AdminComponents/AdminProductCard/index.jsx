@@ -41,6 +41,7 @@ export default function AdminProductCard({ p, setDetailToRender }) {
           <p>Stock: {stock}</p>
           <p>${originalprice}</p>
         </div>
+        <button>Delete product</button>
       </div>
     </div>
   );
