@@ -50,9 +50,10 @@ import {
   GET_ALL_USERS,
 
   //ADMIN
-  PUT_CATEGORY_STATE,
   POST_CATEGORY,
   POSTING_CATEGORY,
+  CLEAN_PRODUCT_SEARCH_RESULTS,
+  GET_SUCURSAL,
 } from "./actions";
 
 const initialState = {
@@ -88,6 +89,7 @@ const initialState = {
     name: null,
     posting: null,
   },
+  sucursal: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -438,6 +440,16 @@ export const reducer = (state = initialState, action) => {
           name: action.payload.name,
           posting: "posted",
         },
+      };
+    case CLEAN_PRODUCT_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchedProducts: [],
+      };
+    case GET_SUCURSAL:
+      return {
+        ...state,
+        sucursal: action.payload,
       };
     default:
       return state;
