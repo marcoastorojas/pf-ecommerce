@@ -16,6 +16,7 @@ const {
     getProductsFilter,
     getReviews,
     putProductById,
+    promo,
  } = require("../controllers/productControllers")
 
 //middlewares
@@ -106,6 +107,8 @@ productRoutes.post("/enviaremail", (req, res) => {
 productRoutes.post("/", validBodyPostProducts, postProduct)
 
 productRoutes.get('/:id', validIdParam, getProductById)
+
+productRoutes.post("/promo/:id", validIdParam, promo)
 
 
 
