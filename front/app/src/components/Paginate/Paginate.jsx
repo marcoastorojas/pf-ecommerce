@@ -29,7 +29,7 @@ export default function Paginate({
 
   return (
     <div className="container-paginate">
-      <ul className="page">
+      <ul className="paginate">
         <li>
           <a className="prev" onClick={() => prevHandler()}>
             Prev

@@ -6,7 +6,7 @@
   margin: 4rem
 }
 
-ul {
+.paginate {
   position: relative;
   background: #eeeeee;
   display: flex;
@@ -15,13 +15,13 @@ ul {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-ul li {
+.paginate li {
   list-style: none;
   line-height: 50px;
   margin: 0 5px;
 }
 
-ul li.pageNumber {
+.paginate li.pageNumber {
   width: 50px;
   height: 50px;
   line-height: 50px;
@@ -32,7 +32,7 @@ a {
   cursor: pointer;
 }
 
-ul li a {
+.paginate li a {
   display: block;
   text-decoration: none;
   color: #777;
@@ -40,19 +40,19 @@ ul li a {
   border-radius: 50%;
 }
 
-ul li.pageNumber:hover a,
-ul li.pageNumber.active a {
+.paginate li.pageNumber:hover a,
+.paginate li.pageNumber.active a {
   background: #34495e;
   color: #eeeeee;
 }
 
-ul li:first-child {
+.paginate li:first-child {
   margin-right: 30px;
   font-weight: 700;
   font-size: 20px;
 }
 
-ul li:last-child {
+.paginate li:last-child {
   margin-left: 30px;
   font-weight: 700;
   font-size: 20px;
