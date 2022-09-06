@@ -10,12 +10,13 @@ export default function ResultsContainer() {
     const resultsFound = useSelector(state => state.resultsFound);
     return (
         <div className={style.contResults}>
-            {/* <button onClick={() => console.log(searchedProducts[0])}>PRUEBA</button> */}
+            <button onClick={() => console.log(searchedProducts[0])}>PRUEBA</button>
             {
                 searchedProducts.length > 0 ? 
                 searchedProducts?.map((product, index) => {
                     return (
                        <CatalogueCards
+                       stock={product.stock}
                        key={index}
                        id={product.id}
                        name={product.title}
