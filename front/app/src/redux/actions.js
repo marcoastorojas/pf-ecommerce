@@ -73,6 +73,8 @@ export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
 
 export const GET_SUCURSAL = "GET_SUCURSAL";
 
+export const GET_MARKER = 'GET_MARKER';
+
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
@@ -1053,3 +1055,9 @@ export const getSucursal = () => {
     }
   };
 };
+
+export const getMarker = (latlng) => {
+  return (dispatch) => {
+    dispatch({ type: GET_MARKER, payload: latlng})
+  }
+}
