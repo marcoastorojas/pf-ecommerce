@@ -3,6 +3,7 @@ const orderRoutes = Router();
 
 //controllers
 const { getOrderbyUser } = require("../controllers/orderController")
+const { OrderStatus } = require("../db")
 //middleware
 // const { validIdParam } = require("../middlewares/validIdParam")
 
@@ -21,6 +22,11 @@ orderRoutes.post("/",
   }
   , getOrderbyUser)
 
+orderRoutes.post("/status",async (req, res) => {
+  if (!req.body.description) return res.status(400).json({ message: "description is necessary" })
+  const orderStatus = await OrderStatus.create(req.body)
+  res.json(orderStatus)
+})
 module.exports = {
   orderRoutes,
 };

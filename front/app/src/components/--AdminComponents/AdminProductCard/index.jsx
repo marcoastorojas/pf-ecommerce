@@ -1,11 +1,25 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 import style from "./index.module.css";
 
 export default function AdminProductCard({ p, setDetailToRender }) {
-  const { id, title, model, description, brand, stock, images, userId, price } = p;
+  const {
+    id,
+    title,
+    // model,
+    // description,
+    // brand,
+    stock,
+    images,
+    // userId,
+    price,
+  } = p;
   const urlImages = images.split(" ");
-  const { id: priceId, originalprice, discount, expiresin, productId } = price;
+  const {
+    // id: priceId,
+    originalprice,
+    // discount, expiresin, productId
+  } = price;
 
   const renderDetail = () => {
     setDetailToRender(id);

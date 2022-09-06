@@ -1,5 +1,10 @@
 
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getSucursal } from "../../redux/actions";
 
+import map from "../../media/svg/map.svg";
+import store from "../../media/svg/store.svg";
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import style from './Mapita.module.css';
@@ -9,37 +14,47 @@ import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
-export default function Mapita ({X = 51.505,Y = -0.09}) {
-    
-    const position = [X, Y]
-
-    // var map = L.map('map').setView([51.505, -0.09], 13);
-
-// L.tileLayer('https://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright%22%3EOpenStreetMap</a> contributors'
-// }).addTo(map);
-
-// L.marker([51.5, -0.09]).addTo(map)
-//     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-//     .openPopup();
-
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow
+const markerIcon = new window.L.Icon({
+    iconUrl: map,
+    iconSize: [35, 45],
+    iconAnchor: [17, 46], //[left/right, top/bottom]
+    popupAnchor: [0, -46]
 });
 
-L.Marker.prototype.options.icon = DefaultIcon;
+const storeIcon = new window.L.Icon({
+    iconUrl: store,
+    iconSize: [35, 45],
+    iconAnchor: [17, 46], //[left/right, top/bottom]
+    popupAnchor: [0, -46]
+});
 
+export default function Mapita ({X = 51.505,Y = -0.09}) {
+
+   const dispatch = useDispatch();
+  const sucursal = useSelector((state) => state.sucursal);
+  
+  useEffect(() => {
+    dispatch(getSucursal())
+  }, [])
+    
+    const position = [X, Y]
 
     return (
         <div id='map' className={style.contMapita}>
             <MapContainer center={position} zoom={13} scrollWheelZoom={false} className={style.leaflet_container}>
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={position} src='https://gluc.mx/u/fotografias/m/2020/6/29/f638x638-29448_87615_5057.jpg'>
+                <Marker position={position} icon={markerIcon}>
                     <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
+                        Your position
                     </Popup>
                 </Marker>
+                {sucursal.length > 0 && sucursal.map((sl) => {
+                    return  <Marker position={[sl.lat, sl.lng]} icon={storeIcon} key={sl.id}>
+                    <Popup>
+                       {sl.name}
+                    </Popup>
+                </Marker>
+                })}
             </MapContainer>
         </div>
     )

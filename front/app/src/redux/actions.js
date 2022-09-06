@@ -71,6 +71,8 @@ export const POSTING_CATEGORY = "POSTING_CATEGORY";
 export const POST_CATEGORY = "POST_CATEGORY";
 export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
 
+export const GET_SUCURSAL = "GET_SUCURSAL";
+
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
@@ -454,9 +456,9 @@ export const logIn = (user) => {
 };
 
 export const sendPayment = (dataPayment) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     try {
-      axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
+      await axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
         dispatch({
           type: SEND_PAYMENT,
           payload: response.data,
@@ -1035,5 +1037,19 @@ export const cleanProductSearchResults = () => {
     dispatch({
       type: CLEAN_PRODUCT_SEARCH_RESULTS,
     });
+  };
+};
+
+export const getSucursal = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/sucursal`);
+      return dispatch({
+        type: GET_SUCURSAL,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("error sucursal");
+    }
   };
 };

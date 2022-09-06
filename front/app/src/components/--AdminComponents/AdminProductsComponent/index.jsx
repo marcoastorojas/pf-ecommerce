@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanProductSearchResults, getProductId, getProducts, getProductsByName } from "../../../redux/actions";
+import { cleanProductSearchResults, getProducts, getProductsByName } from "../../../redux/actions";
 import AdminProductCard from "../AdminProductCard";
 
 import style from "./index.module.css";
@@ -61,6 +61,7 @@ export default function AdminProductsComponent() {
     console.log(details);
     // console.log(searchInput);
     dispatch(getProducts(paginate));
+    //eslint-disable-next-line
   }, [dispatch, paginate, detailToRender, details]);
 
   return (
