@@ -33,7 +33,7 @@ export default function MyShoppingContainer () {
                 Object.keys(dataOrders).length !== 0 && dataOrders?.map( e => {
                     return (
                         <div key={e.id}>
-                            <MyShopping buyer={e.user} date={e.createdAt} orders={e.orderdetails}/>
+                            <MyShopping buyer={e.user} date={e.createdAt} orders={e.orderdetails} status={e.orderStatus}/>
                         </div>
                     )
                 })

@@ -109,7 +109,7 @@ export default function MyShopping (props) {
                 </div>
             </div>
             <div className={style.status}>
-                <h3>Status: </h3>
+                <h3>Status: {props.status.description} </h3>
                 <h3>Total: ${calTotal()}</h3>
                 {/* <button>Cancel Operation</button> */}
             </div>
