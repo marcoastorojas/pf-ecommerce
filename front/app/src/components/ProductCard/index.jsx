@@ -1,4 +1,4 @@
-//import { useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./index.module.css";
 import { addFav, delFav, getUserFav } from "../../redux/actions";
@@ -15,13 +15,13 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
 
   const product = { id, title, image, price, model, brand };
   
+    useEffect(() => {
+        dispatch(getUserFav(user.uid))
+    }, [dispatch])  
+  
   const addFavourites = () => {
     if(user.uid)  {
     dispatch(addFav(product.id, user.uid));
-    setTimeout(() => {
-        dispatch(getUserFav(user.uid))
-    }, 500)
-   
     }
     else return console.log("LOG IN")
   };
@@ -29,9 +29,6 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
   const delFavourites = () => {
     if(user.uid)  {
     dispatch(delFav(user.uid, product.id));
-    setTimeout(() => {
-        dispatch(getUserFav(user.uid))
-    }, 500)
     }
     else return console.log("LOG IN")
   };
