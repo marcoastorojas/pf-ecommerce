@@ -22,13 +22,13 @@ import SimpleNavBar from "./components/SimpleNavBar";
 import AdminNavBar from "./components/--AdminComponents/AdminNavBar";
 import Footer from "./components/Footer";
 
+import RegisterSucursal from "./components/--AdminComponents/RegisterSucursal/RegisterSucursal.jsx";
 // import SellerRoutes from "./validations/SellerRoutes";
 // import BuyerRoutes from "./validations/BuyerRoutes";
 
 // import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "./validations/usersTypes";
 
 import "./App.css";
-import RegisterSucursal from "./components/--AdminComponents/RegisterSucursal/RegisterSucursal.jsx";
 
 function App() {
   const { pathname } = useLocation();
