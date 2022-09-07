@@ -223,7 +223,7 @@ export default function ProductDetail({ product }) {
               user.roleId !== ADMIN_ROLE?
               <div className={style.buttons}>
                 <button
-                  className={style.buttonProdDet}
+                  className={stockInCart<stock?style.buttonProdDet:style.buttonDisabled}
                   onClick={() => addCart()}
                   disabled={stockInCart ? !(stock - stockInCart) : false}
                 >
