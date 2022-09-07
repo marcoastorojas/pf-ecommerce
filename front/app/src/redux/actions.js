@@ -412,7 +412,7 @@ export const postUser = (newUser) => {
           type: POST_USER,
           payload: response.data.user,
         });
-        toast.success('Signup succesfull! Please Login')
+        toast.success('Signup succesfull!')
       })
       .catch((err) => {
         toast.dismiss('REGISTERUSER')
