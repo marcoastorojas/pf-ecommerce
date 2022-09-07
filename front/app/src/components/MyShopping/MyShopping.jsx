@@ -31,7 +31,7 @@ export default function MyShopping (props) {
 
     return (
         <div className={style.contMyShopping}>
-            <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button>
+            {/* <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button> */}
             <div className={style.header}>
                 <div className={style.titulo}>
                     <h3>Date: {props.date}</h3>
