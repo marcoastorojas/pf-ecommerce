@@ -12,12 +12,13 @@ export default function ShoppingCart() {
 
   const cart = useSelector((state) => state.cart);
   const cartTotal = useSelector((state) => state.cartTotal);
+   const user = useSelector((state) => state.user);
 
   const [quantityAdd, setQuantityAdd] = useState(1);
   const [quantityRes, setQuantityRes] = useState(1);
 
   useEffect(() => {
-    dispatch(getTotal());
+    if(user.uid)dispatch(getTotal());
   }, [cart.length]);
 
   const addCart = (e) => {

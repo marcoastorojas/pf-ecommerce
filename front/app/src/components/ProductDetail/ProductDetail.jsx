@@ -14,9 +14,16 @@ import {
   getUserReviews,
   updateReview,
   getProductId,
+  
+  addFav,
+  delFav,
+  getUserFav,
 } from "../../redux/actions";
 import { toast } from "react-hot-toast";
-
+//favorites
+import star from "../../media/images/bx-star.svg";
+import starF from "../../media/images/bxs-star.svg";
+//score
 import yellowStar from "../../media/svg/yellow-star.svg";
 import yellowBorderStar from "../../media/svg/yellow-border-star.svg";
 import { ADMIN_ROLE } from "../../validations/usersTypes";
@@ -31,6 +38,7 @@ export default function ProductDetail({ product }) {
 
   const [showEdit, setShowEdit] = useState(false);
 
+  const favourites = useSelector((state) => state.favourites);
   const userInfo = useSelector((state) => state.userInfo);
   const user = useSelector((state) => state.user);
   const reviews = useSelector((state) => state.reviews);
@@ -49,7 +57,10 @@ export default function ProductDetail({ product }) {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    if (user.uid) dispatch(getUserReviews(user.uid));
+    if (user.uid) {
+        dispatch(getUserReviews(user.uid));
+        dispatch(getUserFav(user.uid))
+     }
      dispatch(getProductId(product.id));
   }, [])
 
@@ -137,6 +148,26 @@ export default function ProductDetail({ product }) {
     });
   };
   
+  const addFavourites = () => {
+    if(user.uid)  {
+    dispatch(addFav(product.id, user.uid));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 800)
+    }
+    else return console.log("LOG IN")
+  };
+
+  const delFavourites = () => {
+    if(user.uid)  {
+    dispatch(delFav(user.uid, product.id));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 800)
+    }
+    else return console.log("LOG IN")
+  };
+  
   const productScoreRaw = product.Reviews.reduce((acc, rw) => acc += rw.score, 0)
           
      const getScore = (num) => {
@@ -146,6 +177,16 @@ export default function ProductDetail({ product }) {
      }
           
    const productScore = getScore(productScoreRaw / product.Reviews.length)
+   
+   const productFilterFav = favourites.find((pt) => pt.product.id === product.id)
+   
+   const starImage = productFilterFav? <div className={style.favorites}>
+            Add to favorites:
+          <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
+        </div> : <div className={style.favorites}>
+            Add to favorites:
+          <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
+        </div>
 
   return (
     <div className={style.contProDet}>
@@ -189,6 +230,9 @@ export default function ProductDetail({ product }) {
             <SellerDetails seller={product.user}/>
           </div>
           <div className={style.shopping}>
+          <div>
+           {userInfo.role?.name === "USER_ROLE" ? starImage : null}
+      </div>
             <div className={style.pricing}>
               {/* <div className={style.quant}> */}
               <h4>Stock: {product.stock}</h4>
