@@ -145,7 +145,7 @@ export default function ProductDetail({ product }) {
         else return num;
      }
           
-   const productScore = getScore(productScoreRaw / product.Reviews.length) 
+   const productScore = getScore(productScoreRaw / product.Reviews.length)
 
   return (
     <div className={style.contProDet}>
@@ -241,10 +241,16 @@ export default function ProductDetail({ product }) {
         </div>
       </div>
       <div className={style.comments}>
-        <h3>Product score: {productScore}{Array.apply(0, Array(5)).map((str, index) => {
-            if(index + 1 - productScore > 0.5) return <img src={yellowBorderStar} alt="yello-border-star" key={index}/>
-            if(index + 1 - productScore < 0.5) return <img src={yellowStar} alt="yellow-star" key={index}/>
-            if(index + 1- productScore === 0.5) return <img src={yellowStarHalf} alt="yellow-star-half" key={index}/>
+        <h3>Product score: {productScore ? productScore : 0}{Array.apply(0, Array(5)).map((str, index) => {
+            if(!productScore){
+                 if(index + 1 - 0 > 0.5) return <img src={yellowBorderStar} alt="yello-border-star" key={index}/>
+                 if(index + 1 - 0 < 0.5) return <img src={yellowStar} alt="yellow-star" key={index}/>
+                if(index + 1- 0 === 0.5) return <img src={yellowStarHalf} alt="yellow-star-half" key={index}/>
+            } else {
+                 if(index + 1 - productScore > 0.5) return <img src={yellowBorderStar} alt="yello-border-star" key={index}/>
+                 if(index + 1 - productScore < 0.5) return <img src={yellowStar} alt="yellow-star" key={index}/>
+                if(index + 1- productScore === 0.5) return <img src={yellowStarHalf} alt="yellow-star-half" key={index}/>   
+                    }
                     }) }</h3>
         <h2>Comments:</h2>
         {product.Reviews.length > 0 &&
