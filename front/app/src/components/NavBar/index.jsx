@@ -164,7 +164,7 @@ export default function NavBar() {
             </div>
               : <></>
           }
-        {ADMIN_ROLE === user.roleId && <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/categories")}>Admin interface.</button>}
+        {ADMIN_ROLE === user.roleId && <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/users")}>Admin interface.</button>}
       </div>
     </header>
   );
