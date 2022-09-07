@@ -263,24 +263,28 @@ export default function ProductDetail({ product }) {
                 </span>
               </div> */}
             </div>
-            <div className={style.buttons}>
-              <button
-                className={style.buttonProdDet}
-                onClick={() => addCart()}
-                disabled={stockInCart ? !(stock - stockInCart) : false}
-              >
-                <span className={style.text}>Add to cart</span>
-                <span className={style.icon}>
-                  <img src={Add} alt="add-cart" />
-                </span>
-              </button>
-              {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
-                <span className={style.text}>Delete All</span>
-                <span className={style.icon}>
-                  <img src={Del} alt="delete-cart" />
-                </span>
-              </button> */}
-            </div>
+            {
+              user.roleId !== ADMIN_ROLE?
+              <div className={style.buttons}>
+                <button
+                  className={stockInCart<stock?style.buttonProdDet:style.buttonDisabled}
+                  onClick={() => addCart()}
+                  disabled={stockInCart ? !(stock - stockInCart) : false}
+                >
+                  <span className={style.text}>Add to cart</span>
+                  <span className={style.icon}>
+                    <img src={Add} alt="add-cart" />
+                  </span>
+                </button>
+                {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
+                  <span className={style.text}>Delete All</span>
+                  <span className={style.icon}>
+                    <img src={Del} alt="delete-cart" />
+                  </span>
+                </button> */}
+              </div>
+              : <></>
+            }
           </div>
         </div>
       </div>
@@ -305,19 +309,23 @@ export default function ProductDetail({ product }) {
             ) {
               return (
                 <div className={style.commentSec} key={index}>
-                  <h3>{rw.user.username}</h3>
+                  <div className={style.username}>
+                    <h3>{rw.user.username}</h3>
+                  </div>
+                  <div className={style.descComen}>
+                    <p>{rw.description}</p>
+                  </div>
                   <div className={style.commentData}>
                     {rw.score}
                     <h4> {Array.apply(0, Array(5)).map((str, index) => {
-                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
-                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                        if(index < rw.score) return <img key={index} src={yellowStar} alt="yellow-star"/>
+                        else return <img key={index} src={yellowBorderStar} alt="yello-border-star"/>
                     }) }</h4>
-                    <p>{rw.description}</p>
                   </div>
                   <div className={style.commentButtons}>
-                    <button onClick={() => delRw()}>Delete</button>
+                    <button className={style.button} onClick={() => delRw()}>Delete</button>
                     {!showEdit ? (
-                      <button onClick={() => setShowEdit(true)}>Edit</button>
+                      <button className={style.button} onClick={() => setShowEdit(true)}>Edit</button>
                     ) : null}
                   </div>
                 </div>
@@ -325,28 +333,45 @@ export default function ProductDetail({ product }) {
             } else
               return (
                 <div className={style.commentSec} key={index}>
-                  <h3>{rw.user.username}</h3>
+                  <div className={style.username}>
+                    <h3>{rw.user.username}</h3>
+                  </div>
+                  <div className={style.descComen}>
+                    <p>{rw.description}</p>
+                  </div>
                   <div className={style.commentData}>
                     {rw.score}
                     <h4> {Array.apply(0, Array(5)).map((str, index) => {
-                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
-                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                        if(index < rw.score) return <img key={index} src={yellowStar} alt="yellow-star"/>
+                        else return <img key={index} src={yellowBorderStar} alt="yello-border-star"/>
                     }) }</h4>
-                    <p>{rw.description}</p>
                   </div>
                 </div>
               );
           })}
 
-        <div>
+        <div className={style.addCommentSection}>
           {user.uid &&
           reviews.length >= 0 &&
           user.roleId !== ADMIN_ROLE &&
           !reviews.filter((rw) => rw.productId === product.id).length ? (
-            <div>
-              <form onSubmit={(e) => addRw(e)}>
+            <div className={style.prueba}>
+              <form className={style.formComment} onSubmit={(e) => addRw(e)}>
+                <div className={style.descriptionComment}>
+                  <div>
+                    <label>Description:</label>
+                  </div>
+                  <div>
+                    <textarea
+                      type="text"
+                      name="description"
+                      value={review.description}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </div>
+                </div>
                 <div className={style.score}>
-                  <label>Score:</label>
+                  <p>Score:</p>
                   <input
                     type="range"
                     min="0"
@@ -357,15 +382,6 @@ export default function ProductDetail({ product }) {
                     onChange={(e) => handleChange(e)}
                   />
                   {review.score}
-                </div>
-                <div className={style.descriptionComment}>
-                  <label>Description:</label>
-                  <input
-                    type="text"
-                    name="description"
-                    value={review.description}
-                    onChange={(e) => handleChange(e)}
-                  />
                 </div>
                 <input
                   type="submit"

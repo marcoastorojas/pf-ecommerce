@@ -43,14 +43,15 @@ export default function FilterContainer() {
  };
 
  useEffect(() => {
-  filtrar();
+  // filtrar();
+  document.querySelector('#submitForm').click()
   if(order !== '') document.querySelector('#orderButton').className = style.buttonOrderSelected
-//   else if(desc !== '') document.querySelector('#orderButton').className = style.buttonOrderSelected
   else document.querySelector('#orderButton').className = style.buttonOrder
  }, [order, category]);
 
- const filtrar = () => {
-    console.log(min, max, order, search, 'filtrar:', category)
+ const filtrar = (e) => {
+    e.preventDefault()
+    // console.log(min, max, order, search, 'filtrar:', category)
     dispatch(newSearchProducts(search, order, min, max, category))
     // console.log(category, search)
     // if(category === '') dispatch(getProductsFilter(search, max, min, asc, desc));
@@ -62,35 +63,37 @@ const categoryHandle = (e) => {
  return (
   <div className={style.contFilter}>
     {/* <button onClick={ () => console.log(category)}>PRUEBA</button> */}
-    <div className={style.eachFilter}>
-        {/* <h4>Order By:</h4> */}
-        {/* <label>Price: </label> */}
-        <button id='orderButton' className={style.buttonOrder} onClick={orderHandle}>Price: Order</button>
-        <br></br>
-    </div>
-    <div className={style.eachFilter}>
-        <h4>Categories: </h4>
-        <select className={style.selectCategories} onChange={categoryHandle}>
-            <option hidden>{searchCategory?searchCategory[1]:'Select Category'}</option>
-            {categories?.map(e => {
-                    return <option key={e.id} value={e.id}>{e.name}</option>
-                })}
-        </select>
-    </div>
-    <div className={style.eachFilter}>
-        <h4>Precio:</h4>
-        <label>Min:</label>
-        <br></br>
-        <input className={style.inputFilter} onChange={minPriceHandle}></input>
-        <br></br>
-        <label>Max:</label>
-        <br></br>
-        <input className={style.inputFilter} onChange={maxPriceHandle}></input>
-        <br></br>
-    </div>
-    {/* <div className={style.eachFilter}> */}
-        <button className={style.buttonFilter} onClick={filtrar}>Filtrar</button>
-    {/* </div> */}
-    </div>
+    <form onSubmit={filtrar}>
+      <div className={style.eachFilter}>
+          {/* <h4>Order By:</h4> */}
+          {/* <label>Price: </label> */}
+          <button type="button" id='orderButton' className={style.buttonOrder} onClick={orderHandle}>Price: Order</button>
+          <br></br>
+      </div>
+      <div className={style.eachFilter}>
+          <h4>Categories: </h4>
+          <select className={style.selectCategories} onChange={categoryHandle}>
+              <option hidden>{searchCategory?searchCategory[1]:'Select Category'}</option>
+              {categories?.map(e => {
+                      return <option key={e.id} value={e.id}>{e.name}</option>
+                  })}
+          </select>
+      </div>
+      <div className={style.eachFilter}>
+          <h4>Precio:</h4>
+          <label>Min:</label>
+          <br></br>
+          <input className={style.inputFilter} onChange={minPriceHandle}></input>
+          <br></br>
+          <label>Max:</label>
+          <br></br>
+          <input className={style.inputFilter} onChange={maxPriceHandle}></input>
+          <br></br>
+      </div>
+      {/* <div className={style.eachFilter}> */}
+          <input id="submitForm" type='submit' className={style.buttonFilter} onClick={filtrar}/>
+      {/* </div> */}
+    </form>
+  </div>
  );
 }
