@@ -182,7 +182,7 @@ export default function ProductDetail({ product }) {
           
    const productScore = getScore(productScoreRaw / product.Reviews.length)
    
-   const productFilterFav = favourites.find((pt) => pt.product.id === product.id)
+   const productFilterFav = favourites[0] !== 0? favourites.find((pt) => pt.product.id === product.id): []
    
    const starImage = productFilterFav? <div className={style.favorites}>
             Add to favorites:
@@ -277,7 +277,7 @@ export default function ProductDetail({ product }) {
               user.roleId !== ADMIN_ROLE?
               <div className={style.buttons}>
                 <button
-                  className={stockInCart<stock?style.buttonProdDet:style.buttonDisabled}
+                  className={(stockInCart || 0)<stock?style.buttonProdDet:style.buttonDisabled}
                   onClick={() => addCart()}
                   disabled={stockInCart ? !(stock - stockInCart) : false}
                 >

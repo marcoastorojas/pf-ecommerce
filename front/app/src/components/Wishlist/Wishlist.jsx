@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { delFav, getUserFav } from "../../redux/actions";
 import starF from "../../media/images/bxs-star.svg";
 import { NavLink } from "react-router-dom";
-
+import Loading from '../Loading/Loading.jsx';
+import NoResultFound from '../NoResultsFound/NoResultsFound.jsx';
 import style from "./Wishlist.module.css";
 
 export default function Wishlist() {
@@ -26,10 +27,10 @@ export default function Wishlist() {
      else return console.log("LOG IN")
   }
 
- if (favourites.length > 0)
+//  if (favourites.length > 0)
     return (
       <div className={style.containerFather}>
-        {favourites.map((pt) => {
+        {favourites.length == 0? <Loading/> : favourites[0] === 0? <NoResultFound />: favourites.map((pt) => {
          const images = pt.product.images.split(" ");
           return (
             <div key={pt.product.id} className={style.product_card}>
@@ -49,5 +50,5 @@ export default function Wishlist() {
         })}
       </div>
     );
-  else return <div className={style.empty}>WISHLIST IS EMPTY</div>;
+  // else return <div className={style.empty}>WISHLIST IS EMPTY</div>;
 }
