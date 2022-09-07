@@ -56,6 +56,9 @@ import {
   CLEANSE_PRODUCT_DETAILS,
   GET_SUCURSAL,
   SET_SUCURSAL,
+  POSTING_DISCOUNT,
+  POST_DISCOUNT,
+  DISCOUNT_ERROR,
 } from "./actions";
 
 const initialState = {
@@ -93,6 +96,9 @@ const initialState = {
   },
   sucursal: [],
   nuevaSucursal: { name: "", lat: "", lng: "" },
+  postingDiscount: false,
+  discountPosted: false,
+  discountError: "no",
 };
 
 export const reducer = (state = initialState, action) => {
@@ -466,6 +472,21 @@ export const reducer = (state = initialState, action) => {
         ...state,
         nuevaSucursal: action.payload,
       };
+    case POSTING_DISCOUNT:
+      return {
+        ...state,
+        postingDiscount: true,
+        discountPosted: false,
+      };
+    case POST_DISCOUNT:
+      return {
+        ...state,
+        postingDiscount: false,
+        discountPosted: true,
+        // detailIsDiscounted: action.payload.productName === state.product.title && "yes",
+      };
+    case DISCOUNT_ERROR:
+      return { ...state, postingDiscount: false, discountError: "yes" };
     default:
       return state;
   }

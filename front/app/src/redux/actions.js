@@ -72,10 +72,13 @@ export const POST_CATEGORY = "POST_CATEGORY";
 export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const CLEANSE_PRODUCT_DETAILS = "CLEANSE_PRODUCT_DETAILS";
+export const POSTING_DISCOUNT = "POSTING_DISCOUNT";
+export const POST_DISCOUNT = "POST_DISCOUNT";
+export const DISCOUNT_ERROR = "DISCOUNT_ERROR";
 
 export const GET_SUCURSAL = "GET_SUCURSAL";
 
-export const SET_SUCURSAL = 'SET_SUCURSAL';
+export const SET_SUCURSAL = "SET_SUCURSAL";
 
 const BASE_URL = `http://localhost:3001/api`;
 
@@ -399,29 +402,29 @@ export const setUserGoogle = (payload, logOut = false) => {
 };
 
 export const postUser = (newUser) => {
-  toast.loading('Loadinasdg...', {
-    id:'REGISTERUSER'
-  })
+  toast.loading("Loadinasdg...", {
+    id: "REGISTERUSER",
+  });
   return (dispatch) => {
     axios
       .post(`${BASE_URL}/auth/signup`, newUser)
       .then((response) => {
-        toast.dismiss('REGISTERUSER')
+        toast.dismiss("REGISTERUSER");
         console.log({ from: "postUser action creator", response });
         dispatch({
           type: POST_USER,
           payload: response.data.user,
         });
-        toast.success('Signup succesfull!')
+        toast.success("Signup succesfull!");
       })
       .catch((err) => {
-        toast.dismiss('REGISTERUSER')
+        toast.dismiss("REGISTERUSER");
         console.log({ m: "Error on postUser action creator", err });
         dispatch({
           type: POST_USER_ERROR,
           payload: err.response.data.errors,
         });
-        toast.error('Error. Please try again later')
+        toast.error("Error. Please try again later");
       });
   };
 };
@@ -554,7 +557,6 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
@@ -737,8 +739,8 @@ export const getOrders = (idUser) => {
       .catch((err) => {
         dispatch({
           type: GET_ORDERS,
-          payload: {error: 1}
-        })
+          payload: { error: 1 },
+        });
         console.log(err);
       });
   };
@@ -1107,25 +1109,65 @@ export const getSucursal = () => {
 };
 
 export const postSucursal = (data) => {
-  console.log('LlEGÓ',data)
+  console.log("LlEGÓ", data);
   return () => {
     try {
       axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/sucursal`,
         data: data,
-      })
-      .then(response => {
-        console.log('LLEGó', response.data)
-      })
-    } catch(err) {
-      console.log(err.message)
+      }).then((response) => {
+        console.log("LLEGó", response.data);
+      });
+    } catch (err) {
+      console.log(err.message);
     }
-  }
-}
+  };
+};
 
 export const setSucursal = (data) => {
   return (dispatch) => {
-    dispatch({type: SET_SUCURSAL, payload: data})
-  }
-}
+    dispatch({ type: SET_SUCURSAL, payload: data });
+  };
+};
+
+export const postDiscount = (id, discount) => {
+  return (dispatch) => {
+    dispatch({
+      type: POSTING_DISCOUNT,
+    });
+    axios({
+      method: "POST",
+      url: `${BASE_URL}/products/promo/${id}`,
+      data: {
+        discount: discount.discountInput,
+        expiresin: discount.discountDate,
+      },
+    })
+      .then((response) => {
+        axios({
+          method: "GET",
+          url: `${BASE_URL}/products/${id}`,
+        })
+          .then((response) => {
+            console.log({ from: "postDiscount .then() second request", response });
+            dispatch({
+              type: GET_PRODUCT_BY_ID,
+              payload: response.data,
+            });
+          })
+          .catch((err) => console.log(err));
+        console.log({ from: "postDiscount", response });
+        dispatch({
+          type: POST_DISCOUNT,
+          payload: response.data,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: DISCOUNT_ERROR,
+        });
+        console.log(err);
+      });
+  };
+};

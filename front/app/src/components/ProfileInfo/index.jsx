@@ -6,7 +6,7 @@ import { putUserImage } from "../../redux/actions";
 import emptyUser from "../../media/images/empty_user_profilepic.png";
 
 import BuyerUserInfoForm from "../BuyerUserInfoForm";
-import SellerUserInfoForm from "../SellerUserInfoForm";
+// import SellerUserInfoForm from "../SellerUserInfoForm";
 
 import style from "./index.module.css";
 import BeASeller from "../BeASeller/BeASeller";
