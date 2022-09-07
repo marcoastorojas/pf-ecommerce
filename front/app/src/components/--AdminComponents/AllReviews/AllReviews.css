@@ -3,12 +3,17 @@
  align-items: center;
   justify-content: center;
   flex-direction: column;
-  box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1);
+  /* box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1); */
   margin: 2rem;
   border-radius: 1rem;
+  border: 1px solid var(--border-color);
+}
+.reviews-main:hover {
+  border: 1px solid black;
 }
 
 .reviews-user-image {
+  padding: 1%;
     display:flex;
     align-items:center;
     justify-content: flex-start;
@@ -68,16 +73,30 @@
  align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
+  padding: 1%;
     
 }
 
-.reviews-comment div {
-     display:flex;
- align-items: center;
-  justify-content: center;
-      text-align: justify;
+.reviews-commentOne {
+  /* border: 1px solid red; */
+  width: 100%;
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: justify;
   word-break: keep-all;
 }
+.reviews-commentTwo {
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+/* .reviews-commentTwo > button {
+  padding: 2% 5%;
+  width: 20%;
+} */
 
 .reviews-comment div h2 {
     margin-right: 0.5rem
@@ -89,17 +108,23 @@
   align-items: center;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-
-  width: 110%;
+  padding: 1% 5%;
+  width: 10%;
   background-color: var(--background-button-color);
   color: white;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-bottom: 1rem
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
 }
 
 .reviews-comment div button:hover {
       cursor: pointer;
      box-shadow: 0 0 10px 1px var(--border-color);
+     width: 20%;
+}
+.reviews-comment div button:active {
+  color: black;
+  background-color: white;
 }
