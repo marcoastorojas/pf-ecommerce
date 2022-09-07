@@ -10,18 +10,17 @@ import starF from "../../media/images/bxs-star.svg";
 
 export default function ProductCard({ id, title, image, price, model, brand }) {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.userInfo);
   const favourites = useSelector((state) => state.favourites);
 
   const product = { id, title, image, price, model, brand };
   
-    useEffect(() => {
-        dispatch(getUserFav(user.uid))
-    }, [dispatch])  
-  
   const addFavourites = () => {
     if(user.uid)  {
     dispatch(addFav(product.id, user.uid));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 1000)
     }
     else return console.log("LOG IN")
   };
@@ -29,23 +28,35 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
   const delFavourites = () => {
     if(user.uid)  {
     dispatch(delFav(user.uid, product.id));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 1000)
     }
     else return console.log("LOG IN")
   };
+  
 
-
-  return (
+  if(user.role?.name === "USER_ROLE")return (
     <div className={style.product_card}>
-     {favourites.find((pt) => pt.product.id === id) ? (
-        <div>
+    {favourites.find((pt) => pt.product.id === id) ? <div className={style.favorites}>
           <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
-        </div>
-      ) : (
-       <div>
+        </div> : <div className={style.favorites}>
           <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
-        </div>
-      )}
+        </div>}
 
+      <Link to={`/product/${id}`} className={style.product_data}>
+        {/* <div></div> */}
+        <img src={image.slice(0)} alt={title} />
+        <h3 className={style.product_title}>{title}</h3>
+        <h3 className={style.product_price}>
+          ${Number(price).toLocaleString()}
+        </h3>
+      </Link>
+    </div>
+  );
+  
+  else return  (
+    <div className={style.product_card}>
       <Link to={`/product/${id}`} className={style.product_data}>
         {/* <div></div> */}
         <img src={image.slice(0)} alt={title} />

@@ -554,7 +554,7 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        console.log("GETUSERINFOR", response.data);
+        
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,

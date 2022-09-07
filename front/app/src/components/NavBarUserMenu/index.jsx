@@ -22,6 +22,8 @@ export default function NavBarUserMenu() {
   const handleLogOut = () => {
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
+    localStorage.setItem("fav", JSON.stringify([]));
+    localStorage.setItem("cart", JSON.stringify([]));
     navigate("/");
   };
 
