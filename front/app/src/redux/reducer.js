@@ -53,6 +53,7 @@ import {
   POST_CATEGORY,
   POSTING_CATEGORY,
   CLEAN_PRODUCT_SEARCH_RESULTS,
+  CLEANSE_PRODUCT_DETAILS,
   GET_SUCURSAL,
   SET_SUCURSAL,
 } from "./actions";
@@ -91,7 +92,7 @@ const initialState = {
     posting: null,
   },
   sucursal: [],
-  nuevaSucursal: {name: '', lat: '', lng: ''},
+  nuevaSucursal: { name: "", lat: "", lng: "" },
 };
 
 export const reducer = (state = initialState, action) => {
@@ -279,6 +280,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         signupResponse: action.payload,
+        user: action.payload,
         signupErrors: null,
       };
     case POST_USER_ERROR:
@@ -453,11 +455,17 @@ export const reducer = (state = initialState, action) => {
         ...state,
         sucursal: action.payload,
       };
+    case CLEANSE_PRODUCT_DETAILS:
+      return {
+        ...state,
+        product: {},
+      };
+
     case SET_SUCURSAL:
       return {
         ...state,
-        nuevaSucursal: action.payload
-      }
+        nuevaSucursal: action.payload,
+      };
     default:
       return state;
   }

@@ -9,12 +9,12 @@
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   /* flex-direction: row; */
 
   width: 100%;
   height: 15vh;
-
+  border: 1px solid green;
   background-color: white;
 
   border-bottom: solid black 3px;
@@ -32,17 +32,17 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 40%;
+  width: 45%;
 }
 
 .logoAndSB {
   /* border: 2px solid red; */
-
+  /* padding-right: 15%; */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 
-  width: 85%;
+  width: 100%;
 }
 
 .logoLink {
@@ -65,14 +65,26 @@
 .navBarLinks {
   text-decoration: none;
   color: black;
+  padding: 3% 7%;
+  border-radius: 10px 10px 0 0;
+}
+.activeLink {
+  /* background-color: var(--background-button-color); */
+  border: 1px solid var(--border-color) ;
+  border-bottom: none;
+  color: black;
+  text-decoration: none;
+  padding: 3% 7%;
+  border-radius: 10px 10px 0 0;
 }
 
 .navButtons {
+  align-self: flex-end;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-
+  /* border: 1px solid red; */
   width: 450px;
 }
 
@@ -86,7 +98,9 @@
   font-family: "Raleway", sans-serif;
   font-size: 17px;
 }
-
+.contCate > h3 {
+  font-weight: 500;
+}
 .contCate:hover .categoriasChikito {
   visibility: visible;
 }
@@ -118,7 +132,7 @@
   justify-content: space-evenly;
   align-items: center;
 
-  width: 25vw;
+  width: 40%;
 
   /* border: 2px solid red; */
 }
@@ -133,8 +147,8 @@
   justify-content: center;
   align-items: center;
 
-  width: 75%;
-height: 50%;
+  width: 40%;
+  height: 50%;
   padding: 4px;
   margin: 1%;
 }
@@ -172,7 +186,7 @@ height: 50%;
 
 
 .cartDiv {
-  width: 30%;
+  width: 20%;
   /* border: 1px solid blue; */
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -180,6 +194,8 @@ height: 50%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 .cartDiv:hover {
   border: 1px solid black;
@@ -188,6 +204,8 @@ height: 50%;
 .cartDivInfo {
   /* border: 1px solid black; */
   width: 100%;
+  padding-top: 7%;
+  padding-bottom: 7%;
   /* height: 100%; */
   display: flex;
   justify-content: space-evenly;
@@ -221,4 +239,20 @@ height: 50%;
 .shoppCartMenuHidden {
   display: none;
   visibility: hidden;
+}
+.buttonToAdmin {
+  /* background-color: var(--background-button-color); */
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  color: black;
+  padding: 7% 3%;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  /* font-weight: 100; */
+}
+.buttonToAdmin:hover {
+  cursor: pointer;
+  border-color: black;
 }

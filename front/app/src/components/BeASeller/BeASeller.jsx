@@ -51,20 +51,20 @@ export default function ({disabledForm = false}) {
 
     //SETEO LOS DATOS INICIALES
     const initialData = {
-        lastname: userInfoExtra?.info?.lastname,
-        dni: userInfoExtra?.info?.dni,
-        birthday: userInfoExtra?.info?.birthday,
-        gender: userInfoExtra?.info?.gender,
-        street: userInfoExtra?.info?.street,
-        number: userInfoExtra?.info?.number,
-        zipcode: userInfoExtra?.info?.zipcode,
-        country: userInfoExtra?.info?.country,
-        state: userInfoExtra?.info?.state,
-        city: userInfoExtra?.info?.city
+        lastname: userInfoExtra?.info?.lastname || '',
+        dni: userInfoExtra?.info?.dni || '',
+        birthday: userInfoExtra?.info?.birthday || '',
+        gender: userInfoExtra?.info?.gender || '',
+        street: userInfoExtra?.info?.street || '',
+        number: userInfoExtra?.info?.number || '',
+        zipcode: userInfoExtra?.info?.zipcode || '',
+        country: userInfoExtra?.info?.country || '',
+        state: userInfoExtra?.info?.state || '',
+        city: userInfoExtra?.info?.city || ''
     }
     useEffect(() => {
         if (Object.keys(userInfoExtra).length > 0) {
-            document.querySelector('#streetNumber').innerText = userInfoExtra.info.number
+            document.querySelector('#streetNumber').innerText = userInfoExtra.info?.number || ''
             console.log('papa')
 
         }

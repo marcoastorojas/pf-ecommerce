@@ -41,11 +41,11 @@ export default function AllReviews() {
               </NavLink>
             </div>
             <div className="reviews-comment">
-                <div>
-                    <h2>{rw.score}</h2>
-                    <p>{rw.description}</p>
+                <div className="reviews-commentOne">
+                    <h3>Score: {rw.score}</h3>
+                    <h3>Desc: {rw.description}</h3>
                 </div>
-              <div>
+              <div className="reviews-commentTwo">
                 <button onClick={() => delRw(rw.user.uid, rw.product.id)}>Delete</button>
               </div>
             </div>

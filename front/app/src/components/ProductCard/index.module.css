@@ -20,6 +20,7 @@
   padding: 1%;
   transition: all 0.2s ease;
   animation: born 0.5s linear;
+  background-color: white;
 }
 
 .product_card:hover {

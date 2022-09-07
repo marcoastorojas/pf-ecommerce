@@ -27,8 +27,6 @@ export default function Landing() {
 
 
  return (
-  <div className={style.landing}>
-   {/* <NavBar /> */}
    <div className={style.mainDiv}>
     <Carousel />
     <LandingProducts />
@@ -40,7 +38,5 @@ export default function Landing() {
       />
     {/* <br /> */}
    </div>
-   {/* <Footer /> */}
-  </div>
  );
 }

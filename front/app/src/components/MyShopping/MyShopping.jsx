@@ -31,18 +31,18 @@ export default function MyShopping (props) {
 
     return (
         <div className={style.contMyShopping}>
-            <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button>
+            {/* <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button> */}
             <div className={style.header}>
                 <div className={style.titulo}>
-                    {/* <h3>Date: {props.date}</h3> */}
-                    <h3>Date: 17/52/87453</h3>
+                    <h3>Date: {props.date}</h3>
+                    {/* <h3>Date: 17/52/87453</h3> */}
                 </div>
                 <div className={style.contMapa}>
-                    <h3>Branch withdrawal: </h3>
+                    <h3>Branch withdrawal: {props.sucursal.name} </h3>
                     <div>
                         <h3 id='mapitaButton' className={style.buttonMap} onClick={verMapita}>Map</h3>
                         <div id='mapita' className={style.mapaHidden}>
-                            <Mapita X={-34.63936} Y={-58.40286}/>
+                            <Mapita X={props.sucursal?.lat} Y={props.sucursal?.lng} oneMarker='true'/>
                         </div>
                     </div>
                 </div>
@@ -50,11 +50,11 @@ export default function MyShopping (props) {
             <div className={style.operInfo}>
                 <div className={style.infoUser}>
                     <div className={style.divImg}>
-                        {/* <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" /> */}
+                        <img src={!props.buyer.image?noProfilePic:props.buyer.image} alt="user profile" referrerPolicy="no-referrer" />
                     </div>
                     <div className={style.infoBuyer}>
-                        {/* <p>Username: {props.buyer.username}</p> */}
-                        {/* <p>Email: {props.buyer.email}</p> */}
+                        <p>Username: {props.buyer.username}</p>
+                        <p>Email: {props.buyer.email}</p>
                     </div>
                     {/* <h3>Cel:</h3> */}
                 </div>
@@ -66,7 +66,7 @@ export default function MyShopping (props) {
                         props.orders?.map( e => {
                             return (
                                 <Link to= {`/product/${e.id}`} key={e.id} className={style.SuccProd}>
-                                        <span className={style.titleProd}>{e.product.title}</span><span>{e.quantity}</span><span>${Number(e.price).toLocaleString()}</span><span>${Number(e.price * e.quantity).toLocaleString()}</span>
+                                        <span className={style.titleProd}>{e.product?.title}</span><span>{e.quantity}</span><span>${Number(e.price).toLocaleString()}</span><span>${Number(e.price * e.quantity).toLocaleString()}</span>
                                 </Link>
                                 // <div key={e.id} className={style.contMiniOrder}>
                                 //     <div className={style.orderProductTitle}>
@@ -109,7 +109,7 @@ export default function MyShopping (props) {
                 </div>
             </div>
             <div className={style.status}>
-                <h3>Status: </h3>
+                <h3>Status: {props.status.description} </h3>
                 <h3>Total: ${calTotal()}</h3>
                 {/* <button>Cancel Operation</button> */}
             </div>
