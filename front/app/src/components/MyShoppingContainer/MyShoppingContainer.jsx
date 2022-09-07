@@ -32,7 +32,7 @@ export default function MyShoppingContainer () {
             {/* <button onClick={PRUEBADISPATCH}>PRUEBADISPATCH</button> */}
             {/* <button onClick={() => console.log(dataOrders)}>PRUEBACONSOLE:LOG</button> */}
             {
-                Object.keys(dataOrders).length !== 0?<Loading/> : Object.values(dataOrders)[0] === 1? <NoResultsFound/>: dataOrders?.map( e => {
+                Object.keys(dataOrders).length === 0?<Loading/> : Object.values(dataOrders)[0] === 1? <NoResultsFound/>: dataOrders?.map( e => {
                     return (
                         <div key={e.id}>
                             <MyShopping sucursal={e.sucursal} buyer={e.user} date={e.createdAt} orders={e.orderdetails} status={e.orderStatus}/>

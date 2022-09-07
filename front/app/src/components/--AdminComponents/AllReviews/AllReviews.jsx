@@ -24,16 +24,20 @@ export default function AllReviews() {
 
   return (
     <div>
-      {productsReviews.map((rw) => {
+      {/* <button onClick={() => console.log(productsReviews[0].user.username)}>PRUEBA</button> */}
+      {productsReviews.length > 0 && productsReviews?.map((rw) => {
         return (
           <div key={rw.id} className="reviews-main">
-            <div className="reviews-user-image">
-              <img src={rw.user.image ? rw.user.image : defaultImg} alt={rw.user.username} />
-              <h2>{rw.user.username}</h2>
-              <div>
-                <h3>Role: {rw.user.role.name}</h3>
-              </div>
-            </div>
+            {
+              rw.user !== null ? 
+              <div className="reviews-user-image">
+                <img src={rw.user.image ? rw.user?.image : defaultImg} alt={rw.user?.username} />
+                <h2>{rw.user.username}</h2>
+                <div>
+                  <h3>Role: {rw.user.role.name}</h3>
+                </div>
+              </div> : <></>
+            }
             <div>
               <NavLink to={`/product/${rw.product.id}`} className="reviews-product">
                 <img src={rw.product.images.split(" ")[0]}/>
