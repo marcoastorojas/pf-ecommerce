@@ -71,17 +71,18 @@ export default function AdminProductsComponent() {
   }, [dispatch, paginate, details]);
 
   return (
-    <div>
-      <p>Complete product catalog:</p>
-      <p>{products.data && products.data[0] && products.totalResults} products uploaded.</p>
-      <form onSubmit={onSearchHandler}>
+    <div className={style.contAdminProducts}>
+      <h1>Complete product catalog:</h1>
+      <h3>{products.data && products.data[0] && products.totalResults} products uploaded.</h3>
+      <form onSubmit={onSearchHandler} className={style.formProduct}>
+        {/* <label>Search:</label> */}
         <input type="text" placeholder="Search a product by it's title" onChange={onSearchInputChange} />
         <button type="submit">Filter</button>
         <button onClick={setOriginalResultsHandler} disabled={searchTry ? false : true}>
           Back to all results.
         </button>
       </form>
-      <div>
+      <div className={style.pageButtons}>
         <button id="prev" onClick={prevOrNext}>
           {"<"}
         </button>
@@ -95,7 +96,7 @@ export default function AdminProductsComponent() {
           {">"}
         </button>
       </div>
-      <div>
+      <div className={style.resultProducts}>
         {!searchedProducts[0] &&
           products.data &&
           products.data.map((p) => (

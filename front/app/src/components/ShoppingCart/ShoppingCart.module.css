@@ -11,6 +11,7 @@
   background-color: white;
   box-shadow: 0 10px 10px 1px var(--border-color);
   transition: all 0.2s ease;
+  z-index: 999;
   /* justify-content: space-evenly; */
 }
 .contShoppingCart:hover {

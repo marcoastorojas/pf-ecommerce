@@ -7,6 +7,7 @@
 }
 .contMapita {
     border: 1px solid black;;
+    z-index: -1;
     /* height:  500px; */
     /* width: 700px; */
     /* width: 100%;
