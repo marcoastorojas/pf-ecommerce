@@ -38,11 +38,11 @@ export default function MyShopping (props) {
                     {/* <h3>Date: 17/52/87453</h3> */}
                 </div>
                 <div className={style.contMapa}>
-                    <h3>Branch withdrawal: </h3>
+                    <h3>Branch withdrawal: {props.sucursal.name} </h3>
                     <div>
                         <h3 id='mapitaButton' className={style.buttonMap} onClick={verMapita}>Map</h3>
                         <div id='mapita' className={style.mapaHidden}>
-                            <Mapita X={-34.63936} Y={-58.40286}/>
+                            <Mapita X={props.sucursal?.lat} Y={props.sucursal?.lng} oneMarker='true'/>
                         </div>
                     </div>
                 </div>
