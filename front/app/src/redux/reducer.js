@@ -275,6 +275,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         signupResponse: action.payload,
+        user: action.payload,
         signupErrors: null,
       };
     case POST_USER_ERROR:

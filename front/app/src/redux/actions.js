@@ -394,7 +394,7 @@ export const postUser = (newUser) => {
         console.log({ from: "postUser action creator", response });
         dispatch({
           type: POST_USER,
-          payload: response.data,
+          payload: response.data.user,
         });
       })
       .catch((err) => {
