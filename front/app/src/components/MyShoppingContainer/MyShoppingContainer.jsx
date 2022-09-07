@@ -4,6 +4,8 @@ import { getOrders } from '../../redux/actions';
 import { ADMIN_ROLE } from '../../validations/usersTypes';
 import MyShopping from "../MyShopping/MyShopping";
 import style from './MyShoppingContainer.module.css';
+import NoResultsFound from '../NoResultsFound/NoResultsFound.jsx';
+import Loading from '../Loading/Loading.jsx';
 
 
 export default function MyShoppingContainer () {
@@ -30,16 +32,13 @@ export default function MyShoppingContainer () {
             {/* <button onClick={PRUEBADISPATCH}>PRUEBADISPATCH</button> */}
             {/* <button onClick={() => console.log(dataOrders)}>PRUEBACONSOLE:LOG</button> */}
             {
-                Object.keys(dataOrders).length !== 0 && dataOrders?.map( e => {
+                Object.keys(dataOrders).length === 0?<Loading/> : Object.values(dataOrders)[0] === 1? <NoResultsFound/>: dataOrders?.map( e => {
                     return (
                         <div key={e.id}>
                             <MyShopping sucursal={e.sucursal} buyer={e.user} date={e.createdAt} orders={e.orderdetails} status={e.orderStatus}/>
                         </div>
                     )
                 })
-            }
-            {
-                Object.keys(dataOrders).length === 0 && <div> <h1>No results</h1> </div>
             }
         </div>
     )

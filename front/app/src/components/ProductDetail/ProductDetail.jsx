@@ -14,9 +14,16 @@ import {
   getUserReviews,
   updateReview,
   getProductId,
+  
+  addFav,
+  delFav,
+  getUserFav,
 } from "../../redux/actions";
 import { toast } from "react-hot-toast";
-
+//favorites
+import star from "../../media/images/bx-star.svg";
+import starF from "../../media/images/bxs-star.svg";
+//score
 import yellowStar from "../../media/svg/yellow-star.svg";
 import yellowBorderStar from "../../media/svg/yellow-border-star.svg";
 import { ADMIN_ROLE } from "../../validations/usersTypes";
@@ -31,6 +38,7 @@ export default function ProductDetail({ product }) {
 
   const [showEdit, setShowEdit] = useState(false);
 
+  const favourites = useSelector((state) => state.favourites);
   const userInfo = useSelector((state) => state.userInfo);
   const user = useSelector((state) => state.user);
   const reviews = useSelector((state) => state.reviews);
@@ -49,7 +57,10 @@ export default function ProductDetail({ product }) {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    if (user.uid) dispatch(getUserReviews(user.uid));
+    if (user.uid) {
+        dispatch(getUserReviews(user.uid));
+        dispatch(getUserFav(user.uid))
+     }
      dispatch(getProductId(product.id));
   }, [])
 
@@ -137,6 +148,26 @@ export default function ProductDetail({ product }) {
     });
   };
   
+  const addFavourites = () => {
+    if(user.uid)  {
+    dispatch(addFav(product.id, user.uid));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 1000)
+    }
+    else return console.log("LOG IN")
+  };
+
+  const delFavourites = () => {
+    if(user.uid)  {
+    dispatch(delFav(user.uid, product.id));
+    setTimeout(() => {
+        dispatch(getUserFav(user.uid))
+    }, 1000)
+    }
+    else return console.log("LOG IN")
+  };
+  
   const productScoreRaw = product.Reviews.reduce((acc, rw) => acc += rw.score, 0)
           
      const getScore = (num) => {
@@ -146,6 +177,16 @@ export default function ProductDetail({ product }) {
      }
           
    const productScore = getScore(productScoreRaw / product.Reviews.length)
+   
+   const productFilterFav = favourites.find((pt) => pt.product.id === product.id)
+   
+   const starImage = productFilterFav? <div className={style.favorites}>
+            Add to favorites:
+          <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
+        </div> : <div className={style.favorites}>
+            Add to favorites:
+          <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
+        </div>
 
   return (
     <div className={style.contProDet}>
@@ -189,6 +230,9 @@ export default function ProductDetail({ product }) {
             <SellerDetails seller={product.user}/>
           </div>
           <div className={style.shopping}>
+          <div>
+           {userInfo.role?.name === "USER_ROLE" ? starImage : null}
+      </div>
             <div className={style.pricing}>
               {/* <div className={style.quant}> */}
               <h4>Stock: {product.stock}</h4>
@@ -219,24 +263,28 @@ export default function ProductDetail({ product }) {
                 </span>
               </div> */}
             </div>
-            <div className={style.buttons}>
-              <button
-                className={style.buttonProdDet}
-                onClick={() => addCart()}
-                disabled={stockInCart ? !(stock - stockInCart) : false}
-              >
-                <span className={style.text}>Add to cart</span>
-                <span className={style.icon}>
-                  <img src={Add} alt="add-cart" />
-                </span>
-              </button>
-              {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
-                <span className={style.text}>Delete All</span>
-                <span className={style.icon}>
-                  <img src={Del} alt="delete-cart" />
-                </span>
-              </button> */}
-            </div>
+            {
+              user.roleId !== ADMIN_ROLE?
+              <div className={style.buttons}>
+                <button
+                  className={(stockInCart || 0)<stock?style.buttonProdDet:style.buttonDisabled}
+                  onClick={() => addCart()}
+                  disabled={stockInCart ? !(stock - stockInCart) : false}
+                >
+                  <span className={style.text}>Add to cart</span>
+                  <span className={style.icon}>
+                    <img src={Add} alt="add-cart" />
+                  </span>
+                </button>
+                {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
+                  <span className={style.text}>Delete All</span>
+                  <span className={style.icon}>
+                    <img src={Del} alt="delete-cart" />
+                  </span>
+                </button> */}
+              </div>
+              : <></>
+            }
           </div>
         </div>
       </div>
@@ -261,19 +309,23 @@ export default function ProductDetail({ product }) {
             ) {
               return (
                 <div className={style.commentSec} key={index}>
-                  <h3>{rw.user.username}</h3>
+                  <div className={style.username}>
+                    <h3>{rw.user.username}</h3>
+                  </div>
+                  <div className={style.descComen}>
+                    <p>{rw.description}</p>
+                  </div>
                   <div className={style.commentData}>
                     {rw.score}
                     <h4> {Array.apply(0, Array(5)).map((str, index) => {
-                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
-                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                        if(index < rw.score) return <img key={index} src={yellowStar} alt="yellow-star"/>
+                        else return <img key={index} src={yellowBorderStar} alt="yello-border-star"/>
                     }) }</h4>
-                    <p>{rw.description}</p>
                   </div>
                   <div className={style.commentButtons}>
-                    <button onClick={() => delRw()}>Delete</button>
+                    <button className={style.button} onClick={() => delRw()}>Delete</button>
                     {!showEdit ? (
-                      <button onClick={() => setShowEdit(true)}>Edit</button>
+                      <button className={style.button} onClick={() => setShowEdit(true)}>Edit</button>
                     ) : null}
                   </div>
                 </div>
@@ -281,28 +333,45 @@ export default function ProductDetail({ product }) {
             } else
               return (
                 <div className={style.commentSec} key={index}>
-                  <h3>{rw.user.username}</h3>
+                  <div className={style.username}>
+                    <h3>{rw.user.username}</h3>
+                  </div>
+                  <div className={style.descComen}>
+                    <p>{rw.description}</p>
+                  </div>
                   <div className={style.commentData}>
                     {rw.score}
                     <h4> {Array.apply(0, Array(5)).map((str, index) => {
-                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
-                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                        if(index < rw.score) return <img key={index} src={yellowStar} alt="yellow-star"/>
+                        else return <img key={index} src={yellowBorderStar} alt="yello-border-star"/>
                     }) }</h4>
-                    <p>{rw.description}</p>
                   </div>
                 </div>
               );
           })}
 
-        <div>
+        <div className={style.addCommentSection}>
           {user.uid &&
           reviews.length >= 0 &&
           user.roleId !== ADMIN_ROLE &&
           !reviews.filter((rw) => rw.productId === product.id).length ? (
-            <div>
-              <form onSubmit={(e) => addRw(e)}>
+            <div className={style.prueba}>
+              <form className={style.formComment} onSubmit={(e) => addRw(e)}>
+                <div className={style.descriptionComment}>
+                  <div>
+                    <label>Description:</label>
+                  </div>
+                  <div>
+                    <textarea
+                      type="text"
+                      name="description"
+                      value={review.description}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </div>
+                </div>
                 <div className={style.score}>
-                  <label>Score:</label>
+                  <p>Score:</p>
                   <input
                     type="range"
                     min="0"
@@ -313,15 +382,6 @@ export default function ProductDetail({ product }) {
                     onChange={(e) => handleChange(e)}
                   />
                   {review.score}
-                </div>
-                <div className={style.descriptionComment}>
-                  <label>Description:</label>
-                  <input
-                    type="text"
-                    name="description"
-                    value={review.description}
-                    onChange={(e) => handleChange(e)}
-                  />
                 </div>
                 <input
                   type="submit"

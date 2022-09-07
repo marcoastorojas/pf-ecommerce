@@ -23,12 +23,13 @@ import AdminNavBar from "./components/--AdminComponents/AdminNavBar";
 import Footer from "./components/Footer";
 
 import RegisterSucursal from "./components/--AdminComponents/RegisterSucursal/RegisterSucursal.jsx";
-// import SellerRoutes from "./validations/SellerRoutes";
-// import BuyerRoutes from "./validations/BuyerRoutes";
+import SellerRoutes from "./validations/SellerRoutes";
+import BuyerRoutes from "./validations/BuyerRoutes";
 
 // import { BUYER_ROLE, SELLER_ROLE, ADMIN_ROLE } from "./validations/usersTypes";
 
 import "./App.css";
+import AdminRoutes from "./validations/AdminRoutes";
 
 function App() {
   const { pathname } = useLocation();
@@ -52,16 +53,18 @@ function App() {
         <Route path="/login" exact element={<LogIn />} />
         <Route path="/results" exact element={<Results />} />
         <Route path="/product/:id" exact element={<Details />} />
-        <Route path="/shopping-cart" exact element={<Cart />} />
-        {/* <Route element={<BuyerRoutes />}> */}
-        <Route path="/checkout/" exact element={<CheckoutPay />} />
-        <Route path="/successpay" element={<SuccessPayment />} />
-        <Route path="/user/:component" exact element={<InfoUserB />} />
-        {/* <Route element={<SellerRoutes />}> */}
-        <Route path="/product/create" exact element={<Form />} />
-        {/* </Route> */}
-        {/* </Route> */}
-        <Route path="/soyadmin/:panel" exact element={<AdminPage />} />
+        {/* <Route path="/shopping-cart" exact element={<Cart />} /> */}
+        <Route element={<BuyerRoutes />}>
+          <Route path="/checkout/" exact element={<CheckoutPay />} />
+          <Route path="/successpay" element={<SuccessPayment />} />
+          <Route path="/user/:component" exact element={<InfoUserB />} />
+          <Route element={<SellerRoutes />}>
+            <Route path="/product/create" exact element={<Form />} />
+          </Route>
+        </Route>
+        <Route element={<AdminRoutes/>}>
+          <Route path="/soyadmin/:panel" exact element={<AdminPage />} />
+        </Route>
         <Route path="*" exact element={<GenericError />} />
       </Routes>
       <Footer />

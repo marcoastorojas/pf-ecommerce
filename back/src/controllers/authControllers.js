@@ -37,7 +37,7 @@ const googleAuth = async (req = request, res = response) => {
         email,
         password: "",
         google: true,
-        username: "",
+        username: name,
         image,
         roleId: role.id || roleCreated.id,
       });

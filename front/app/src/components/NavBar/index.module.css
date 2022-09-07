@@ -98,7 +98,9 @@
   font-family: "Raleway", sans-serif;
   font-size: 17px;
 }
-
+.contCate > h3 {
+  font-weight: 500;
+}
 .contCate:hover .categoriasChikito {
   visibility: visible;
 }
@@ -192,6 +194,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 .cartDiv:hover {
   border: 1px solid black;
@@ -200,6 +204,8 @@
 .cartDivInfo {
   /* border: 1px solid black; */
   width: 100%;
+  padding-top: 7%;
+  padding-bottom: 7%;
   /* height: 100%; */
   display: flex;
   justify-content: space-evenly;

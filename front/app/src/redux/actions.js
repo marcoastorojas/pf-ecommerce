@@ -415,7 +415,7 @@ export const postUser = (newUser) => {
           type: POST_USER,
           payload: response.data.user,
         });
-        toast.success("Signup succesfull! Please Login");
+        toast.success("Signup succesfull!");
       })
       .catch((err) => {
         toast.dismiss("REGISTERUSER");
@@ -557,7 +557,6 @@ export const getUserInfo = (id) => {
     axios
       .get(`${BASE_URL}/auth/users/${id}`)
       .then((response) => {
-        console.log("GETUSERINFOR", response.data);
         dispatch({
           type: GET_USER_INFO,
           payload: response.data,
@@ -738,6 +737,10 @@ export const getOrders = (idUser) => {
         });
       })
       .catch((err) => {
+        dispatch({
+          type: GET_ORDERS,
+          payload: { error: 1 },
+        });
         console.log(err);
       });
   };

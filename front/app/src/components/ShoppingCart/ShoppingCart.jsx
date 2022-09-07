@@ -12,12 +12,13 @@ export default function ShoppingCart() {
 
   const cart = useSelector((state) => state.cart);
   const cartTotal = useSelector((state) => state.cartTotal);
+   const user = useSelector((state) => state.user);
 
   const [quantityAdd, setQuantityAdd] = useState(1);
   const [quantityRes, setQuantityRes] = useState(1);
 
   useEffect(() => {
-    dispatch(getTotal());
+    if(user.uid)dispatch(getTotal());
   }, [cart.length]);
 
   const addCart = (e) => {
@@ -117,13 +118,13 @@ export default function ShoppingCart() {
                   </div>
                 </div>
                 <div className={style.buttonsCSC}>
-                  <button value={pt.product.id} onClick={(e) => addCart(e)}>
+                  <button className={pt.amount<pt.product.stock?style.buttonAdd:style.buttonDisabled} value={pt.product.id} onClick={(e) => addCart(e)} disabled={pt.amount < pt.product.stock?false:true}>
                     +{quantityAdd}
                   </button>
-                  <button value={pt.product.id} onClick={(e) => resCart(e)}>
+                  <button className={pt.amount!==0?style.buttonAdd:style.buttonDisabled} value={pt.product.id} onClick={(e) => resCart(e)}>
                     -{quantityRes}
                   </button>
-                  <button value={pt.product.id} onClick={(e) => deleteFromCart(e)}>
+                  <button className={pt.amount!==0?style.buttonAdd:style.buttonDisabled} value={pt.product.id} onClick={(e) => deleteFromCart(e)}>
                     {/* -{pt.amount} */}
                     Remove all
                   </button>

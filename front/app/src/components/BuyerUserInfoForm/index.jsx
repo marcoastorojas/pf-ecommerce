@@ -17,9 +17,9 @@ export default function BuyerUserInfoForm({ disabledForm }) {
 
   // FORM INFO
   const initialForm = {
-    name: user.name,
-    username: user.username,
-    email: user.email,
+    name: user.name || '',
+    username: user.username || '',
+    email: user.email || '',
     password: "",
     newPassword: "",
   };

@@ -38,7 +38,7 @@ export function validate(inputs) {
   if (!inputs.images) {
     errors.images = "Images is required";
   } else if (!/\.(jpe?g|tiff?|png|webp|bmp)$/i.test(inputs.images)) {
-    errors.images = "Images is format invalid";
+    errors.images = "Images url must end in .jpg";
   }
 
   return errors;
