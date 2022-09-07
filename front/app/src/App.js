@@ -35,8 +35,9 @@ function App() {
 
   return (
     <div className="App">
-      {pathname === "/signup" || (pathname === "/login" && <SimpleNavBar />)}
-      {pathname === "/soyadmin/categories" ||
+      {/* <button onClick={() => console.log(pathname)}>PRUEBA</button> */}
+      {pathname === "/signup" || pathname === "/login" ? <SimpleNavBar /> :
+      pathname === "/soyadmin/categories" ||
       pathname === "/soyadmin/users" ||
       pathname === "/soyadmin/reviews" ||
       pathname === "/soyadmin/products" ||
