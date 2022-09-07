@@ -219,24 +219,28 @@ export default function ProductDetail({ product }) {
                 </span>
               </div> */}
             </div>
-            <div className={style.buttons}>
-              <button
-                className={style.buttonProdDet}
-                onClick={() => addCart()}
-                disabled={stockInCart ? !(stock - stockInCart) : false}
-              >
-                <span className={style.text}>Add to cart</span>
-                <span className={style.icon}>
-                  <img src={Add} alt="add-cart" />
-                </span>
-              </button>
-              {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
-                <span className={style.text}>Delete All</span>
-                <span className={style.icon}>
-                  <img src={Del} alt="delete-cart" />
-                </span>
-              </button> */}
-            </div>
+            {
+              user.roleId !== ADMIN_ROLE?
+              <div className={style.buttons}>
+                <button
+                  className={style.buttonProdDet}
+                  onClick={() => addCart()}
+                  disabled={stockInCart ? !(stock - stockInCart) : false}
+                >
+                  <span className={style.text}>Add to cart</span>
+                  <span className={style.icon}>
+                    <img src={Add} alt="add-cart" />
+                  </span>
+                </button>
+                {/* <button className={style.buttonProdDet} onClick={() => deleteFromCart()}>
+                  <span className={style.text}>Delete All</span>
+                  <span className={style.icon}>
+                    <img src={Del} alt="delete-cart" />
+                  </span>
+                </button> */}
+              </div>
+              : <></>
+            }
           </div>
         </div>
       </div>
@@ -266,8 +270,8 @@ export default function ProductDetail({ product }) {
                   <div className={style.commentData}>
                     {rw.score}
                     <h4> {Array.apply(0, Array(5)).map((str, index) => {
-                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
-                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                        if(index < rw.score) return <img key={index} src={yellowStar} alt="yellow-star"/>
+                        else return <img key={index} src={yellowBorderStar} alt="yello-border-star"/>
                     }) }</h4>
                   </div>
                   <div className={style.commentButtons}>
@@ -290,8 +294,8 @@ export default function ProductDetail({ product }) {
                   <div className={style.commentData}>
                     {rw.score}
                     <h4> {Array.apply(0, Array(5)).map((str, index) => {
-                        if(index < rw.score) return <img src={yellowStar} alt="yellow-star"/>
-                        else return <img src={yellowBorderStar} alt="yello-border-star"/>
+                        if(index < rw.score) return <img key={index} src={yellowStar} alt="yellow-star"/>
+                        else return <img key={index} src={yellowBorderStar} alt="yello-border-star"/>
                     }) }</h4>
                   </div>
                 </div>

@@ -14,6 +14,7 @@
   display: flex;
   justify-content: space-around;
   /* width: 80%; */
+  animation: born 0.5s linear;
 }
 .left {
   border: 1px solid var(--border-color);
@@ -215,6 +216,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: born 0.5s linear;
 }
 .comments > div {
   width: 100%;
@@ -447,7 +449,14 @@
 
 
 
-
+@keyframes born {
+  from {
+    transform: scale(0%);
+  }
+  to {
+    transform: scale(100%);
+  }
+}
 
 
 
