@@ -60,10 +60,11 @@ const getProductById = async (req = request, res = response) => {
 
     Product.findByPk(id, {
         include: [
-            { model: Favorite, include:User },
+            { model: Favorite, include: User },
             { model: Review, attributes: ["id", "score", "description"], include: User },
             { model: Category, attributes: ["id", "name"] },
-            { model: Price }
+            { model: Price },
+            { model: User}
         ]
     })
         .then((data) => {
@@ -436,7 +437,7 @@ const promo = async (req, res) => {
 
         const favorites = await Favorite.findAll({ where: { productId }, include: [Product, User] })
         if (!favorites.length) {
-            return res.json({ message: "promo publicada exitosamente",price })
+            return res.json({ message: "promo publicada exitosamente", price })
         }
         const productName = favorites[0].product.title
         const productImage = favorites[0].product.images.split(" ")[0]

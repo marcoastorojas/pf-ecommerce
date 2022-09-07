@@ -16,6 +16,7 @@ export default function ResultsContainer() {
                 searchedProducts?.map((product, index) => {
                     return (
                        <CatalogueCards
+                       stock={product.stock}
                        key={index}
                        id={product.id}
                        name={product.title}

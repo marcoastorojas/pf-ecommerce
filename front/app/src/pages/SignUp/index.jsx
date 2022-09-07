@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 import { cleanSignupErrors, postUser } from "../../redux/actions";
 import SignInGoogle from "../../components/SignInGoogle/SigInGoogle.jsx";
@@ -121,12 +121,12 @@ export default function SignUp() {
 
   //muestra los toast de error y limpia los errores al desmontarse
   useEffect(() => {
-    signupResponse.username === username && toast.success("Signup succesfull!", { duration: 6000 });
+    // signupResponse.username === username && toast.success("Signup succesfull!", { duration: 6000 });
 
-    signupErrors &&
-      toast.error(toastMessage(), {
-        duration: 9000,
-      });
+    // signupErrors &&
+    //   toast.error(toastMessage(), {
+    //     duration: 9000,
+    //   });
     return function cleanse() {
       dispatch(cleanSignupErrors());
     };
@@ -139,7 +139,7 @@ export default function SignUp() {
   return (
     <div className={style.container}>
       <main className={style.mainDiv}>
-        <Toaster />
+        {/* <Toaster /> */}
         <h2 className={style.register}>Register Page</h2>
 
         <form onSubmit={submitHandler} className={style.form}>
@@ -192,6 +192,9 @@ export default function SignUp() {
         <div className={style.signInGoogle}>
           <SignInGoogle />
         </div>
+        {
+          signupResponse.username === username && <Navigate to='/login'/>
+        }
       </main>
     </div>
   );

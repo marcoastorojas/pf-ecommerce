@@ -399,22 +399,29 @@ export const setUserGoogle = (payload, logOut = false) => {
 };
 
 export const postUser = (newUser) => {
+  toast.loading('Loadinasdg...', {
+    id:'REGISTERUSER'
+  })
   return (dispatch) => {
     axios
       .post(`${BASE_URL}/auth/signup`, newUser)
       .then((response) => {
+        toast.dismiss('REGISTERUSER')
         console.log({ from: "postUser action creator", response });
         dispatch({
           type: POST_USER,
-          payload: response.data,
+          payload: response.data.user,
         });
+        toast.success('Signup succesfull! Please Login')
       })
       .catch((err) => {
+        toast.dismiss('REGISTERUSER')
         console.log({ m: "Error on postUser action creator", err });
         dispatch({
           type: POST_USER_ERROR,
           payload: err.response.data.errors,
         });
+        toast.error('Error. Please try again later')
       });
   };
 };
