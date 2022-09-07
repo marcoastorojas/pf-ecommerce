@@ -38,7 +38,7 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
 
   if(user.role?.name === "USER_ROLE")return (
     <div className={style.product_card}>
-    {favourites.find((pt) => pt.product.id === id) ? <div className={style.favorites}>
+    { favourites[0] !==0 && favourites.find((pt) => pt.product.id === id) ? <div className={style.favorites}>
           <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
         </div> : <div className={style.favorites}>
           <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
