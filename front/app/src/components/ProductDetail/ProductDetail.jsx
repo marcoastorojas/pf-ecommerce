@@ -178,7 +178,7 @@ export default function ProductDetail({ product }) {
           
    const productScore = getScore(productScoreRaw / product.Reviews.length)
    
-   const productFilterFav = favourites.find((pt) => pt.product.id === product.id)
+   const productFilterFav = favourites[0] !== 0? favourites.find((pt) => pt.product.id === product.id): []
    
    const starImage = productFilterFav? <div className={style.favorites}>
             Add to favorites:
