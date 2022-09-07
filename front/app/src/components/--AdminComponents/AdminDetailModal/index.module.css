@@ -348,6 +348,8 @@
 
   font-family: "Raleway", sans-serif;
   color: black;
+
+  cursor: pointer;
 }
 
 .discountButton:hover {

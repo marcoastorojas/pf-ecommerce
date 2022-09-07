@@ -9,14 +9,20 @@ import {
 import closeCross from "../../../media/svg/round_cross.svg";
 
 import style from "./index.module.css";
+import { useEffect } from "react";
 
 export default function AdminDetailModal({ details, closeDetailHandler }) {
   const dispatch = useDispatch();
 
+  const date = new Date();
+  const minDate = `${date.getDate()}${date.getFullYear}`;
+
   const [deleteTry, setDeleteTry] = useState(false);
+  const [discountInput, setDiscountInput] = useState(0.1);
+  const [discountDate, setDiscountDate] = useState(null);
+  const [emptyOrIncompleteDiscountValues, setemptyOrIncompleteDiscountValues] = useState(minDate);
 
   function deleteTryHandler(e) {
-    // console.log("delete try");
     if (e.target.id === "delete") {
       setDeleteTry(true);
     } else if (e.target.id === "cancel") {
@@ -28,6 +34,33 @@ export default function AdminDetailModal({ details, closeDetailHandler }) {
     console.log(details.id);
     dispatch(deleteProduct(details.id));
   };
+
+  function onDiscountInputChange(e) {
+    let discount = e.target.value;
+    if (discount >= 10 && discount <= 90) {
+      let discountFloat = discount / 100;
+      setDiscountInput(discountFloat);
+      if (discountInput && discountDate) setemptyOrIncompleteDiscountValues(false);
+    }
+  }
+
+  function onDateInputChange(e) {
+    setDiscountDate(e.target.value);
+  }
+
+  const discountSubmitHandler = (e) => {
+    e.preventDefault();
+    // if (discountInput && discountDate) {
+    console.log({ discount: discountInput, date: discountDate, objDate: date });
+    // } else {
+    //   setemptyOrIncompleteDiscountValues(true);
+    //   console.log({ m: "Empty or incomplete discount values" });
+    // }
+  };
+
+  useEffect(() => {
+    console.log();
+  });
 
   return (
     <div>
@@ -133,18 +166,20 @@ export default function AdminDetailModal({ details, closeDetailHandler }) {
           </div>
           <div className={style.discountDiv}>
             <p className={style.discountTitle}>Apply Discount</p>
-            <form className={style.discountForm}>
+            <form className={style.discountForm} onSubmit={discountSubmitHandler}>
               <div>
                 <label htmlFor="discount">Discount percentage:</label>
                 <p>warning*number between 10 and 90</p>
-                <input id="discount" type="number" />
+                <input id="discount" type="number" defaultValue="10" min={10} max={90} onChange={onDiscountInputChange} />
               </div>
               <div>
-                <label htmlFor="date">Expire date</label>
+                <label htmlFor="expire">Expire date</label>
                 <p>warning*valid date</p>
-                <input id="date" type="date" />
+                <input id="expire" type="date" defaultValue={minDate} onChange={onDateInputChange} />
               </div>
-              <button className={style.discountButton}>Confirm discount</button>
+              <button className={style.discountButton} type="submit">
+                Confirm discount
+              </button>
             </form>
           </div>
           <div className={style.deleteButtonDiv}>
