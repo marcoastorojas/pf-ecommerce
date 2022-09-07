@@ -309,30 +309,73 @@
 .discountDiv {
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
 
-  width: 300px;
+  padding: 0 0 0 0px;
+  border: 1px solid transparent;
+
+  width: 350px;
 }
 
 .discountTitle {
   font-size: 18px;
   font-weight: 600;
 
-  margin: 0 0 0 20px;
+  margin: 0 0 0 35px;
 }
 
 .discountForm {
+  position: relative;
+
   flex: 1;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
 
-  padding: 10px 15px;
-  border: 1px solid black;
+  padding: 20px 15px 20px 35px;
+  /* border: 1px solid black; */
+}
+
+.discountP {
+  /* background-color: aqua; */
+
+  padding: 0 0 3px 0;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+  margin: 0 0 10px 0;
+
+  width: 300px;
+}
+
+.discountInput {
+  padding: 0 0 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 10px 0 5px 0;
+
+  height: 30px;
+  width: 200px;
+
+  font-size: 15px;
+}
+
+.discountDate {
+  padding: 0 10px 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 10px 0 0 0;
+
+  height: 30px;
+  width: 200px;
+
+  font-size: 15px;
 }
 
 .discountButton {
+  position: absolute;
+  bottom: 85px;
+  left: 46px;
+
   background-color: white;
 
   /* align-self: center; */
@@ -342,7 +385,7 @@
   border-radius: 3px;
   margin: 3px 0px;
 
-  /* width: 130px; */
+  width: 200px;
 
   transition: all 0.5s ease-out;
 
@@ -355,8 +398,74 @@
 .discountButton:hover {
   /* background-color: rgb(253, 208, 139); */
   border-color: rgb(253, 208, 139);
-  /* width: 150px; */
-  padding: 7px 13px;
+  left: 36px;
+  width: 220px;
+  /* padding: 7px 13px; */
+}
+
+.finishDiscountButton {
+  position: absolute;
+  bottom: 85px;
+  left: 46px;
+
+  background-color: white;
+
+  /* align-self: center; */
+
+  padding: 7px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 3px 0px;
+
+  width: 200px;
+
+  transition: all 0.5s ease-out;
+
+  font-family: "Raleway", sans-serif;
+  color: black;
+
+  cursor: pointer;
+}
+
+.finishDiscountButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: plum;
+  left: 36px;
+  width: 220px;
+  /* padding: 7px 13px; */
+}
+
+.dateWarningDiv {
+  display: flex;
+  justify-content: center;
+
+  border: 1px solid transparent;
+  margin: 40px 0 0 0;
+
+  width: 220px;
+}
+
+.discountLoader {
+  border: 3px solid;
+  border-color: rgb(31, 31, 31) transparent transparent;
+  border-radius: 80%;
+  margin: 0 0 0 0px;
+
+  width: 10px;
+  height: 10px;
+
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+    /* filter: hue-rotate(360deg); */
+  }
+}
+
+.succesOrErrorSVG {
+  width: 18px;
+  margin: 0 0 0 0px;
 }
 
 .deleteButtonDiv {
