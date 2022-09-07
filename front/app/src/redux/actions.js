@@ -820,12 +820,32 @@ export const clearReview = () => {
 };
 
 export const getUserFav = (id) => {
-  return async function (dispatch) {
-    const response = await axios.get(`${BASE_URL}/auth/users/${id}`);
-    return dispatch({
-      type: GET_USER_FAVOURITES,
-      payload: response.data.favorites,
-    });
+  toast.loading('Loading Favourites', {
+    id: 'GETUSERFAVS'
+  })
+  return async (dispatch) => {
+    axios({
+      method: 'GET',
+      url: `${BASE_URL}/auth/users/${id}`,
+    })
+    .then(response => {
+      toast.dismiss('GETUSERFAVS')
+      console.log(response.data)
+      if(response.data.favorites.length > 0) {
+        dispatch({
+          type: GET_USER_FAVOURITES,
+          payload: response.data.favorites,
+        });
+      }
+      else {
+        dispatch({
+          type: GET_USER_FAVOURITES,
+          payload: [0]
+        })
+      }
+    })
+    .catch(res => {
+    })
   };
 };
 
