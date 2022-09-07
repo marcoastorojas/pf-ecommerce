@@ -45,22 +45,57 @@
   width: 100%;
 }
 
-.logoLink {
-  /* background-color: aqua; */
-  margin: 10px;
+/* .logoLink { */
+/* background-color: aqua; */
+/* margin: 10px;
   border: 2px solid black;
   width: 100px;
   height: 40px;
 
   text-decoration: none;
   text-align: center;
+  color: black; */
+/* } */
+
+/* .logo { */
+/* display: inline;
+  font-size: 30px; */
+/* } */
+
+/*///////////////////////////*/
+
+.logoLink {
+  display: flex;
+  flex-direction: column;
+
+  margin: 10px;
+  border: 2px solid black;
+
+  width: 100px;
+  height: 40px;
+
+  font-size: 30px;
+  text-decoration: none;
+  /* text-align: center; */
   color: black;
 }
 
-.logo {
-  display: inline;
-  font-size: 30px;
+/* .logo { */
+/* display: inline; */
+/* display: flex; */
+/* flex-direction: column; */
+/* } */
+
+.plus {
+  /* border: 1px solid green; */
+  margin: 3px 0 0 0;
 }
+.hardware {
+  /* border: 1px solid orange; */
+  margin: 1px 0 0 21px;
+}
+
+/*/////////////////////////////////////////*/
 
 .navBarLinks {
   text-decoration: none;
@@ -70,7 +105,7 @@
 }
 .activeLink {
   /* background-color: var(--background-button-color); */
-  border: 1px solid var(--border-color) ;
+  border: 1px solid var(--border-color);
   border-bottom: none;
   color: black;
   text-decoration: none;
@@ -184,7 +219,6 @@
   color: whitesmoke;
 }
 
-
 .cartDiv {
   width: 20%;
   /* border: 1px solid blue; */
@@ -229,7 +263,7 @@
   cursor: pointer;
 }
 
-.shoppCartMenu  {
+.shoppCartMenu {
   position: absolute;
   margin: 600px 0 0 0;
   /* padding: 0; */

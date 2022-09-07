@@ -5,17 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import { ADMIN_ROLE } from "../../validations/usersTypes";
 
-import {
-  getCategories,
-  getCategoryProductsById,
-  getSearchCategory,
-  newSearchProducts,
-  // getSearchCategory,
-  // getSearchName,
-  setUserGoogle,
-  upgradeToSeller,
-} from "../../redux/actions";
-import { BUYER_ROLE, SELLER_ROLE } from "../../validations/usersTypes";
+import { getCategories, getSearchCategory, newSearchProducts } from "../../redux/actions";
+import { BUYER_ROLE } from "../../validations/usersTypes";
 
 import SearchBar from "../SearchBar";
 import NavBarUserMenu from "../NavBarUserMenu";
@@ -31,9 +22,7 @@ export default function NavBar() {
 
   const categories = useSelector((state) => state.categories);
   const cart = useSelector((state) => state.cart);
-  // const user = JSON.parse(localStorage.getItem('user'))
   const user = useSelector((state) => state.user);
-  // const errorRedux = useSelector((state) => state.errorsLogIn);
 
   useEffect(() => {
     dispatch(getCategories(true));
@@ -42,9 +31,8 @@ export default function NavBar() {
   const [showCategories, setShowCategories] = useState(false);
 
   const onCategorySelection = (e) => {
-    // dispatch(getCategoryProductsById(e.target.id));
-    dispatch(newSearchProducts(null,null,null,null,e.target.id))
-    dispatch(getSearchCategory([e.target.id, e.target.name]))
+    dispatch(newSearchProducts(null, null, null, null, e.target.id));
+    dispatch(getSearchCategory([e.target.id, e.target.name]));
   };
 
   function showCategoriesHandler() {
@@ -85,24 +73,24 @@ export default function NavBar() {
   };
   return (
     <header className={style.header}>
-      {/* <Toaster /> */}
       <div className={style.sectionOne}>
         <div className={style.logoAndSB}>
-          {" "}
           <Link to={"/"} className={style.logoLink}>
-            <p className={style.logo}>PF: e-commerce</p>
+            {/* <p className={style.logo}>PF: e-commerce</p> */}
+            <p className={style.plus}>
+              <b>Plus</b>
+            </p>
+            <p className={style.hardware}>hardware</p>
           </Link>
-          {/* <div className={style.searchBarDiv}> */}
           <SearchBar />
-          {/* </div> */}
         </div>
         <nav className={style.navButtons}>
-          <NavLink to='/' className={ ({isActive}) => isActive?style.activeLink:style.navBarLinks} >
+          <NavLink to="/" className={({ isActive }) => (isActive ? style.activeLink : style.navBarLinks)}>
             Home
           </NavLink>
           <NavLink
             to="/product/create"
-            className={ ({isActive}) => isActive?style.activeLink:style.navBarLinks}
+            className={({ isActive }) => (isActive ? style.activeLink : style.navBarLinks)}
             hidden={user && localStorage.user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE ? false : true}
           >
             Upload your product
@@ -125,12 +113,6 @@ export default function NavBar() {
               </div>
             </h3>
           </div>
-          {/* <Link to="/" className={style.navBarLinks}>
-            History
-          </Link>
-          <Link to="/" className={style.navBarLinks}>
-            Sales
-          </Link> */}
         </nav>
       </div>
 
@@ -152,19 +134,24 @@ export default function NavBar() {
           )}
         </div>
         {/* <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div> */}
-          {user.roleId !== ADMIN_ROLE?
-            <div className={style.cartDiv}>
-              <div className={style.cartDivInfo} onClick={HideShoppCart}>
-                <img src={cartI} alt="Cart" />
-                <span>{cart.length}</span>
-              </div>
-                <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
-                    <ShoppingCart />
-                </div>
+        {user.roleId !== ADMIN_ROLE ? (
+          <div className={style.cartDiv}>
+            <div className={style.cartDivInfo} onClick={HideShoppCart}>
+              <img src={cartI} alt="Cart" />
+              <span>{cart.length}</span>
             </div>
-              : <></>
-          }
-        {ADMIN_ROLE === user.roleId && <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/users")}>Admin interface.</button>}
+            <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
+              <ShoppingCart />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+        {ADMIN_ROLE === user.roleId && (
+          <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/users")}>
+            Admin interface.
+          </button>
+        )}
       </div>
     </header>
   );
