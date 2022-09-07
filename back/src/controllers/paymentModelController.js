@@ -6,10 +6,10 @@ const { request, response } = require("express");
 const postOrder =  async  (req = request, res = response) => {
   var order, orderid
   getOrder = function() {
-
+  console.log('req.body--->'+JSON.stringify(req.body))
   const userId = req.body.user_id;  
   var sucursalid = req.body.direction
- console.log('sucursalId--->'+sucursalid)
+ //console.log('sucursalId--->'+sucursalid)
   var promise = new Promise(function(resolve, reject) {  
 
       // busco la última orden abierta.
@@ -31,13 +31,23 @@ const postOrder =  async  (req = request, res = response) => {
         const orderDetail = req.body.products.map((product) => {
           return (product = {
             productId: product.product.id,
-            quantity: product.amount,
-            //price: product.product.price,
-            price: 1,
+            quantity: product.amount,            
+            price: product.product.price.originalprice,
             orderId: order.id,
           });
         });
-        newOrderDetail = Orderdetail.bulkCreate(orderDetail);
+
+      console.log('orderdetail--->'+ JSON.stringify(orderDetail))
+        
+       //buscar la orden y borrarla para volverla a llenar     
+
+      Orderdetail.destroy({
+        where: {
+          orderId: order.id   
+        }
+      })
+      
+      const newOrderDetail = Orderdetail.bulkCreate(orderDetail);
         orderid = order.id
 
       } else {
@@ -55,8 +65,7 @@ const postOrder =  async  (req = request, res = response) => {
           return (product = {
             productId: product.product.id,
             quantity: product.amount,
-            //price: product.product.price,
-            price: 1,
+            price: product.product.price.originalprice,
             orderId: neworder.id,
           });
         });
