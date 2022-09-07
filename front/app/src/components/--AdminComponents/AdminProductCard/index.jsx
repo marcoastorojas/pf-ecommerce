@@ -1,8 +1,12 @@
 // import { useEffect } from "react";
 
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getProductId } from "../../../redux/actions";
 import style from "./index.module.css";
 
-export default function AdminProductCard({ p, setDetailToRender }) {
+export default function AdminProductCard({ p, setRenderDetail }) {
+  const dispatch = useDispatch();
   const {
     id,
     title,
@@ -22,8 +26,10 @@ export default function AdminProductCard({ p, setDetailToRender }) {
   } = price;
 
   const renderDetail = () => {
-    setDetailToRender(id);
-    // console.log(id);
+    // setRenderDetail(id);
+    dispatch(getProductId(id));
+    setRenderDetail(true);
+    console.log(id);
   };
 
   // useEffect(() => {
@@ -41,7 +47,6 @@ export default function AdminProductCard({ p, setDetailToRender }) {
           <p>Stock: {stock}</p>
           <p>${originalprice}</p>
         </div>
-        <button>Delete product</button>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanProductSearchResults, getProducts, getProductsByName } from "../../../redux/actions";
+import { cleanProductSearchResults, cleanseProductDetails, deleteProduct, getProducts, getProductsByName } from "../../../redux/actions";
+import AdminDetailModal from "../AdminDetailModal";
 import AdminProductCard from "../AdminProductCard";
 
 import style from "./index.module.css";
@@ -9,15 +10,19 @@ import style from "./index.module.css";
 export default function AdminProductsComponent() {
   const dispatch = useDispatch();
 
+  //PAGINADO
   const [paginate, setPaginate] = useState(1);
+  //SEARCH INPUT
   const [searchInput, setSearchInput] = useState(null);
   const [searchTry, setSearchTry] = useState(false);
+  //MODAL DE DETALLE
+  const [renderDetail, setRenderDetail] = useState(false);
+  // const [detailToRender, setDetailToRender] = useState(null);
+  // const [details, setDetails] = useState(null);
 
   const products = useSelector((state) => state.products);
   const searchedProducts = useSelector((state) => state.searchedProducts);
-
-  const [detailToRender, setDetailToRender] = useState(null);
-  const [details, setDetails] = useState(null);
+  const details = useSelector((state) => state.product);
 
   function onSearchInputChange(e) {
     setSearchInput(e.target.value);
@@ -28,7 +33,7 @@ export default function AdminProductsComponent() {
   }
 
   function prevOrNext(e) {
-    console.log(e.target.id);
+    // console.log(e.target.id);
     if (e.target.id === "prev") {
       if (paginate > 1) setPaginate(paginate - 1);
     } else if (e.target.id === "next") {
@@ -38,31 +43,32 @@ export default function AdminProductsComponent() {
 
   const onSearchHandler = (e) => {
     e.preventDefault();
-    console.log(searchInput, "set serach to true");
+    console.log({ searchInput, search: "setting to true" });
     setSearchTry(true);
     dispatch(getProductsByName(searchInput));
   };
 
   const setOriginalResultsHandler = () => {
-    console.log("hoi");
+    // console.log("hoi");
     setSearchTry(false);
     dispatch(cleanProductSearchResults());
   };
 
   function closeDetailHandler() {
-    console.log("soy detail");
-    setDetailToRender(null);
-    setDetails(null);
+    // console.log("soy detail");
+    // setDetailToRender(null);
+    setRenderDetail(false);
+    dispatch(cleanseProductDetails());
   }
 
   useEffect(() => {
-    console.log(detailToRender);
-    setDetails(products.data && products.data.find((p) => p.id === detailToRender));
+    // console.log(detailToRender);
+    // setDetails(products.data && products.data.find((p) => p.id === detailToRender));
     console.log(details);
     // console.log(searchInput);
     dispatch(getProducts(paginate));
     //eslint-disable-next-line
-  }, [dispatch, paginate, detailToRender, details]);
+  }, [dispatch, paginate, details]);
 
   return (
     <div>
@@ -90,41 +96,78 @@ export default function AdminProductsComponent() {
         </button>
       </div>
       <div>
-        {!searchedProducts[0] && products.data && products.data.map((p) => <AdminProductCard key={p.id} p={p} setDetailToRender={setDetailToRender} />)}
-        {searchedProducts && searchedProducts[0] && searchedProducts.map((p) => <AdminProductCard key={p.id} p={p} setDetailToRender={setDetailToRender} />)}
+        {!searchedProducts[0] &&
+          products.data &&
+          products.data.map((p) => (
+            <AdminProductCard
+              key={p.id}
+              p={p}
+              setRenderDetail={setRenderDetail}
+              // setDetailToRender={setDetailToRender}
+            />
+          ))}
+        {searchedProducts &&
+          searchedProducts[0] &&
+          searchedProducts.map((p) => (
+            <AdminProductCard
+              key={p.id}
+              p={p}
+              setRenderDetail={setRenderDetail}
+              // setDetailToRender={setDetailToRender}
+            />
+          ))}
       </div>
-      {details && (
+      {renderDetail && details && (
         <div className={style.detailContainer}>
-          <div className={style.detailCard} id={details.id}>
-            <div className={style.imgAndTitle}>
-              <div className={style.detailImgContainer}>
-                {details.images.split(" ").map((img) => {
-                  return <img src={img} alt="product" className={style.detailImg} />;
-                })}
-                {/* <img src={details.images.split(" ")[0]} alt="product" className={style.detailImg} /> */}
-              </div>
-              <div className={style.titleDiv}>
-                <button onClick={closeDetailHandler}>close</button>
-                <p>Title: {details.title}</p>
-                <p>Model: {details.model}</p>
-                <p>Brand: {details.brand}</p>
-                <p>Stock: {details.stock}</p>
-                <p>Owner: {details.userId}</p>
-              </div>
-            </div>
-            <div className={style.costDiv}>
-              <p>Total cost: ${details.price.originalprice}</p>
-              <p>Discount: {details.price.discount ? details.price.discount : "No discount."}</p>
-              {details.price.discount && <p>Discount expire time: {details.price.expiresin ? details.price.expiresin : "Without limit."}</p>}
-            </div>
-            <div>
-              <p>Description:</p>
-              <p>{details.description}</p>
-            </div>
-            <p></p>
-          </div>
+          <AdminDetailModal details={details} closeDetailHandler={closeDetailHandler} />
         </div>
       )}
     </div>
   );
 }
+
+// <div className={style.detailCard} id={details.id}>
+//   <div className={style.imgAndTitle}>
+//     <div className={style.detailImgContainer}>
+//       {details.images &&
+//         details.images.split(" ").map((img) => {
+//           return <img key={img} src={img} alt="product" className={style.detailImg} />;
+//         })}
+//       {/* <img src={details.images.split(" ")[0]} alt="product" className={style.detailImg} /> */}
+//     </div>
+//     <div className={style.titleDiv}>
+//       <button onClick={closeDetailHandler}>close</button>
+//       <p>Title: {details.title}</p>
+//       <p>Model: {details.model}</p>
+//       <p>Brand: {details.brand}</p>
+//       <p>Stock: {details.stock}</p>
+//       <p>Owner: {details.userId}</p>
+//     </div>
+//   </div>
+//   <div className={style.costDiv}>
+//     <p>Total cost: ${details.price && details.price.originalprice}</p>
+//     <p>
+//       Discount:
+//       {details.price && details.price.discount ? details.price.discount : "No discount."}
+//     </p>
+//     {details.price && details.price.discount && <p>Discount expire time: {details.price.expiresin ? details.price.expiresin : "Without limit."}</p>}
+//   </div>
+//   <div>
+//     <p>Description:</p>
+//     <p>{details.description}</p>
+//   </div>
+//   <div>
+//     <button id="delete" onClick={deleteTryHandler}>
+//       Delete product
+//     </button>
+//     {deleteTry && (
+//       <div>
+//         <p>You're about to delete a product from the data base. Do you want to complete this action?</p>
+//         <button onClick={deleteActionHandler}>Yes, continue.</button>
+//         <button id="cancel" onClick={deleteTryHandler}>
+//           No, cancel the action.
+//         </button>
+//       </div>
+//     )}
+//   </div>
+// </div>
