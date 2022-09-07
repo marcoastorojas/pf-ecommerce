@@ -70,6 +70,8 @@ export const PUT_CATEGORY_STATE = "PUT_CATEGORY_STATE";
 export const POSTING_CATEGORY = "POSTING_CATEGORY";
 export const POST_CATEGORY = "POST_CATEGORY";
 export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const CLEANSE_PRODUCT_DETAILS = "CLEANSE_PRODUCT_DETAILS";
 
 export const GET_SUCURSAL = "GET_SUCURSAL";
 
@@ -105,16 +107,21 @@ export const getProducts = (page) => {
 };
 
 export const getProductId = (id) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/products/${id}`);
-      return dispatch({
-        type: GET_PRODUCT_BY_ID,
-        payload: response.data,
+  return (dispatch) => {
+    // toast.loading("Searching product detail");
+    axios
+      .get(`${BASE_URL}/products/${id}`)
+      .then((response) => {
+        // toast.dismiss();
+        dispatch({
+          type: GET_PRODUCT_BY_ID,
+          payload: response.data,
+        });
+      })
+      .catch((err) => {
+        console.log(`can not find product with id: ${id}`, err);
+        toast.error("Something went wrong searching product by id");
       });
-    } catch (error) {
-      console.log(`can not find product with id: ${id}`, error);
-    }
   };
 };
 
@@ -1045,6 +1052,38 @@ export const cleanProductSearchResults = () => {
   return (dispatch) => {
     dispatch({
       type: CLEAN_PRODUCT_SEARCH_RESULTS,
+    });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return (dispatch) => {
+    toast.loading("Deleting product from database...");
+    axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/${id}`,
+    })
+      .then((response) => {
+        toast.dismiss();
+        toast.success("Product deleted");
+        console.log({ from: "deleteProduct", response });
+        dispatch({
+          type: DELETE_PRODUCT,
+          payload: response,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.dismiss();
+        toast.error("Error while trying to delete product, try again.");
+      });
+  };
+};
+
+export const cleanseProductDetails = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEANSE_PRODUCT_DETAILS,
     });
   };
 };
