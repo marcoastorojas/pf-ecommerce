@@ -25,11 +25,11 @@ paymentRoutes.post("/", async function (req, res, next) {
   
   if (orderFounded){
     const user = await User.findOne({ where: { uid: orderFounded.userId } });
+    const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
     
     const filteredOrder = {
   //if (orderFounded) {
   //const user = await User.findOne({ where: { uid: orderFounded.userId } });
-  //const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
   
   //const filteredOrder = {
     orderId: orderFounded.id,
@@ -40,8 +40,7 @@ paymentRoutes.post("/", async function (req, res, next) {
     id: user.uid,
     userName: user.username,
     email: user.email,
-    },
-    sucursal,
+    },    
     orderDetail: orderFounded.orderdetails.map((product) => {
       return {
         idProduct: product.productId,
