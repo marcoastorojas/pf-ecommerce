@@ -40,7 +40,7 @@ function GoTo({name = "Your position", lat=-34.61315, lng=-58.37723}) {
     </Marker>
 }
 
-export default function Mapita ({X = -34.61315,Y = -58.37723, search = ""}) {
+export default function Mapita ({X = -34.61315,Y = -58.37723, search = "", oneMarker = false}) {
 
    const dispatch = useDispatch();
   const sucursal = useSelector((state) => state.sucursal);
@@ -63,7 +63,7 @@ export default function Mapita ({X = -34.61315,Y = -58.37723, search = ""}) {
                         Your position
                     </Popup>
                 </Marker>
-                {sucursal.length > 0 && sucursal.map((sl) => {
+                {sucursal.length > 0 && !oneMarker && sucursal.map((sl) => {
                     return  <Marker position={[sl.lat, sl.lng]} icon={storeIcon} key={sl.id}>
                     <Popup>
                        {sl.name}
