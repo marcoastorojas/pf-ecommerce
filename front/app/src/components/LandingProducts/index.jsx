@@ -2,7 +2,7 @@ import { getUserFav, getUserInfo } from "../../redux/actions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
-import "./index.modules.css";
+import style from "./index.module.css";
 // import Paginate from "../Paginate/Paginate";
 
 export default function LandingProducts() {
@@ -27,8 +27,7 @@ export default function LandingProducts() {
   }, []);
 
   return (
-    <main>
-      <div className="container-lProducts">
+      <div className={style.containerProducts}>
         {Array.isArray(sliceArrayProduct)
           ? sliceArrayProduct.map((product) => {
               return (
@@ -45,6 +44,5 @@ export default function LandingProducts() {
             })
           : null}
       </div>
-    </main>
   );
 }

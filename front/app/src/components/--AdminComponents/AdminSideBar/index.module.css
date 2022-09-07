@@ -44,6 +44,9 @@
 
 .firstOptionDiv:hover {
   box-shadow: inset 0px -5px 4px -3px rgba(0, 0, 0, 0.1);
+  background-color: black;
+  border-radius: 10px;
+  color: white;
 }
 
 .optionDiv {
@@ -57,6 +60,13 @@
   width: 300px;
 
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+.optionDiv:hover {
+  background-color: black;
+  /* background: linear-gradient(to top, orange, black); */
+  border-radius: 10px;
+  color: white;
 }
 
 .lasOptionDiv {
@@ -68,8 +78,14 @@
   justify-content: center;
 
   width: 300px;
-
+  
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+.lasOptionDiv:hover {
+  background-color: black;
+  border-radius: 10px;
+  color: white;
 }
 
 .optionP {

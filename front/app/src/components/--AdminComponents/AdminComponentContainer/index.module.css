@@ -8,11 +8,11 @@
   height: 98%;
 
   /* box-shadow: inset 0 0 0 5px red; */
-
+  width: 100%;
   overflow-y: scroll;
 }
 
-.containerDiv::-webkit-scrollbar {
+/* .containerDiv::-webkit-scrollbar {
   appearance: none;
 }
 
@@ -22,13 +22,13 @@
 
 .contenedor::-webkit-scrollbar:horizontal {
   height: 5px;
-}
+} */
 
 /* .containerDiv::-webkit-scrollbar-button:increment,
 .containerDiv::-webkit-scrollbar-button {
   color: aqua;
 } */
 
-.contenedor::-webkit-scrollbar-track {
+/* .contenedor::-webkit-scrollbar-track {
   border-radius: 10px;
-}
+} */

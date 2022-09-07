@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { ADMIN_ROLE } from "../../validations/usersTypes";
@@ -97,8 +97,18 @@ export default function NavBar() {
           {/* </div> */}
         </div>
         <nav className={style.navButtons}>
+          <NavLink to='/' className={ ({isActive}) => isActive?style.activeLink:style.navBarLinks} >
+            Home
+          </NavLink>
+          <NavLink
+            to="/product/create"
+            className={ ({isActive}) => isActive?style.activeLink:style.navBarLinks}
+            hidden={user && localStorage.user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE ? false : true}
+          >
+            Upload your product
+          </NavLink>
           <div className={style.contCate}>
-            <h3 onClick={showCategoriesHandler} className={style.categoriesButton}>
+            <p onClick={showCategoriesHandler} className={style.categoriesButton}>
               Categories
               <div className={style.categoriasChikito}>
                 {categories[0] &&
@@ -113,21 +123,14 @@ export default function NavBar() {
                     );
                   })}
               </div>
-            </h3>
+            </p>
           </div>
-          <Link to="/" className={style.navBarLinks}>
+          {/* <Link to="/" className={style.navBarLinks}>
             History
           </Link>
           <Link to="/" className={style.navBarLinks}>
             Sales
-          </Link>
-          <Link
-            to="/product/create"
-            className={style.navBarLinks}
-            hidden={user && localStorage.user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== BUYER_ROLE ? false : true}
-          >
-            Upload your product
-          </Link>
+          </Link> */}
         </nav>
       </div>
 
@@ -160,7 +163,7 @@ export default function NavBar() {
           </div>
           {/* </Link> */}
         </div>
-        {ADMIN_ROLE === user.roleId && <button onClick={() => navigate("/soyadmin/categories")}>Back to Admin screen.</button>}
+        {ADMIN_ROLE === user.roleId && <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/categories")}>Admin interface.</button>}
       </div>
     </header>
   );

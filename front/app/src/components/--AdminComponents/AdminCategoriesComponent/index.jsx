@@ -17,7 +17,7 @@ export default function AdminCategoriesComponent() {
 
   return (
     <div className={style.generalDiv}>
-      <div>
+      <div className={style.formCategorySerch}>
         <AdminCategoryForm />
       </div>
       <div className={style.abledDisabledDiv}>
@@ -31,15 +31,15 @@ export default function AdminCategoriesComponent() {
             })}
         </div>
         <div className={style.separationDiv}></div>
-        <div className={style.disabledDivDiv}>
-          <p className={style.abledDsiabledP}>Disabled categories.</p>
-          {categories[0] &&
-            categories.map((c) => {
-              // console.log(c);
-              let { id, name, active } = c;
-              if (active === "false") return <AdminCategoryCard key={id} id={id} name={name} active={active} />;
-            })}
-        </div>
+          <div className={style.disabledDivDiv}>
+            <p className={style.abledDsiabledP}>Disabled categories.</p>
+            {categories[0] &&
+              categories.map((c) => {
+                // console.log(c);
+                let { id, name, active } = c;
+                if (active === "false") return <AdminCategoryCard key={id} id={id} name={name} active={active} />;
+              })}
+          </div>
       </div>
     </div>
   );
