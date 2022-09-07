@@ -8,8 +8,14 @@
   width: 600px;
 
   cursor: pointer;
+  transition: all 0.2s ease;
 }
-
+.cardDiv:hover {
+  border: 1px solid black;
+  box-shadow: 0 0 10px grey;
+  background-color: black;
+  color: white;
+}
 .imgDiv {
   display: flex;
   justify-content: center;
