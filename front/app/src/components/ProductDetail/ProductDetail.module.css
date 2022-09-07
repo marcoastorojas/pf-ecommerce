@@ -2,13 +2,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
+  padding: 1%;
   /* background-color: rgb(249, 246, 238); */
   /* margin-top: 2rem; */
   /* margin-bottom: 2rem; */
+  /* width: 100%; */
+  /* border: 1px solid green; */
 }
 .publish {
   display: flex;
   justify-content: space-around;
+  /* width: 80%; */
 }
 .left {
   border: 1px solid var(--border-color);
@@ -206,6 +211,13 @@
   border-radius: 10px;
   margin: 2%;
   padding: 2%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.comments > div {
+  width: 100%;
 }
 
 .comments h3 {
@@ -214,20 +226,45 @@
   align-items:center;
     
 }
-
+.headComments {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+  /* width: 100%; */
+  /* padding: 0 5% 0 5%; */
+  margin: 0;
+}
+.headComments > h2 {
+  margin: 0;
+  padding: 0;
+  width: 30%;
+  /* border: 1px solid green; */
+  display: flex;
+  justify-content: space-evenly;
+}
+.starimg {
+  /* border: 1px solid brown; */
+  aspect-ratio: 1/1;
+  width: 25px;
+}
 .commentSec {
   border: 1px solid var(--border-color);
   background: whitesmoke;
   display: flex;
-    align-items:center;
+  align-items:center;
+  justify-content: space-between;
   margin: 2rem;
   border-radius: 5px;
   padding: 1rem;
+  /* width: 50%; */
 }
+/* .commentSec > div {
+  border: 1px solid red;
+} */
 
 .commentData {
   display: flex;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   justify-content: center;
   align-items:center;
   font-weight:bold;
@@ -239,24 +276,27 @@
   align-items:center;
 }
 
-.commentData p {
+/* .commentData p {
     margin-left: 1rem;
-}
+} */
 
 .commentButtons {
-    margin: 0 auto;
+    margin: 0;
+    width: 15%;
+    display: flex;
+    justify-content: space-evenly;
 }
 
-.commentButtons button {
-   display: flex;
+.button {
+   /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
   padding: 2%;
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 5%;
   margin: 5%;
-  width: 120%;
+  width: 100%; 
   background-color: var(--background-button-color);
   color: white;
   display: flex;
@@ -265,14 +305,18 @@
   transition: all 0.2s ease;
 }
 
-.commentButtons button:hover {
+.button:hover {
     cursor: pointer;
      box-shadow: 0 0 10px 1px var(--border-color);
 }
-
-.score {
-    margin:1rem 0 0.5rem 0;
+.button:active {
+  background-color: white;
+  color: black;
 }
+
+/* .score {
+    margin:1rem 0 0.5rem 0;
+} */
 
 .score > input[type="range"] {
   -webkit-appearance: none;
@@ -323,9 +367,9 @@
   background-color: white;
 }
 
-.descriptionComment {
+/* .descriptionComment {
     margin:1rem 0 0.5rem 0;
-}
+} */
 
 .descriptionComment > input[type="text"]{
     min-width: 80vh;
@@ -333,26 +377,83 @@
 }
 
 .submitComment {
-    display: flex;
-  flex-direction: column;
-  align-items: center;
+    /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
   border: 1px solid var(--border-color);
   border-radius: 10px;
-
-  width: 10%;
+  width: 15%;
   background-color: var(--background-button-color);
   color: white;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   transition: all 0.2s ease;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    /* padding-left: 3rem; */
+    /* padding-right: 3rem; */
+    padding: 2% 5%;
 }
 .submitComment:hover {
     cursor: pointer;
      box-shadow: 0 0 10px 1px var(--border-color);
+     width: 25%;
 }
+.submitComment:active {
+  background-color: white;
+  color: black;
+}
+
+/* .addCommentSection {
+  border: 1px solid red;
+}
+.prueba {
+  border: 1px solid green;
+} */
+.formComment {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 2%;
+}
+.descriptionComment {
+  /* border: 1px solid red; */
+  width: 50%;
+  /* text-align: left; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.descriptionComment > div {
+  /* border: 1px solid green; */
+  width: 100%;
+}
+.descriptionComment > div > label {
+  font-size: 20px;
+}
+.descriptionComment > div > textarea {
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  padding: 2%;
+  resize: none;
+  width: 90%;
+  height: 50px;
+  transition: all 0.2s ease;
+}
+.descriptionComment > div > textarea:focus {
+  border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
 /* .left::-webkit-scrollbar-track {
   background-color: darkgrey;
 }
