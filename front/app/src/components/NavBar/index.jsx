@@ -108,7 +108,7 @@ export default function NavBar() {
             Upload your product
           </NavLink>
           <div className={style.contCate}>
-            <p onClick={showCategoriesHandler} className={style.categoriesButton}>
+            <h3 onClick={showCategoriesHandler} className={style.categoriesButton}>
               Categories
               <div className={style.categoriasChikito}>
                 {categories[0] &&
@@ -123,7 +123,7 @@ export default function NavBar() {
                     );
                   })}
               </div>
-            </p>
+            </h3>
           </div>
           {/* <Link to="/" className={style.navBarLinks}>
             History
@@ -152,17 +152,18 @@ export default function NavBar() {
           )}
         </div>
         {/* <div>{user && Object.keys(user).length !== 0 && JSON.parse(localStorage.user).roleId !== SELLER_ROLE && <button onClick={btnUpSel}>Upgrade to Seller</button>}</div> */}
-        <div className={style.cartDiv}>
-          {/* <Link to={"/shopping-cart"} className={style.cartLink}> */}
-          <div className={style.cartDivInfo} onClick={HideShoppCart}>
-            <img src={cartI} alt="Cart" />
-            <span>{cart.length}</span>
-          </div>
-          <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
-            <ShoppingCart />
-          </div>
-          {/* </Link> */}
-        </div>
+          {user.roleId !== ADMIN_ROLE?
+            <div className={style.cartDiv}>
+              <div className={style.cartDivInfo} onClick={HideShoppCart}>
+                <img src={cartI} alt="Cart" />
+                <span>{cart.length}</span>
+              </div>
+                <div id="shoppCartNavBar" className={style.shoppCartMenuHidden}>
+                    <ShoppingCart />
+                </div>
+            </div>
+              : <></>
+          }
         {ADMIN_ROLE === user.roleId && <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/categories")}>Admin interface.</button>}
       </div>
     </header>
