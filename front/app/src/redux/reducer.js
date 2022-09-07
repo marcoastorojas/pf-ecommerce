@@ -13,6 +13,7 @@ import {
   LOG_IN,
   ERROR_HANDLE,
   RESULTS_FOUND,
+  CLEAR_CART,
 
   //SIGNUP
   POST_USER,
@@ -23,7 +24,6 @@ import {
   ADD_TO_CART,
   REMOVE_ONE_FROM_CART,
   REMOVE_ALL_FROM_CART,
-  CLEAR_CART,
   ADD_ONE_FROM_CART,
   GET_TOTAL,
   SEND_PAYMENT,
@@ -56,6 +56,7 @@ import {
   CLEANSE_PRODUCT_DETAILS,
   GET_SUCURSAL,
   SET_SUCURSAL,
+  CLEAR_FAVOURITES,
 } from "./actions";
 
 const initialState = {
@@ -466,6 +467,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         nuevaSucursal: action.payload,
       };
+      case CLEAR_FAVOURITES:
+          return {
+              ...state,
+              favourites: []
+          }
     default:
       return state;
   }

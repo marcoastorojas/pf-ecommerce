@@ -14,6 +14,7 @@ import {
   getUserReviews,
   updateReview,
   getProductId,
+  getOrders,
   
   addFav,
   delFav,
@@ -37,6 +38,8 @@ export default function ProductDetail({ product }) {
   const [stockEnCarrito, setStockEnCarrito] = useState(0);
 
   const [showEdit, setShowEdit] = useState(false);
+  
+  const dataOrders = useSelector((state) => state.dataOrders)
 
   const favourites = useSelector((state) => state.favourites);
   const userInfo = useSelector((state) => state.userInfo);
@@ -60,6 +63,7 @@ export default function ProductDetail({ product }) {
     if (user.uid) {
         dispatch(getUserReviews(user.uid));
         dispatch(getUserFav(user.uid))
+        dispatch(getOrders(user.uid))
      }
      dispatch(getProductId(product.id));
   }, [])
@@ -250,10 +254,16 @@ export default function ProductDetail({ product }) {
               />
               {/* <div className="quantity">{quantity}</div> */}
               {/* </div> */}
+              <div className={style.prices}>
+                 <h3>Discount: { product.price.discount ? product.price.discount * 100: 0}%</h3>
+                 <h3>Original Price: ${Intl.NumberFormat().format(
+                  (product.price.originalprice * quantity)
+                )}</h3>
+              </div>
               <h2>
                 Total: $
                 {Intl.NumberFormat().format(
-                  product.price.originalprice * quantity
+                  (product.price.originalprice * quantity) * product.price.discount
                 )}
               </h2>
               {/* <div className={style.total}>

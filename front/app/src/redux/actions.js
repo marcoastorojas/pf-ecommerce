@@ -1125,3 +1125,10 @@ export const setSucursal = (data) => {
     dispatch({type: SET_SUCURSAL, payload: data})
   }
 }
+
+
+export const clearFavorites = () => {
+    return {
+        type: CLEAR_FAVOURITES
+    }
+}
