@@ -307,9 +307,54 @@
 }
 
 .discountDiv {
+  display: flex;
+  flex-direction: column;
   border: 1px solid red;
 
   width: 300px;
+}
+
+.discountTitle {
+  font-size: 18px;
+  font-weight: 600;
+
+  margin: 0 0 0 20px;
+}
+
+.discountForm {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px 15px;
+  border: 1px solid black;
+}
+
+.discountButton {
+  background-color: white;
+
+  /* align-self: center; */
+
+  padding: 7px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 3px 0px;
+
+  /* width: 130px; */
+
+  transition: all 0.5s ease-out;
+
+  font-family: "Raleway", sans-serif;
+  color: black;
+}
+
+.discountButton:hover {
+  /* background-color: rgb(253, 208, 139); */
+  border-color: rgb(253, 208, 139);
+  /* width: 150px; */
+  padding: 7px 13px;
 }
 
 .deleteButtonDiv {

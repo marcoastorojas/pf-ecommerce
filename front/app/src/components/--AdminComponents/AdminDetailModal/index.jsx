@@ -1,8 +1,10 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { cleanseProductDetails, deleteProduct } from "../../../redux/actions";
+import {
+  // cleanseProductDetails,
+  deleteProduct,
+} from "../../../redux/actions";
 
 import closeCross from "../../../media/svg/round_cross.svg";
 
@@ -26,12 +28,6 @@ export default function AdminDetailModal({ details, closeDetailHandler }) {
     console.log(details.id);
     dispatch(deleteProduct(details.id));
   };
-
-  // useEffect(() => {
-  //   function cleanseDetails() {
-  //     dispatch(cleanseProductDetails());
-  //   }
-  // });
 
   return (
     <div>
@@ -67,11 +63,15 @@ export default function AdminDetailModal({ details, closeDetailHandler }) {
                   details.categories &&
                   details.categories.length > 0 &&
                   details.categories.map((category) => {
-                    return <li className={style.listItem}>{category.name}</li>;
+                    return (
+                      <li key={category.name} className={style.listItem}>
+                        {category.name}
+                      </li>
+                    );
                   })}
               </ul>
               <p className={style.titlesP}>Owner:</p>
-              <p className={style.descriptionP}> {details.userId}</p>
+              <p className={style.descriptionP}> {details && details.user && details.user.username}</p>
               <p className={style.titlesP}>Stock:</p>
               <p className={style.descriptionP}> {details.stock}</p>
               <p className={style.titlesP}>Total cost:</p>
@@ -121,23 +121,30 @@ export default function AdminDetailModal({ details, closeDetailHandler }) {
             <p className={style.wishlistTitle}>Added to wishlist by:</p>
             <ul className={style.ulWishlist}>
               {details && details.favorites && details.favorites.length > 0 ? (
-                details.favorites.map((favorite) => <li className={style.wishlistLi}>{favorite.user.username}</li>)
+                details.favorites.map((favorite) => (
+                  <li key={favorite.user.username} className={style.wishlistLi}>
+                    {favorite.user.username}
+                  </li>
+                ))
               ) : (
                 <p>This product doesn't belong to anyones wishlist.</p>
               )}
             </ul>
           </div>
           <div className={style.discountDiv}>
-            <p>Aply Discount</p>
-            <form>
+            <p className={style.discountTitle}>Apply Discount</p>
+            <form className={style.discountForm}>
               <div>
                 <label htmlFor="discount">Discount percentage:</label>
+                <p>warning*number between 10 and 90</p>
                 <input id="discount" type="number" />
               </div>
               <div>
-                <label htmlFor="date"></label>
+                <label htmlFor="date">Expire date</label>
+                <p>warning*valid date</p>
                 <input id="date" type="date" />
               </div>
+              <button className={style.discountButton}>Confirm discount</button>
             </form>
           </div>
           <div className={style.deleteButtonDiv}>
