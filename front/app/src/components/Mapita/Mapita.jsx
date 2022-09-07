@@ -28,7 +28,7 @@ const storeIcon = new window.L.Icon({
     popupAnchor: [0, -46]
 });
 
-function GoTo({name = "Your position", lat=-34.61315, lng=-58.37723}) {
+function GoTo({name = "Your position", lat, lng}) {
       const map = useMap();
       
       if(name && lat && lng) {
@@ -40,7 +40,7 @@ function GoTo({name = "Your position", lat=-34.61315, lng=-58.37723}) {
     </Marker>
 }
 
-export default function Mapita ({X = -34.61315,Y = -58.37723, search = "", oneMarker = false}) {
+export default function Mapita ({X,Y, search = "", oneMarker = false}) {
 
    const dispatch = useDispatch();
   const sucursal = useSelector((state) => state.sucursal);
@@ -56,7 +56,7 @@ export default function Mapita ({X = -34.61315,Y = -58.37723, search = "", oneMa
     
     return (
         <div id='map' className={style.contMapita}>
-            <MapContainer center={position} zoom={13} scrollWheelZoom={false} className={style.leaflet_container}>
+            <MapContainer center={position} zoom={13} maxZoom={16} minZoom={3} scrollWheelZoom={true} className={style.leaflet_container}>
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <Marker position={position} icon={markerIcon}>
                     <Popup>

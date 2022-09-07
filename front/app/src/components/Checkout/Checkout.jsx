@@ -111,22 +111,23 @@ export default function Checkout() {
         Shopping cart is empty
       </div>
     );
-  } else
-    return (
+  } else if(location.loaded)return (
       <div className="check">
         <input type="text" name="email" id="email" placeholder="email" value={email} disabled={true}/>
         <input type="text" name="direction" id="direction" placeholder="direction" value={direction} disabled={true} />
         <button onClick={() => handlePay()}>PAY</button>
         <div>
-            <select onChange={(e) => changeDirection(e)}>
+            <select onChange={(e) => changeDirection(e)} className="select-check">
                 <option value="">SUCURSALES</option>
                    {sucursal.length > 0 && sucursal.map((sl) => {
                 return <option key={sl.id} value={sl.name}>{sl.name}</option>
             })}
             </select>
         </div>
-        <div className="map">{location.loaded && !location.error ? <Mapita X={location.coordinates.lat} Y={location.coordinates.lng} search={direction}/> : <Mapita search={direction}/>}</div>
+        <div className="map">{<Mapita X={location.coordinates?.lat ? location.coordinates.lat : -34.61315} Y={location.coordinates?.lng ? location.coordinates.lng : -58.37723} search={direction}/>}</div>
         <Toaster />
       </div>
     );
+    
+    else <div>loading</div>
 }

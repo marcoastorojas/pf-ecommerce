@@ -8,6 +8,7 @@
 .contMapita {
     border: 1px solid black;;
     z-index: -1;
+    border-radius: 5px;
     /* height:  500px; */
     /* width: 700px; */
     /* width: 100%;
