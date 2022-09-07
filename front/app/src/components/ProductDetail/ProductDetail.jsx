@@ -153,7 +153,7 @@ export default function ProductDetail({ product }) {
     dispatch(addFav(product.id, user.uid));
     setTimeout(() => {
         dispatch(getUserFav(user.uid))
-    }, 800)
+    }, 1000)
     }
     else return console.log("LOG IN")
   };
@@ -163,7 +163,7 @@ export default function ProductDetail({ product }) {
     dispatch(delFav(user.uid, product.id));
     setTimeout(() => {
         dispatch(getUserFav(user.uid))
-    }, 800)
+    }, 1000)
     }
     else return console.log("LOG IN")
   };
