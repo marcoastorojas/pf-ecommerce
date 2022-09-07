@@ -31,7 +31,7 @@ export default function MyShopping (props) {
 
     return (
         <div className={style.contMyShopping}>
-            {/* <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button> */}
+            <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button>
             <div className={style.header}>
                 <div className={style.titulo}>
                     <h3>Date: {props.date}</h3>
@@ -65,7 +65,8 @@ export default function MyShopping (props) {
                     {
                         props.orders?.map( e => {
                             return (
-                                <Link to= {`/product/${e.id}`} key={e.id} className={style.SuccProd}>
+                                e.product !== null &&
+                                <Link to= {`/product/${e.product.id}`} key={e.id} className={style.SuccProd}>
                                         <span className={style.titleProd}>{e.product?.title}</span><span>{e.quantity}</span><span>${Number(e.price).toLocaleString()}</span><span>${Number(e.price * e.quantity).toLocaleString()}</span>
                                 </Link>
                                 // <div key={e.id} className={style.contMiniOrder}>
