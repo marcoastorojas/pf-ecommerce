@@ -6,10 +6,10 @@ const { request, response } = require("express");
 const postOrder =  async  (req = request, res = response) => {
   var order, orderid
   getOrder = function() {
-  console.log('req.body--->'+JSON.stringify(req.body))
+ 
   const userId = req.body.user_id;  
   var sucursalid = req.body.direction
- //console.log('sucursalId--->'+sucursalid)
+  
   var promise = new Promise(function(resolve, reject) {  
 
       // busco la última orden abierta.
@@ -37,11 +37,10 @@ const postOrder =  async  (req = request, res = response) => {
           });
         });
 
-      console.log('orderdetail--->'+ JSON.stringify(orderDetail))
         
        //buscar la orden y borrarla para volverla a llenar     
 
-      Orderdetail.destroy({
+     const deleteRows = await Orderdetail.destroy({
         where: {
           orderId: order.id   
         }
@@ -69,6 +68,9 @@ const postOrder =  async  (req = request, res = response) => {
             orderId: neworder.id,
           });
         });
+
+        
+        console.log('orderDetail--->'+orderDetail)
 
         const newOrderDetail = await Orderdetail.bulkCreate(orderDetail);           
   

@@ -16,22 +16,22 @@ const { postOrder } = require("../controllers/paymentModelController");
 const Price = require("../models/Price");
 
 paymentRoutes.post("/", async function (req, res, next) {
+  
   let arr = [];
   const orderid = await postOrder(req, res)
+  console.log('orderid-->'+ orderid)
   const orderFounded = await Order.findByPk(orderid,  
   {  
     include: [{ model: OrderStatus }, { model: Orderdetail, include: [Product] }],
   })
   
   if (orderFounded){
+    console.log('orderFounded-->'+ JSON.stringify(orderFounded))
     const user = await User.findOne({ where: { uid: orderFounded.userId } });
     const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
-    
+
     const filteredOrder = {
-  //if (orderFounded) {
-  //const user = await User.findOne({ where: { uid: orderFounded.userId } });
   
-  //const filteredOrder = {
     orderId: orderFounded.id,
     orderDate: orderFounded.createdAt,
     orderStatusId: orderFounded.orderStatusId,
@@ -46,22 +46,55 @@ paymentRoutes.post("/", async function (req, res, next) {
         idProduct: product.productId,
         title: product.product.title,
         quantity: product.quantity,
-       // price: product.product.price,
-       price: 1
-      };
+        price: product.price       
+      }
+  })
 
   }
-)} 
-console.log('--->'+ JSON.stringify(filteredOrder));
-  link = PaymentInstance.getPaymentLink(req, res)
-  .then((link) =>{   
-   res.status(200).send([{ link: link, order: filteredOrder }]) 
-  })
-  }
-  
-  
+console.log('filteredOrder-->'+filteredOrder)
+  const link = await PaymentInstance.getPaymentLink(req, res)  
+  res.status(200).send([{ link: link, order: filteredOrder }])  
+
+}
 })
+
+  //     const user = await User.findOne({ where: { uid: orderFounded.userId } });
+//     //const sucursal = await Sucursal.findOne({ where: { id: orderFounded.sucursalId } });
+    
+//  //console.log('orderFounded---->'+JSON.stringify(orderFounded))
+
+
+//     const filteredOrder = {
   
+//     orderId: orderFounded.id,
+//     orderDate: orderFounded.createdAt,
+//     orderStatusId: orderFounded.orderStatusId,
+//     orderStatusDescription: orderFounded.orderStatus.description,
+//     user: {
+//     id: user.uid,
+//     userName: user.username,
+//     email: user.email,
+//     },    
+//     orderDetail: orderFounded.orderdetails.map((product) => {
+//       return {
+//         idProduct: product.productId,
+//         title: product.product.title,
+//         quantity: product.quantity,
+//        // price: product.price
+//        //price: product.product.price.originalprice
+//       };
+
+//   }
+// )} 
+// //console.log('--->'+ JSON.stringify(filteredOrder));
+//   link = PaymentInstance.getPaymentLink(req, res)
+//   .then((link) =>{   
+//    res.status(200).send([{ link: link, order: filteredOrder }]) 
+//   })
+//   }
+   
+
+ 
 module.exports = {
   paymentRoutes,
 };

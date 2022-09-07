@@ -42,10 +42,11 @@ class PaymentService {
                 "receiver_address": {}
               },
               "back_urls": {                
-               // "success": "https://pf-ecommerce-ebon.vercel.app",			         
-               "success": "https://pf-ecommerce-ebon.vercel.app",
-               "failure": "https://pf-ecommerce-ebon.vercel.app",
-               "pending": "https://pf-ecommerce-ebon.vercel.app"				         
+              //"success": "http://localhost:3000"				                        
+               "success": "https://pf-ecommerce-ebon.vercel.app",			         
+               //"success": "https://pf-ecommerce-ebon.vercel.app",
+              "failure": "https://pf-ecommerce-ebon.vercel.app",
+              "pending": "https://pf-ecommerce-ebon.vercel.app"				         
                //"pending": "http://localhost:3000"				                        
               },              
           		"auto_return": "approved",
