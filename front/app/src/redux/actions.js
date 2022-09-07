@@ -735,6 +735,10 @@ export const getOrders = (idUser) => {
         });
       })
       .catch((err) => {
+        dispatch({
+          type: GET_ORDERS,
+          payload: {error: 1}
+        })
         console.log(err);
       });
   };
