@@ -14,7 +14,7 @@ export default function SellerDetails({seller}) {
   
   return (
     <div className={style.contSeller}>
-      <button onClick={() => console.log(seller)}>PRUEBA</button>
+      {/* <button onClick={() => console.log(seller)}>PRUEBA</button> */}
       <img src={seller.image!==null?seller.image:imagenAdmin} alt="user profile" referrerPolicy="no-referrer"/>
       <h2>{seller.username}</h2>
       <div className="user-data">
