@@ -31,7 +31,7 @@ export default function MyShopping (props) {
 
     return (
         <div className={style.contMyShopping}>
-            <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button>
+            {/* <button onClick={() => console.log(props)}>CONSOLELOGPROPS</button> */}
             <div className={style.header}>
                 <div className={style.titulo}>
                     <h3>Date: {props.date}</h3>
@@ -101,13 +101,13 @@ export default function MyShopping (props) {
                         })
                     }
                 </div>
-                <div className={style.infoSell}>
+                {/* <div className={style.infoSell}>
                     <h3>Seller Info</h3>
                     <h3>Name:</h3>
                     <h3>Email:</h3>
                     <h3>Address:</h3>
                     <h3>Cel:</h3>
-                </div>
+                </div> */}
             </div>
             <div className={style.status}>
                 <h3>Status: {props.status.description} </h3>
