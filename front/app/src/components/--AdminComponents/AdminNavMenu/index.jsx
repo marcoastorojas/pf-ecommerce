@@ -44,9 +44,9 @@ export default function AdminNavMenu() {
         <p className={style.administratorP}>Adminstrator:</p>
         <h3 className={style.administratorH3}>{admin.username}</h3>
       </div>
-      <div className={style.profileDiv} onClick={onProfileClick}>
+      {/* <div className={style.profileDiv} onClick={onProfileClick}>
         Profile
-      </div>
+      </div> */}
       <div className={style.logoutDiv} onClick={logOutTryHandler}>
         Log out
       </div>

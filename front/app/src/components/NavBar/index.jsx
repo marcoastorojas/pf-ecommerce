@@ -118,7 +118,7 @@ export default function NavBar() {
 
       <div className={style.sectionTwo}>
         <div className={style.userOrLoginDiv}>
-          {user && Object.keys(user).length !== 0 && <NavBarUserMenu />}
+          {user && Object.keys(user).length !== 0 && user.roleId !== ADMIN_ROLE && <NavBarUserMenu />}
           {/* {user && Object.keys(user).length !== 0 && <button onClick={handleSignOut}>Sign Out</button>} */}
           {Object.keys(user).length === 0 ? (
             <div className={style.logAndSign}>
