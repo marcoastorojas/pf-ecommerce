@@ -277,6 +277,7 @@
 .buttonToAdmin {
   /* background-color: var(--background-button-color); */
   background-color: transparent;
+  /* background: linear-gradient(to left, var(--border-color), white); */
   border: 1px solid var(--border-color);
   border-left: none;
   border-radius: 0 10px 10px 0;

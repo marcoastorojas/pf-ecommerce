@@ -149,7 +149,7 @@ export default function NavBar() {
         )}
         {ADMIN_ROLE === user.roleId && (
           <button className={style.buttonToAdmin} onClick={() => navigate("/soyadmin/users")}>
-            Admin interface.
+            Go to Admin interface.
           </button>
         )}
       </div>
