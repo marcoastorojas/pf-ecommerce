@@ -419,7 +419,7 @@ export const setUserGoogle = (payload, logOut = false) => {
 };
 
 export const postUser = (newUser) => {
-  toast.loading("Loadinasdg...", {
+  toast.loading("Loading...", {
     id: "REGISTERUSER",
   });
   return (dispatch) => {
