@@ -748,10 +748,18 @@ export const getOrders = (idUser) => {
     })
       .then((response) => {
         console.log(response.data);
-        dispatch({
-          type: GET_ORDERS,
-          payload: response.data,
-        });
+        if(response.data.length > 0){
+          dispatch({
+            type: GET_ORDERS,
+            payload: response.data,
+          });
+        }
+        else {
+          dispatch({
+            type: GET_ORDERS,
+            payload: { error: 1 },
+          });
+        }
       })
       .catch((err) => {
         dispatch({
