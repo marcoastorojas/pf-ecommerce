@@ -12,8 +12,8 @@ class PaymentService {
           //"picture_url": "http://www.myapp.com/myimage.jpg",
           //"category_id": "car_electronics",
           "quantity": product.amount,
-          "currency_id": "ARS",
-          "unit_price":  product.product.price
+          "currency_id": "ARS",          
+          "unit_price": product.product.price.originalprice
         }       
 
       }) 
@@ -41,10 +41,15 @@ class PaymentService {
                 ],
                 "receiver_address": {}
               },
-              "back_urls": {
-                "success": "http://localhost:3000/successpay",			         
+              "back_urls": {                
+              //"success": "http://localhost:3000"				                        
+               "success": "https://pf-ecommerce-ebon.vercel.app",			         
+               //"success": "https://pf-ecommerce-ebon.vercel.app",
+              "failure": "https://pf-ecommerce-ebon.vercel.app",
+              "pending": "https://pf-ecommerce-ebon.vercel.app"				         
+               //"pending": "http://localhost:3000"				                        
               },              
-          		auto_return: "approved",
+          		"auto_return": "approved",
               "differential_pricing": {},
               "metadata": {}             
         };

@@ -9,7 +9,7 @@ export default function Cart() {
   const cart = useSelector(state => state.cart)
 
   useEffect(() => {
-    document.title = `Cart: ${cart.length} elements`
+    document.title = `Shopping Cart: ${cart.length} elements`
   })
   return (
     <div>

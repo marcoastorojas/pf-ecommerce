@@ -1,31 +1,37 @@
-import { getProducts } from "../../redux/actions";
-import { useEffect, useState } from "react";
+import { getUserFav, getUserInfo } from "../../redux/actions";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../ProductCard";
-import "./index.modules.css";
-import Paginate from "../Paginate/Paginate";
+import style from "./index.module.css";
+import Loading from '../Loading/Loading.jsx';
+import NoResultsFound from '../NoResultsFound/NoResultsFound.jsx';
+// import Paginate from "../Paginate/Paginate";
 
 export default function LandingProducts() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.allProducts);
   const favourites = useSelector((state) => state.favourites);
+  const user = useSelector((state) => state.user);
+
   const sliceArrayProduct = products.data?.slice(0, 20);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [dataPerPage, setdataPerPage] = useState(20);
+  // const [dataPerPage, setdataPerPage] = useState(20);
 
   useEffect(() => {
     localStorage.setItem("fav", JSON.stringify(favourites));
   }, [favourites]);
 
   useEffect(() => {
-    dispatch(getProducts(currentPage));
-  }, [currentPage]);
+    if (user.uid) {
+      // dispatch(getUserFav(user.uid));
+      dispatch(getUserInfo(user.uid));
+    }
+  }, []);
 
   return (
-    <main>
-      <div className="container-lProducts">
-        {Array.isArray(sliceArrayProduct)
+      <div className={style.containerProducts}>
+        {/* <button onClick={() => console.log(products)}>PRUEBA</button> */}
+        {products.length===0?<Loading/>:products[0]===0?<NoResultsFound/>: Array.isArray(sliceArrayProduct)
           ? sliceArrayProduct.map((product) => {
               return (
                 <ProductCard
@@ -33,7 +39,7 @@ export default function LandingProducts() {
                   id={product.id}
                   title={product.title}
                   image={product.images}
-                  price={product.price}
+                  price={product.price.originalprice}
                   brand={product.brand}
                   model={product.model}
                 />
@@ -41,12 +47,5 @@ export default function LandingProducts() {
             })
           : null}
       </div>
-      <Paginate
-        totalData={60}
-        dataPerPage={dataPerPage}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
-    </main>
   );
 }

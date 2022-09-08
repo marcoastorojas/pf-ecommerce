@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CatalogueCards from "../CatalogueCards";
 import Loading from "../Loading/Loading";
+import NoResultsFound from '../NoResultsFound/NoResultsFound.jsx';
 
 import style from "./ResultsContainer.module.css"
 
@@ -16,6 +17,7 @@ export default function ResultsContainer() {
                 searchedProducts?.map((product, index) => {
                     return (
                        <CatalogueCards
+                       stock={product.stock}
                        key={index}
                        id={product.id}
                        name={product.title}
@@ -33,7 +35,7 @@ export default function ResultsContainer() {
                 resultsFound && searchedProducts.length === 0?<Loading/>:<></>
             }
             {
-                !resultsFound?<p>No results found</p>:<></>
+                !resultsFound?<NoResultsFound/>:<></>
             }
         </div>
     )

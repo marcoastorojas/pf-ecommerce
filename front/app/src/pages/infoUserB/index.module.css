@@ -1,3 +1,5 @@
 .mainDiv {
   display: flex;
+  padding: 2px;
+  height: 800px;
 }

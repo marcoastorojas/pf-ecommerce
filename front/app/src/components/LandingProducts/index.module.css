@@ -1,0 +1,11 @@
+.containerProducts {
+ /* position: relative; */
+ /* height: 200px; */
+ display: flex;
+ flex-wrap: wrap;
+ /* border: 1px solid red; */
+ width: 100%;
+ margin: 0;
+ align-items: center;
+ justify-content: space-evenly;
+}

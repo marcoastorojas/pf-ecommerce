@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "./index.module.css";
 
 import noProfilePic from "../../media/images/empty_user_profilepic.png";
-import { setUserGoogle } from "../../redux/actions";
+import { setUserGoogle, clearCart, clearFavorites } from "../../redux/actions";
 
 export default function NavBarUserMenu() {
   const dispatch = useDispatch();
@@ -22,16 +22,23 @@ export default function NavBarUserMenu() {
   const handleLogOut = () => {
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
+    dispatch(clearFavorites())
+    dispatch(clearCart())
     navigate("/");
+    return window.location.reload()
   };
 
   return (
     <div className={style.userContainer}>
       <div className={style.userNavDiv} onClick={handleUserNavDivClick}>
-        <div className={style.imageDiv}>
-          <img className={style.profilePic} src={!user.picture ? noProfilePic : user.picture} alt="user profile" referrerPolicy="no-referrer"></img>
+        <div className={style.visibleData}>
+          <div className={style.imageDiv}>
+            <img className={style.profilePic} src={!user.image ? noProfilePic : user.image} alt="user profile" referrerPolicy="no-referrer"></img>
+          </div>
+          <div className={style.usernameDiv}>
+            <p className={style.username}>{user.username}</p>
+          </div>
         </div>
-        <p className={style.username}>{user.username}</p>
         <div className={showUserMenu ? style.userMenu : style.hiddenUserMenu}>
           <Link to="/user/info" className={style.menuLink}>
             Profile
@@ -45,7 +52,7 @@ export default function NavBarUserMenu() {
           <Link to="/user/reviews" className={style.menuLink}>
             Reviews
           </Link>
-          <button className={style.userMenuButton} onClick={handleLogOut}>
+          <button className={style.menuLink} onClick={handleLogOut}>
             Log out
           </button>
         </div>

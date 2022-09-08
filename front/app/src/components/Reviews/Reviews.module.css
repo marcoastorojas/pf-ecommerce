@@ -1,0 +1,33 @@
+.reviewContainer {
+  flex: 1;
+    margin: 2rem;
+}
+
+.comments {
+    margin: 1rem 0 0 2rem;
+    border: 1px solid black;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.comments:hover {
+     box-shadow: 0 0 10px 1px var(--border-color);
+}
+
+.reviewData {
+    text-align: justify;
+    word-break: keep-all;
+    margin-top: 0.5rem;
+}
+
+.reviewData span {
+    font-weight: bold;
+}
+
+.productData {
+    text-decoration: none;
+    color: black;
+}
+.productData:hover {
+    text-decoration: underline;
+}

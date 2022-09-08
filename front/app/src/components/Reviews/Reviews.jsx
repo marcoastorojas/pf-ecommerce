@@ -1,46 +1,34 @@
-import React from "react";
-
-const fakeData = {
-  user: {
-    id: "User id",
-    name: "User name",
-    photo:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29uJTIwcG9ydHJhaXR8ZW58MHx8MHx8&w=1000&q=80",
-    country: "User country 1",
-    reviews: [
-      {
-        product: {
-          name: "Product name 1",
-          image: "",
-          comment: { body: "User comment", score: 3 },
-        },
-      },
-      {
-        product: {
-          name: "Product name 2",
-          image: "",
-          comment: { body: "User comment 2", score: 6 },
-        },
-      },
-    ],
-  },
-};
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
+import { NavLink } from "react-router-dom";
+import style from "./Reviews.module.css";
+import Loading from "../Loading/Loading";
+import NoResultsFound from "../NoResultsFound/NoResultsFound";
 
 export default function Reviews() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const reviews = useSelector((state) => state.reviews);
+  
+  useEffect(() => {
+    dispatch(getUserReviews(user.uid));
+  }, [])
+
   return (
-    <div>
-      Reviews
-      <div>
-        {fakeData.user.reviews.map((ct) => {
+    <div className={style.reviewContainer}>
+      <div >
+        {reviews.length===0? <Loading/>: reviews[0]===0?<NoResultsFound/>: reviews.map((rw) => {
           return (
-            <div key={ct.product.name}>
+            <div key={rw.id} className={style.comments}>
               <div>
-                <h2>{ct.product.name}</h2>
-                <img src={ct.product.image} alt={ct.product.name} />
+                <NavLink to={`/product/${rw.productId}`} className={style.productData}>
+                GO TO PRODUCT PAGE
+                </NavLink>
               </div>
-              <div>
-                <p>{ct.product.comment.body}</p>
-                <span>Score: {ct.product.comment.score}</span>
+              <div className={style.reviewData}>
+               <span>Score: {rw.score}</span>
+                <p>{rw.description}</p>
               </div>
             </div>
           );

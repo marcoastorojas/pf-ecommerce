@@ -2,12 +2,13 @@
 
 :root {
   --background-button-color: rgba(0, 0, 0, 0.9);
-  --border-color: rgba(0, 0, 0, 0.2);
+  --border-color: rgba(0, 0, 0, 0.4);
   --soft-shadow: rgba(255, 255, 255, 0.5);
 }
 
 .App {
   font-family: "Raleway", sans-serif;
+  /* background-color: red; */
 }
 
 .toast-border {
@@ -54,3 +55,37 @@
   border: none;
   width: 1vw;
 }
+.tostadora {
+  margin: 2%;
+  padding: 2%;
+  /* background-color: var(--background-button-color); */
+  /* width: 50%; */
+  color: black;
+  /* font-size: 20px; */
+  /* font-weight: 500; */
+  /* margin-top: 20%; */
+  border: 1px solid black;
+  /* box-shadow: 0 0 20px 1px var(--border-color); */
+  /* background: linear-gradient(to right, var(--background-button-color), white); */
+}
+
+
+/* ::-webkit-scrollbar-button {
+  background-color: blue;
+} */
+
+/* ::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--border-color);
+  border-left: 1px solid black;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.473);
+} */

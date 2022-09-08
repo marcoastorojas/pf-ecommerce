@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearCart,
-  removeAllFromCart,
-  removeOneFromCart,
-  addOneFromCart,
-  getTotal,
-} from "../../redux/actions";
-import { Toaster, toast } from "react-hot-toast";
-import "./ShoppingCart.css";
+import { clearCart, removeAllFromCart, removeOneFromCart, addOneFromCart, getTotal } from "../../redux/actions";
+import { toast } from "react-hot-toast";
+import style from "./ShoppingCart.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -18,13 +12,14 @@ export default function ShoppingCart() {
 
   const cart = useSelector((state) => state.cart);
   const cartTotal = useSelector((state) => state.cartTotal);
+   const user = useSelector((state) => state.user);
 
   const [quantityAdd, setQuantityAdd] = useState(1);
   const [quantityRes, setQuantityRes] = useState(1);
 
   useEffect(() => {
-    dispatch(getTotal());
-  }, [dispatch]);
+    if(user.uid)dispatch(getTotal());
+  }, [cart.length]);
 
   const addCart = (e) => {
     dispatch(addOneFromCart(e.target.value));
@@ -88,64 +83,84 @@ export default function ShoppingCart() {
 
   if (cart.length > 0)
     return (
-      <div className="cart">
-        <h2>Shopping Cart</h2>
-        <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
-        <div className="products-cart">
+      <div className={style.contShoppingCart}>
+        {/* <button onClick={() => console.log(cart, cartTotal)}>PRUEBA</button> */}
+        {/* <h2>Shopping Cart</h2> */}
+        <div className={style.headShopCart}>
+          <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
+        </div>
+        <div className={style.productsShopCart}>
           {cart.map((pt) => {
             const images = pt.product.images.split(" ");
             return (
-              <div key={pt.product.id} className="card">
-                <Link to={`/product/${pt.product.id}`}>
-                  <img src={images[0]} alt={pt.product.title} />
-                </Link>
-
-                <h2>{pt.product.title}</h2>
-                <div className="info">
-                  <h3>
-                    <span>Model: {pt.product.model}</span>
-                    <span>Brand: {pt.product.brand}</span>
-                  </h3>
-                  <div className="price">
-                    <h2>
-                      <span>Total items: {pt.amount}</span>
-                      <span>
-                        Total price:$
-                        {Intl.NumberFormat().format(
-                          pt.amount * pt.product.price
-                        )}
-                      </span>
-                    </h2>
+              <div key={pt.product.id} className={style.cardShopCart}>
+                <div className={style.productoCSC}>
+                  <div className={style.imgCSCDiv}>
+                    <Link to={`/product/${pt.product.id}`}>
+                      <img className={style.shopCartIMG} src={images[0]} alt={pt.product.title} />
+                    </Link>
                   </div>
-                  <div className="buttons-cart">
-                    <button value={pt.product.id} onClick={(e) => addCart(e)}>
-                      +{quantityAdd}
-                    </button>
-                    <button value={pt.product.id} onClick={(e) => resCart(e)}>
-                      -{quantityRes}
-                    </button>
-                    <button
-                      value={pt.product.id}
-                      onClick={(e) => deleteFromCart(e)}
-                    >
-                      -{pt.amount}
-                    </button>
+                  <div className={style.detailsNprice}>
+                    <div className={style.details}>
+                      <div className={style.detailsTop}>
+                        <p>{pt.product.title}</p>
+                      </div>
+                      <div className={style.detailsBot}>
+                        <p>{pt.product.brand}</p>
+                        <p>{pt.product.model}</p>
+                      </div>
+                    </div>
+                    <div className={style.price}>
+                      <p>${pt.product.price.originalprice}</p>
+                      <p>x{pt.amount}</p>
+                      <p>${Intl.NumberFormat().format(pt.amount * pt.product.price.originalprice)}</p>
+                    </div>
                   </div>
+                </div>
+                <div className={style.buttonsCSC}>
+                  <button className={pt.amount<pt.product.stock?style.buttonAdd:style.buttonDisabled} value={pt.product.id} onClick={(e) => addCart(e)} disabled={pt.amount < pt.product.stock?false:true}>
+                    +{quantityAdd}
+                  </button>
+                  <button className={pt.amount!==0?style.buttonAdd:style.buttonDisabled} value={pt.product.id} onClick={(e) => resCart(e)}>
+                    -{quantityRes}
+                  </button>
+                  <button className={pt.amount!==0?style.buttonAdd:style.buttonDisabled} value={pt.product.id} onClick={(e) => deleteFromCart(e)}>
+                    {/* -{pt.amount} */}
+                    Remove all
+                  </button>
                 </div>
               </div>
             );
           })}
         </div>
-        <div>
-          <button className="button-all" onClick={() => deleteAll()}>
+        <div className={style.buttonsShopCart}>
+          <button className={style.buttonEnabled} onClick={() => deleteAll()}>
             <span>REMOVE ALL</span>
           </button>
-          <button className="checkout" onClick={() => goToCheckout()}>
+          <button className={style.buttonEnabled} onClick={() => goToCheckout()}>
             <span>CHECKOUT</span>
           </button>
         </div>
-        <Toaster />
+        {/* <Toaster /> */}
       </div>
     );
-  else return <div className="no-data">Shooping cart is empty</div>;
+  else
+    return (
+      <div className={style.contShoppingCart}>
+        <div className={style.headShopCart}>
+          <h3>TOTAL TO PAY: ${Intl.NumberFormat().format(cartTotal)}</h3>
+        </div>
+        <div className={style.productsShopCart}>
+          <p>Shopping cart is empty</p>;
+        </div>
+        <div className={style.buttonsShopCart}>
+          <button className={style.buttonDisabled} disabled>
+            <span>REMOVE ALL</span>
+          </button>
+          <button className={style.buttonDisabled} disabled>
+            <span>CHECKOUT</span>
+          </button>
+        </div>
+      </div>
+    );
 }

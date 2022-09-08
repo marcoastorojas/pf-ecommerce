@@ -1,0 +1,34 @@
+.containerDiv {
+  flex: 1;
+
+  padding: 5px;
+  /* border: 2px solid brown; */
+  margin: 3px;
+
+  height: 98%;
+
+  /* box-shadow: inset 0 0 0 5px red; */
+  width: 100%;
+  overflow-y: scroll;
+}
+
+/* .containerDiv::-webkit-scrollbar {
+  appearance: none;
+}
+
+.containerDiv::-webkit-scrollbar:vertical {
+  width: 5px;
+}
+
+.contenedor::-webkit-scrollbar:horizontal {
+  height: 5px;
+} */
+
+/* .containerDiv::-webkit-scrollbar-button:increment,
+.containerDiv::-webkit-scrollbar-button {
+  color: aqua;
+} */
+
+/* .contenedor::-webkit-scrollbar-track {
+  border-radius: 10px;
+} */

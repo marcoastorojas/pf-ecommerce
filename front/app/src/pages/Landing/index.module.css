@@ -1,5 +1,6 @@
 .landing {
  width: 100vw;
+ z-index: -1;
 }
 
 .mainDiv {
@@ -8,4 +9,6 @@
  display: flex;
  flex-direction: column;
  align-items: center;
+ /* padding: 2%; */
+ /* justify-content: center; */
 }

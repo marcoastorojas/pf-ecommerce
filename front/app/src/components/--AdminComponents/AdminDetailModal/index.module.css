@@ -1,0 +1,574 @@
+.detailContainer {
+  flex: 1;
+
+  background-color: rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  /* border: 3px solid red; */
+
+  width: 100%;
+  height: 100%;
+}
+/*////////////////////////////////////////////////////////////////*/
+
+.detailCard {
+  background-color: white;
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+
+  width: 1440px;
+  height: 800px;
+}
+
+.imgAndTitle {
+  display: flex;
+}
+
+.detailImgContainer {
+  display: flex;
+  overflow-x: scroll;
+
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin: 0 0 0 0;
+
+  /* width: 1000px; */
+  max-width: 1000px;
+  height: 280px;
+}
+
+.detailImg {
+  max-width: 250px;
+  max-height: 250px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin: 5px 3px 5px 2px;
+}
+
+.descriptionDiv {
+  border: 1px solid transparent;
+
+  padding: 0px 15px 5px 15px;
+
+  width: 965px;
+  height: 220px;
+}
+
+.descriptionTitleP {
+  font-weight: 600;
+  font-size: 18px;
+
+  margin: 15px 0 0px 0;
+}
+
+.descriptionText {
+  background-color: rgba(173, 216, 230, 0.1);
+
+  padding: 7px;
+  /* border: 1px solid red; */
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  overflow-y: scroll;
+
+  height: 140px;
+  max-height: 300px;
+
+  margin: 10px 0 0px 0;
+}
+
+.titleAndCostDiv {
+  position: relative;
+  display: flex;
+  /* align-items: center; */
+
+  padding: 0 0 0 10px;
+  border: 1px solid transparent;
+  margin: 0 0 0 0;
+
+  width: 430px;
+  height: 507px;
+}
+
+.titleDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 0px 0 0 10px;
+  /* border: 1px solid black; */
+  /* margin: 10px 0px 10px 10px; */
+}
+
+.titlesP {
+  font-weight: 600;
+  font-size: 18px;
+
+  margin: 0 0 5px 0;
+}
+
+.descriptionP {
+  display: inline;
+
+  padding: 0 0 3px 0;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+  margin: 0 15px 3px 5px;
+}
+
+.unorderedList {
+  padding: 0 10px 5px 25px;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+  margin: 0 15px 3px 5px;
+}
+
+.listItem {
+  padding: 0;
+  /* border: 1px solid red; */
+  margin: 0 0 0 0;
+}
+
+/* .separationDivOne { */
+/* align-self: center;
+
+  border: 1px solid var(--border-color);
+  border-width: 0 0 0 1px;
+  margin: 0 15px;
+
+  height: 270px; */
+/* } */
+
+/* .costOwnerDiv { */
+/* display: flex; */
+/* flex-direction: column; */
+/* justify-content: space-evenly; */
+/* align-items: center; */
+
+/* padding: 0 0 0 0; */
+/* border: 1px solid var(--border-color); */
+/* border-width: 0 0 1px 0; */
+/* margin: 2px 0px; */
+
+/* width: 800px; */
+/* } */
+
+.closeButton {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  background-color: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1px 1px 0 2px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  /* margin: 0 0 0px 375px; */
+
+  width: 30px;
+  height: 30px;
+
+  transition: all 0.5s ease;
+
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: rgba(119, 119, 119, 0.1);
+  border: 1px solid black;
+}
+
+.botSection {
+  display: flex;
+}
+
+.reviewsDiv {
+  border: 1px solid transparent;
+
+  width: 543px;
+  height: 295px;
+}
+
+.reviewsTitleP {
+  font-weight: 600;
+  font-size: 18px;
+
+  margin: 0 0 10px 15px;
+}
+
+.reviewsDiv2 {
+  overflow-y: scroll;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px;
+  border: 1px solid var(--border-color);
+  border-width: 1px 0 1px 0;
+
+  height: 250px;
+}
+
+.reviewsCard {
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+
+  margin: 0 0 3px 0;
+
+  /* height: 100px; */
+}
+
+.reviewHead {
+  display: flex;
+  align-items: center;
+
+  padding: 0 0 0 20px;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+
+  width: 90%;
+}
+
+.reviewTitles {
+  font-weight: 600;
+  /* margin: 0 0 0 0; */
+}
+
+.reviewP {
+  padding: 0 10px 0 10px;
+}
+
+.userDiv {
+  display: flex;
+}
+
+.scoreDiv {
+  display: flex;
+}
+
+.reviewDescriptionDiv {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0px 20px;
+}
+
+.reviewDescriptionP {
+  margin: 0 0 10px 0;
+}
+
+.wishlistDiv {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 0 0 10px;
+  border: 1px solid transparent;
+
+  width: 263px;
+}
+
+.wishlistTitle {
+  font-size: 18px;
+  font-weight: 600;
+
+  margin: 0 0 0 20px;
+}
+
+.ulWishlist {
+  overflow-y: scroll;
+
+  padding: 10px 0 0 38px;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+  margin: 0 0 0 0;
+
+  height: 261px;
+}
+
+.wishlistLi {
+  padding: 0 0 5px 0;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+
+  width: 150px;
+}
+
+.discountDiv {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 0 0 0px;
+  border: 1px solid transparent;
+
+  width: 350px;
+}
+
+.discountTitle {
+  font-size: 18px;
+  font-weight: 600;
+
+  margin: 0 0 0 35px;
+}
+
+.discountForm {
+  position: relative;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+
+  padding: 20px 15px 20px 35px;
+  /* border: 1px solid black; */
+}
+
+.discountP {
+  /* background-color: aqua; */
+
+  padding: 0 0 3px 0;
+  border: 1px solid var(--border-color);
+  border-width: 0 0 1px 0;
+  margin: 0 0 10px 0;
+
+  width: 300px;
+}
+
+.discountInput {
+  padding: 0 0 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 10px 0 5px 0;
+
+  height: 30px;
+  width: 200px;
+
+  font-size: 15px;
+}
+
+.discountDate {
+  padding: 0 10px 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 10px 0 0 0;
+
+  height: 30px;
+  width: 200px;
+
+  font-size: 15px;
+}
+
+.discountButton {
+  position: absolute;
+  bottom: 85px;
+  left: 46px;
+
+  background-color: white;
+
+  /* align-self: center; */
+
+  padding: 7px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 3px 0px;
+
+  width: 200px;
+
+  transition: all 0.5s ease-out;
+
+  font-family: "Raleway", sans-serif;
+  color: black;
+
+  cursor: pointer;
+}
+
+.discountButton:hover {
+  /* background-color: rgb(253, 208, 139); */
+  border-color: rgb(253, 208, 139);
+  left: 36px;
+  width: 220px;
+  /* padding: 7px 13px; */
+}
+
+.finishDiscountButton {
+  position: absolute;
+  bottom: 85px;
+  left: 46px;
+
+  background-color: white;
+
+  /* align-self: center; */
+
+  padding: 7px 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 3px 0px;
+
+  width: 200px;
+
+  transition: all 0.5s ease-out;
+
+  font-family: "Raleway", sans-serif;
+  color: black;
+
+  cursor: pointer;
+}
+
+.finishDiscountButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: plum;
+  left: 36px;
+  width: 220px;
+  /* padding: 7px 13px; */
+}
+
+.dateWarningDiv {
+  display: flex;
+  justify-content: center;
+
+  border: 1px solid transparent;
+  margin: 40px 0 0 0;
+
+  width: 220px;
+}
+
+.discountLoader {
+  border: 3px solid;
+  border-color: rgb(31, 31, 31) transparent transparent;
+  border-radius: 80%;
+  margin: 0 0 0 0px;
+
+  width: 10px;
+  height: 10px;
+
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+    /* filter: hue-rotate(360deg); */
+  }
+}
+
+.succesOrErrorSVG {
+  width: 18px;
+  margin: 0 0 0 0px;
+}
+
+.deleteButtonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid transparent;
+
+  width: 417px;
+}
+
+.deletBorderDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+
+  width: 200px;
+  height: 120px;
+
+  transition: all 0.5s ease;
+}
+
+.deletBorderDiv:hover {
+  width: 250px;
+  border-color: rgb(252, 80, 80);
+}
+
+.deleteButton {
+  padding: 7px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+
+  transition: all 0.3s ease;
+
+  font-family: "Raleway", sans-serif;
+
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: rgb(252, 80, 80);
+  color: aliceblue;
+}
+
+.deletBorderDivActive {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+
+  width: 330px;
+  height: 150px;
+
+  transition: all 0.5s ease;
+
+  text-align: center;
+}
+
+.deletBorderDivActive:hover {
+  /* width: 250px; */
+  border-color: rgb(252, 80, 80);
+}
+
+.deleteWarning {
+  width: 260px;
+}
+
+.yesButton {
+  background-color: white;
+
+  padding: 4px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 0 10px 0 0;
+
+  transition: all 0.5s ease-out;
+
+  cursor: pointer;
+}
+
+.yesButton:hover {
+  background-color: rgb(252, 80, 80);
+  color: aliceblue;
+}
+
+.noButton {
+  background-color: white;
+
+  padding: 4px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+
+  transition: all 0.5s ease-out;
+
+  cursor: pointer;
+}
+
+.noButton:hover {
+  background-color: lightblue;
+}

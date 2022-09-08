@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tests-ecommerce`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/test-2`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -29,26 +29,36 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 
-const { Order, Orderdetail, OrderType } = sequelize.models;
+const { Order, Orderdetail, OrderType, OrderStatus,Sucursal } = sequelize.models;
+
+// Order - OrderDetail - OrderStatus
 
 Order.hasMany(Orderdetail);
 Orderdetail.belongsTo(Order);
 
-const { Category, Subcategory, Product, Role, User, Person, Status } = sequelize.models;
+Sucursal.hasMany(Order);
+Order.belongsTo(Sucursal);
+
+OrderStatus.hasMany(Order);
+Order.belongsTo(OrderStatus);
+ 
+
+const { Category, Subcategory, Product, Price, Role, User, Person, Status, Favorite, Review } = sequelize.models;
+
+User.hasMany(Product, { foreignKey: "userId" })
+Product.belongsTo(User, { foreignKey: "userId" })
+
 
 // Product - Category - Subcategory
 
 Product.hasMany(Orderdetail);
 Orderdetail.belongsTo(Product);
 
-Category.hasMany(Subcategory, { as: "subcategories" });
-Subcategory.belongsTo(Category, { as: "category" });
+Product.hasOne(Price)
+Price.belongsTo(Product)
 
-Subcategory.hasMany(Product, { as: "products" });
-Product.belongsTo(Subcategory, { as: "subcategory" });
-
-Category.hasMany(Product, { as: "products" });
-Product.belongsTo(Category, { as: "category" });
+Product.belongsToMany(Category, { through: "category-product" })
+Category.belongsToMany(Product, { through: "category-product" })
 
 // User - Person - Rol - Status
 Role.hasMany(User, { as: "users" });
@@ -63,6 +73,18 @@ Status.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Order, { foreignKey: "userId" });
 Order.belongsTo(User, { foreignKey: "userId" });
 
+// User - Favorite - Product - Review
+User.hasMany(Favorite)
+Favorite.belongsTo(User)
+
+Product.hasMany(Favorite)
+Favorite.belongsTo(Product)
+
+User.hasMany(Review)
+Review.belongsTo(User)
+
+Product.hasMany(Review)
+Review.belongsTo(Product)
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

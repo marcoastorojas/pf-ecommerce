@@ -1,0 +1,130 @@
+.reviews-main {
+    display:flex;
+ align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /* box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1); */
+  margin: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+}
+.reviews-main:hover {
+  border: 1px solid black;
+}
+
+.reviews-user-image {
+  padding: 1%;
+    display:flex;
+    align-items:center;
+    justify-content: flex-start;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1);
+     border-radius: 1rem 1rem 0 0;
+}
+
+.reviews-user-image img {
+  border-radius: 50%;
+  width: 10%;
+  height: 5%;
+  object-fit: contain;
+  margin:0.5rem
+}
+
+.reviews-user-image h2 {
+    margin-right:1rem
+}
+
+.reviews-user-image div {
+     display:flex;
+    align-items:center;
+    justify-content: flex-start;
+    margin-right:1rem;
+    color: grey;
+}
+
+.reviews-product {
+     display:flex;
+    align-items:center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+}
+
+.reviews-product img {
+  width: 10%;
+  height: 5%;
+  object-fit: contain;
+  margin:0.5rem
+}
+
+.reviews-product h2 {
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-align: justify;
+  word-break: keep-all;
+}
+
+.reviews-product:hover {
+    background: rgba(0,0,0,0.03);
+}
+
+.reviews-comment {
+
+ display:flex;
+ align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 1%;
+    
+}
+
+.reviews-commentOne {
+  /* border: 1px solid red; */
+  width: 100%;
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: justify;
+  word-break: keep-all;
+}
+.reviews-commentTwo {
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+/* .reviews-commentTwo > button {
+  padding: 2% 5%;
+  width: 20%;
+} */
+
+.reviews-comment div h2 {
+    margin-right: 0.5rem
+}
+
+.reviews-comment div button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1% 5%;
+  width: 10%;
+  background-color: var(--background-button-color);
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.reviews-comment div button:hover {
+      cursor: pointer;
+     box-shadow: 0 0 10px 1px var(--border-color);
+     width: 20%;
+}
+.reviews-comment div button:active {
+  color: black;
+  background-color: white;
+}

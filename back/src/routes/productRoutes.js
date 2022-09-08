@@ -1,4 +1,5 @@
 const { Router } = require("express")
+
 //controllers
 const {
     postProduct,
@@ -6,7 +7,17 @@ const {
     getProductsByCategoryId,
     getProductsBySubcategoryId,
     getProductById,
-    deleteProduct } = require("../controllers/productControllers")
+    deleteProduct,
+    addFavorite,
+    addReview,
+    deleteFavorite,
+    deleteReview,
+    updateReview,
+    getProductsFilter,
+    getReviews,
+    putProductById,
+    promo,
+ } = require("../controllers/productControllers")
 
 //middlewares
 const { validQueryGetProducts } = require("../middlewares/validQueryGetProducts")
@@ -14,10 +25,19 @@ const { validIdParam } = require("../middlewares/validIdParam")
 
 const { Product, Category, Subcategory } = require("../db")
 const { Op, where } = require("sequelize")
-const { validBodyPostProducts } = require("../middlewares/validBodyPostProducts")
+const { validBodyPostProducts } = require("../middlewares/validBodyPostProducts");
+const sendmail = require("../helpers/sendEmail");
 
 
 const productRoutes = Router()
+
+//PruebaSebas
+productRoutes.get('/productsfilter', getProductsFilter)
+
+//endpoint para modificar productos
+productRoutes.put('/productsmodify/:productId', putProductById)
+
+productRoutes.get('/reviews', getReviews)
 
 productRoutes.get("/productsWithCategories", async (req, res) => {
     const title = req.query.title;
@@ -70,9 +90,25 @@ productRoutes.get("/productsWithCategories", async (req, res) => {
     });
 });
 
+
+productRoutes.post("/enviaremail", (req, res) => {
+    sendmail(
+        "majewka22@gmail.com",//email o emails Destino [] o ""
+        "Verificacion Email", // asunto del email
+        "Presiona para verificar email",
+        "<h2>enviar</h2><button>enviar</button>"
+    ).then((result) => {
+        res.status(200).json({ message: "enviado" })
+    }).catch((error) => {
+        console.log(error);
+    })
+})
+
 productRoutes.post("/", validBodyPostProducts, postProduct)
 
 productRoutes.get('/:id', validIdParam, getProductById)
+
+productRoutes.post("/promo/:id", validIdParam, promo)
 
 
 
@@ -80,31 +116,23 @@ productRoutes.get('/:id', validIdParam, getProductById)
 productRoutes.get("/", validQueryGetProducts, getProducts)
 
 
-//validando los datos ingresados por el query con un middleware "validQueryGetProducts" 
-//Get products by categoryId
-//Query 
-// productRoutes.get('/category/:idCategory', async (req, res) => {
-//     let products
-//     const categoryId = req.params.idCategory;
-//     const subCategory = await Subcategory.findAll({ where: { categoryId: categoryId } })
-
-//     subCategory.length ?
-//         (
-//             products = await Product.findAll({ where: { subcategoryId: subCategory[0].id } }),
-//             res.send(products)
-//         )
-
-//         : res.send('No hay resultados.')
-
-// })
-
-
 productRoutes.get('/category/:id', validIdParam, validQueryGetProducts, getProductsByCategoryId)
 
 //validando los datos ingresados por el query con un middleware "validQueryGetProducts"
 productRoutes.get('/subcategory/:id', validIdParam, validQueryGetProducts, getProductsBySubcategoryId)
 
+
+
 productRoutes.delete('/:id', validIdParam, deleteProduct)
+
+productRoutes.post('/favorite/:id', validIdParam, addFavorite)
+productRoutes.delete('/favorite/:id', validIdParam, deleteFavorite)
+
+productRoutes.post('/review/:id', validIdParam, addReview)
+productRoutes.delete('/review/:id', validIdParam, deleteReview)
+productRoutes.put('/review/:id', validIdParam, updateReview)
+
+
 
 module.exports = {
     productRoutes

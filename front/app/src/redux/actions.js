@@ -39,40 +39,109 @@ export const SEND_PAYMENT = "SEND_PAYMENT";
 export const SET_SUCCESS_PAYMENT = "SET_SUCCESS_PAYMENT";
 
 //Wishlist
+export const GET_USER_FAVOURITES = "GET_USER_FAVOURITES";
 export const ADD_FAVOURITES = "ADD_FAVOURITES";
 export const DEL_FAVOURITES = "DEL_FAVOURITES";
+export const CLEAR_FAVOURITES = "CLEAR_FAVOURITES";
 
-//
+//USER DATA
+export const GET_USER_INFO = "GET_USER_INFO";
+export const PUT_USER_IMAGE = "PUT_USER_IMAGE";
+export const VERIFY_CURRENT_PASSWORD = "VERIFY_CURRENT_PASSWORD";
+export const PUT_NEW_PASSWORD = "PUT_NEW_PASSWORD";
+export const VERIFYING_PASSWORD = "VERIFYING_PASSWORD";
+export const GET_USER_INFO_EXTRA = "GET_USER_INFO_EXTRA";
+export const PUT_NEW_USER_INFO = "PUT_NEW_USER_INFO";
+
+//REVIEWS
+export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
+export const ADD_REVIEW = "ADD_REVIEW";
+export const DEL_REVIEW = "DEL_REVIEW";
+export const UPDATE_REVIEW = "UPDATE_REVIEW";
+export const CLEAR_REVIEWS = "CLEAR_REVIEWS";
+export const ALL_REVIEWS = "ALL_REVIEWS";
+
+//ORDERS
+export const GET_ORDERS = "GET_ORDERS";
+
+//ADMIN
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const PUT_CATEGORY_STATE = "PUT_CATEGORY_STATE";
+export const POSTING_CATEGORY = "POSTING_CATEGORY";
+export const POST_CATEGORY = "POST_CATEGORY";
+export const CLEAN_PRODUCT_SEARCH_RESULTS = "CLEAN_PRODUCT_SEARCH_RESULTS";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const CLEANSE_PRODUCT_DETAILS = "CLEANSE_PRODUCT_DETAILS";
+export const POSTING_DISCOUNT = "POSTING_DISCOUNT";
+export const POST_DISCOUNT = "POST_DISCOUNT";
+export const DISCOUNT_ERROR = "DISCOUNT_ERROR";
+
+export const GET_SUCURSAL = "GET_SUCURSAL";
+
+export const SET_SUCURSAL = "SET_SUCURSAL";
 
 const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
+  // console.log('ACTION')
+  // toast.loading("Loading products...", {
+  //   id: "Landing",
+  // });
   const url = new URL(`${BASE_URL}/products`);
   if (page > 0) url.searchParams.append("page", page);
   return async function (dispatch) {
     try {
-      let json = await axios.get(url.href);
-      return dispatch({
-        type: GET_PRODUCTS,
-        payload: json.data,
+      axios({
+        method: "GET",
+        url: url.href,
+      }).then((response) => {
+        // toast.dismiss("Landing");
+        console.log(response.data)
+        if(response.data.data.length > 0) {
+          dispatch({
+            type: GET_PRODUCTS,
+            payload: response.data,
+          });
+        }
+        else {
+          dispatch({
+            type: GET_PRODUCTS,
+            payload: [0]
+          })
+        }
       });
     } catch (error) {
+      // toast.dismiss("Landing");
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: [0]
+      })
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: [0]
+      })
       console.log(error);
+      // toast.error("Error loading products");
     }
   };
 };
 
 export const getProductId = (id) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/products/${id}`);
-      return dispatch({
-        type: GET_PRODUCT_BY_ID,
-        payload: response.data,
+  return (dispatch) => {
+    // toast.loading("Searching product detail");
+    axios
+      .get(`${BASE_URL}/products/${id}`)
+      .then((response) => {
+        // toast.dismiss();
+        dispatch({
+          type: GET_PRODUCT_BY_ID,
+          payload: response.data,
+        });
+      })
+      .catch((err) => {
+        console.log(`can not find product with id: ${id}`, err);
+        toast.error("Something went wrong searching product by id");
       });
-    } catch (error) {
-      console.log(`can not find product with id: ${id}`, error);
-    }
   };
 };
 
@@ -97,7 +166,9 @@ export const clearDetail = () => {
 };
 
 export const getProductsByName = (textInput) => {
-  toast.loading("Searching...");
+  toast.loading("Searching...", {
+    id: "getProductsByName",
+  });
   return (dispatch) => {
     dispatch({
       type: RESULTS_FOUND,
@@ -115,6 +186,7 @@ export const getProductsByName = (textInput) => {
         //  response: response,
         // });
         //  console.log('BY NAME; ', response.data.data)
+        toast.dismiss("getProductsByName");
         response.data.data.length > 0
           ? dispatch({
               type: GET_PRODUCTS_BY_NAME,
@@ -124,9 +196,9 @@ export const getProductsByName = (textInput) => {
               type: RESULTS_FOUND,
               payload: false,
             });
-        toast.dismiss();
       })
       .catch((err) => {
+        toast.dismiss("getProductsByName");
         toast.err("No results");
         // console.log({ from: "action creator getProductsByName", err });
         dispatch({
@@ -138,7 +210,9 @@ export const getProductsByName = (textInput) => {
 };
 
 export const getProductsFilter = (name, max, min, asc, desc) => {
-  toast.loading("Searching...");
+  toast.loading("Searching...", {
+    id: "SearchFilter",
+  });
   let url = new URL(`${BASE_URL}/products`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
@@ -147,9 +221,9 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   if (!!desc) url.searchParams.append("desc", desc);
   //  console.log(url.href);
   return (dispatch) => {
-    toast.dismiss();
+    toast.dismiss("SearchFilter");
     dispatch({ type: RESULTS_FOUND, payload: true });
-
+    dispatch({ type: GET_PRODUCTS_FILTER, payload: [] });
     axios
       .get(url.href)
       .then((response) => {
@@ -163,10 +237,13 @@ export const getProductsFilter = (name, max, min, asc, desc) => {
   };
 };
 
-export const getCategories = () => {
+export const getCategories = (onlyActive) => {
+  let url = new URL(`${BASE_URL}/categories`);
+  if (onlyActive) url.searchParams.append("onlyActive", "true");
+  // else url.searchParams.append('onlyActive', 'false')
   return (dispatch) => {
     axios
-      .get(`${BASE_URL}/categories`)
+      .get(url.href)
       .then((response) => {
         // console.log({ from: "action creator getCategories" });
         dispatch({
@@ -179,7 +256,9 @@ export const getCategories = () => {
 };
 
 export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) => {
-  toast.loading("Searching...");
+  toast.loading("Searching...", {
+    id: "SearchFilter",
+  });
   let url = new URL(`${BASE_URL}/products/category/${categoryId}`);
   if (!!name) url.searchParams.append("name", name);
   if (!!max) url.searchParams.append("max", max);
@@ -202,7 +281,7 @@ export const getCategoryProductsById = (categoryId, name, max, min, asc, desc) =
         //  from: "action creator getCategoryProductsById",
         //  response,
         // });
-        toast.dismiss();
+        toast.dismiss("SearchFilter");
         response.data.data.length
           ? dispatch({
               type: GET_CATEGORY_PRODUCTS_BY_ID,
@@ -234,21 +313,22 @@ export const getSearchName = (payload) => {
   };
 };
 
-export const getSubCategories = () => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(`${BASE_URL}/subCategories`);
-      return dispatch({
-        type: GET_SUB_CATEGORIES,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(`can not find subcategories`, error);
-    }
-  };
-};
+// export const getSubCategories = () => {
+//   return async function (dispatch) {
+//     try {
+//       const response = await axios.get(`${BASE_URL}/subCategories`);
+//       return dispatch({
+//         type: GET_SUB_CATEGORIES,
+//         payload: response.data,
+//       });
+//     } catch (error) {
+//       console.log(`can not find subcategories`, error);
+//     }
+//   };
+// };
 
 export const getSearchCategory = (payload) => {
+  // console.log(payload)
   return {
     type: GET_SEARCH_CATEGORY,
     payload,
@@ -305,7 +385,9 @@ export const setUserGoogle = (payload, logOut = false) => {
     };
   } else {
     return (dispatch) => {
-      toast.loading("Loading...");
+      toast.loading("Loading...", {
+        id: "LogInGoogle",
+      });
       axios({
         method: "POST",
         url: `${BASE_URL}/auth/google`,
@@ -314,7 +396,7 @@ export const setUserGoogle = (payload, logOut = false) => {
         },
       })
         .then((response) => {
-          toast.dismiss();
+          toast.dismiss("LogInGoogle");
           console.log(response.data.user);
           dispatch({
             type: SET_USER_GOOGLE,
@@ -324,7 +406,7 @@ export const setUserGoogle = (payload, logOut = false) => {
           toast.success("Welcome " + response.data.user.name);
         })
         .catch((err) => {
-          toast.dismiss();
+          toast.dismiss("LogInGoogle");
           console.log("ErrorCATCHGOOGLE", err.response);
           dispatch({
             type: ERROR_HANDLE,
@@ -337,22 +419,29 @@ export const setUserGoogle = (payload, logOut = false) => {
 };
 
 export const postUser = (newUser) => {
+  toast.loading("Loading...", {
+    id: "REGISTERUSER",
+  });
   return (dispatch) => {
     axios
       .post(`${BASE_URL}/auth/signup`, newUser)
       .then((response) => {
+        toast.dismiss("REGISTERUSER");
         console.log({ from: "postUser action creator", response });
         dispatch({
           type: POST_USER,
-          payload: response.data,
+          payload: response.data.user,
         });
+        toast.success("Signup succesfull!");
       })
       .catch((err) => {
+        toast.dismiss("REGISTERUSER");
         console.log({ m: "Error on postUser action creator", err });
         dispatch({
           type: POST_USER_ERROR,
           payload: err.response.data.errors,
         });
+        toast.error("Error. Please try again later");
       });
   };
 };
@@ -367,7 +456,9 @@ export const cleanSignupErrors = () => {
 
 export const logIn = (user) => {
   //  console.log('ACTIONS: ', user)
-  toast.loading("Loading...");
+  toast.loading("Loading...", {
+    id: "LogIn",
+  });
   return (dispatch) => {
     axios({
       method: "POST",
@@ -375,7 +466,7 @@ export const logIn = (user) => {
       data: user,
     })
       .then((response) => {
-        toast.dismiss();
+        toast.dismiss("LogIn");
         // console.log('RESPONSE: ', response)
         dispatch({
           type: LOG_IN,
@@ -389,8 +480,8 @@ export const logIn = (user) => {
         toast.success(`Welcome ${response.data.user.username}`);
       })
       .catch((err) => {
-        toast.dismiss();
-        // console.log(err.response.data.errors)
+        toast.dismiss("LogIn");
+        // console.log(err.response.data)
         dispatch({
           type: ERROR_HANDLE,
           payload: err.response.data.errors,
@@ -401,17 +492,21 @@ export const logIn = (user) => {
 };
 
 export const sendPayment = (dataPayment) => {
-  return (dispatch) => {
+  toast.loading('Please wait...', {
+    id: 'PAYMENT'
+  })
+  return async (dispatch) => {
     try {
-      axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
+      await axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
         dispatch({
           type: SEND_PAYMENT,
           payload: response.data,
         });
-        console.log(response.data);
+        toast.dismiss('PAYMENT')
+        // console.log(response.data);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
-        localStorage.setItem('mp', JSON.stringify(response.data))
+        localStorage.setItem("mp", JSON.stringify(response.data));
         window.open(response.data[0].link.toString());
         dispatch({
           type: SET_SUCCESS_PAYMENT,
@@ -419,22 +514,26 @@ export const sendPayment = (dataPayment) => {
         });
       });
     } catch (error) {
+      toast.dismiss('PAYMENT')
       console.log("Error, can not fetch payment", { error: error });
     }
   };
 };
 
 export const upgradeToSeller = (idUser, role) => {
-  console.log(idUser, role);
+  console.log("Entró a upgradeToSeller");
   return () => {
-    toast.loading("Upgrading account");
+    toast.loading("Sending request", {
+      id: "UpgradeToSeller",
+    });
     try {
       axios({
         method: "PUT",
         url: `${BASE_URL}/auth/changerol/${idUser}`,
         data: { role: role },
       }).then((response) => {
-        toast.dismiss();
+        console.log(response.data);
+        toast.dismiss("UpgradeToSeller");
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -443,46 +542,714 @@ export const upgradeToSeller = (idUser, role) => {
           })
         );
         toast.success("You can publish your products now");
+        window.location.reload(false);
       });
     } catch (err) {
-      toast.dismiss();
+      console.log("Failed en upgradeToSeller");
+      toast.dismiss("UpgradeToSeller");
       console.log(err);
       toast.error("error");
     }
   };
 };
 
-export const addFav = (product) => {
-  return {
-    type: ADD_FAVOURITES,
-    payload: product,
-  };
-};
+// export const setSuccessPaymentData = () => {
+//{type: SET_SUCCESS_PAYMENT}
+// };
 
-export const delFav = (id) => {
-  return {
-    type: DEL_FAVOURITES,
-    payload: id,
-  };
-};
-
-export const setSuccessPaymentData = () => {
-  //{type: SET_SUCCESS_PAYMENT}
-}
-
-export const cancelOperation = (idOper) => {  //CANCELAR LA OPERACION EN MYSHOPPING
+export const cancelOperation = (idOper) => {
+  //CANCELAR LA OPERACION EN MYSHOPPING
   return (dispatch) => {
     axios({
-      method: 'POST',
+      method: "POST",
       data: {
-        id: idOper
-      }
-    })
-    .then( response => {
+        id: idOper,
+      },
+    }).then((response) => {
       // dispatch({
       //   type:
       // })
       //Mensaje de confirmación
+    });
+  };
+};
+
+export const getUserInfo = (id) => {
+  return (dispatch) => {
+    axios
+      .get(`${BASE_URL}/auth/users/${id}`)
+      .then((response) => {
+        dispatch({
+          type: GET_USER_INFO,
+          payload: response.data,
+        });
+        let userInfoAct = {
+          email: response.data.email,
+          google: response.data.google,
+          image: response.data.image,
+          roleId: response.data.roleId,
+          uid: response.data.uid,
+          username: response.data.username,
+          name: response.data.info?.name,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfoAct));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const putUserImage = (id, changes, text = "Updating Information") => {
+  // console.log("Entró en putUserImage");
+  toast.loading(text, {
+    id: "UpdateInformation",
+  });
+  return (dispatch) => {
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/users/${id}`,
+      data: changes,
     })
+      .then((response) => {
+        // console.log("Success en putUserImage");
+        toast.dismiss("UpdateInformation");
+        // console.log(response.data.user.image);
+        dispatch({
+          type: PUT_USER_IMAGE,
+          payload: response.data.user.image,
+        });
+        toast.success("Information sent");
+        //Actualizar la información en localStorage
+        let userInfoAct = {
+          email: response.data.user?.email,
+          google: response.data.user?.google,
+          image: response.data.user?.image,
+          roleId: response.data.user?.roleId,
+          uid: response.data.user?.uid,
+          username: response.data.user.username,
+          name: response.data.user?.info?.name,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfoAct));
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        // console.log(err);
+        toast.dismiss("UpdateInformation");
+        // console.log("Failed en putUserImage");
+        toast.error("There was an error. Please try again in a few minutes");
+      });
+  };
+};
+
+export const putNewUserInfo = (id, changes) => {
+  return (dispatch) => {
+    toast.loading("Updating information", {
+      id: "NewUserInfo",
+    });
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/users/${id}`,
+      data: changes,
+    })
+      .then((response) => {
+        console.log({ from: "putNewUserInfo", response });
+        dispatch({
+          type: PUT_NEW_USER_INFO,
+          payload: response.data.user,
+        });
+        // console.log(response.data)
+        // dispatch(getUserInfo(id))
+        toast.dismiss("NewUserInfo");
+        toast.success("Changes applied succesfully!", { duration: 10000 });
+        let userInfoAct = {
+          email: response.data.user?.email,
+          google: response.data.user?.google,
+          image: response.data.user?.image,
+          roleId: response.data.user?.roleId,
+          uid: response.data.user?.uid,
+          username: response.data.user.username,
+          name: response.data.user?.info?.name,
+        };
+        localStorage.setItem("user", JSON.stringify(userInfoAct));
+        window.location.reload(false);
+      })
+      .catch((err) => console.log({ from: "putNewUserInfo", err }));
+  };
+};
+
+export const verifyCurrentPassword = (id, currentPassword) => {
+  return (dispatch) => {
+    dispatch({
+      type: VERIFYING_PASSWORD,
+    });
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/password/${id}`,
+      data: {
+        oldPassword: currentPassword,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        dispatch({
+          type: VERIFY_CURRENT_PASSWORD,
+          payload: response.data.equal,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const putNewPassword = (id, password) => {
+  return (dispatch) => {
+    toast.loading("Updating password", {
+      id: "NewPassword",
+    });
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/users/${id}`,
+      data: {
+        password,
+      },
+    })
+      .then((response) => {
+        console.log({ from: "putNewPassword", axios: response });
+        // dispatch({
+        //   type: PUT_NEW_PASSWORD,
+        //   payload: response.data,
+        // });
+        toast.dismiss("NewPassword");
+        toast.success("Password modified succesfully!");
+      })
+      .catch((err) => console.log({ from: "putNewPassword", err }));
+  };
+};
+
+// export const getInfoUserExtra = (userId, data) => {
+//   return (dispatch) => {
+//     axios({
+//       method: 'PUT',
+//       url: `${BASE_URL}/auth/users/${userId}`,
+//       data: data
+//     })
+//     .then(response => {
+//       dispatch({
+//         type: GET_USER_INFO_EXTRA,
+//         payload: response.data
+//       })
+//     })
+//     .catch(err => console.log(err))
+//   }
+// }
+
+export const getOrders = (idUser) => {
+  console.log(idUser);
+  return (dispatch) => {
+    axios({
+      method: "POST",
+      url: `${BASE_URL}/order/`,
+      data: {
+        userId: idUser,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        if(response.data.length > 0){
+          dispatch({
+            type: GET_ORDERS,
+            payload: response.data,
+          });
+        }
+        else {
+          dispatch({
+            type: GET_ORDERS,
+            payload: { error: 1 },
+          });
+        }
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_ORDERS,
+          payload: { error: 1 },
+        });
+        console.log(err);
+      });
+  };
+};
+
+export const getUserReviews = (id) => {
+  // toast.loading('Searching reviews...', {
+  //   id:'SEARCHINGREVIEWS'
+  // })
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/auth/users/${id}`);
+      // toast.dismiss('SEARCHINGREVIEWS')
+      if(response.data.Reviews.length > 0) {
+        return dispatch({
+          type: GET_USER_REVIEWS,
+          payload: response.data.Reviews,
+        });
+      }
+      else {
+        return dispatch({
+          type: GET_USER_REVIEWS,
+          payload: [0],
+        });
+      }
+    } catch (error) {
+      // toast.dismiss('SEARCHINGREVIEWS')
+      console.log(error);
+      dispatch({
+        type: GET_USER_REVIEWS,
+        payload: [0]
+      })
+    }
+  };
+};
+
+export const addReview = (review, id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`${BASE_URL}/products/review/${id}`, {
+        userId: review.id,
+        score: review.score,
+        description: review.description,
+      });
+
+      return dispatch({
+        type: ADD_REVIEW,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const delReview = (userId, id) => {
+  return async function (dispatch) {
+    await axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/review/${id}`,
+      data: { userId: userId },
+    })
+      .then((response) => {
+        dispatch({
+          type: DEL_REVIEW,
+          payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateReview = (review, id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`${BASE_URL}/products/review/${id}`, {
+        score: review.score,
+        description: review.description,
+        userId: review.id,
+      });
+
+      return dispatch({
+        type: UPDATE_REVIEW,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const clearReview = () => {
+  return {
+    type: CLEAR_REVIEWS,
+  };
+};
+
+export const getUserFav = (id) => {
+  // toast.loading('Loading Favourites', {
+  //   id: 'GETUSERFAVS'
+  // })
+  return async (dispatch) => {
+    axios({
+      method: 'GET',
+      url: `${BASE_URL}/auth/users/${id}`,
+    })
+    .then(response => {
+      // toast.dismiss('GETUSERFAVS')
+      console.log(response.data)
+      if(response.data.favorites.length > 0) {
+        dispatch({
+          type: GET_USER_FAVOURITES,
+          payload: response.data.favorites,
+        });
+      }
+      else {
+        dispatch({
+          type: GET_USER_FAVOURITES,
+          payload: [0]
+        })
+      }
+    })
+    .catch(res => {
+    })
+  };
+};
+
+export const addFav = (productId, id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`${BASE_URL}/products/favorite/${productId}`, { userId: id });
+
+      return dispatch({
+        type: ADD_FAVOURITES,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const delFav = (userId, id) => {
+  return async function (dispatch) {
+    await axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/favorite/${id}`,
+      data: { userId: userId },
+    })
+      .then((response) => {
+        dispatch({
+          type: DEL_FAVOURITES,
+          payload: response.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+//Rutas Admin
+
+export const getAllUsers = () => {
+  return (dispatch) => {
+    axios({
+      method: "GET",
+      url: `${BASE_URL}/auth/users`,
+    })
+      .then((response) => {
+        dispatch({
+          type: GET_ALL_USERS,
+          payload: response.data.data,
+        });
+        // console.log(response.data.data)
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const changeOtherUserRol = (userId, newRol) => {
+  toast.loading("Updating user rol", {
+    id: "ChangeRol",
+  });
+  return () => {
+    axios({
+      method: "PUT",
+      url: `${BASE_URL}/auth/changerol/${userId}`,
+      data: {
+        role: newRol,
+      },
+    })
+      .then((response) => {
+        toast.dismiss("ChangeRol");
+        // console.log(response.data)
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        toast.dismiss("ChangeRol");
+        console.log(err);
+      });
+  };
+};
+
+export const changeUserStatus = (userId, newStatus) => {
+  // console.log('ACTION', newStatus)
+  return () => {
+    axios({
+      method: "DELETE",
+      url: `${BASE_URL}/auth/users/${userId}`,
+      data: {
+        newStatus: newStatus,
+      },
+    })
+      .then((response) => {
+        // console.log(response.data)
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const newSearchProducts = (name, priceOrder, min, max, categoryId) => {
+  const url = new URL(`${BASE_URL}/products/productsfilter`);
+
+  if (!!name) url.searchParams.append("name", name);
+  if (!!priceOrder) url.searchParams.append("priceOrder", priceOrder);
+  if (!!min) url.searchParams.append("min", min);
+  if (!!max) url.searchParams.append("max", max);
+  if (!!categoryId) url.searchParams.append("categoryId", categoryId);
+  console.log("name: ", name, "priceOrder: ", priceOrder, "min: ", min, "max: ", max, "categoryId:", categoryId);
+
+  return (dispatch) => {
+    dispatch({
+      type: RESULTS_FOUND,
+      payload: true,
+    });
+    dispatch({
+      type: GET_PRODUCTS_BY_NAME,
+      payload: [],
+    });
+    dispatch({
+      type: GET_SEARCH_NAME,
+      payload: name || "",
+    });
+    axios({
+      method: "GET",
+      url: url.href,
+    })
+      .then((response) => {
+        // console.log(response.data.length)
+        response.data.length > 0
+          ? dispatch({
+              type: GET_PRODUCTS_BY_NAME,
+              payload: response.data,
+            })
+          : dispatch({
+              type: RESULTS_FOUND,
+              payload: false,
+            });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const putCategoryState = (categoryId, newStatus) => {
+  return (dispatch) => {
+    axios({
+      method: "DELETE",
+      url: `${BASE_URL}/categories`,
+      data: { categoryId, newStatus },
+    })
+      .then((response) => {
+        console.log({ from: "putCategoryState DELETE", response });
+        dispatch({
+          type: PUT_CATEGORY_STATE,
+          payload: response.data,
+        });
+      })
+      .then((response) => {
+        axios
+          .get(`${BASE_URL}/categories`)
+          .then((response) => {
+            console.log({ from: "putCategoryState GET", response });
+            dispatch({
+              type: GET_CATEGORIES,
+              payload: response.data.data,
+            });
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const postCategory = (name) => {
+  return (dispatch) => {
+    dispatch({
+      type: POSTING_CATEGORY,
+      payload: { name, state: "posting" },
+    });
+    axios({
+      method: "POST",
+      url: `${BASE_URL}/categories`,
+      data: {
+        name,
+      },
+    })
+      .then((response) => {
+        console.log({ from: "postCategory", response });
+        dispatch({
+          type: POST_CATEGORY,
+          payload: response.data,
+        });
+        axios
+          .get(`${BASE_URL}/categories`)
+          .then((response) => {
+            console.log({ from: "postCategory second request", response });
+            dispatch({
+              type: GET_CATEGORIES,
+              payload: response.data.data,
+            });
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: POST_CATEGORY,
+          payload: { name, state: "error" },
+        });
+      });
+  };
+};
+
+export const getAllReviews = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/products/reviews`);
+      console.log(response.data);
+      return dispatch({
+        type: ALL_REVIEWS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("error all reviews");
+    }
+  };
+};
+
+export const cleanProductSearchResults = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAN_PRODUCT_SEARCH_RESULTS,
+    });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return (dispatch) => {
+    toast.loading("Deleting product from database...");
+    axios({
+      method: "DELETE",
+      url: `${BASE_URL}/products/${id}`,
+    })
+      .then((response) => {
+        toast.dismiss();
+        toast.success("Product deleted");
+        console.log({ from: "deleteProduct", response });
+        dispatch({
+          type: DELETE_PRODUCT,
+          payload: response,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.dismiss();
+        toast.error("Error while trying to delete product, try again.");
+      });
+  };
+};
+
+export const cleanseProductDetails = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEANSE_PRODUCT_DETAILS,
+    });
+  };
+};
+
+export const getSucursal = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${BASE_URL}/sucursal`);
+      return dispatch({
+        type: GET_SUCURSAL,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("error sucursal");
+    }
+  };
+};
+
+export const postSucursal = (data) => {
+  // console.log("LlEGÓ", data);
+  return () => {
+    try {
+      toast.loading('Saving address', {
+        id: 'SUCURSAL'
+      })
+      axios({
+        method: "POST",
+        url: `${BASE_URL}/sucursal`,
+        data: data,
+      }).then((response) => {
+        // console.log("LLEGó", response.data);
+        toast.dismiss('SUCURSAL')
+        toast.success('Address saved!')
+      });
+    } catch (err) {
+      toast.dismiss('SUCURSAL')
+      toast.success("Can't saver the address. Try again later")
+      // console.log(err.message);
+    }
+  };
+};
+
+export const setSucursal = (data) => {
+  return (dispatch) => {
+    dispatch({type: SET_SUCURSAL, payload: data})
   }
+}
+
+export const postDiscount = (id, discount) => {
+  return (dispatch) => {
+    dispatch({
+      type: POSTING_DISCOUNT,
+    });
+    axios({
+      method: "POST",
+      url: `${BASE_URL}/products/promo/${id}`,
+      data: {
+        discount: discount.discountInput,
+        expiresin: discount.discountDate,
+      },
+    })
+      .then((response) => {
+        axios({
+          method: "GET",
+          url: `${BASE_URL}/products/${id}`,
+        })
+          .then((response) => {
+            console.log({ from: "postDiscount .then() second request", response });
+            dispatch({
+              type: GET_PRODUCT_BY_ID,
+              payload: response.data,
+            });
+          })
+          .catch((err) => console.log(err));
+        console.log({ from: "postDiscount", response });
+        dispatch({
+          type: POST_DISCOUNT,
+          payload: response.data,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: DISCOUNT_ERROR,
+        });
+        console.log(err);
+      });
+  };
+};
+
+
+
+export const clearFavorites = () => {
+    return {
+        type: CLEAR_FAVOURITES
+    }
 }

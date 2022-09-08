@@ -9,18 +9,20 @@
 
 .header {
   display: flex;
-  justify-content: center;
-  flex-direction: row;
+  justify-content: space-evenly;
+  /* flex-direction: row; */
 
   width: 100%;
   height: 15vh;
-
-  /* background-color: #f72585; */
+  /* border: 1px solid green; */
+  background-color: white;
 
   border-bottom: solid black 3px;
-
+  /* margin: 0; */
   text-align: center;
   font-family: "Raleway", sans-serif;
+  padding-top: 1%;
+  /* z-index: 10; */
 }
 
 .sectionOne {
@@ -30,47 +32,94 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 40%;
+  width: 45%;
 }
 
 .logoAndSB {
   /* border: 2px solid red; */
-
+  /* padding-right: 15%; */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 
-  width: 85%;
+  width: 100%;
 }
 
-.logoLink {
-  /* background-color: aqua; */
-  margin: 10px;
+/* .logoLink { */
+/* background-color: aqua; */
+/* margin: 10px;
   border: 2px solid black;
   width: 100px;
   height: 40px;
 
   text-decoration: none;
   text-align: center;
+  color: black; */
+/* } */
+
+/* .logo { */
+/* display: inline;
+  font-size: 30px; */
+/* } */
+
+/*///////////////////////////*/
+
+.logoLink {
+  display: flex;
+  flex-direction: column;
+
+  margin: 10px;
+  border: 2px solid black;
+
+  width: 100px;
+  height: 40px;
+
+  font-size: 30px;
+  text-decoration: none;
+  /* text-align: center; */
   color: black;
 }
 
-.logo {
-  display: inline;
-  font-size: 30px;
+/* .logo { */
+/* display: inline; */
+/* display: flex; */
+/* flex-direction: column; */
+/* } */
+
+.plus {
+  /* border: 1px solid green; */
+  margin: 3px 0 0 0;
 }
+.hardware {
+  /* border: 1px solid orange; */
+  margin: 1px 0 0 21px;
+}
+
+/*/////////////////////////////////////////*/
 
 .navBarLinks {
   text-decoration: none;
   color: black;
+  padding: 3% 7%;
+  border-radius: 10px 10px 0 0;
+}
+.activeLink {
+  /* background-color: var(--background-button-color); */
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  color: black;
+  text-decoration: none;
+  padding: 3% 7%;
+  border-radius: 10px 10px 0 0;
 }
 
 .navButtons {
+  align-self: flex-end;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-
+  /* border: 1px solid red; */
   width: 450px;
 }
 
@@ -84,7 +133,9 @@
   font-family: "Raleway", sans-serif;
   font-size: 17px;
 }
-
+.contCate > h3 {
+  font-weight: 500;
+}
 .contCate:hover .categoriasChikito {
   visibility: visible;
 }
@@ -116,10 +167,13 @@
   justify-content: space-evenly;
   align-items: center;
 
-  width: 20vw;
+  width: 40%;
 
   /* border: 2px solid red; */
 }
+/* .sectionTwo > div {
+  border: 1px solid blue;
+} */
 
 .userOrLoginDiv {
   /* border: 2px solid lightblue; */
@@ -128,8 +182,8 @@
   justify-content: center;
   align-items: center;
 
-  width: 75%;
-
+  width: 40%;
+  height: 50%;
   padding: 4px;
   margin: 1%;
 }
@@ -165,11 +219,40 @@
   color: whitesmoke;
 }
 
+.cartDiv {
+  width: 20%;
+  /* border: 1px solid blue; */
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 2% 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.cartDiv:hover {
+  border: 1px solid black;
+  /* cursor: pointer; */
+}
+.cartDivInfo {
+  /* border: 1px solid black; */
+  width: 100%;
+  padding-top: 7%;
+  padding-bottom: 7%;
+  /* height: 100%; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.cartDivInfo:hover {
+  cursor: pointer;
+}
 .cartLink {
   display: flex;
   justify-items: center;
   align-items: center;
-
+  /* width: 30%; */
   border: 1px solid black;
   border-radius: 10px;
   padding: 8px 20px;
@@ -178,4 +261,33 @@
   text-decoration: none;
 
   cursor: pointer;
+}
+
+.shoppCartMenu {
+  position: absolute;
+  margin: 600px 200px 0 0;
+  /* padding: 0; */
+  /* backdrop-filter: blur(2px); */
+  z-index: 5;
+}
+.shoppCartMenuHidden {
+  display: none;
+  visibility: hidden;
+}
+.buttonToAdmin {
+  /* background-color: var(--background-button-color); */
+  background-color: transparent;
+  /* background: linear-gradient(to left, var(--border-color), white); */
+  border: 1px solid var(--border-color);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  color: black;
+  padding: 7% 3%;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  /* font-weight: 100; */
+}
+.buttonToAdmin:hover {
+  cursor: pointer;
+  border-color: black;
 }

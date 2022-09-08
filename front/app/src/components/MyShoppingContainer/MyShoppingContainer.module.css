@@ -1,0 +1,5 @@
+.contMSC {
+    width: 100%;
+    /* height: 70%; */
+    overflow-y: scroll;
+}
