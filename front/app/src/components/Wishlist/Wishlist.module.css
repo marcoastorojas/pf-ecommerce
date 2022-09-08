@@ -4,11 +4,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150vh;
+  width: 90%;
+  overflow: scroll;
+  /* border: 1px solid green; */
 }
 
 .containerFather {
+  width: 90%;
+  overflow: scroll;
+  /* border: 1px solid green; */
 display:flex;
+flex-wrap: wrap;
     margin:2rem 0 0 2rem;
 }
 
