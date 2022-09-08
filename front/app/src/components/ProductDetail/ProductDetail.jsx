@@ -192,11 +192,9 @@ export default function ProductDetail({ product }) {
           <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
         </div>
         
-   //const filterOrderUno = dataOrders.length > 0 ? dataOrders.map((orderS) => orderS.orderdetails.map((orderSProduct) => orderSProduct.productId)) : []
+   const filterOrderUno = dataOrders.length > 0 ? dataOrders.map((orderS) => orderS.orderdetails.map((orderSProduct) => orderSProduct.productId)) : []
    
-   //const filterOrderDos = filterOrderUno.map((orderNew) => orderNew.find((productId) => productId === product.id))
-   
-   //console.log(filterOrderUno)
+   const filterOrderDos = filterOrderUno.map((orderProductId) => orderProductId.includes(product.id))
 
   return (
     <div className={style.contProDet}>
@@ -241,7 +239,7 @@ export default function ProductDetail({ product }) {
           </div>
           <div className={style.shopping}>
           <div>
-           {userInfo.role?.name === "USER_ROLE" ? starImage : null}
+           {userInfo.role?.name === "USER_ROLE" || user.role?.name === "SELLER_ROLE" ? starImage : null}
       </div>
             <div className={style.pricing}>
               {/* <div className={style.quant}> */}
@@ -368,7 +366,7 @@ export default function ProductDetail({ product }) {
           })}
 
         <div className={style.addCommentSection}>
-          {user.uid &&
+          {user.uid && filterOrderDos.includes(true) &&
           reviews.length >= 0 &&
           user.roleId !== ADMIN_ROLE &&
           !reviews.filter((rw) => rw.productId === product.id).length ? (
