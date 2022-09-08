@@ -191,6 +191,12 @@ export default function ProductDetail({ product }) {
             Add to favorites:
           <img src={star} alt="star" className={style.star} onClick={() => addFavourites()} />
         </div>
+        
+   //const filterOrderUno = dataOrders.length > 0 ? dataOrders.map((orderS) => orderS.orderdetails.map((orderSProduct) => orderSProduct.productId)) : []
+   
+   //const filterOrderDos = filterOrderUno.map((orderNew) => orderNew.find((productId) => productId === product.id))
+   
+   //console.log(filterOrderUno)
 
   return (
     <div className={style.contProDet}>
