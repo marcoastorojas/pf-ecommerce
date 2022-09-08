@@ -492,6 +492,9 @@ export const logIn = (user) => {
 };
 
 export const sendPayment = (dataPayment) => {
+  toast.loading('Please wait...', {
+    id: 'PAYMENT'
+  })
   return async (dispatch) => {
     try {
       await axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
@@ -499,7 +502,8 @@ export const sendPayment = (dataPayment) => {
           type: SEND_PAYMENT,
           payload: response.data,
         });
-        console.log(response.data);
+        toast.dismiss('PAYMENT')
+        // console.log(response.data);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
         localStorage.setItem("mp", JSON.stringify(response.data));
@@ -510,6 +514,7 @@ export const sendPayment = (dataPayment) => {
         });
       });
     } catch (error) {
+      toast.dismiss('PAYMENT')
       console.log("Error, can not fetch payment", { error: error });
     }
   };
