@@ -256,8 +256,8 @@ export default function ProductDetail({ product }) {
               {/* </div> */}
               <div className={style.prices}>
                  <h3>Discount: { product.price.discount ? product.price.discount * 100: 0}%</h3>
-                 <h3>Original Price: ${Intl.NumberFormat().format(
-                  (product.price.originalprice * quantity)
+                 <h3>Price by unit: ${Intl.NumberFormat().format(
+                  (product.price.originalprice)
                 )}</h3>
               </div>
               <h2>
