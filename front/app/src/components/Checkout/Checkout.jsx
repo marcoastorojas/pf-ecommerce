@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
-import { sendPayment, getSucursal } from "../../redux/actions";
+import { sendPayment, getSucursal, clearCart } from "../../redux/actions";
 import { useState } from "react";
 import Mapita from "../Mapita/Mapita.jsx"
 import "./Checkout.css"
+
 
 
 export default function Checkout() {
@@ -45,6 +46,11 @@ export default function Checkout() {
       direction: tienda.id,
       email: email
     }));
+    
+    setTimeout(() => {
+        dispatch(clearCart());
+         navigate("/");
+    }, 1200)
   } else return toast.error("Fill the payment data");
   };
   

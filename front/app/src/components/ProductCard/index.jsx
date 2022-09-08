@@ -20,7 +20,7 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
     dispatch(addFav(product.id, user.uid));
     setTimeout(() => {
         dispatch(getUserFav(user.uid))
-    }, 1000)
+    }, 1200)
     }
     else return console.log("LOG IN")
   };
@@ -30,7 +30,7 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
     dispatch(delFav(user.uid, product.id));
     setTimeout(() => {
         dispatch(getUserFav(user.uid))
-    }, 1000)
+    }, 1200)
     }
     else return console.log("LOG IN")
   };
