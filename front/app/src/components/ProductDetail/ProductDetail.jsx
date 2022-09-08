@@ -262,9 +262,10 @@ export default function ProductDetail({ product }) {
               </div>
               <h2>
                 Total: $
-                {Intl.NumberFormat().format(
+                {product.price.discount ? Intl.NumberFormat().format(
                   (product.price.originalprice * quantity) * product.price.discount
-                )}
+                ) : Intl.NumberFormat().format(
+                  (product.price.originalprice * quantity))}
               </h2>
               {/* <div className={style.total}>
                 Total:{" "}
