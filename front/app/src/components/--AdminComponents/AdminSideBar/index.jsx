@@ -17,6 +17,8 @@ export default function AdminSideBar() {
         return navigate("/soyadmin/reviews");
       case "categories":
         return navigate("/soyadmin/categories");
+      case "sucursales":
+        return navigate("/soyadmin/sucursales")
       default:
         return;
     }
@@ -49,6 +51,11 @@ export default function AdminSideBar() {
         <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="categories" className={style.optionP}>
             Categories management
+          </p>
+        </div>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
+          <p id="sucursales" className={style.optionP}>
+            Add sucursal
           </p>
         </div>
       </nav>

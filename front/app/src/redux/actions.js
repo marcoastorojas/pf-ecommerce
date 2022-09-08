@@ -1171,18 +1171,25 @@ export const getSucursal = () => {
 };
 
 export const postSucursal = (data) => {
-  console.log("LlEGÓ", data);
+  // console.log("LlEGÓ", data);
   return () => {
     try {
+      toast.loading('Saving address', {
+        id: 'SUCURSAL'
+      })
       axios({
         method: "POST",
         url: `${BASE_URL}/sucursal`,
         data: data,
       }).then((response) => {
-        console.log("LLEGó", response.data);
+        // console.log("LLEGó", response.data);
+        toast.dismiss('SUCURSAL')
+        toast.success('Address saved!')
       });
     } catch (err) {
-      console.log(err.message);
+      toast.dismiss('SUCURSAL')
+      toast.success("Can't saver the address. Try again later")
+      // console.log(err.message);
     }
   };
 };

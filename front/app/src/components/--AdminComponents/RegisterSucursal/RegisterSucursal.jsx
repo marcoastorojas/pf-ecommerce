@@ -117,22 +117,29 @@ export default function RegisterSucursal () {
     }
     return (
         <div>
-            <button onClick={() => console.log(suc)}>PRUIEBA</button>
-            <label>{suc.name}</label>
-            <label>LAT: {suc.lat}</label>
-            <label>LNG: {suc.lng}</label>
-            <button onClick={sendSucursal}>Enviar</button>
+            {/* <button onClick={() => console.log(suc)}>PRUIEBA</button> */}
+            {/* <label>LAT: {suc.lat}</label> */}
+            {/* <label>LNG: {suc.lng}</label> */}
+            <div className={style.mapDiv}>
                 <MapContainer center={position} zoom={13} scrollWheelZoom={false} className={style.leaflet_container}>
                     <TileLayer  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         
                             {/* <Marker id='asd' position={markerPosition} icon={markerIcon}>
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                A pretty CSS3 popup. <br /> Easily customizable.
                                 </Popup>
                             </Marker> */}
                     
                     <Buscador/>
                 </MapContainer>
+            </div>
+            <div>
+                <h2>New Sucursal:</h2>
+                <label>{suc.name}</label>
+            </div>
+            <div>
+                <button onClick={sendSucursal}>Save</button>
+            </div>
         </div>
     )
 }
