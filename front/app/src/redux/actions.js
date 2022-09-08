@@ -747,15 +747,32 @@ export const getOrders = (idUser) => {
 };
 
 export const getUserReviews = (id) => {
+  toast.loading('Searching reviews...', {
+    id:'SEARCHINGREVIEWS'
+  })
   return async function (dispatch) {
     try {
       const response = await axios.get(`${BASE_URL}/auth/users/${id}`);
-      return dispatch({
-        type: GET_USER_REVIEWS,
-        payload: response.data.Reviews,
-      });
+      toast.dismiss('SEARCHINGREVIEWS')
+      if(response.data.Reviews.length > 0) {
+        return dispatch({
+          type: GET_USER_REVIEWS,
+          payload: response.data.Reviews,
+        });
+      }
+      else {
+        return dispatch({
+          type: GET_USER_REVIEWS,
+          payload: [0],
+        });
+      }
     } catch (error) {
+      toast.dismiss('SEARCHINGREVIEWS')
       console.log(error);
+      dispatch({
+        type: GET_USER_REVIEWS,
+        payload: [0]
+      })
     }
   };
 };
