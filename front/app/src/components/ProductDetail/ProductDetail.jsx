@@ -15,6 +15,7 @@ import {
   updateReview,
   getProductId,
   getOrders,
+  getTotal,
   
   addFav,
   delFav,
@@ -87,6 +88,7 @@ export default function ProductDetail({ product }) {
     dispatch(addToCart(product, +quantity));
     // console.log('stock', stock, 'quantity', quantity)
     setQuantity(1);
+    setTimeout(() =>  dispatch(getTotal()), 1000)
     toast.success(`Successfully added ${quantity} items to the cart!`);
   };
 
