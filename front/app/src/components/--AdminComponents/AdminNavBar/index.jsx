@@ -8,7 +8,7 @@ export default function AdminNavBar() {
     <header className={style.header}>
       <div className={style.sectionOne}>
         <div className={style.logoDiv}>
-          <Link to={"/soyadmin"} className={style.logoLink}>
+          <Link to={"/soyadmin/users"} className={style.logoLink}>
             <p className={style.plus}>
               <b>Plus</b>
             </p>

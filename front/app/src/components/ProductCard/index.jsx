@@ -20,7 +20,7 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
     dispatch(addFav(product.id, user.uid));
     setTimeout(() => {
         dispatch(getUserFav(user.uid))
-    }, 1000)
+    }, 1200)
     }
     else return console.log("LOG IN")
   };
@@ -30,13 +30,13 @@ export default function ProductCard({ id, title, image, price, model, brand }) {
     dispatch(delFav(user.uid, product.id));
     setTimeout(() => {
         dispatch(getUserFav(user.uid))
-    }, 1000)
+    }, 1200)
     }
     else return console.log("LOG IN")
   };
   
 
-  if(user.role?.name === "USER_ROLE")return (
+  if(user.role?.name === "USER_ROLE" || user.role?.name === "SELLER_ROLE" )return (
     <div className={style.product_card}>
     { favourites[0] !==0 && favourites.find((pt) => pt.product.id === id) ? <div className={style.favorites}>
           <img src={starF} alt="fill-star" className={style.star} onClick={() => delFavourites()} />
