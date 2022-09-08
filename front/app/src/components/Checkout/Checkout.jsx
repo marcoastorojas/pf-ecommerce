@@ -45,7 +45,7 @@ export default function Checkout() {
       direction: tienda.id,
       email: email
     }));
-  } else toast.error("Fill the payment data");
+  } else return toast.error("Fill the payment data");
   };
   
   const onSuccess=(location)=>{
