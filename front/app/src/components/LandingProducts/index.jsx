@@ -30,7 +30,7 @@ export default function LandingProducts() {
 
   return (
       <div className={style.containerProducts}>
-        <button onClick={() => console.log(products)}>PRUEBA</button>
+        {/* <button onClick={() => console.log(products)}>PRUEBA</button> */}
         {products.length===0?<Loading/>:products[0]===0?<NoResultsFound/>: Array.isArray(sliceArrayProduct)
           ? sliceArrayProduct.map((product) => {
               return (
