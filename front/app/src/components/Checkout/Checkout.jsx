@@ -29,7 +29,7 @@ export default function Checkout() {
 
 
   const handlePay = () => {
-  if(email.length > 0 && location.coordinates.lat.length > 0){
+  if(!!email && !!direction){
   const tienda = sucursal.find((sl) => sl.name === direction)
     console.log({ 
       totalPriceProducts: cartTotal,
@@ -124,7 +124,7 @@ export default function Checkout() {
                 return <option key={sl.id} value={sl.name}>{sl.name}</option>
             })}
             </select>
-      <button onClick={() => handlePay()} disabled={true}>PAY</button>
+      <button onClick={() => handlePay()}>PAY</button>
       </div>
         <div className="map">{<Mapita X={location.coordinates?.lat ? location.coordinates.lat : -34.61315} Y={location.coordinates?.lng ? location.coordinates.lng : -58.37723} search={direction}/>}</div>
         <Toaster />
