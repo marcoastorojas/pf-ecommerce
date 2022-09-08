@@ -23,13 +23,13 @@ export default function ShoppingCart() {
 
   const addCart = (e) => {
     dispatch(addOneFromCart(e.target.value));
-    dispatch(getTotal());
+    setTimeout(() => {dispatch(getTotal());},1200)
     toast.success(`Successfully added ${quantityAdd} items to the cart!`);
   };
 
   const resCart = (e) => {
     dispatch(removeOneFromCart(e.target.value));
-    dispatch(getTotal());
+     setTimeout(() => {dispatch(getTotal());},1200)
     toast.success(`Successfully removed ${quantityRes} items to the cart!`, {
       style: {
         border: "1px solid #713200",
@@ -45,7 +45,7 @@ export default function ShoppingCart() {
 
   const deleteFromCart = (e) => {
     dispatch(removeAllFromCart(e.target.value));
-    dispatch(getTotal());
+     setTimeout(() => {dispatch(getTotal());},1200)
     toast.success(`Successfully deleted product from the cart!`, {
       style: {
         border: "1px solid #FF2301",
@@ -60,7 +60,7 @@ export default function ShoppingCart() {
   };
 
   const deleteAll = () => {
-    dispatch(getTotal());
+    dispatch(clearCart());
     toast.success(`Successfully cleared cart!`, {
       style: {
         border: "1px solid  #F32013",
@@ -73,7 +73,7 @@ export default function ShoppingCart() {
       },
     });
     setTimeout(() => {
-      dispatch(clearCart());
+      dispatch(getTotal());
     }, 1200);
   };
 
