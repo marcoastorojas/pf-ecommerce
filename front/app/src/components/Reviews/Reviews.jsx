@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addReview, delReview, getUserReviews, updateReview} from "../../redux/actions";
 import { NavLink } from "react-router-dom";
 import style from "./Reviews.module.css";
+import Loading from "../Loading/Loading";
+import NoResultsFound from "../NoResultsFound/NoResultsFound";
 
 export default function Reviews() {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ export default function Reviews() {
   return (
     <div className={style.reviewContainer}>
       <div >
-        {reviews.map((rw) => {
+        {reviews.length===0? <Loading/>: reviews[0]===0?<NoResultsFound/>: reviews.map((rw) => {
           return (
             <div key={rw.id} className={style.comments}>
               <div>

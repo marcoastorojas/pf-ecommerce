@@ -84,9 +84,9 @@ const BASE_URL = `http://localhost:3001/api`;
 
 export const getProducts = (page) => {
   // console.log('ACTION')
-  toast.loading("Loading products...", {
-    id: "Landing",
-  });
+  // toast.loading("Loading products...", {
+  //   id: "Landing",
+  // });
   const url = new URL(`${BASE_URL}/products`);
   if (page > 0) url.searchParams.append("page", page);
   return async function (dispatch) {
@@ -95,16 +95,33 @@ export const getProducts = (page) => {
         method: "GET",
         url: url.href,
       }).then((response) => {
-        toast.dismiss("Landing");
-        dispatch({
-          type: GET_PRODUCTS,
-          payload: response.data,
-        });
+        // toast.dismiss("Landing");
+        console.log(response.data)
+        if(response.data.data.length > 0) {
+          dispatch({
+            type: GET_PRODUCTS,
+            payload: response.data,
+          });
+        }
+        else {
+          dispatch({
+            type: GET_PRODUCTS,
+            payload: [0]
+          })
+        }
       });
     } catch (error) {
-      toast.dismiss("Landing");
+      // toast.dismiss("Landing");
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: [0]
+      })
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: [0]
+      })
       console.log(error);
-      toast.error("Error loading products");
+      // toast.error("Error loading products");
     }
   };
 };
@@ -747,15 +764,32 @@ export const getOrders = (idUser) => {
 };
 
 export const getUserReviews = (id) => {
+  // toast.loading('Searching reviews...', {
+  //   id:'SEARCHINGREVIEWS'
+  // })
   return async function (dispatch) {
     try {
       const response = await axios.get(`${BASE_URL}/auth/users/${id}`);
-      return dispatch({
-        type: GET_USER_REVIEWS,
-        payload: response.data.Reviews,
-      });
+      // toast.dismiss('SEARCHINGREVIEWS')
+      if(response.data.Reviews.length > 0) {
+        return dispatch({
+          type: GET_USER_REVIEWS,
+          payload: response.data.Reviews,
+        });
+      }
+      else {
+        return dispatch({
+          type: GET_USER_REVIEWS,
+          payload: [0],
+        });
+      }
     } catch (error) {
+      // toast.dismiss('SEARCHINGREVIEWS')
       console.log(error);
+      dispatch({
+        type: GET_USER_REVIEWS,
+        payload: [0]
+      })
     }
   };
 };
@@ -822,16 +856,16 @@ export const clearReview = () => {
 };
 
 export const getUserFav = (id) => {
-  toast.loading('Loading Favourites', {
-    id: 'GETUSERFAVS'
-  })
+  // toast.loading('Loading Favourites', {
+  //   id: 'GETUSERFAVS'
+  // })
   return async (dispatch) => {
     axios({
       method: 'GET',
       url: `${BASE_URL}/auth/users/${id}`,
     })
     .then(response => {
-      toast.dismiss('GETUSERFAVS')
+      // toast.dismiss('GETUSERFAVS')
       console.log(response.data)
       if(response.data.favorites.length > 0) {
         dispatch({
