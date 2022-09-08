@@ -13,6 +13,7 @@ import {
   LOG_IN,
   ERROR_HANDLE,
   RESULTS_FOUND,
+  CLEAR_CART,
 
   //SIGNUP
   POST_USER,
@@ -23,7 +24,6 @@ import {
   ADD_TO_CART,
   REMOVE_ONE_FROM_CART,
   REMOVE_ALL_FROM_CART,
-  CLEAR_CART,
   ADD_ONE_FROM_CART,
   GET_TOTAL,
   SEND_PAYMENT,
@@ -59,6 +59,7 @@ import {
   POSTING_DISCOUNT,
   POST_DISCOUNT,
   DISCOUNT_ERROR,
+  CLEAR_FAVOURITES,
 } from "./actions";
 
 const initialState = {
@@ -72,13 +73,17 @@ const initialState = {
   subCategories: [],
   searchCategory: ["", ""],
   signupResponse: {},
-  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : {},
   userInfo: {}, //información adicional del usuario
   verifyingPassword: "no",
   verifiedPassword: null,
   signupErrors: null,
   errorsLogIn: {},
-  cart: localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [],
+  cart: localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [],
   cartTotal: 0,
   dataPayment: localStorage.mp ? JSON.parse(localStorage.getItem("mp")) : {},
   //  dataSuccessPayment: {},
@@ -87,7 +92,9 @@ const initialState = {
   reviews: [],
   productsReviews: [],
   dataOrders: {},
-  favourites: localStorage.getItem("fav") ? JSON.parse(localStorage.getItem("fav")) : [],
+  favourites: localStorage.getItem("fav")
+    ? JSON.parse(localStorage.getItem("fav"))
+    : [],
   userInfoExtra: {}, //Info de usuario completa
   allUsers: [], //AllUsersForAdmin
   postingCategory: {
@@ -166,7 +173,9 @@ export const reducer = (state = initialState, action) => {
     /*eslint-disable */
     //SHOPPING CART
     case ADD_TO_CART: {
-      const getCart = state.cart.filter((pt) => pt.product.id === action.payload.product.id);
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload.product.id
+      );
       if (getCart.length === 1) {
         state.cart.map((pt) => {
           if (pt.product.id === action.payload.product.id) {
@@ -179,14 +188,20 @@ export const reducer = (state = initialState, action) => {
           ...state,
           cart: [...state.cart],
         };
-      } else localStorage.setItem("cart", JSON.stringify([...state.cart, action.payload]));
+      } else
+        localStorage.setItem(
+          "cart",
+          JSON.stringify([...state.cart, action.payload])
+        );
       return {
         ...state,
         cart: [...state.cart, action.payload],
       };
     }
     case REMOVE_ONE_FROM_CART: {
-      const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload
+      );
       if (getCart.length === 1) {
         if (getCart[0].amount > 1) {
           state.cart.map((pt) => {
@@ -201,7 +216,9 @@ export const reducer = (state = initialState, action) => {
             cart: [...state.cart],
           };
         } else {
-          const newProducts = state.cart.filter((pt) => pt.product.id !== action.payload);
+          const newProducts = state.cart.filter(
+            (pt) => pt.product.id !== action.payload
+          );
           localStorage.setItem("cart", JSON.stringify(newProducts));
           return {
             ...state,
@@ -214,9 +231,13 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case REMOVE_ALL_FROM_CART: {
-      const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload
+      );
       if (getCart.length === 1) {
-        const newProducts = state.cart.filter((pt) => pt.product.id !== action.payload);
+        const newProducts = state.cart.filter(
+          (pt) => pt.product.id !== action.payload
+        );
         localStorage.setItem("cart", JSON.stringify(newProducts));
         return {
           ...state,
@@ -228,7 +249,9 @@ export const reducer = (state = initialState, action) => {
       };
     }
     case ADD_ONE_FROM_CART: {
-      const getCart = state.cart.filter((pt) => pt.product.id === action.payload);
+      const getCart = state.cart.filter(
+        (pt) => pt.product.id === action.payload
+      );
       if (getCart.length === 1) {
         if (getCart[0].amount > 0) {
           state.cart.map((pt) => {
@@ -243,7 +266,9 @@ export const reducer = (state = initialState, action) => {
             cart: [...state.cart],
           };
         } else {
-          const newProducts = state.cart.filter((pt) => pt.product.id !== action.payload);
+          const newProducts = state.cart.filter(
+            (pt) => pt.product.id !== action.payload
+          );
           localStorage.setItem("cart", JSON.stringify(newProducts));
           return {
             ...state,
@@ -258,7 +283,10 @@ export const reducer = (state = initialState, action) => {
     /*eslint-enable */
     case GET_TOTAL: {
       if (state.cart.length > 0) {
-        const total = state.cart.reduce((acc, pt) => (acc = pt.product.price.originalprice * pt.amount + acc), 0);
+        const total = state.cart.reduce(
+          (acc, pt) => (acc = pt.product.price.originalprice * pt.amount + acc),
+          0
+        );
         return {
           ...state,
           cartTotal: total,
@@ -379,7 +407,10 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         user: { ...state.user, ...newUserData },
-        userInfo: { ...state.userInfo, info: { ...state.userInfo.info, ...newUserInfo } },
+        userInfo: {
+          ...state.userInfo,
+          info: { ...state.userInfo.info, ...newUserInfo },
+        },
       };
     case VERIFYING_PASSWORD:
       return {
@@ -472,6 +503,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         nuevaSucursal: action.payload,
       };
+
     case POSTING_DISCOUNT:
       return {
         ...state,
@@ -487,6 +519,12 @@ export const reducer = (state = initialState, action) => {
       };
     case DISCOUNT_ERROR:
       return { ...state, postingDiscount: false, discountError: "yes" };
+
+    case CLEAR_FAVOURITES:
+      return {
+        ...state,
+        favourites: [],
+      };
     default:
       return state;
   }

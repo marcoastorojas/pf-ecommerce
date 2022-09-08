@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "./index.module.css";
 
 import noProfilePic from "../../media/images/empty_user_profilepic.png";
-import { setUserGoogle } from "../../redux/actions";
+import { setUserGoogle, clearCart, clearFavorites } from "../../redux/actions";
 
 export default function NavBarUserMenu() {
   const dispatch = useDispatch();
@@ -22,9 +22,10 @@ export default function NavBarUserMenu() {
   const handleLogOut = () => {
     dispatch(setUserGoogle({}, true));
     localStorage.removeItem("user");
-    localStorage.setItem("fav", JSON.stringify([]));
-    localStorage.setItem("cart", JSON.stringify([]));
+    dispatch(clearFavorites())
+    dispatch(clearCart())
     navigate("/");
+    return window.location.reload()
   };
 
   return (

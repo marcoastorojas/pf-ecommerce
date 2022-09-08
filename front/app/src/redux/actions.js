@@ -1147,9 +1147,9 @@ export const postSucursal = (data) => {
 
 export const setSucursal = (data) => {
   return (dispatch) => {
-    dispatch({ type: SET_SUCURSAL, payload: data });
-  };
-};
+    dispatch({type: SET_SUCURSAL, payload: data})
+  }
+}
 
 export const postDiscount = (id, discount) => {
   return (dispatch) => {
@@ -1191,3 +1191,11 @@ export const postDiscount = (id, discount) => {
       });
   };
 };
+
+
+
+export const clearFavorites = () => {
+    return {
+        type: CLEAR_FAVOURITES
+    }
+}
