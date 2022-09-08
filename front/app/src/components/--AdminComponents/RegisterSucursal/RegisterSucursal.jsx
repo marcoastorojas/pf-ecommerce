@@ -116,23 +116,32 @@ export default function RegisterSucursal () {
         dispatch(postSucursal(suc))
     }
     return (
-        <div>
-            <button onClick={() => console.log(suc)}>PRUIEBA</button>
-            <label>{suc.name}</label>
-            <label>LAT: {suc.lat}</label>
-            <label>LNG: {suc.lng}</label>
-            <button onClick={sendSucursal}>Enviar</button>
+        <div className={style.contReg}>
+            {/* <button onClick={() => console.log(suc)}>PRUIEBA</button> */}
+            {/* <label>LAT: {suc.lat}</label> */}
+            {/* <label>LNG: {suc.lng}</label> */}
+            <div className={style.infoSuc}>
+                {/* <div> */}
+                    <h2>New Sucursal: {suc.name}</h2>
+                    {/* <label>{suc.name}</label> */}
+                {/* </div> */}
+                {/* <div> */}
+                    <button className={suc.name===''?style.buttonDisabled:style.button} onClick={sendSucursal}>Save</button>
+                {/* </div> */}
+            </div>
+            <div className={style.mapDiv}>
                 <MapContainer center={position} zoom={13} scrollWheelZoom={false} className={style.leaflet_container}>
                     <TileLayer  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         
                             {/* <Marker id='asd' position={markerPosition} icon={markerIcon}>
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                A pretty CSS3 popup. <br /> Easily customizable.
                                 </Popup>
                             </Marker> */}
                     
                     <Buscador/>
                 </MapContainer>
+            </div>
         </div>
     )
 }

@@ -80,7 +80,7 @@ const categoryHandle = (e) => {
           </select>
       </div>
       <div className={style.eachFilter}>
-          <h4>Precio:</h4>
+          <h4>Price:</h4>
           <label>Min:</label>
           <br></br>
           <input className={style.inputFilter} onChange={minPriceHandle}></input>
@@ -91,7 +91,7 @@ const categoryHandle = (e) => {
           <br></br>
       </div>
       {/* <div className={style.eachFilter}> */}
-          <input id="submitForm" type='submit' className={style.buttonFilter} onClick={filtrar}/>
+          <input id="submitForm" type='submit' value='Filter' className={style.buttonFilter} onClick={filtrar}/>
       {/* </div> */}
     </form>
   </div>

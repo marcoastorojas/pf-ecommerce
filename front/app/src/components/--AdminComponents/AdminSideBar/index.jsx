@@ -17,6 +17,8 @@ export default function AdminSideBar() {
         return navigate("/soyadmin/reviews");
       case "categories":
         return navigate("/soyadmin/categories");
+      case "sucursales":
+        return navigate("/soyadmin/sucursales")
       default:
         return;
     }
@@ -26,22 +28,22 @@ export default function AdminSideBar() {
     <aside className={style.aside}>
       <div className={style.controlPanel}>Control Panel</div>
       <nav className={style.optionNav}>
-        <div className={style.optionDiv} onClick={componentSelectionHandler}>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="users" className={style.optionP}>
             User monitoring
           </p>
         </div>
-        <div className={style.lasOptionDiv} onClick={componentSelectionHandler}>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="products" className={style.optionP}>
             Products management
           </p>
         </div>
-        <div className={style.lasOptionDiv} onClick={componentSelectionHandler}>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="orders" className={style.optionP}>
             Orders administration
           </p>
         </div>
-        <div className={style.optionDiv} onClick={componentSelectionHandler}>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="reviews" className={style.optionP}>
             All Reviews
           </p>
@@ -49,6 +51,11 @@ export default function AdminSideBar() {
         <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
           <p id="categories" className={style.optionP}>
             Categories management
+          </p>
+        </div>
+        <div className={style.firstOptionDiv} onClick={componentSelectionHandler}>
+          <p id="sucursales" className={style.optionP}>
+            Add sucursal
           </p>
         </div>
       </nav>

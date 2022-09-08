@@ -19,6 +19,9 @@ export default function Landing() {
         document.title = 'Home'
         dispatch(getProducts(currentPage));
     }, [currentPage])
+    useEffect(() => {
+      window.scrollTo(0,0)
+    }, [])
     // useEffect(() => {
     //   toast.loading('Loading products', {
     //     id: 'Landing'

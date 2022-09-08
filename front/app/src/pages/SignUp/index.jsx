@@ -10,6 +10,7 @@ import { Toaster, toast } from "react-hot-toast";
 import style from "./index.module.css";
 
 export default function SignUp() {
+  const userRedux = useSelector(state => state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -196,6 +197,9 @@ export default function SignUp() {
           signupResponse.username === username && <Navigate to='/login'/>
         }
       </main>
+      {
+            Object.keys(userRedux).length !== 0 && <Navigate to='/'/> 
+        }
     </div>
   );
 }

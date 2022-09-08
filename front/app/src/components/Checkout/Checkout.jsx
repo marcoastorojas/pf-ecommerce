@@ -111,7 +111,7 @@ export default function Checkout() {
     );
     setTimeout(() => {
       navigate("/");
-    }, 1500);
+    }, 3000);
 
     return (
       <div>
@@ -122,6 +122,7 @@ export default function Checkout() {
   } else if(location.loaded)return (
       <div className="check">
       <div className="check-right">
+        <h2>Select a withdrawal  point</h2>
       <input type="text" name="email" id="email" placeholder="email" value={email} disabled={true}/>
       <input type="text" name="direction" id="direction" placeholder="direction" value={direction} disabled={true} />
         <select onChange={(e) => changeDirection(e)} className="select-check">
@@ -130,7 +131,8 @@ export default function Checkout() {
                 return <option key={sl.id} value={sl.name}>{sl.name}</option>
             })}
             </select>
-      <button onClick={() => handlePay()}>PAY</button>
+            {/* <button onClick={() => console.log(direction)}>PRUEA</button> */}
+      <button className={direction===''?"buttonDisabled":"button"} onClick={() => handlePay()} disabled={direction===''?true:false}>PAY</button>
       </div>
         <div className="map">{<Mapita X={location.coordinates?.lat ? location.coordinates.lat : -34.61315} Y={location.coordinates?.lng ? location.coordinates.lng : -58.37723} search={direction}/>}</div>
         <Toaster />

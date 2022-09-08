@@ -42,6 +42,7 @@ function App() {
         pathname === "/soyadmin/users" ||
         pathname === "/soyadmin/reviews" ||
         pathname === "/soyadmin/products" ||
+        pathname === "/soyadmin/sucursales" ||
         pathname === "/soyadmin/orders" ? (
         <AdminNavBar />
       ) : (

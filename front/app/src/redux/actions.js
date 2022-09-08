@@ -419,7 +419,7 @@ export const setUserGoogle = (payload, logOut = false) => {
 };
 
 export const postUser = (newUser) => {
-  toast.loading("Loadinasdg...", {
+  toast.loading("Loading...", {
     id: "REGISTERUSER",
   });
   return (dispatch) => {
@@ -492,6 +492,9 @@ export const logIn = (user) => {
 };
 
 export const sendPayment = (dataPayment) => {
+  toast.loading('Please wait...', {
+    id: 'PAYMENT'
+  })
   return async (dispatch) => {
     try {
       await axios.post(`${BASE_URL}/payment`, dataPayment).then((response) => {
@@ -499,7 +502,8 @@ export const sendPayment = (dataPayment) => {
           type: SEND_PAYMENT,
           payload: response.data,
         });
-        console.log(response.data);
+        toast.dismiss('PAYMENT')
+        // console.log(response.data);
         //const response_1 = await axios.get(${BASE_URL}/payment);
         //console.log(response_1);
         localStorage.setItem("mp", JSON.stringify(response.data));
@@ -510,6 +514,7 @@ export const sendPayment = (dataPayment) => {
         });
       });
     } catch (error) {
+      toast.dismiss('PAYMENT')
       console.log("Error, can not fetch payment", { error: error });
     }
   };
@@ -748,10 +753,18 @@ export const getOrders = (idUser) => {
     })
       .then((response) => {
         console.log(response.data);
-        dispatch({
-          type: GET_ORDERS,
-          payload: response.data,
-        });
+        if(response.data.length > 0){
+          dispatch({
+            type: GET_ORDERS,
+            payload: response.data,
+          });
+        }
+        else {
+          dispatch({
+            type: GET_ORDERS,
+            payload: { error: 1 },
+          });
+        }
       })
       .catch((err) => {
         dispatch({
@@ -1163,18 +1176,25 @@ export const getSucursal = () => {
 };
 
 export const postSucursal = (data) => {
-  console.log("LlEGÓ", data);
+  // console.log("LlEGÓ", data);
   return () => {
     try {
+      toast.loading('Saving address', {
+        id: 'SUCURSAL'
+      })
       axios({
         method: "POST",
         url: `${BASE_URL}/sucursal`,
         data: data,
       }).then((response) => {
-        console.log("LLEGó", response.data);
+        // console.log("LLEGó", response.data);
+        toast.dismiss('SUCURSAL')
+        toast.success('Address saved!')
       });
     } catch (err) {
-      console.log(err.message);
+      toast.dismiss('SUCURSAL')
+      toast.success("Can't saver the address. Try again later")
+      // console.log(err.message);
     }
   };
 };

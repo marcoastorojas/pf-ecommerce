@@ -65,6 +65,7 @@ export default function ProductForm() {
   const handleNext = (e) => {
     e.preventDefault();
     setNext(true);
+    window.scrollTo(0,0);
   };
 
   const handleSubmit = (e) => {
@@ -185,11 +186,11 @@ export default function ProductForm() {
         <h1>Preview product</h1>
         <div>
           <img src={inputs.images} alt={inputs.title} />
-          <h3>Name: {inputs.title}</h3>
-          <h3>Model: {inputs.model}</h3>
-          <h3>Brand: {inputs.brand}</h3>
-          <h3>Description: {inputs.description}</h3>
-          <h3>Price: ${Intl.NumberFormat().format(inputs.price)}</h3>
+          <p>Name: {inputs.title}</p>
+          <p>Model: {inputs.model}</p>
+          <p>Brand: {inputs.brand}</p>
+          <p>Description: {inputs.description}</p>
+          <p>Price: ${Intl.NumberFormat().format(inputs.price)}</p>
         </div>
         <div className={style.buttons}>
           <h1>Would you like to sell your product?</h1>
