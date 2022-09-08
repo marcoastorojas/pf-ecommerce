@@ -228,6 +228,7 @@
   color: white;
   padding: 4%;
   width: 50%;
+  margin-top: 2%;
   transition: all 0.2s ease;
 }
 .button:hover{
