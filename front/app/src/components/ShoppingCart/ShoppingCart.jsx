@@ -23,13 +23,13 @@ export default function ShoppingCart() {
 
   const addCart = (e) => {
     dispatch(addOneFromCart(e.target.value));
-    setTimeout(() => {dispatch(getTotal());}, 1200)
+    setTimeout(() => {dispatch(getTotal());},1200)
     toast.success(`Successfully added ${quantityAdd} items to the cart!`);
   };
 
   const resCart = (e) => {
     dispatch(removeOneFromCart(e.target.value));
-    setTimeout(() => {dispatch(getTotal());}, 1200)
+     setTimeout(() => {dispatch(getTotal());},1200)
     toast.success(`Successfully removed ${quantityRes} items to the cart!`, {
       style: {
         border: "1px solid #713200",
@@ -45,7 +45,7 @@ export default function ShoppingCart() {
 
   const deleteFromCart = (e) => {
     dispatch(removeAllFromCart(e.target.value));
-    setTimeout(() => {dispatch(getTotal());}, 1100)
+     setTimeout(() => {dispatch(getTotal());},1200)
     toast.success(`Successfully deleted product from the cart!`, {
       style: {
         border: "1px solid #FF2301",
