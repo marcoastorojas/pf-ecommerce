@@ -18,7 +18,9 @@ const Price = require("../models/Price");
 paymentRoutes.post("/", async function (req, res, next) {
   
   let arr = [];
+  console.log("paso aqui")
   const orderid = await postOrder(req, res)
+  console.log("paso aqui 2")
   console.log('orderid-->'+ orderid)
   const orderFounded = await Order.findByPk(orderid,  
   {  
