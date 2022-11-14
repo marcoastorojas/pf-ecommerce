@@ -80,7 +80,7 @@ export const GET_SUCURSAL = "GET_SUCURSAL";
 
 export const SET_SUCURSAL = "SET_SUCURSAL";
 
-const BASE_URL = `http://localhost:3001/api`;
+const BASE_URL = `https://pf-ecommerce.onrender.com/api`;
 
 export const getProducts = (page) => {
   // console.log('ACTION')
